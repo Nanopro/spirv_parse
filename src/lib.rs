@@ -1,5 +1,6 @@
 pub mod parse;
 pub mod raw;
+pub mod reflection;
 
 
 #[macro_use]
@@ -9,8 +10,6 @@ extern crate serde_json;
 
 
 
-#[macro_use]
-extern crate lazy_static;
 
 #[macro_use]
 extern crate generator;
