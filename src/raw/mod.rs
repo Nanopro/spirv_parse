@@ -1,14 +1,6 @@
-use serde::Deserialize;
-use std::collections::HashMap;
+mod generated;
 
-use serde::Serialize;
-
-
-
-grammar!{
-    path: "./SPIRV-Headers/include/spirv/unified1/spirv.core.grammar.json",
-}
-
+pub use generated::*;
 
 
 
@@ -79,9 +71,9 @@ mod tests{
 
     #[test]
     fn test_bit(){
-        let data = vec![0b10];
-        let x = FPFastMathMode::from_raw(&data);
-        assert_eq!(x.0, FPFastMathMode(0b10));
+        let data = vec![0b11];
+        let x = ImageOperands::from_raw(&data);
+        assert_eq!(x.0, ImageOperands(0b11));
         assert_eq!(x.1, &[] as &[u32]);
     }
 

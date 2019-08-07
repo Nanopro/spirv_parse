@@ -13,107 +13,17 @@ use proc_macro2::Span;
 use serde_json::{from_reader, Value};
 use std::collections::HashSet;
 use std::fs::File;
-use std::io::Read;
+use std::io::{Read, Write};
 use syn::parse::{Parse, ParseStream, Result};
 use syn::{Ident, LitBool, LitInt, LitStr, Attribute};
 
 
 
-struct MacroInput {
-    path: String,
+pub struct MacroInput {
+    pub path: String,
+    pub output: String,
 }
 
-impl Parse for MacroInput {
-    fn parse(input: ParseStream) -> Result<Self> {
-        let mut json_path = String::new();
-        while !input.is_empty() {
-            let name: Ident = input.parse()?;
-            input.parse::<Token![:]>()?;
-
-            match name.to_string().as_ref() {
-                "path" => {
-                    let path: LitStr = input.parse()?;
-                    json_path = path.value();
-                }
-
-                name => panic!(format!("Unknown field name: {}", name)),
-            }
-
-            if !input.is_empty() {
-                input.parse::<Token![,]>()?;
-            }
-        }
-
-        Ok(Self { path: json_path })
-    }
-}
-
-#[proc_macro]
-pub fn enum_json(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let input = parse_macro_input!(input as MacroInput);
-    let file = File::open(input.path).unwrap();
-    let data: Value = from_reader(file).unwrap();
-    let enums = data.get("spv").unwrap().get("enum").unwrap();
-
-    assert!(enums.is_array());
-
-    let enums = enums.as_array().unwrap();
-    let mut structs = vec![];
-
-    for en in enums {
-        let en = en.as_object().unwrap();
-
-        if en.get("Type").unwrap() == "Value" {
-            let struct_name =
-                Ident::new(en.get("Name").unwrap().as_str().unwrap(), Span::call_site());
-            let values = en.get("Values").unwrap().as_object().unwrap();
-            let mut fields = vec![];
-            let mut occupied = HashSet::new();
-            values.iter().for_each(|(k, v)| {
-                let name = Ident::new(k, Span::call_site());
-                let value = v.as_u64().unwrap() as isize;
-                if occupied.insert(value) {
-                    fields.push(quote!(
-                        #name = #value
-                    ));
-                }
-            });
-
-            let mut occupied = HashSet::new();
-            let mut from_name = vec![];
-            values.iter().for_each(|(k, v)| {
-                let name = Ident::new(k, Span::call_site());
-                if occupied.insert(v.as_u64().unwrap() as isize) {
-                    from_name.push(quote!(
-                        #k => Some(#struct_name::#name)
-                    ));
-                }
-            });
-
-            structs.push(quote! {
-                #[repr(C)]
-                #[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
-                enum #struct_name{
-                    #( #fields, )*
-                }
-
-                impl #struct_name{
-                    pub fn from_name(name: &str) -> Option<Self>{
-                        match name{
-                             #( #from_name, )*
-                             _ => None
-                        }
-                    }
-                }
-            })
-        }
-    }
-
-    quote!(
-         #( #structs )*
-    )
-        .into()
-}
 
 
 fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
@@ -161,7 +71,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
             structs.push(quote!(
 
                 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-                pub struct #struct_name(u32);
+                pub struct #struct_name(pub u32);
 
 
 
@@ -380,7 +290,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
             structs.push(
                 quote!(
                      #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
-                    pub struct #struct_name(u32);
+                    pub struct #struct_name(pub u32);
                     impl #struct_name{
                         pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
                             //assert!(data.len() > 0);
@@ -393,19 +303,19 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
         if category == "Literal" {
             let t = match op_kind.get("kind").unwrap().as_str().unwrap() {
                 "LiteralInteger" => {
-                    quote!(u32)
+                    quote!(pub u32)
                 }
                 "LiteralString" => {
-                    quote!(String)
+                    quote!(pub String)
                 }
                 "LiteralContextDependentNumber" => {
-                    quote!(u32)
+                    quote!(pub u32)
                 }
                 "LiteralExtInstInteger" => {
-                    quote!(u32)
+                    quote!(pub u32)
                 }
                 "LiteralSpecConstantOpInteger" => {
-                    quote!(u32)
+                    quote!(pub u32)
                 }
                 _ => panic!("Unknow Literal kind, please update spirv grammar json"),
             };
@@ -486,7 +396,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
             structs.push(
                 quote!(
                     #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
-                    pub struct #struct_name( #( #bases, )* );
+                    pub struct #struct_name( #( pub #bases, )* );
                     impl #struct_name{
                         pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
                             (
@@ -616,10 +526,12 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
             constr.push(
                 quote!(
                     #op_code =>{
-                        //println!("{}, {:?}", #op_str, data);
-                        Instruction::#op_name(
+                        println!("{}, {:?}", #op_str, data);
+                        let instr = Instruction::#op_name(
                             #( #fields_constr, )*
-                        )
+                        );
+                        assert_eq!(data.len(), 0);
+                        instr
                     }
                 )
             );
@@ -675,9 +587,8 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
 }
 
 
-#[proc_macro]
-pub fn grammar(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let input = parse_macro_input!(input as MacroInput);
+//#[proc_macro]
+pub fn grammar(input: MacroInput) {
     let file = File::open(input.path).unwrap();
     let data: Value = from_reader(file).unwrap();
     let instr = &data.get("instructions").unwrap().as_array().unwrap();
@@ -693,12 +604,19 @@ pub fn grammar(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let instr = instructions(instr);
 
 
-    quote!(
+    let res = quote!(
+        #![allow(non_upper_case_globals)]
+        #![allow(non_camel_case_types)]
+        #![allow(non_snake_case)]
+        #![allow(unused)]
+        use serde::{Deserialize, Serialize};
         pub const MAGIC: u64 = #magic;
         pub const VERSION: (u8, u8) = (#major, #minor);
         #enums
         #instr
-    ).into()
+    );
+    let mut file = File::create(input.output).unwrap();
+    write!(&mut file, "{}", res).expect("WTF");
 }
 
 
