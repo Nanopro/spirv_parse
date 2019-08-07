@@ -25,7 +25,7 @@ impl Reflection {
     pub fn get_decoration(&self, id: u32, decoration: Decoration) -> Option<u32>{
         for instr in &self.inner.instructions{
             match instr{
-                Instruction::Decorate(target, decor) if decor == decoration => return Some(target.0),
+
                 _ => ()
             }
         }
@@ -48,8 +48,6 @@ mod tests{
         };
 
         let res = parse_spirv(words).unwrap();
-        let reflect = Reflection::new(res).unwrap();
 
-        assert_eq!(reflect.get_decoration(19, Decoration::Binding), Some())
     }
 }

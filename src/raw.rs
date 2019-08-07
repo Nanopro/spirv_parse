@@ -70,6 +70,14 @@ mod tests{
     }
 
     #[test]
+    fn test_enum_with_par(){
+        let data = vec![6, 2];
+        let x = Decoration::from_raw(&data);
+        assert_eq!(x.0, Decoration::ArrayStride(LiteralInteger(2)));
+        assert_eq!(x.1, &[] as &[u32]);
+    }
+
+    #[test]
     fn test_bit(){
         let data = vec![0b10];
         let x = FPFastMathMode::from_raw(&data);

@@ -218,28 +218,36 @@
       "MemberDecorate": [
         11,
         0,
-        "BuiltIn"
+        {
+          "BuiltIn": "Position"
+        }
       ]
     },
     {
       "MemberDecorate": [
         11,
         1,
-        "BuiltIn"
+        {
+          "BuiltIn": "PointSize"
+        }
       ]
     },
     {
       "MemberDecorate": [
         11,
         2,
-        "BuiltIn"
+        {
+          "BuiltIn": "ClipDistance"
+        }
       ]
     },
     {
       "MemberDecorate": [
         11,
         3,
-        "BuiltIn"
+        {
+          "BuiltIn": "CullDistance"
+        }
       ]
     },
     {
@@ -259,14 +267,18 @@
       "MemberDecorate": [
         17,
         0,
-        "Offset"
+        {
+          "Offset": 0
+        }
       ]
     },
     {
       "MemberDecorate": [
         17,
         0,
-        "MatrixStride"
+        {
+          "MatrixStride": 16
+        }
       ]
     },
     {
@@ -278,13 +290,17 @@
     {
       "Decorate": [
         19,
-        "DescriptorSet"
+        {
+          "DescriptorSet": 0
+        }
       ]
     },
     {
       "Decorate": [
         19,
-        "Binding"
+        {
+          "Binding": 0
+        }
       ]
     },
     {
@@ -298,14 +314,18 @@
       "MemberDecorate": [
         23,
         0,
-        "Offset"
+        {
+          "Offset": 0
+        }
       ]
     },
     {
       "MemberDecorate": [
         23,
         0,
-        "MatrixStride"
+        {
+          "MatrixStride": 16
+        }
       ]
     },
     {
@@ -317,13 +337,17 @@
     {
       "Decorate": [
         25,
-        "DescriptorSet"
+        {
+          "DescriptorSet": 0
+        }
       ]
     },
     {
       "Decorate": [
         25,
-        "Binding"
+        {
+          "Binding": 1
+        }
       ]
     },
     {
@@ -337,14 +361,18 @@
       "MemberDecorate": [
         29,
         0,
-        "Offset"
+        {
+          "Offset": 0
+        }
       ]
     },
     {
       "MemberDecorate": [
         29,
         0,
-        "MatrixStride"
+        {
+          "MatrixStride": 16
+        }
       ]
     },
     {
@@ -356,13 +384,17 @@
     {
       "Decorate": [
         38,
-        "Location"
+        {
+          "Location": 0
+        }
       ]
     },
     {
       "Decorate": [
         40,
-        "SpecId"
+        {
+          "SpecId": 0
+        }
       ]
     },
     {
@@ -374,19 +406,25 @@
     {
       "Decorate": [
         51,
-        "Location"
+        {
+          "Location": 0
+        }
       ]
     },
     {
       "Decorate": [
         56,
-        "Location"
+        {
+          "Location": 1
+        }
       ]
     },
     {
       "Decorate": [
         60,
-        "Location"
+        {
+          "Location": 2
+        }
       ]
     },
     {

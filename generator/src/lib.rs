@@ -121,8 +121,9 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
 
     for op_kind in operand_kinds {
         let category = op_kind.get("category").unwrap().as_str().unwrap();
+        let struct_str = op_kind.get("kind").unwrap().as_str().unwrap();
         let struct_name = Ident::new(
-            op_kind.get("kind").unwrap().as_str().unwrap(),
+            struct_str,
             Span::call_site(),
         );
 
@@ -280,7 +281,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
         }
         if category == "ValueEnum" {
             let mut values = vec![];
-            let mut from_name = vec![];
+
             let mut from_value = vec![];
             let mut occupied = HashSet::new();
             for enumerant in op_kind.get("enumerants").unwrap().as_array().unwrap() {
@@ -293,44 +294,84 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                     }
                 };
                 let value = enumerant.get("value").unwrap().as_u64().unwrap() as u32;
+                let mut fields_constr = vec![];
+                let mut fields = vec![];
+                match enumerant.get("parameters"){
+                    Some(v) => {
+                        let parameters = v.as_array().unwrap();
+                        for par in parameters{
+                            let kind = Ident::new(par.get("kind").unwrap().as_str().unwrap(), Span::call_site());
+                            fields.push(
+                                quote!(
+                                    #kind
+                                )
+                            );
+
+                            fields_constr.push(
+                                quote!(
+                                    {
+                                        let (v, d) = #kind::from_raw(data);
+                                        data = d;
+                                        v
+                                    }
+                                )
+                            );
+
+                        }
+                    },
+                    None => {
+
+                    }
+                }
+
+
+
                 if occupied.insert(value) {
-                    values.push(quote!(
-                        #ident = #value
-                    ));
-                    from_name.push(quote!(
-                        #name => Some(#struct_name::#ident)
-                    ));
-                    from_value.push(quote!(
-                        #value => Some(#struct_name::#ident)
-                    ))
+                    if fields.len() > 0{
+                        values.push(quote!(
+                            #ident(
+                                #( #fields, )*
+                            )
+                        ));
+
+                        from_value.push(quote!(
+                            #value => {
+                                let s = #struct_name::#ident(
+                                    #( #fields_constr, )*
+                                );
+                                (s, data)
+                            }
+                        ))
+                    }else{
+                        values.push(quote!(
+                                #ident
+                        ));
+
+                        from_value.push(quote!(
+                            #value => {
+                                (#struct_name::#ident, data)
+                            }
+                        ))
+                    }
+
                 }
             }
 
             structs.push(quote!(
-                #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+                #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
                 #[repr(u32)]
                 pub enum #struct_name{
                     #( #values, )*
                 }
 
                 impl #struct_name{
-                    pub fn from_name(name: &str) -> Option<Self>{
-                        match name{
-                             #( #from_name, )*
-                             _ => None
-                        }
-                    }
-                    pub fn from_value(value: u32) -> Option<Self>{
+                    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
+                        let value = data[0];
+                        data = &data[1..];
                         match value{
-                             #( #from_value, )*
-                             _ => None
+                            #( #from_value, )*
+                            _ => panic!("Unknown value for Enum: {}", #struct_str),
                         }
-                    }
-
-                    pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
-                        //assert!(data.len() > 0);
-                        let s = Self::from_value(data[0]).expect("Bad value");
-                        (s, &data[1..])
                     }
                 }
             ));
@@ -598,7 +639,6 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
 
 
     quote! {
-
         fn parse_string(data: &[u32]) -> (String, &[u32]) {
             let bytes = data.iter()
                 .flat_map(|&n| {
