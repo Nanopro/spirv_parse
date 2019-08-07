@@ -1,16 +1,15 @@
 use crate::raw::*;
 use serde::Serialize;
 use serde_json::to_string;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize)]
 pub struct Spirv {
     pub version: (u8, u8),
     pub bound: u32,
     pub instructions: Vec<Instruction>,
+    pub decorations: Vec<(u32, Decoration)>,
 }
-
-
-
 
 
 pub fn parse_spirv(i: &[u32]) -> Result<Spirv, ParseError> {
@@ -23,14 +22,14 @@ pub fn parse_spirv(i: &[u32]) -> Result<Spirv, ParseError> {
     }
 
     let version = (((i[1] & 0x00ff0000) >> 16) as u8, ((i[1] & 0x0000ff00) >> 8) as u8);
-    if version.0 != VERSION.0 || version.1 > VERSION.1{
+    if version.0 != VERSION.0 || version.1 > VERSION.1 {
         return Err(ParseError::BadVersion);
     }
 
 
     let instructions = {
         let mut ret = Vec::new();
-        let mut i = &i[5 ..];
+        let mut i = &i[5..];
         while i.len() >= 1 {
             let (instruction, rest) = parse_instruction(i)?;
             ret.push(instruction);
@@ -39,11 +38,19 @@ pub fn parse_spirv(i: &[u32]) -> Result<Spirv, ParseError> {
         ret
     };
 
+    let decorations = instructions.iter().filter_map(|instruction| {
+        match instruction {
+            &Instruction::Decorate(id, decoration) => Some((id.0, decoration)),
+            _ => None
+        }
+    }).collect::<Vec<_>>();
+
     Ok(Spirv {
-           version: version,
-           bound: i[3],
-           instructions: instructions,
-       })
+        version,
+        bound: i[3],
+        instructions,
+        decorations,
+    })
 }
 
 
@@ -55,8 +62,6 @@ pub enum ParseError {
     IncompleteInstruction,
     UnknownConstant(&'static str, u32),
 }
-
-
 
 
 fn parse_instruction(i: &[u32]) -> Result<(Instruction, &[u32]), ParseError> {
@@ -72,8 +77,8 @@ fn parse_instruction(i: &[u32]) -> Result<(Instruction, &[u32]), ParseError> {
         return Err(ParseError::IncompleteInstruction);
     }
 
-    let opcode = decode_instruction(opcode, &i[1 .. word_count])?;
-    Ok((opcode, &i[word_count ..]))
+    let opcode = decode_instruction(opcode, &i[1..word_count])?;
+    Ok((opcode, &i[word_count..]))
 }
 
 fn decode_instruction(opcode: u16, operands: &[u32]) -> Result<Instruction, ParseError> {
@@ -83,44 +88,44 @@ fn decode_instruction(opcode: u16, operands: &[u32]) -> Result<Instruction, Pars
 fn parse_string(data: &[u32]) -> (String, &[u32]) {
     let bytes = data.iter()
         .flat_map(|&n| {
-                      let b1 = (n & 0xff) as u8;
-                      let b2 = ((n >> 8) & 0xff) as u8;
-                      let b3 = ((n >> 16) & 0xff) as u8;
-                      let b4 = ((n >> 24) & 0xff) as u8;
-                      vec![b1, b2, b3, b4].into_iter()
-                  })
+            let b1 = (n & 0xff) as u8;
+            let b2 = ((n >> 8) & 0xff) as u8;
+            let b3 = ((n >> 16) & 0xff) as u8;
+            let b4 = ((n >> 24) & 0xff) as u8;
+            vec![b1, b2, b3, b4].into_iter()
+        })
         .take_while(|&b| b != 0)
         .collect::<Vec<u8>>();
 
     let r = 1 + bytes.len() / 4;
     let s = String::from_utf8(bytes).expect("Shader content is not UTF-8");
 
-    (s, &data[r ..])
+    (s, &data[r..])
 }
 
 pub(crate) struct FoundDecoration {
     pub target_id: u32,
-    pub params: Vec<u32>
+    pub params: Vec<u32>,
 }
 
 impl Spirv {
-    pub fn parse(words: &[u32]) -> Result<Self, ParseError>{
+    pub fn parse(words: &[u32]) -> Result<Self, ParseError> {
         parse_spirv(words)
     }
 }
 
 
-
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
     use std::fs::File;
     use std::io::Write;
+
     #[test]
-    fn test(){
+    fn test() {
         let bytes = include_bytes!("../tests/pos_norm_col.spirv");
-        let words = unsafe{
-            std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len()/4)
+        let words = unsafe {
+            std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4)
         };
 
         let res = parse_spirv(words).unwrap();
@@ -128,9 +133,7 @@ mod tests{
         let s = to_string(&res).unwrap();
 
 
-
         let mut file = File::create("./tests/pos_norm_col.json").unwrap();
         file.write(s.as_bytes());
-
     }
 }
