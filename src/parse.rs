@@ -104,7 +104,9 @@ pub(crate) struct FoundDecoration {
 }
 
 impl Spirv {
-
+    pub fn parse(words: &[u32]) -> Result<Self, ParseError>{
+        parse_spirv(words)
+    }
 }
 
 
