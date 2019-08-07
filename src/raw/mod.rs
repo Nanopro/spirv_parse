@@ -89,9 +89,14 @@ mod tests{
         let data = vec![1, 2];
         let x = Instruction::from_raw(1, &data);
         assert_eq!(x, Instruction::Undef(IdResultType(1), IdResult(2)));
-
     }
 
+    #[test]
+    fn test_instruction_with_parametred_bit_enum(){
+        let data = vec![1,2,3,4,0b1];
+        let x = Instruction::from_raw(88, &data);
+        assert_eq!(x, Instruction::ImageSampleExplicitLod(IdResultType(1), IdResult(2), IdRef(3), IdRef(4), ImageOperands(0b1)));
+    }
 
 }
 

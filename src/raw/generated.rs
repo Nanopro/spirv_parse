@@ -1,1 +1,18208 @@
-# ! [ allow ( non_upper_case_globals ) ] # ! [ allow ( non_camel_case_types ) ] # ! [ allow ( non_snake_case ) ] # ! [ allow ( unused ) ] use serde :: { Deserialize , Serialize } ; pub const MAGIC : u64 = 0x07230203 ; pub const VERSION : ( u8 , u8 ) = ( 1u8 , 4u8 ) ; # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct ImageOperands ( pub u32 ) ; impl ImageOperands { pub const None : Self = ImageOperands ( 0u32 ) ; pub const Bias : Self = ImageOperands ( 1u32 ) ; pub const Lod : Self = ImageOperands ( 2u32 ) ; pub const Grad : Self = ImageOperands ( 4u32 ) ; pub const ConstOffset : Self = ImageOperands ( 8u32 ) ; pub const Offset : Self = ImageOperands ( 16u32 ) ; pub const ConstOffsets : Self = ImageOperands ( 32u32 ) ; pub const Sample : Self = ImageOperands ( 64u32 ) ; pub const MinLod : Self = ImageOperands ( 128u32 ) ; pub const MakeTexelAvailableKHR : Self = ImageOperands ( 256u32 ) ; pub const MakeTexelVisibleKHR : Self = ImageOperands ( 512u32 ) ; pub const NonPrivateTexelKHR : Self = ImageOperands ( 1024u32 ) ; pub const VolatileTexelKHR : Self = ImageOperands ( 2048u32 ) ; pub const SignExtend : Self = ImageOperands ( 4096u32 ) ; pub const ZeroExtend : Self = ImageOperands ( 8192u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "None" => Some ( ImageOperands :: None ) , "Bias" => Some ( ImageOperands :: Bias ) , "Lod" => Some ( ImageOperands :: Lod ) , "Grad" => Some ( ImageOperands :: Grad ) , "ConstOffset" => Some ( ImageOperands :: ConstOffset ) , "Offset" => Some ( ImageOperands :: Offset ) , "ConstOffsets" => Some ( ImageOperands :: ConstOffsets ) , "Sample" => Some ( ImageOperands :: Sample ) , "MinLod" => Some ( ImageOperands :: MinLod ) , "MakeTexelAvailableKHR" => Some ( ImageOperands :: MakeTexelAvailableKHR ) , "MakeTexelVisibleKHR" => Some ( ImageOperands :: MakeTexelVisibleKHR ) , "NonPrivateTexelKHR" => Some ( ImageOperands :: NonPrivateTexelKHR ) , "VolatileTexelKHR" => Some ( ImageOperands :: VolatileTexelKHR ) , "SignExtend" => Some ( ImageOperands :: SignExtend ) , "ZeroExtend" => Some ( ImageOperands :: ZeroExtend ) , _ => None } } } impl Default for ImageOperands { fn default ( ) -> ImageOperands { ImageOperands ( 0 ) } } impl ImageOperands { # [ inline ] pub const fn empty ( ) -> ImageOperands { ImageOperands ( 0 ) } # [ inline ] pub const fn all ( ) -> ImageOperands { ImageOperands ( 8192u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( ImageOperands ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == ImageOperands :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & ImageOperands :: all ( ) == ImageOperands :: all ( ) } # [ inline ] pub fn intersects ( self , other : ImageOperands ) -> bool { self & other != ImageOperands :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : ImageOperands ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for ImageOperands { type Output = ImageOperands ; # [ inline ] fn bitor ( self , rhs : ImageOperands ) -> ImageOperands { ImageOperands ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for ImageOperands { # [ inline ] fn bitor_assign ( & mut self , rhs : ImageOperands ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for ImageOperands { type Output = ImageOperands ; # [ inline ] fn bitand ( self , rhs : ImageOperands ) -> ImageOperands { ImageOperands ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for ImageOperands { # [ inline ] fn bitand_assign ( & mut self , rhs : ImageOperands ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for ImageOperands { type Output = ImageOperands ; # [ inline ] fn bitxor ( self , rhs : ImageOperands ) -> ImageOperands { ImageOperands ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for ImageOperands { # [ inline ] fn bitxor_assign ( & mut self , rhs : ImageOperands ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for ImageOperands { type Output = ImageOperands ; # [ inline ] fn sub ( self , rhs : ImageOperands ) -> ImageOperands { self & ! rhs } } impl :: std :: ops :: SubAssign for ImageOperands { # [ inline ] fn sub_assign ( & mut self , rhs : ImageOperands ) { * self = * self - rhs } } impl :: std :: ops :: Not for ImageOperands { type Output = ImageOperands ; # [ inline ] fn not ( self ) -> ImageOperands { self ^ ImageOperands :: all ( ) } } # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct FPFastMathMode ( pub u32 ) ; impl FPFastMathMode { pub const None : Self = FPFastMathMode ( 0u32 ) ; pub const NotNaN : Self = FPFastMathMode ( 1u32 ) ; pub const NotInf : Self = FPFastMathMode ( 2u32 ) ; pub const NSZ : Self = FPFastMathMode ( 4u32 ) ; pub const AllowRecip : Self = FPFastMathMode ( 8u32 ) ; pub const Fast : Self = FPFastMathMode ( 16u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "None" => Some ( FPFastMathMode :: None ) , "NotNaN" => Some ( FPFastMathMode :: NotNaN ) , "NotInf" => Some ( FPFastMathMode :: NotInf ) , "NSZ" => Some ( FPFastMathMode :: NSZ ) , "AllowRecip" => Some ( FPFastMathMode :: AllowRecip ) , "Fast" => Some ( FPFastMathMode :: Fast ) , _ => None } } } impl Default for FPFastMathMode { fn default ( ) -> FPFastMathMode { FPFastMathMode ( 0 ) } } impl FPFastMathMode { # [ inline ] pub const fn empty ( ) -> FPFastMathMode { FPFastMathMode ( 0 ) } # [ inline ] pub const fn all ( ) -> FPFastMathMode { FPFastMathMode ( 16u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( FPFastMathMode ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == FPFastMathMode :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & FPFastMathMode :: all ( ) == FPFastMathMode :: all ( ) } # [ inline ] pub fn intersects ( self , other : FPFastMathMode ) -> bool { self & other != FPFastMathMode :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : FPFastMathMode ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for FPFastMathMode { type Output = FPFastMathMode ; # [ inline ] fn bitor ( self , rhs : FPFastMathMode ) -> FPFastMathMode { FPFastMathMode ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for FPFastMathMode { # [ inline ] fn bitor_assign ( & mut self , rhs : FPFastMathMode ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for FPFastMathMode { type Output = FPFastMathMode ; # [ inline ] fn bitand ( self , rhs : FPFastMathMode ) -> FPFastMathMode { FPFastMathMode ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for FPFastMathMode { # [ inline ] fn bitand_assign ( & mut self , rhs : FPFastMathMode ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for FPFastMathMode { type Output = FPFastMathMode ; # [ inline ] fn bitxor ( self , rhs : FPFastMathMode ) -> FPFastMathMode { FPFastMathMode ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for FPFastMathMode { # [ inline ] fn bitxor_assign ( & mut self , rhs : FPFastMathMode ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for FPFastMathMode { type Output = FPFastMathMode ; # [ inline ] fn sub ( self , rhs : FPFastMathMode ) -> FPFastMathMode { self & ! rhs } } impl :: std :: ops :: SubAssign for FPFastMathMode { # [ inline ] fn sub_assign ( & mut self , rhs : FPFastMathMode ) { * self = * self - rhs } } impl :: std :: ops :: Not for FPFastMathMode { type Output = FPFastMathMode ; # [ inline ] fn not ( self ) -> FPFastMathMode { self ^ FPFastMathMode :: all ( ) } } # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct SelectionControl ( pub u32 ) ; impl SelectionControl { pub const None : Self = SelectionControl ( 0u32 ) ; pub const Flatten : Self = SelectionControl ( 1u32 ) ; pub const DontFlatten : Self = SelectionControl ( 2u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "None" => Some ( SelectionControl :: None ) , "Flatten" => Some ( SelectionControl :: Flatten ) , "DontFlatten" => Some ( SelectionControl :: DontFlatten ) , _ => None } } } impl Default for SelectionControl { fn default ( ) -> SelectionControl { SelectionControl ( 0 ) } } impl SelectionControl { # [ inline ] pub const fn empty ( ) -> SelectionControl { SelectionControl ( 0 ) } # [ inline ] pub const fn all ( ) -> SelectionControl { SelectionControl ( 2u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( SelectionControl ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == SelectionControl :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & SelectionControl :: all ( ) == SelectionControl :: all ( ) } # [ inline ] pub fn intersects ( self , other : SelectionControl ) -> bool { self & other != SelectionControl :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : SelectionControl ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for SelectionControl { type Output = SelectionControl ; # [ inline ] fn bitor ( self , rhs : SelectionControl ) -> SelectionControl { SelectionControl ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for SelectionControl { # [ inline ] fn bitor_assign ( & mut self , rhs : SelectionControl ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for SelectionControl { type Output = SelectionControl ; # [ inline ] fn bitand ( self , rhs : SelectionControl ) -> SelectionControl { SelectionControl ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for SelectionControl { # [ inline ] fn bitand_assign ( & mut self , rhs : SelectionControl ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for SelectionControl { type Output = SelectionControl ; # [ inline ] fn bitxor ( self , rhs : SelectionControl ) -> SelectionControl { SelectionControl ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for SelectionControl { # [ inline ] fn bitxor_assign ( & mut self , rhs : SelectionControl ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for SelectionControl { type Output = SelectionControl ; # [ inline ] fn sub ( self , rhs : SelectionControl ) -> SelectionControl { self & ! rhs } } impl :: std :: ops :: SubAssign for SelectionControl { # [ inline ] fn sub_assign ( & mut self , rhs : SelectionControl ) { * self = * self - rhs } } impl :: std :: ops :: Not for SelectionControl { type Output = SelectionControl ; # [ inline ] fn not ( self ) -> SelectionControl { self ^ SelectionControl :: all ( ) } } # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct LoopControl ( pub u32 ) ; impl LoopControl { pub const None : Self = LoopControl ( 0u32 ) ; pub const Unroll : Self = LoopControl ( 1u32 ) ; pub const DontUnroll : Self = LoopControl ( 2u32 ) ; pub const DependencyInfinite : Self = LoopControl ( 4u32 ) ; pub const DependencyLength : Self = LoopControl ( 8u32 ) ; pub const MinIterations : Self = LoopControl ( 16u32 ) ; pub const MaxIterations : Self = LoopControl ( 32u32 ) ; pub const IterationMultiple : Self = LoopControl ( 64u32 ) ; pub const PeelCount : Self = LoopControl ( 128u32 ) ; pub const PartialCount : Self = LoopControl ( 256u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "None" => Some ( LoopControl :: None ) , "Unroll" => Some ( LoopControl :: Unroll ) , "DontUnroll" => Some ( LoopControl :: DontUnroll ) , "DependencyInfinite" => Some ( LoopControl :: DependencyInfinite ) , "DependencyLength" => Some ( LoopControl :: DependencyLength ) , "MinIterations" => Some ( LoopControl :: MinIterations ) , "MaxIterations" => Some ( LoopControl :: MaxIterations ) , "IterationMultiple" => Some ( LoopControl :: IterationMultiple ) , "PeelCount" => Some ( LoopControl :: PeelCount ) , "PartialCount" => Some ( LoopControl :: PartialCount ) , _ => None } } } impl Default for LoopControl { fn default ( ) -> LoopControl { LoopControl ( 0 ) } } impl LoopControl { # [ inline ] pub const fn empty ( ) -> LoopControl { LoopControl ( 0 ) } # [ inline ] pub const fn all ( ) -> LoopControl { LoopControl ( 256u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( LoopControl ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == LoopControl :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & LoopControl :: all ( ) == LoopControl :: all ( ) } # [ inline ] pub fn intersects ( self , other : LoopControl ) -> bool { self & other != LoopControl :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : LoopControl ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for LoopControl { type Output = LoopControl ; # [ inline ] fn bitor ( self , rhs : LoopControl ) -> LoopControl { LoopControl ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for LoopControl { # [ inline ] fn bitor_assign ( & mut self , rhs : LoopControl ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for LoopControl { type Output = LoopControl ; # [ inline ] fn bitand ( self , rhs : LoopControl ) -> LoopControl { LoopControl ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for LoopControl { # [ inline ] fn bitand_assign ( & mut self , rhs : LoopControl ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for LoopControl { type Output = LoopControl ; # [ inline ] fn bitxor ( self , rhs : LoopControl ) -> LoopControl { LoopControl ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for LoopControl { # [ inline ] fn bitxor_assign ( & mut self , rhs : LoopControl ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for LoopControl { type Output = LoopControl ; # [ inline ] fn sub ( self , rhs : LoopControl ) -> LoopControl { self & ! rhs } } impl :: std :: ops :: SubAssign for LoopControl { # [ inline ] fn sub_assign ( & mut self , rhs : LoopControl ) { * self = * self - rhs } } impl :: std :: ops :: Not for LoopControl { type Output = LoopControl ; # [ inline ] fn not ( self ) -> LoopControl { self ^ LoopControl :: all ( ) } } # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct FunctionControl ( pub u32 ) ; impl FunctionControl { pub const None : Self = FunctionControl ( 0u32 ) ; pub const Inline : Self = FunctionControl ( 1u32 ) ; pub const DontInline : Self = FunctionControl ( 2u32 ) ; pub const Pure : Self = FunctionControl ( 4u32 ) ; pub const Const : Self = FunctionControl ( 8u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "None" => Some ( FunctionControl :: None ) , "Inline" => Some ( FunctionControl :: Inline ) , "DontInline" => Some ( FunctionControl :: DontInline ) , "Pure" => Some ( FunctionControl :: Pure ) , "Const" => Some ( FunctionControl :: Const ) , _ => None } } } impl Default for FunctionControl { fn default ( ) -> FunctionControl { FunctionControl ( 0 ) } } impl FunctionControl { # [ inline ] pub const fn empty ( ) -> FunctionControl { FunctionControl ( 0 ) } # [ inline ] pub const fn all ( ) -> FunctionControl { FunctionControl ( 8u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( FunctionControl ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == FunctionControl :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & FunctionControl :: all ( ) == FunctionControl :: all ( ) } # [ inline ] pub fn intersects ( self , other : FunctionControl ) -> bool { self & other != FunctionControl :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : FunctionControl ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for FunctionControl { type Output = FunctionControl ; # [ inline ] fn bitor ( self , rhs : FunctionControl ) -> FunctionControl { FunctionControl ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for FunctionControl { # [ inline ] fn bitor_assign ( & mut self , rhs : FunctionControl ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for FunctionControl { type Output = FunctionControl ; # [ inline ] fn bitand ( self , rhs : FunctionControl ) -> FunctionControl { FunctionControl ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for FunctionControl { # [ inline ] fn bitand_assign ( & mut self , rhs : FunctionControl ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for FunctionControl { type Output = FunctionControl ; # [ inline ] fn bitxor ( self , rhs : FunctionControl ) -> FunctionControl { FunctionControl ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for FunctionControl { # [ inline ] fn bitxor_assign ( & mut self , rhs : FunctionControl ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for FunctionControl { type Output = FunctionControl ; # [ inline ] fn sub ( self , rhs : FunctionControl ) -> FunctionControl { self & ! rhs } } impl :: std :: ops :: SubAssign for FunctionControl { # [ inline ] fn sub_assign ( & mut self , rhs : FunctionControl ) { * self = * self - rhs } } impl :: std :: ops :: Not for FunctionControl { type Output = FunctionControl ; # [ inline ] fn not ( self ) -> FunctionControl { self ^ FunctionControl :: all ( ) } } # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct MemorySemantics ( pub u32 ) ; impl MemorySemantics { pub const Relaxed : Self = MemorySemantics ( 0u32 ) ; pub const None : Self = MemorySemantics ( 0u32 ) ; pub const Acquire : Self = MemorySemantics ( 2u32 ) ; pub const Release : Self = MemorySemantics ( 4u32 ) ; pub const AcquireRelease : Self = MemorySemantics ( 8u32 ) ; pub const SequentiallyConsistent : Self = MemorySemantics ( 16u32 ) ; pub const UniformMemory : Self = MemorySemantics ( 64u32 ) ; pub const SubgroupMemory : Self = MemorySemantics ( 128u32 ) ; pub const WorkgroupMemory : Self = MemorySemantics ( 256u32 ) ; pub const CrossWorkgroupMemory : Self = MemorySemantics ( 512u32 ) ; pub const AtomicCounterMemory : Self = MemorySemantics ( 1024u32 ) ; pub const ImageMemory : Self = MemorySemantics ( 2048u32 ) ; pub const OutputMemoryKHR : Self = MemorySemantics ( 4096u32 ) ; pub const MakeAvailableKHR : Self = MemorySemantics ( 8192u32 ) ; pub const MakeVisibleKHR : Self = MemorySemantics ( 16384u32 ) ; pub const Volatile : Self = MemorySemantics ( 32768u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "Relaxed" => Some ( MemorySemantics :: Relaxed ) , "None" => Some ( MemorySemantics :: None ) , "Acquire" => Some ( MemorySemantics :: Acquire ) , "Release" => Some ( MemorySemantics :: Release ) , "AcquireRelease" => Some ( MemorySemantics :: AcquireRelease ) , "SequentiallyConsistent" => Some ( MemorySemantics :: SequentiallyConsistent ) , "UniformMemory" => Some ( MemorySemantics :: UniformMemory ) , "SubgroupMemory" => Some ( MemorySemantics :: SubgroupMemory ) , "WorkgroupMemory" => Some ( MemorySemantics :: WorkgroupMemory ) , "CrossWorkgroupMemory" => Some ( MemorySemantics :: CrossWorkgroupMemory ) , "AtomicCounterMemory" => Some ( MemorySemantics :: AtomicCounterMemory ) , "ImageMemory" => Some ( MemorySemantics :: ImageMemory ) , "OutputMemoryKHR" => Some ( MemorySemantics :: OutputMemoryKHR ) , "MakeAvailableKHR" => Some ( MemorySemantics :: MakeAvailableKHR ) , "MakeVisibleKHR" => Some ( MemorySemantics :: MakeVisibleKHR ) , "Volatile" => Some ( MemorySemantics :: Volatile ) , _ => None } } } impl Default for MemorySemantics { fn default ( ) -> MemorySemantics { MemorySemantics ( 0 ) } } impl MemorySemantics { # [ inline ] pub const fn empty ( ) -> MemorySemantics { MemorySemantics ( 0 ) } # [ inline ] pub const fn all ( ) -> MemorySemantics { MemorySemantics ( 32768u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( MemorySemantics ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == MemorySemantics :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & MemorySemantics :: all ( ) == MemorySemantics :: all ( ) } # [ inline ] pub fn intersects ( self , other : MemorySemantics ) -> bool { self & other != MemorySemantics :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : MemorySemantics ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for MemorySemantics { type Output = MemorySemantics ; # [ inline ] fn bitor ( self , rhs : MemorySemantics ) -> MemorySemantics { MemorySemantics ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for MemorySemantics { # [ inline ] fn bitor_assign ( & mut self , rhs : MemorySemantics ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for MemorySemantics { type Output = MemorySemantics ; # [ inline ] fn bitand ( self , rhs : MemorySemantics ) -> MemorySemantics { MemorySemantics ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for MemorySemantics { # [ inline ] fn bitand_assign ( & mut self , rhs : MemorySemantics ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for MemorySemantics { type Output = MemorySemantics ; # [ inline ] fn bitxor ( self , rhs : MemorySemantics ) -> MemorySemantics { MemorySemantics ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for MemorySemantics { # [ inline ] fn bitxor_assign ( & mut self , rhs : MemorySemantics ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for MemorySemantics { type Output = MemorySemantics ; # [ inline ] fn sub ( self , rhs : MemorySemantics ) -> MemorySemantics { self & ! rhs } } impl :: std :: ops :: SubAssign for MemorySemantics { # [ inline ] fn sub_assign ( & mut self , rhs : MemorySemantics ) { * self = * self - rhs } } impl :: std :: ops :: Not for MemorySemantics { type Output = MemorySemantics ; # [ inline ] fn not ( self ) -> MemorySemantics { self ^ MemorySemantics :: all ( ) } } # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct MemoryAccess ( pub u32 ) ; impl MemoryAccess { pub const None : Self = MemoryAccess ( 0u32 ) ; pub const Volatile : Self = MemoryAccess ( 1u32 ) ; pub const Aligned : Self = MemoryAccess ( 2u32 ) ; pub const Nontemporal : Self = MemoryAccess ( 4u32 ) ; pub const MakePointerAvailableKHR : Self = MemoryAccess ( 8u32 ) ; pub const MakePointerVisibleKHR : Self = MemoryAccess ( 16u32 ) ; pub const NonPrivatePointerKHR : Self = MemoryAccess ( 32u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "None" => Some ( MemoryAccess :: None ) , "Volatile" => Some ( MemoryAccess :: Volatile ) , "Aligned" => Some ( MemoryAccess :: Aligned ) , "Nontemporal" => Some ( MemoryAccess :: Nontemporal ) , "MakePointerAvailableKHR" => Some ( MemoryAccess :: MakePointerAvailableKHR ) , "MakePointerVisibleKHR" => Some ( MemoryAccess :: MakePointerVisibleKHR ) , "NonPrivatePointerKHR" => Some ( MemoryAccess :: NonPrivatePointerKHR ) , _ => None } } } impl Default for MemoryAccess { fn default ( ) -> MemoryAccess { MemoryAccess ( 0 ) } } impl MemoryAccess { # [ inline ] pub const fn empty ( ) -> MemoryAccess { MemoryAccess ( 0 ) } # [ inline ] pub const fn all ( ) -> MemoryAccess { MemoryAccess ( 32u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( MemoryAccess ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == MemoryAccess :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & MemoryAccess :: all ( ) == MemoryAccess :: all ( ) } # [ inline ] pub fn intersects ( self , other : MemoryAccess ) -> bool { self & other != MemoryAccess :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : MemoryAccess ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for MemoryAccess { type Output = MemoryAccess ; # [ inline ] fn bitor ( self , rhs : MemoryAccess ) -> MemoryAccess { MemoryAccess ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for MemoryAccess { # [ inline ] fn bitor_assign ( & mut self , rhs : MemoryAccess ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for MemoryAccess { type Output = MemoryAccess ; # [ inline ] fn bitand ( self , rhs : MemoryAccess ) -> MemoryAccess { MemoryAccess ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for MemoryAccess { # [ inline ] fn bitand_assign ( & mut self , rhs : MemoryAccess ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for MemoryAccess { type Output = MemoryAccess ; # [ inline ] fn bitxor ( self , rhs : MemoryAccess ) -> MemoryAccess { MemoryAccess ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for MemoryAccess { # [ inline ] fn bitxor_assign ( & mut self , rhs : MemoryAccess ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for MemoryAccess { type Output = MemoryAccess ; # [ inline ] fn sub ( self , rhs : MemoryAccess ) -> MemoryAccess { self & ! rhs } } impl :: std :: ops :: SubAssign for MemoryAccess { # [ inline ] fn sub_assign ( & mut self , rhs : MemoryAccess ) { * self = * self - rhs } } impl :: std :: ops :: Not for MemoryAccess { type Output = MemoryAccess ; # [ inline ] fn not ( self ) -> MemoryAccess { self ^ MemoryAccess :: all ( ) } } # [ derive ( Debug , Clone , Copy , PartialEq , Eq , PartialOrd , Ord , Hash , Serialize , Deserialize ) ] pub struct KernelProfilingInfo ( pub u32 ) ; impl KernelProfilingInfo { pub const None : Self = KernelProfilingInfo ( 0u32 ) ; pub const CmdExecTime : Self = KernelProfilingInfo ( 1u32 ) ; pub fn from_name ( name : & str ) -> Option < Self > { match name { "None" => Some ( KernelProfilingInfo :: None ) , "CmdExecTime" => Some ( KernelProfilingInfo :: CmdExecTime ) , _ => None } } } impl Default for KernelProfilingInfo { fn default ( ) -> KernelProfilingInfo { KernelProfilingInfo ( 0 ) } } impl KernelProfilingInfo { # [ inline ] pub const fn empty ( ) -> KernelProfilingInfo { KernelProfilingInfo ( 0 ) } # [ inline ] pub const fn all ( ) -> KernelProfilingInfo { KernelProfilingInfo ( 1u32 as u32 ) } # [ inline ] pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( KernelProfilingInfo ( data [ 0 ] ) , & data [ 1 .. ] ) } # [ inline ] pub const fn as_raw ( self ) -> u32 { self . 0 } # [ inline ] pub fn is_empty ( self ) -> bool { self == KernelProfilingInfo :: empty ( ) } # [ inline ] pub fn is_all ( self ) -> bool { self & KernelProfilingInfo :: all ( ) == KernelProfilingInfo :: all ( ) } # [ inline ] pub fn intersects ( self , other : KernelProfilingInfo ) -> bool { self & other != KernelProfilingInfo :: empty ( ) } # [ doc = r" Returns whether `other` is a subset of `self`" ] # [ inline ] pub fn contains ( self , other : KernelProfilingInfo ) -> bool { self & other == other } } impl :: std :: ops :: BitOr for KernelProfilingInfo { type Output = KernelProfilingInfo ; # [ inline ] fn bitor ( self , rhs : KernelProfilingInfo ) -> KernelProfilingInfo { KernelProfilingInfo ( self . 0 | rhs . 0 ) } } impl :: std :: ops :: BitOrAssign for KernelProfilingInfo { # [ inline ] fn bitor_assign ( & mut self , rhs : KernelProfilingInfo ) { * self = * self | rhs } } impl :: std :: ops :: BitAnd for KernelProfilingInfo { type Output = KernelProfilingInfo ; # [ inline ] fn bitand ( self , rhs : KernelProfilingInfo ) -> KernelProfilingInfo { KernelProfilingInfo ( self . 0 & rhs . 0 ) } } impl :: std :: ops :: BitAndAssign for KernelProfilingInfo { # [ inline ] fn bitand_assign ( & mut self , rhs : KernelProfilingInfo ) { * self = * self & rhs } } impl :: std :: ops :: BitXor for KernelProfilingInfo { type Output = KernelProfilingInfo ; # [ inline ] fn bitxor ( self , rhs : KernelProfilingInfo ) -> KernelProfilingInfo { KernelProfilingInfo ( self . 0 ^ rhs . 0 ) } } impl :: std :: ops :: BitXorAssign for KernelProfilingInfo { # [ inline ] fn bitxor_assign ( & mut self , rhs : KernelProfilingInfo ) { * self = * self ^ rhs } } impl :: std :: ops :: Sub for KernelProfilingInfo { type Output = KernelProfilingInfo ; # [ inline ] fn sub ( self , rhs : KernelProfilingInfo ) -> KernelProfilingInfo { self & ! rhs } } impl :: std :: ops :: SubAssign for KernelProfilingInfo { # [ inline ] fn sub_assign ( & mut self , rhs : KernelProfilingInfo ) { * self = * self - rhs } } impl :: std :: ops :: Not for KernelProfilingInfo { type Output = KernelProfilingInfo ; # [ inline ] fn not ( self ) -> KernelProfilingInfo { self ^ KernelProfilingInfo :: all ( ) } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum SourceLanguage { Unknown , ESSL , GLSL , OpenCL_C , OpenCL_CPP , HLSL , } impl SourceLanguage { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( SourceLanguage :: Unknown , data ) } , 1u32 => { ( SourceLanguage :: ESSL , data ) } , 2u32 => { ( SourceLanguage :: GLSL , data ) } , 3u32 => { ( SourceLanguage :: OpenCL_C , data ) } , 4u32 => { ( SourceLanguage :: OpenCL_CPP , data ) } , 5u32 => { ( SourceLanguage :: HLSL , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "SourceLanguage" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum ExecutionModel { Vertex , TessellationControl , TessellationEvaluation , Geometry , Fragment , GLCompute , Kernel , TaskNV , MeshNV , RayGenerationNV , IntersectionNV , AnyHitNV , ClosestHitNV , MissNV , CallableNV , } impl ExecutionModel { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( ExecutionModel :: Vertex , data ) } , 1u32 => { ( ExecutionModel :: TessellationControl , data ) } , 2u32 => { ( ExecutionModel :: TessellationEvaluation , data ) } , 3u32 => { ( ExecutionModel :: Geometry , data ) } , 4u32 => { ( ExecutionModel :: Fragment , data ) } , 5u32 => { ( ExecutionModel :: GLCompute , data ) } , 6u32 => { ( ExecutionModel :: Kernel , data ) } , 5267u32 => { ( ExecutionModel :: TaskNV , data ) } , 5268u32 => { ( ExecutionModel :: MeshNV , data ) } , 5313u32 => { ( ExecutionModel :: RayGenerationNV , data ) } , 5314u32 => { ( ExecutionModel :: IntersectionNV , data ) } , 5315u32 => { ( ExecutionModel :: AnyHitNV , data ) } , 5316u32 => { ( ExecutionModel :: ClosestHitNV , data ) } , 5317u32 => { ( ExecutionModel :: MissNV , data ) } , 5318u32 => { ( ExecutionModel :: CallableNV , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "ExecutionModel" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum AddressingModel { Logical , Physical32 , Physical64 , PhysicalStorageBuffer64EXT , } impl AddressingModel { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( AddressingModel :: Logical , data ) } , 1u32 => { ( AddressingModel :: Physical32 , data ) } , 2u32 => { ( AddressingModel :: Physical64 , data ) } , 5348u32 => { ( AddressingModel :: PhysicalStorageBuffer64EXT , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "AddressingModel" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum MemoryModel { Simple , GLSL450 , OpenCL , VulkanKHR , } impl MemoryModel { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( MemoryModel :: Simple , data ) } , 1u32 => { ( MemoryModel :: GLSL450 , data ) } , 2u32 => { ( MemoryModel :: OpenCL , data ) } , 3u32 => { ( MemoryModel :: VulkanKHR , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "MemoryModel" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum ExecutionMode { Invocations ( LiteralInteger , ) , SpacingEqual , SpacingFractionalEven , SpacingFractionalOdd , VertexOrderCw , VertexOrderCcw , PixelCenterInteger , OriginUpperLeft , OriginLowerLeft , EarlyFragmentTests , PointMode , Xfb , DepthReplacing , DepthGreater , DepthLess , DepthUnchanged , LocalSize ( LiteralInteger , LiteralInteger , LiteralInteger , ) , LocalSizeHint ( LiteralInteger , LiteralInteger , LiteralInteger , ) , InputPoints , InputLines , InputLinesAdjacency , Triangles , InputTrianglesAdjacency , Quads , Isolines , OutputVertices ( LiteralInteger , ) , OutputPoints , OutputLineStrip , OutputTriangleStrip , VecTypeHint ( LiteralInteger , ) , ContractionOff , Initializer , Finalizer , SubgroupSize ( LiteralInteger , ) , SubgroupsPerWorkgroup ( LiteralInteger , ) , SubgroupsPerWorkgroupId ( IdRef , ) , LocalSizeId ( IdRef , IdRef , IdRef , ) , LocalSizeHintId ( IdRef , ) , PostDepthCoverage , DenormPreserve ( LiteralInteger , ) , DenormFlushToZero ( LiteralInteger , ) , SignedZeroInfNanPreserve ( LiteralInteger , ) , RoundingModeRTE ( LiteralInteger , ) , RoundingModeRTZ ( LiteralInteger , ) , StencilRefReplacingEXT , OutputLinesNV , OutputPrimitivesNV ( LiteralInteger , ) , DerivativeGroupQuadsNV , DerivativeGroupLinearNV , OutputTrianglesNV , PixelInterlockOrderedEXT , PixelInterlockUnorderedEXT , SampleInterlockOrderedEXT , SampleInterlockUnorderedEXT , ShadingRateInterlockOrderedEXT , ShadingRateInterlockUnorderedEXT , } impl ExecutionMode { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { let s = ExecutionMode :: Invocations ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 1u32 => { ( ExecutionMode :: SpacingEqual , data ) } , 2u32 => { ( ExecutionMode :: SpacingFractionalEven , data ) } , 3u32 => { ( ExecutionMode :: SpacingFractionalOdd , data ) } , 4u32 => { ( ExecutionMode :: VertexOrderCw , data ) } , 5u32 => { ( ExecutionMode :: VertexOrderCcw , data ) } , 6u32 => { ( ExecutionMode :: PixelCenterInteger , data ) } , 7u32 => { ( ExecutionMode :: OriginUpperLeft , data ) } , 8u32 => { ( ExecutionMode :: OriginLowerLeft , data ) } , 9u32 => { ( ExecutionMode :: EarlyFragmentTests , data ) } , 10u32 => { ( ExecutionMode :: PointMode , data ) } , 11u32 => { ( ExecutionMode :: Xfb , data ) } , 12u32 => { ( ExecutionMode :: DepthReplacing , data ) } , 14u32 => { ( ExecutionMode :: DepthGreater , data ) } , 15u32 => { ( ExecutionMode :: DepthLess , data ) } , 16u32 => { ( ExecutionMode :: DepthUnchanged , data ) } , 17u32 => { let s = ExecutionMode :: LocalSize ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 18u32 => { let s = ExecutionMode :: LocalSizeHint ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 19u32 => { ( ExecutionMode :: InputPoints , data ) } , 20u32 => { ( ExecutionMode :: InputLines , data ) } , 21u32 => { ( ExecutionMode :: InputLinesAdjacency , data ) } , 22u32 => { ( ExecutionMode :: Triangles , data ) } , 23u32 => { ( ExecutionMode :: InputTrianglesAdjacency , data ) } , 24u32 => { ( ExecutionMode :: Quads , data ) } , 25u32 => { ( ExecutionMode :: Isolines , data ) } , 26u32 => { let s = ExecutionMode :: OutputVertices ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 27u32 => { ( ExecutionMode :: OutputPoints , data ) } , 28u32 => { ( ExecutionMode :: OutputLineStrip , data ) } , 29u32 => { ( ExecutionMode :: OutputTriangleStrip , data ) } , 30u32 => { let s = ExecutionMode :: VecTypeHint ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 31u32 => { ( ExecutionMode :: ContractionOff , data ) } , 33u32 => { ( ExecutionMode :: Initializer , data ) } , 34u32 => { ( ExecutionMode :: Finalizer , data ) } , 35u32 => { let s = ExecutionMode :: SubgroupSize ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 36u32 => { let s = ExecutionMode :: SubgroupsPerWorkgroup ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 37u32 => { let s = ExecutionMode :: SubgroupsPerWorkgroupId ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 38u32 => { let s = ExecutionMode :: LocalSizeId ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 39u32 => { let s = ExecutionMode :: LocalSizeHintId ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 4446u32 => { ( ExecutionMode :: PostDepthCoverage , data ) } , 4459u32 => { let s = ExecutionMode :: DenormPreserve ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 4460u32 => { let s = ExecutionMode :: DenormFlushToZero ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 4461u32 => { let s = ExecutionMode :: SignedZeroInfNanPreserve ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 4462u32 => { let s = ExecutionMode :: RoundingModeRTE ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 4463u32 => { let s = ExecutionMode :: RoundingModeRTZ ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 5027u32 => { ( ExecutionMode :: StencilRefReplacingEXT , data ) } , 5269u32 => { ( ExecutionMode :: OutputLinesNV , data ) } , 5270u32 => { let s = ExecutionMode :: OutputPrimitivesNV ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 5289u32 => { ( ExecutionMode :: DerivativeGroupQuadsNV , data ) } , 5290u32 => { ( ExecutionMode :: DerivativeGroupLinearNV , data ) } , 5298u32 => { ( ExecutionMode :: OutputTrianglesNV , data ) } , 5366u32 => { ( ExecutionMode :: PixelInterlockOrderedEXT , data ) } , 5367u32 => { ( ExecutionMode :: PixelInterlockUnorderedEXT , data ) } , 5368u32 => { ( ExecutionMode :: SampleInterlockOrderedEXT , data ) } , 5369u32 => { ( ExecutionMode :: SampleInterlockUnorderedEXT , data ) } , 5370u32 => { ( ExecutionMode :: ShadingRateInterlockOrderedEXT , data ) } , 5371u32 => { ( ExecutionMode :: ShadingRateInterlockUnorderedEXT , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "ExecutionMode" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum StorageClass { UniformConstant , Input , Uniform , Output , Workgroup , CrossWorkgroup , Private , Function , Generic , PushConstant , AtomicCounter , Image , StorageBuffer , CallableDataNV , IncomingCallableDataNV , RayPayloadNV , HitAttributeNV , IncomingRayPayloadNV , ShaderRecordBufferNV , PhysicalStorageBufferEXT , } impl StorageClass { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( StorageClass :: UniformConstant , data ) } , 1u32 => { ( StorageClass :: Input , data ) } , 2u32 => { ( StorageClass :: Uniform , data ) } , 3u32 => { ( StorageClass :: Output , data ) } , 4u32 => { ( StorageClass :: Workgroup , data ) } , 5u32 => { ( StorageClass :: CrossWorkgroup , data ) } , 6u32 => { ( StorageClass :: Private , data ) } , 7u32 => { ( StorageClass :: Function , data ) } , 8u32 => { ( StorageClass :: Generic , data ) } , 9u32 => { ( StorageClass :: PushConstant , data ) } , 10u32 => { ( StorageClass :: AtomicCounter , data ) } , 11u32 => { ( StorageClass :: Image , data ) } , 12u32 => { ( StorageClass :: StorageBuffer , data ) } , 5328u32 => { ( StorageClass :: CallableDataNV , data ) } , 5329u32 => { ( StorageClass :: IncomingCallableDataNV , data ) } , 5338u32 => { ( StorageClass :: RayPayloadNV , data ) } , 5339u32 => { ( StorageClass :: HitAttributeNV , data ) } , 5342u32 => { ( StorageClass :: IncomingRayPayloadNV , data ) } , 5343u32 => { ( StorageClass :: ShaderRecordBufferNV , data ) } , 5349u32 => { ( StorageClass :: PhysicalStorageBufferEXT , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "StorageClass" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum Dim { _1D , _2D , _3D , Cube , Rect , Buffer , SubpassData , } impl Dim { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( Dim :: _1D , data ) } , 1u32 => { ( Dim :: _2D , data ) } , 2u32 => { ( Dim :: _3D , data ) } , 3u32 => { ( Dim :: Cube , data ) } , 4u32 => { ( Dim :: Rect , data ) } , 5u32 => { ( Dim :: Buffer , data ) } , 6u32 => { ( Dim :: SubpassData , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "Dim" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum SamplerAddressingMode { None , ClampToEdge , Clamp , Repeat , RepeatMirrored , } impl SamplerAddressingMode { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( SamplerAddressingMode :: None , data ) } , 1u32 => { ( SamplerAddressingMode :: ClampToEdge , data ) } , 2u32 => { ( SamplerAddressingMode :: Clamp , data ) } , 3u32 => { ( SamplerAddressingMode :: Repeat , data ) } , 4u32 => { ( SamplerAddressingMode :: RepeatMirrored , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "SamplerAddressingMode" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum SamplerFilterMode { Nearest , Linear , } impl SamplerFilterMode { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( SamplerFilterMode :: Nearest , data ) } , 1u32 => { ( SamplerFilterMode :: Linear , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "SamplerFilterMode" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum ImageFormat { Unknown , Rgba32f , Rgba16f , R32f , Rgba8 , Rgba8Snorm , Rg32f , Rg16f , R11fG11fB10f , R16f , Rgba16 , Rgb10A2 , Rg16 , Rg8 , R16 , R8 , Rgba16Snorm , Rg16Snorm , Rg8Snorm , R16Snorm , R8Snorm , Rgba32i , Rgba16i , Rgba8i , R32i , Rg32i , Rg16i , Rg8i , R16i , R8i , Rgba32ui , Rgba16ui , Rgba8ui , R32ui , Rgb10a2ui , Rg32ui , Rg16ui , Rg8ui , R16ui , R8ui , } impl ImageFormat { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( ImageFormat :: Unknown , data ) } , 1u32 => { ( ImageFormat :: Rgba32f , data ) } , 2u32 => { ( ImageFormat :: Rgba16f , data ) } , 3u32 => { ( ImageFormat :: R32f , data ) } , 4u32 => { ( ImageFormat :: Rgba8 , data ) } , 5u32 => { ( ImageFormat :: Rgba8Snorm , data ) } , 6u32 => { ( ImageFormat :: Rg32f , data ) } , 7u32 => { ( ImageFormat :: Rg16f , data ) } , 8u32 => { ( ImageFormat :: R11fG11fB10f , data ) } , 9u32 => { ( ImageFormat :: R16f , data ) } , 10u32 => { ( ImageFormat :: Rgba16 , data ) } , 11u32 => { ( ImageFormat :: Rgb10A2 , data ) } , 12u32 => { ( ImageFormat :: Rg16 , data ) } , 13u32 => { ( ImageFormat :: Rg8 , data ) } , 14u32 => { ( ImageFormat :: R16 , data ) } , 15u32 => { ( ImageFormat :: R8 , data ) } , 16u32 => { ( ImageFormat :: Rgba16Snorm , data ) } , 17u32 => { ( ImageFormat :: Rg16Snorm , data ) } , 18u32 => { ( ImageFormat :: Rg8Snorm , data ) } , 19u32 => { ( ImageFormat :: R16Snorm , data ) } , 20u32 => { ( ImageFormat :: R8Snorm , data ) } , 21u32 => { ( ImageFormat :: Rgba32i , data ) } , 22u32 => { ( ImageFormat :: Rgba16i , data ) } , 23u32 => { ( ImageFormat :: Rgba8i , data ) } , 24u32 => { ( ImageFormat :: R32i , data ) } , 25u32 => { ( ImageFormat :: Rg32i , data ) } , 26u32 => { ( ImageFormat :: Rg16i , data ) } , 27u32 => { ( ImageFormat :: Rg8i , data ) } , 28u32 => { ( ImageFormat :: R16i , data ) } , 29u32 => { ( ImageFormat :: R8i , data ) } , 30u32 => { ( ImageFormat :: Rgba32ui , data ) } , 31u32 => { ( ImageFormat :: Rgba16ui , data ) } , 32u32 => { ( ImageFormat :: Rgba8ui , data ) } , 33u32 => { ( ImageFormat :: R32ui , data ) } , 34u32 => { ( ImageFormat :: Rgb10a2ui , data ) } , 35u32 => { ( ImageFormat :: Rg32ui , data ) } , 36u32 => { ( ImageFormat :: Rg16ui , data ) } , 37u32 => { ( ImageFormat :: Rg8ui , data ) } , 38u32 => { ( ImageFormat :: R16ui , data ) } , 39u32 => { ( ImageFormat :: R8ui , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "ImageFormat" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum ImageChannelOrder { R , A , RG , RA , RGB , RGBA , BGRA , ARGB , Intensity , Luminance , Rx , RGx , RGBx , Depth , DepthStencil , sRGB , sRGBx , sRGBA , sBGRA , ABGR , } impl ImageChannelOrder { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( ImageChannelOrder :: R , data ) } , 1u32 => { ( ImageChannelOrder :: A , data ) } , 2u32 => { ( ImageChannelOrder :: RG , data ) } , 3u32 => { ( ImageChannelOrder :: RA , data ) } , 4u32 => { ( ImageChannelOrder :: RGB , data ) } , 5u32 => { ( ImageChannelOrder :: RGBA , data ) } , 6u32 => { ( ImageChannelOrder :: BGRA , data ) } , 7u32 => { ( ImageChannelOrder :: ARGB , data ) } , 8u32 => { ( ImageChannelOrder :: Intensity , data ) } , 9u32 => { ( ImageChannelOrder :: Luminance , data ) } , 10u32 => { ( ImageChannelOrder :: Rx , data ) } , 11u32 => { ( ImageChannelOrder :: RGx , data ) } , 12u32 => { ( ImageChannelOrder :: RGBx , data ) } , 13u32 => { ( ImageChannelOrder :: Depth , data ) } , 14u32 => { ( ImageChannelOrder :: DepthStencil , data ) } , 15u32 => { ( ImageChannelOrder :: sRGB , data ) } , 16u32 => { ( ImageChannelOrder :: sRGBx , data ) } , 17u32 => { ( ImageChannelOrder :: sRGBA , data ) } , 18u32 => { ( ImageChannelOrder :: sBGRA , data ) } , 19u32 => { ( ImageChannelOrder :: ABGR , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "ImageChannelOrder" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum ImageChannelDataType { SnormInt8 , SnormInt16 , UnormInt8 , UnormInt16 , UnormShort565 , UnormShort555 , UnormInt101010 , SignedInt8 , SignedInt16 , SignedInt32 , UnsignedInt8 , UnsignedInt16 , UnsignedInt32 , HalfFloat , Float , UnormInt24 , UnormInt101010_2 , } impl ImageChannelDataType { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( ImageChannelDataType :: SnormInt8 , data ) } , 1u32 => { ( ImageChannelDataType :: SnormInt16 , data ) } , 2u32 => { ( ImageChannelDataType :: UnormInt8 , data ) } , 3u32 => { ( ImageChannelDataType :: UnormInt16 , data ) } , 4u32 => { ( ImageChannelDataType :: UnormShort565 , data ) } , 5u32 => { ( ImageChannelDataType :: UnormShort555 , data ) } , 6u32 => { ( ImageChannelDataType :: UnormInt101010 , data ) } , 7u32 => { ( ImageChannelDataType :: SignedInt8 , data ) } , 8u32 => { ( ImageChannelDataType :: SignedInt16 , data ) } , 9u32 => { ( ImageChannelDataType :: SignedInt32 , data ) } , 10u32 => { ( ImageChannelDataType :: UnsignedInt8 , data ) } , 11u32 => { ( ImageChannelDataType :: UnsignedInt16 , data ) } , 12u32 => { ( ImageChannelDataType :: UnsignedInt32 , data ) } , 13u32 => { ( ImageChannelDataType :: HalfFloat , data ) } , 14u32 => { ( ImageChannelDataType :: Float , data ) } , 15u32 => { ( ImageChannelDataType :: UnormInt24 , data ) } , 16u32 => { ( ImageChannelDataType :: UnormInt101010_2 , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "ImageChannelDataType" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum FPRoundingMode { RTE , RTZ , RTP , RTN , } impl FPRoundingMode { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( FPRoundingMode :: RTE , data ) } , 1u32 => { ( FPRoundingMode :: RTZ , data ) } , 2u32 => { ( FPRoundingMode :: RTP , data ) } , 3u32 => { ( FPRoundingMode :: RTN , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "FPRoundingMode" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum LinkageType { Export , Import , } impl LinkageType { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( LinkageType :: Export , data ) } , 1u32 => { ( LinkageType :: Import , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "LinkageType" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum AccessQualifier { ReadOnly , WriteOnly , ReadWrite , } impl AccessQualifier { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( AccessQualifier :: ReadOnly , data ) } , 1u32 => { ( AccessQualifier :: WriteOnly , data ) } , 2u32 => { ( AccessQualifier :: ReadWrite , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "AccessQualifier" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum FunctionParameterAttribute { Zext , Sext , ByVal , Sret , NoAlias , NoCapture , NoWrite , NoReadWrite , } impl FunctionParameterAttribute { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( FunctionParameterAttribute :: Zext , data ) } , 1u32 => { ( FunctionParameterAttribute :: Sext , data ) } , 2u32 => { ( FunctionParameterAttribute :: ByVal , data ) } , 3u32 => { ( FunctionParameterAttribute :: Sret , data ) } , 4u32 => { ( FunctionParameterAttribute :: NoAlias , data ) } , 5u32 => { ( FunctionParameterAttribute :: NoCapture , data ) } , 6u32 => { ( FunctionParameterAttribute :: NoWrite , data ) } , 7u32 => { ( FunctionParameterAttribute :: NoReadWrite , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "FunctionParameterAttribute" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum Decoration { RelaxedPrecision , SpecId ( LiteralInteger , ) , Block , BufferBlock , RowMajor , ColMajor , ArrayStride ( LiteralInteger , ) , MatrixStride ( LiteralInteger , ) , GLSLShared , GLSLPacked , CPacked , BuiltIn ( BuiltIn , ) , NoPerspective , Flat , Patch , Centroid , Sample , Invariant , Restrict , Aliased , Volatile , Constant , Coherent , NonWritable , NonReadable , Uniform , UniformId ( IdScope , ) , SaturatedConversion , Stream ( LiteralInteger , ) , Location ( LiteralInteger , ) , Component ( LiteralInteger , ) , Index ( LiteralInteger , ) , Binding ( LiteralInteger , ) , DescriptorSet ( LiteralInteger , ) , Offset ( LiteralInteger , ) , XfbBuffer ( LiteralInteger , ) , XfbStride ( LiteralInteger , ) , FuncParamAttr ( FunctionParameterAttribute , ) , FPRoundingMode ( FPRoundingMode , ) , FPFastMathMode ( FPFastMathMode , ) , LinkageAttributes ( LiteralString , LinkageType , ) , NoContraction , InputAttachmentIndex ( LiteralInteger , ) , Alignment ( LiteralInteger , ) , MaxByteOffset ( LiteralInteger , ) , AlignmentId ( IdRef , ) , MaxByteOffsetId ( IdRef , ) , NoSignedWrap , NoUnsignedWrap , ExplicitInterpAMD , OverrideCoverageNV , PassthroughNV , ViewportRelativeNV , SecondaryViewportRelativeNV ( LiteralInteger , ) , PerPrimitiveNV , PerViewNV , PerTaskNV , PerVertexNV , NonUniformEXT , RestrictPointerEXT , AliasedPointerEXT , CounterBuffer ( IdRef , ) , UserSemantic ( LiteralString , ) , UserTypeGOOGLE ( LiteralString , ) , } impl Decoration { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( Decoration :: RelaxedPrecision , data ) } , 1u32 => { let s = Decoration :: SpecId ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 2u32 => { ( Decoration :: Block , data ) } , 3u32 => { ( Decoration :: BufferBlock , data ) } , 4u32 => { ( Decoration :: RowMajor , data ) } , 5u32 => { ( Decoration :: ColMajor , data ) } , 6u32 => { let s = Decoration :: ArrayStride ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 7u32 => { let s = Decoration :: MatrixStride ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 8u32 => { ( Decoration :: GLSLShared , data ) } , 9u32 => { ( Decoration :: GLSLPacked , data ) } , 10u32 => { ( Decoration :: CPacked , data ) } , 11u32 => { let s = Decoration :: BuiltIn ( { let ( v , d ) = BuiltIn :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 13u32 => { ( Decoration :: NoPerspective , data ) } , 14u32 => { ( Decoration :: Flat , data ) } , 15u32 => { ( Decoration :: Patch , data ) } , 16u32 => { ( Decoration :: Centroid , data ) } , 17u32 => { ( Decoration :: Sample , data ) } , 18u32 => { ( Decoration :: Invariant , data ) } , 19u32 => { ( Decoration :: Restrict , data ) } , 20u32 => { ( Decoration :: Aliased , data ) } , 21u32 => { ( Decoration :: Volatile , data ) } , 22u32 => { ( Decoration :: Constant , data ) } , 23u32 => { ( Decoration :: Coherent , data ) } , 24u32 => { ( Decoration :: NonWritable , data ) } , 25u32 => { ( Decoration :: NonReadable , data ) } , 26u32 => { ( Decoration :: Uniform , data ) } , 27u32 => { let s = Decoration :: UniformId ( { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 28u32 => { ( Decoration :: SaturatedConversion , data ) } , 29u32 => { let s = Decoration :: Stream ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 30u32 => { let s = Decoration :: Location ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 31u32 => { let s = Decoration :: Component ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 32u32 => { let s = Decoration :: Index ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 33u32 => { let s = Decoration :: Binding ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 34u32 => { let s = Decoration :: DescriptorSet ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 35u32 => { let s = Decoration :: Offset ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 36u32 => { let s = Decoration :: XfbBuffer ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 37u32 => { let s = Decoration :: XfbStride ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 38u32 => { let s = Decoration :: FuncParamAttr ( { let ( v , d ) = FunctionParameterAttribute :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 39u32 => { let s = Decoration :: FPRoundingMode ( { let ( v , d ) = FPRoundingMode :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 40u32 => { let s = Decoration :: FPFastMathMode ( { let ( v , d ) = FPFastMathMode :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 41u32 => { let s = Decoration :: LinkageAttributes ( { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LinkageType :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 42u32 => { ( Decoration :: NoContraction , data ) } , 43u32 => { let s = Decoration :: InputAttachmentIndex ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 44u32 => { let s = Decoration :: Alignment ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 45u32 => { let s = Decoration :: MaxByteOffset ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 46u32 => { let s = Decoration :: AlignmentId ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 47u32 => { let s = Decoration :: MaxByteOffsetId ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 4469u32 => { ( Decoration :: NoSignedWrap , data ) } , 4470u32 => { ( Decoration :: NoUnsignedWrap , data ) } , 4999u32 => { ( Decoration :: ExplicitInterpAMD , data ) } , 5248u32 => { ( Decoration :: OverrideCoverageNV , data ) } , 5250u32 => { ( Decoration :: PassthroughNV , data ) } , 5252u32 => { ( Decoration :: ViewportRelativeNV , data ) } , 5256u32 => { let s = Decoration :: SecondaryViewportRelativeNV ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 5271u32 => { ( Decoration :: PerPrimitiveNV , data ) } , 5272u32 => { ( Decoration :: PerViewNV , data ) } , 5273u32 => { ( Decoration :: PerTaskNV , data ) } , 5285u32 => { ( Decoration :: PerVertexNV , data ) } , 5300u32 => { ( Decoration :: NonUniformEXT , data ) } , 5355u32 => { ( Decoration :: RestrictPointerEXT , data ) } , 5356u32 => { ( Decoration :: AliasedPointerEXT , data ) } , 5634u32 => { let s = Decoration :: CounterBuffer ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 5635u32 => { let s = Decoration :: UserSemantic ( { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , 5636u32 => { let s = Decoration :: UserTypeGOOGLE ( { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; ( s , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "Decoration" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum BuiltIn { Position , PointSize , ClipDistance , CullDistance , VertexId , InstanceId , PrimitiveId , InvocationId , Layer , ViewportIndex , TessLevelOuter , TessLevelInner , TessCoord , PatchVertices , FragCoord , PointCoord , FrontFacing , SampleId , SamplePosition , SampleMask , FragDepth , HelperInvocation , NumWorkgroups , WorkgroupSize , WorkgroupId , LocalInvocationId , GlobalInvocationId , LocalInvocationIndex , WorkDim , GlobalSize , EnqueuedWorkgroupSize , GlobalOffset , GlobalLinearId , SubgroupSize , SubgroupMaxSize , NumSubgroups , NumEnqueuedSubgroups , SubgroupId , SubgroupLocalInvocationId , VertexIndex , InstanceIndex , SubgroupEqMask , SubgroupGeMask , SubgroupGtMask , SubgroupLeMask , SubgroupLtMask , BaseVertex , BaseInstance , DrawIndex , DeviceIndex , ViewIndex , BaryCoordNoPerspAMD , BaryCoordNoPerspCentroidAMD , BaryCoordNoPerspSampleAMD , BaryCoordSmoothAMD , BaryCoordSmoothCentroidAMD , BaryCoordSmoothSampleAMD , BaryCoordPullModelAMD , FragStencilRefEXT , ViewportMaskNV , SecondaryPositionNV , SecondaryViewportMaskNV , PositionPerViewNV , ViewportMaskPerViewNV , FullyCoveredEXT , TaskCountNV , PrimitiveCountNV , PrimitiveIndicesNV , ClipDistancePerViewNV , CullDistancePerViewNV , LayerPerViewNV , MeshViewCountNV , MeshViewIndicesNV , BaryCoordNV , BaryCoordNoPerspNV , FragSizeEXT , FragInvocationCountEXT , LaunchIdNV , LaunchSizeNV , WorldRayOriginNV , WorldRayDirectionNV , ObjectRayOriginNV , ObjectRayDirectionNV , RayTminNV , RayTmaxNV , InstanceCustomIndexNV , ObjectToWorldNV , WorldToObjectNV , HitTNV , HitKindNV , IncomingRayFlagsNV , WarpsPerSMNV , SMCountNV , WarpIDNV , SMIDNV , } impl BuiltIn { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( BuiltIn :: Position , data ) } , 1u32 => { ( BuiltIn :: PointSize , data ) } , 3u32 => { ( BuiltIn :: ClipDistance , data ) } , 4u32 => { ( BuiltIn :: CullDistance , data ) } , 5u32 => { ( BuiltIn :: VertexId , data ) } , 6u32 => { ( BuiltIn :: InstanceId , data ) } , 7u32 => { ( BuiltIn :: PrimitiveId , data ) } , 8u32 => { ( BuiltIn :: InvocationId , data ) } , 9u32 => { ( BuiltIn :: Layer , data ) } , 10u32 => { ( BuiltIn :: ViewportIndex , data ) } , 11u32 => { ( BuiltIn :: TessLevelOuter , data ) } , 12u32 => { ( BuiltIn :: TessLevelInner , data ) } , 13u32 => { ( BuiltIn :: TessCoord , data ) } , 14u32 => { ( BuiltIn :: PatchVertices , data ) } , 15u32 => { ( BuiltIn :: FragCoord , data ) } , 16u32 => { ( BuiltIn :: PointCoord , data ) } , 17u32 => { ( BuiltIn :: FrontFacing , data ) } , 18u32 => { ( BuiltIn :: SampleId , data ) } , 19u32 => { ( BuiltIn :: SamplePosition , data ) } , 20u32 => { ( BuiltIn :: SampleMask , data ) } , 22u32 => { ( BuiltIn :: FragDepth , data ) } , 23u32 => { ( BuiltIn :: HelperInvocation , data ) } , 24u32 => { ( BuiltIn :: NumWorkgroups , data ) } , 25u32 => { ( BuiltIn :: WorkgroupSize , data ) } , 26u32 => { ( BuiltIn :: WorkgroupId , data ) } , 27u32 => { ( BuiltIn :: LocalInvocationId , data ) } , 28u32 => { ( BuiltIn :: GlobalInvocationId , data ) } , 29u32 => { ( BuiltIn :: LocalInvocationIndex , data ) } , 30u32 => { ( BuiltIn :: WorkDim , data ) } , 31u32 => { ( BuiltIn :: GlobalSize , data ) } , 32u32 => { ( BuiltIn :: EnqueuedWorkgroupSize , data ) } , 33u32 => { ( BuiltIn :: GlobalOffset , data ) } , 34u32 => { ( BuiltIn :: GlobalLinearId , data ) } , 36u32 => { ( BuiltIn :: SubgroupSize , data ) } , 37u32 => { ( BuiltIn :: SubgroupMaxSize , data ) } , 38u32 => { ( BuiltIn :: NumSubgroups , data ) } , 39u32 => { ( BuiltIn :: NumEnqueuedSubgroups , data ) } , 40u32 => { ( BuiltIn :: SubgroupId , data ) } , 41u32 => { ( BuiltIn :: SubgroupLocalInvocationId , data ) } , 42u32 => { ( BuiltIn :: VertexIndex , data ) } , 43u32 => { ( BuiltIn :: InstanceIndex , data ) } , 4416u32 => { ( BuiltIn :: SubgroupEqMask , data ) } , 4417u32 => { ( BuiltIn :: SubgroupGeMask , data ) } , 4418u32 => { ( BuiltIn :: SubgroupGtMask , data ) } , 4419u32 => { ( BuiltIn :: SubgroupLeMask , data ) } , 4420u32 => { ( BuiltIn :: SubgroupLtMask , data ) } , 4424u32 => { ( BuiltIn :: BaseVertex , data ) } , 4425u32 => { ( BuiltIn :: BaseInstance , data ) } , 4426u32 => { ( BuiltIn :: DrawIndex , data ) } , 4438u32 => { ( BuiltIn :: DeviceIndex , data ) } , 4440u32 => { ( BuiltIn :: ViewIndex , data ) } , 4992u32 => { ( BuiltIn :: BaryCoordNoPerspAMD , data ) } , 4993u32 => { ( BuiltIn :: BaryCoordNoPerspCentroidAMD , data ) } , 4994u32 => { ( BuiltIn :: BaryCoordNoPerspSampleAMD , data ) } , 4995u32 => { ( BuiltIn :: BaryCoordSmoothAMD , data ) } , 4996u32 => { ( BuiltIn :: BaryCoordSmoothCentroidAMD , data ) } , 4997u32 => { ( BuiltIn :: BaryCoordSmoothSampleAMD , data ) } , 4998u32 => { ( BuiltIn :: BaryCoordPullModelAMD , data ) } , 5014u32 => { ( BuiltIn :: FragStencilRefEXT , data ) } , 5253u32 => { ( BuiltIn :: ViewportMaskNV , data ) } , 5257u32 => { ( BuiltIn :: SecondaryPositionNV , data ) } , 5258u32 => { ( BuiltIn :: SecondaryViewportMaskNV , data ) } , 5261u32 => { ( BuiltIn :: PositionPerViewNV , data ) } , 5262u32 => { ( BuiltIn :: ViewportMaskPerViewNV , data ) } , 5264u32 => { ( BuiltIn :: FullyCoveredEXT , data ) } , 5274u32 => { ( BuiltIn :: TaskCountNV , data ) } , 5275u32 => { ( BuiltIn :: PrimitiveCountNV , data ) } , 5276u32 => { ( BuiltIn :: PrimitiveIndicesNV , data ) } , 5277u32 => { ( BuiltIn :: ClipDistancePerViewNV , data ) } , 5278u32 => { ( BuiltIn :: CullDistancePerViewNV , data ) } , 5279u32 => { ( BuiltIn :: LayerPerViewNV , data ) } , 5280u32 => { ( BuiltIn :: MeshViewCountNV , data ) } , 5281u32 => { ( BuiltIn :: MeshViewIndicesNV , data ) } , 5286u32 => { ( BuiltIn :: BaryCoordNV , data ) } , 5287u32 => { ( BuiltIn :: BaryCoordNoPerspNV , data ) } , 5292u32 => { ( BuiltIn :: FragSizeEXT , data ) } , 5293u32 => { ( BuiltIn :: FragInvocationCountEXT , data ) } , 5319u32 => { ( BuiltIn :: LaunchIdNV , data ) } , 5320u32 => { ( BuiltIn :: LaunchSizeNV , data ) } , 5321u32 => { ( BuiltIn :: WorldRayOriginNV , data ) } , 5322u32 => { ( BuiltIn :: WorldRayDirectionNV , data ) } , 5323u32 => { ( BuiltIn :: ObjectRayOriginNV , data ) } , 5324u32 => { ( BuiltIn :: ObjectRayDirectionNV , data ) } , 5325u32 => { ( BuiltIn :: RayTminNV , data ) } , 5326u32 => { ( BuiltIn :: RayTmaxNV , data ) } , 5327u32 => { ( BuiltIn :: InstanceCustomIndexNV , data ) } , 5330u32 => { ( BuiltIn :: ObjectToWorldNV , data ) } , 5331u32 => { ( BuiltIn :: WorldToObjectNV , data ) } , 5332u32 => { ( BuiltIn :: HitTNV , data ) } , 5333u32 => { ( BuiltIn :: HitKindNV , data ) } , 5351u32 => { ( BuiltIn :: IncomingRayFlagsNV , data ) } , 5374u32 => { ( BuiltIn :: WarpsPerSMNV , data ) } , 5375u32 => { ( BuiltIn :: SMCountNV , data ) } , 5376u32 => { ( BuiltIn :: WarpIDNV , data ) } , 5377u32 => { ( BuiltIn :: SMIDNV , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "BuiltIn" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum Scope { CrossDevice , Device , Workgroup , Subgroup , Invocation , QueueFamilyKHR , } impl Scope { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( Scope :: CrossDevice , data ) } , 1u32 => { ( Scope :: Device , data ) } , 2u32 => { ( Scope :: Workgroup , data ) } , 3u32 => { ( Scope :: Subgroup , data ) } , 4u32 => { ( Scope :: Invocation , data ) } , 5u32 => { ( Scope :: QueueFamilyKHR , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "Scope" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum GroupOperation { Reduce , InclusiveScan , ExclusiveScan , ClusteredReduce , PartitionedReduceNV , PartitionedInclusiveScanNV , PartitionedExclusiveScanNV , } impl GroupOperation { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( GroupOperation :: Reduce , data ) } , 1u32 => { ( GroupOperation :: InclusiveScan , data ) } , 2u32 => { ( GroupOperation :: ExclusiveScan , data ) } , 3u32 => { ( GroupOperation :: ClusteredReduce , data ) } , 6u32 => { ( GroupOperation :: PartitionedReduceNV , data ) } , 7u32 => { ( GroupOperation :: PartitionedInclusiveScanNV , data ) } , 8u32 => { ( GroupOperation :: PartitionedExclusiveScanNV , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "GroupOperation" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum KernelEnqueueFlags { NoWait , WaitKernel , WaitWorkGroup , } impl KernelEnqueueFlags { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( KernelEnqueueFlags :: NoWait , data ) } , 1u32 => { ( KernelEnqueueFlags :: WaitKernel , data ) } , 2u32 => { ( KernelEnqueueFlags :: WaitWorkGroup , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "KernelEnqueueFlags" ) , } } } # [ derive ( Debug , Clone , PartialEq , Serialize , Deserialize ) ] # [ repr ( u32 ) ] pub enum Capability { Matrix , Shader , Geometry , Tessellation , Addresses , Linkage , Kernel , Vector16 , Float16Buffer , Float16 , Float64 , Int64 , Int64Atomics , ImageBasic , ImageReadWrite , ImageMipmap , Pipes , Groups , DeviceEnqueue , LiteralSampler , AtomicStorage , Int16 , TessellationPointSize , GeometryPointSize , ImageGatherExtended , StorageImageMultisample , UniformBufferArrayDynamicIndexing , SampledImageArrayDynamicIndexing , StorageBufferArrayDynamicIndexing , StorageImageArrayDynamicIndexing , ClipDistance , CullDistance , ImageCubeArray , SampleRateShading , ImageRect , SampledRect , GenericPointer , Int8 , InputAttachment , SparseResidency , MinLod , Sampled1D , Image1D , SampledCubeArray , SampledBuffer , ImageBuffer , ImageMSArray , StorageImageExtendedFormats , ImageQuery , DerivativeControl , InterpolationFunction , TransformFeedback , GeometryStreams , StorageImageReadWithoutFormat , StorageImageWriteWithoutFormat , MultiViewport , SubgroupDispatch , NamedBarrier , PipeStorage , GroupNonUniform , GroupNonUniformVote , GroupNonUniformArithmetic , GroupNonUniformBallot , GroupNonUniformShuffle , GroupNonUniformShuffleRelative , GroupNonUniformClustered , GroupNonUniformQuad , SubgroupBallotKHR , DrawParameters , SubgroupVoteKHR , StorageBuffer16BitAccess , UniformAndStorageBuffer16BitAccess , StoragePushConstant16 , StorageInputOutput16 , DeviceGroup , MultiView , VariablePointersStorageBuffer , VariablePointers , AtomicStorageOps , SampleMaskPostDepthCoverage , StorageBuffer8BitAccess , UniformAndStorageBuffer8BitAccess , StoragePushConstant8 , DenormPreserve , DenormFlushToZero , SignedZeroInfNanPreserve , RoundingModeRTE , RoundingModeRTZ , Float16ImageAMD , ImageGatherBiasLodAMD , FragmentMaskAMD , StencilExportEXT , ImageReadWriteLodAMD , ShaderClockKHR , SampleMaskOverrideCoverageNV , GeometryShaderPassthroughNV , ShaderViewportIndexLayerEXT , ShaderViewportMaskNV , ShaderStereoViewNV , PerViewAttributesNV , FragmentFullyCoveredEXT , MeshShadingNV , ImageFootprintNV , FragmentBarycentricNV , ComputeDerivativeGroupQuadsNV , FragmentDensityEXT , GroupNonUniformPartitionedNV , ShaderNonUniformEXT , RuntimeDescriptorArrayEXT , InputAttachmentArrayDynamicIndexingEXT , UniformTexelBufferArrayDynamicIndexingEXT , StorageTexelBufferArrayDynamicIndexingEXT , UniformBufferArrayNonUniformIndexingEXT , SampledImageArrayNonUniformIndexingEXT , StorageBufferArrayNonUniformIndexingEXT , StorageImageArrayNonUniformIndexingEXT , InputAttachmentArrayNonUniformIndexingEXT , UniformTexelBufferArrayNonUniformIndexingEXT , StorageTexelBufferArrayNonUniformIndexingEXT , RayTracingNV , VulkanMemoryModelKHR , VulkanMemoryModelDeviceScopeKHR , PhysicalStorageBufferAddressesEXT , ComputeDerivativeGroupLinearNV , CooperativeMatrixNV , FragmentShaderSampleInterlockEXT , FragmentShaderShadingRateInterlockEXT , ShaderSMBuiltinsNV , FragmentShaderPixelInterlockEXT , DemoteToHelperInvocationEXT , SubgroupShuffleINTEL , SubgroupBufferBlockIOINTEL , SubgroupImageBlockIOINTEL , SubgroupImageMediaBlockIOINTEL , IntegerFunctions2INTEL , SubgroupAvcMotionEstimationINTEL , SubgroupAvcMotionEstimationIntraINTEL , SubgroupAvcMotionEstimationChromaINTEL , } impl Capability { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let value = data [ 0 ] ; data = & data [ 1 .. ] ; match value { 0u32 => { ( Capability :: Matrix , data ) } , 1u32 => { ( Capability :: Shader , data ) } , 2u32 => { ( Capability :: Geometry , data ) } , 3u32 => { ( Capability :: Tessellation , data ) } , 4u32 => { ( Capability :: Addresses , data ) } , 5u32 => { ( Capability :: Linkage , data ) } , 6u32 => { ( Capability :: Kernel , data ) } , 7u32 => { ( Capability :: Vector16 , data ) } , 8u32 => { ( Capability :: Float16Buffer , data ) } , 9u32 => { ( Capability :: Float16 , data ) } , 10u32 => { ( Capability :: Float64 , data ) } , 11u32 => { ( Capability :: Int64 , data ) } , 12u32 => { ( Capability :: Int64Atomics , data ) } , 13u32 => { ( Capability :: ImageBasic , data ) } , 14u32 => { ( Capability :: ImageReadWrite , data ) } , 15u32 => { ( Capability :: ImageMipmap , data ) } , 17u32 => { ( Capability :: Pipes , data ) } , 18u32 => { ( Capability :: Groups , data ) } , 19u32 => { ( Capability :: DeviceEnqueue , data ) } , 20u32 => { ( Capability :: LiteralSampler , data ) } , 21u32 => { ( Capability :: AtomicStorage , data ) } , 22u32 => { ( Capability :: Int16 , data ) } , 23u32 => { ( Capability :: TessellationPointSize , data ) } , 24u32 => { ( Capability :: GeometryPointSize , data ) } , 25u32 => { ( Capability :: ImageGatherExtended , data ) } , 27u32 => { ( Capability :: StorageImageMultisample , data ) } , 28u32 => { ( Capability :: UniformBufferArrayDynamicIndexing , data ) } , 29u32 => { ( Capability :: SampledImageArrayDynamicIndexing , data ) } , 30u32 => { ( Capability :: StorageBufferArrayDynamicIndexing , data ) } , 31u32 => { ( Capability :: StorageImageArrayDynamicIndexing , data ) } , 32u32 => { ( Capability :: ClipDistance , data ) } , 33u32 => { ( Capability :: CullDistance , data ) } , 34u32 => { ( Capability :: ImageCubeArray , data ) } , 35u32 => { ( Capability :: SampleRateShading , data ) } , 36u32 => { ( Capability :: ImageRect , data ) } , 37u32 => { ( Capability :: SampledRect , data ) } , 38u32 => { ( Capability :: GenericPointer , data ) } , 39u32 => { ( Capability :: Int8 , data ) } , 40u32 => { ( Capability :: InputAttachment , data ) } , 41u32 => { ( Capability :: SparseResidency , data ) } , 42u32 => { ( Capability :: MinLod , data ) } , 43u32 => { ( Capability :: Sampled1D , data ) } , 44u32 => { ( Capability :: Image1D , data ) } , 45u32 => { ( Capability :: SampledCubeArray , data ) } , 46u32 => { ( Capability :: SampledBuffer , data ) } , 47u32 => { ( Capability :: ImageBuffer , data ) } , 48u32 => { ( Capability :: ImageMSArray , data ) } , 49u32 => { ( Capability :: StorageImageExtendedFormats , data ) } , 50u32 => { ( Capability :: ImageQuery , data ) } , 51u32 => { ( Capability :: DerivativeControl , data ) } , 52u32 => { ( Capability :: InterpolationFunction , data ) } , 53u32 => { ( Capability :: TransformFeedback , data ) } , 54u32 => { ( Capability :: GeometryStreams , data ) } , 55u32 => { ( Capability :: StorageImageReadWithoutFormat , data ) } , 56u32 => { ( Capability :: StorageImageWriteWithoutFormat , data ) } , 57u32 => { ( Capability :: MultiViewport , data ) } , 58u32 => { ( Capability :: SubgroupDispatch , data ) } , 59u32 => { ( Capability :: NamedBarrier , data ) } , 60u32 => { ( Capability :: PipeStorage , data ) } , 61u32 => { ( Capability :: GroupNonUniform , data ) } , 62u32 => { ( Capability :: GroupNonUniformVote , data ) } , 63u32 => { ( Capability :: GroupNonUniformArithmetic , data ) } , 64u32 => { ( Capability :: GroupNonUniformBallot , data ) } , 65u32 => { ( Capability :: GroupNonUniformShuffle , data ) } , 66u32 => { ( Capability :: GroupNonUniformShuffleRelative , data ) } , 67u32 => { ( Capability :: GroupNonUniformClustered , data ) } , 68u32 => { ( Capability :: GroupNonUniformQuad , data ) } , 4423u32 => { ( Capability :: SubgroupBallotKHR , data ) } , 4427u32 => { ( Capability :: DrawParameters , data ) } , 4431u32 => { ( Capability :: SubgroupVoteKHR , data ) } , 4433u32 => { ( Capability :: StorageBuffer16BitAccess , data ) } , 4434u32 => { ( Capability :: UniformAndStorageBuffer16BitAccess , data ) } , 4435u32 => { ( Capability :: StoragePushConstant16 , data ) } , 4436u32 => { ( Capability :: StorageInputOutput16 , data ) } , 4437u32 => { ( Capability :: DeviceGroup , data ) } , 4439u32 => { ( Capability :: MultiView , data ) } , 4441u32 => { ( Capability :: VariablePointersStorageBuffer , data ) } , 4442u32 => { ( Capability :: VariablePointers , data ) } , 4445u32 => { ( Capability :: AtomicStorageOps , data ) } , 4447u32 => { ( Capability :: SampleMaskPostDepthCoverage , data ) } , 4448u32 => { ( Capability :: StorageBuffer8BitAccess , data ) } , 4449u32 => { ( Capability :: UniformAndStorageBuffer8BitAccess , data ) } , 4450u32 => { ( Capability :: StoragePushConstant8 , data ) } , 4464u32 => { ( Capability :: DenormPreserve , data ) } , 4465u32 => { ( Capability :: DenormFlushToZero , data ) } , 4466u32 => { ( Capability :: SignedZeroInfNanPreserve , data ) } , 4467u32 => { ( Capability :: RoundingModeRTE , data ) } , 4468u32 => { ( Capability :: RoundingModeRTZ , data ) } , 5008u32 => { ( Capability :: Float16ImageAMD , data ) } , 5009u32 => { ( Capability :: ImageGatherBiasLodAMD , data ) } , 5010u32 => { ( Capability :: FragmentMaskAMD , data ) } , 5013u32 => { ( Capability :: StencilExportEXT , data ) } , 5015u32 => { ( Capability :: ImageReadWriteLodAMD , data ) } , 5055u32 => { ( Capability :: ShaderClockKHR , data ) } , 5249u32 => { ( Capability :: SampleMaskOverrideCoverageNV , data ) } , 5251u32 => { ( Capability :: GeometryShaderPassthroughNV , data ) } , 5254u32 => { ( Capability :: ShaderViewportIndexLayerEXT , data ) } , 5255u32 => { ( Capability :: ShaderViewportMaskNV , data ) } , 5259u32 => { ( Capability :: ShaderStereoViewNV , data ) } , 5260u32 => { ( Capability :: PerViewAttributesNV , data ) } , 5265u32 => { ( Capability :: FragmentFullyCoveredEXT , data ) } , 5266u32 => { ( Capability :: MeshShadingNV , data ) } , 5282u32 => { ( Capability :: ImageFootprintNV , data ) } , 5284u32 => { ( Capability :: FragmentBarycentricNV , data ) } , 5288u32 => { ( Capability :: ComputeDerivativeGroupQuadsNV , data ) } , 5291u32 => { ( Capability :: FragmentDensityEXT , data ) } , 5297u32 => { ( Capability :: GroupNonUniformPartitionedNV , data ) } , 5301u32 => { ( Capability :: ShaderNonUniformEXT , data ) } , 5302u32 => { ( Capability :: RuntimeDescriptorArrayEXT , data ) } , 5303u32 => { ( Capability :: InputAttachmentArrayDynamicIndexingEXT , data ) } , 5304u32 => { ( Capability :: UniformTexelBufferArrayDynamicIndexingEXT , data ) } , 5305u32 => { ( Capability :: StorageTexelBufferArrayDynamicIndexingEXT , data ) } , 5306u32 => { ( Capability :: UniformBufferArrayNonUniformIndexingEXT , data ) } , 5307u32 => { ( Capability :: SampledImageArrayNonUniformIndexingEXT , data ) } , 5308u32 => { ( Capability :: StorageBufferArrayNonUniformIndexingEXT , data ) } , 5309u32 => { ( Capability :: StorageImageArrayNonUniformIndexingEXT , data ) } , 5310u32 => { ( Capability :: InputAttachmentArrayNonUniformIndexingEXT , data ) } , 5311u32 => { ( Capability :: UniformTexelBufferArrayNonUniformIndexingEXT , data ) } , 5312u32 => { ( Capability :: StorageTexelBufferArrayNonUniformIndexingEXT , data ) } , 5340u32 => { ( Capability :: RayTracingNV , data ) } , 5345u32 => { ( Capability :: VulkanMemoryModelKHR , data ) } , 5346u32 => { ( Capability :: VulkanMemoryModelDeviceScopeKHR , data ) } , 5347u32 => { ( Capability :: PhysicalStorageBufferAddressesEXT , data ) } , 5350u32 => { ( Capability :: ComputeDerivativeGroupLinearNV , data ) } , 5357u32 => { ( Capability :: CooperativeMatrixNV , data ) } , 5363u32 => { ( Capability :: FragmentShaderSampleInterlockEXT , data ) } , 5372u32 => { ( Capability :: FragmentShaderShadingRateInterlockEXT , data ) } , 5373u32 => { ( Capability :: ShaderSMBuiltinsNV , data ) } , 5378u32 => { ( Capability :: FragmentShaderPixelInterlockEXT , data ) } , 5379u32 => { ( Capability :: DemoteToHelperInvocationEXT , data ) } , 5568u32 => { ( Capability :: SubgroupShuffleINTEL , data ) } , 5569u32 => { ( Capability :: SubgroupBufferBlockIOINTEL , data ) } , 5570u32 => { ( Capability :: SubgroupImageBlockIOINTEL , data ) } , 5579u32 => { ( Capability :: SubgroupImageMediaBlockIOINTEL , data ) } , 5584u32 => { ( Capability :: IntegerFunctions2INTEL , data ) } , 5696u32 => { ( Capability :: SubgroupAvcMotionEstimationINTEL , data ) } , 5697u32 => { ( Capability :: SubgroupAvcMotionEstimationIntraINTEL , data ) } , 5698u32 => { ( Capability :: SubgroupAvcMotionEstimationChromaINTEL , data ) } , _ => panic ! ( "Unknown value for Enum: {}" , "Capability" ) , } } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct IdResultType ( pub u32 ) ; impl IdResultType { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct IdResult ( pub u32 ) ; impl IdResult { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct IdMemorySemantics ( pub u32 ) ; impl IdMemorySemantics { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct IdScope ( pub u32 ) ; impl IdScope { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct IdRef ( pub u32 ) ; impl IdRef { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct LiteralInteger ( pub u32 ) ; impl LiteralInteger { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct LiteralString ( pub String ) ; impl LiteralString { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { let res = parse_string ( data ) ; ( Self ( res . 0 ) , res . 1 ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct LiteralContextDependentNumber ( pub u32 ) ; impl LiteralContextDependentNumber { pub fn from_raw ( data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct LiteralExtInstInteger ( pub u32 ) ; impl LiteralExtInstInteger { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct LiteralSpecConstantOpInteger ( pub u32 ) ; impl LiteralSpecConstantOpInteger { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( data [ 0 ] ) , & data [ 1 .. ] ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct PairLiteralIntegerIdRef ( pub LiteralInteger , pub IdRef , ) ; impl PairLiteralIntegerIdRef { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) , data ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct PairIdRefLiteralInteger ( pub IdRef , pub LiteralInteger , ) ; impl PairIdRefLiteralInteger { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) , data ) } } # [ derive ( Debug , PartialEq , Clone , Serialize , Deserialize ) ] pub struct PairIdRefIdRef ( pub IdRef , pub IdRef , ) ; impl PairIdRefIdRef { pub fn from_raw ( mut data : & [ u32 ] ) -> ( Self , & [ u32 ] ) { ( Self ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) , data ) } } fn parse_string ( data : & [ u32 ] ) -> ( String , & [ u32 ] ) { let bytes = data . iter ( ) . flat_map ( | & n | { let b1 = ( n & 0xff ) as u8 ; let b2 = ( ( n >> 8 ) & 0xff ) as u8 ; let b3 = ( ( n >> 16 ) & 0xff ) as u8 ; let b4 = ( ( n >> 24 ) & 0xff ) as u8 ; vec ! [ b1 , b2 , b3 , b4 ] . into_iter ( ) } ) . take_while ( | & b | b != 0 ) . collect :: < Vec < u8 >> ( ) ; let r = 1 + bytes . len ( ) / 4 ; let s = String :: from_utf8 ( bytes ) . expect ( "Shader content is not UTF-8" ) ; ( s , & data [ r .. ] ) } # [ derive ( Debug , Clone , PartialEq , Serialize ) ] pub enum Instruction { Nop , Undef ( IdResultType , IdResult , ) , SourceContinued ( LiteralString , ) , Source ( SourceLanguage , LiteralInteger , Option < IdRef > , Option < LiteralString > , ) , SourceExtension ( LiteralString , ) , Name ( IdRef , LiteralString , ) , MemberName ( IdRef , LiteralInteger , LiteralString , ) , String ( IdResult , LiteralString , ) , Line ( IdRef , LiteralInteger , LiteralInteger , ) , Extension ( LiteralString , ) , ExtInstImport ( IdResult , LiteralString , ) , ExtInst ( IdResultType , IdResult , IdRef , LiteralExtInstInteger , Vec < IdRef > , ) , MemoryModel ( AddressingModel , MemoryModel , ) , EntryPoint ( ExecutionModel , IdRef , LiteralString , Vec < IdRef > , ) , ExecutionMode ( IdRef , ExecutionMode , ) , Capability ( Capability , ) , TypeVoid ( IdResult , ) , TypeBool ( IdResult , ) , TypeInt ( IdResult , LiteralInteger , LiteralInteger , ) , TypeFloat ( IdResult , LiteralInteger , ) , TypeVector ( IdResult , IdRef , LiteralInteger , ) , TypeMatrix ( IdResult , IdRef , LiteralInteger , ) , TypeImage ( IdResult , IdRef , Dim , LiteralInteger , LiteralInteger , LiteralInteger , LiteralInteger , ImageFormat , Option < AccessQualifier > , ) , TypeSampler ( IdResult , ) , TypeSampledImage ( IdResult , IdRef , ) , TypeArray ( IdResult , IdRef , IdRef , ) , TypeRuntimeArray ( IdResult , IdRef , ) , TypeStruct ( IdResult , Vec < IdRef > , ) , TypeOpaque ( IdResult , LiteralString , ) , TypePointer ( IdResult , StorageClass , IdRef , ) , TypeFunction ( IdResult , IdRef , Vec < IdRef > , ) , TypeEvent ( IdResult , ) , TypeDeviceEvent ( IdResult , ) , TypeReserveId ( IdResult , ) , TypeQueue ( IdResult , ) , TypePipe ( IdResult , AccessQualifier , ) , TypeForwardPointer ( IdRef , StorageClass , ) , ConstantTrue ( IdResultType , IdResult , ) , ConstantFalse ( IdResultType , IdResult , ) , Constant ( IdResultType , IdResult , LiteralContextDependentNumber , ) , ConstantComposite ( IdResultType , IdResult , Vec < IdRef > , ) , ConstantSampler ( IdResultType , IdResult , SamplerAddressingMode , LiteralInteger , SamplerFilterMode , ) , ConstantNull ( IdResultType , IdResult , ) , SpecConstantTrue ( IdResultType , IdResult , ) , SpecConstantFalse ( IdResultType , IdResult , ) , SpecConstant ( IdResultType , IdResult , LiteralContextDependentNumber , ) , SpecConstantComposite ( IdResultType , IdResult , Vec < IdRef > , ) , SpecConstantOp ( IdResultType , IdResult , LiteralSpecConstantOpInteger , ) , Function ( IdResultType , IdResult , FunctionControl , IdRef , ) , FunctionParameter ( IdResultType , IdResult , ) , FunctionEnd , FunctionCall ( IdResultType , IdResult , IdRef , Vec < IdRef > , ) , Variable ( IdResultType , IdResult , StorageClass , Option < IdRef > , ) , ImageTexelPointer ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , Load ( IdResultType , IdResult , IdRef , Option < MemoryAccess > , ) , Store ( IdRef , IdRef , Option < MemoryAccess > , ) , CopyMemory ( IdRef , IdRef , Option < MemoryAccess > , Option < MemoryAccess > , ) , CopyMemorySized ( IdRef , IdRef , IdRef , Option < MemoryAccess > , Option < MemoryAccess > , ) , AccessChain ( IdResultType , IdResult , IdRef , Vec < IdRef > , ) , InBoundsAccessChain ( IdResultType , IdResult , IdRef , Vec < IdRef > , ) , PtrAccessChain ( IdResultType , IdResult , IdRef , IdRef , Vec < IdRef > , ) , ArrayLength ( IdResultType , IdResult , IdRef , LiteralInteger , ) , GenericPtrMemSemantics ( IdResultType , IdResult , IdRef , ) , InBoundsPtrAccessChain ( IdResultType , IdResult , IdRef , IdRef , Vec < IdRef > , ) , Decorate ( IdRef , Decoration , ) , MemberDecorate ( IdRef , LiteralInteger , Decoration , ) , DecorationGroup ( IdResult , ) , GroupDecorate ( IdRef , Vec < IdRef > , ) , GroupMemberDecorate ( IdRef , Vec < PairIdRefLiteralInteger > , ) , VectorExtractDynamic ( IdResultType , IdResult , IdRef , IdRef , ) , VectorInsertDynamic ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , VectorShuffle ( IdResultType , IdResult , IdRef , IdRef , Vec < LiteralInteger > , ) , CompositeConstruct ( IdResultType , IdResult , Vec < IdRef > , ) , CompositeExtract ( IdResultType , IdResult , IdRef , Vec < LiteralInteger > , ) , CompositeInsert ( IdResultType , IdResult , IdRef , IdRef , Vec < LiteralInteger > , ) , CopyObject ( IdResultType , IdResult , IdRef , ) , Transpose ( IdResultType , IdResult , IdRef , ) , SampledImage ( IdResultType , IdResult , IdRef , IdRef , ) , ImageSampleImplicitLod ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , ImageSampleExplicitLod ( IdResultType , IdResult , IdRef , IdRef , ImageOperands , ) , ImageSampleDrefImplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageSampleDrefExplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , ImageOperands , ) , ImageSampleProjImplicitLod ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , ImageSampleProjExplicitLod ( IdResultType , IdResult , IdRef , IdRef , ImageOperands , ) , ImageSampleProjDrefImplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageSampleProjDrefExplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , ImageOperands , ) , ImageFetch ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , ImageGather ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageDrefGather ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageRead ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , ImageWrite ( IdRef , IdRef , IdRef , Option < ImageOperands > , ) , Image ( IdResultType , IdResult , IdRef , ) , ImageQueryFormat ( IdResultType , IdResult , IdRef , ) , ImageQueryOrder ( IdResultType , IdResult , IdRef , ) , ImageQuerySizeLod ( IdResultType , IdResult , IdRef , IdRef , ) , ImageQuerySize ( IdResultType , IdResult , IdRef , ) , ImageQueryLod ( IdResultType , IdResult , IdRef , IdRef , ) , ImageQueryLevels ( IdResultType , IdResult , IdRef , ) , ImageQuerySamples ( IdResultType , IdResult , IdRef , ) , ConvertFToU ( IdResultType , IdResult , IdRef , ) , ConvertFToS ( IdResultType , IdResult , IdRef , ) , ConvertSToF ( IdResultType , IdResult , IdRef , ) , ConvertUToF ( IdResultType , IdResult , IdRef , ) , UConvert ( IdResultType , IdResult , IdRef , ) , SConvert ( IdResultType , IdResult , IdRef , ) , FConvert ( IdResultType , IdResult , IdRef , ) , QuantizeToF16 ( IdResultType , IdResult , IdRef , ) , ConvertPtrToU ( IdResultType , IdResult , IdRef , ) , SatConvertSToU ( IdResultType , IdResult , IdRef , ) , SatConvertUToS ( IdResultType , IdResult , IdRef , ) , ConvertUToPtr ( IdResultType , IdResult , IdRef , ) , PtrCastToGeneric ( IdResultType , IdResult , IdRef , ) , GenericCastToPtr ( IdResultType , IdResult , IdRef , ) , GenericCastToPtrExplicit ( IdResultType , IdResult , IdRef , StorageClass , ) , Bitcast ( IdResultType , IdResult , IdRef , ) , SNegate ( IdResultType , IdResult , IdRef , ) , FNegate ( IdResultType , IdResult , IdRef , ) , IAdd ( IdResultType , IdResult , IdRef , IdRef , ) , FAdd ( IdResultType , IdResult , IdRef , IdRef , ) , ISub ( IdResultType , IdResult , IdRef , IdRef , ) , FSub ( IdResultType , IdResult , IdRef , IdRef , ) , IMul ( IdResultType , IdResult , IdRef , IdRef , ) , FMul ( IdResultType , IdResult , IdRef , IdRef , ) , UDiv ( IdResultType , IdResult , IdRef , IdRef , ) , SDiv ( IdResultType , IdResult , IdRef , IdRef , ) , FDiv ( IdResultType , IdResult , IdRef , IdRef , ) , UMod ( IdResultType , IdResult , IdRef , IdRef , ) , SRem ( IdResultType , IdResult , IdRef , IdRef , ) , SMod ( IdResultType , IdResult , IdRef , IdRef , ) , FRem ( IdResultType , IdResult , IdRef , IdRef , ) , FMod ( IdResultType , IdResult , IdRef , IdRef , ) , VectorTimesScalar ( IdResultType , IdResult , IdRef , IdRef , ) , MatrixTimesScalar ( IdResultType , IdResult , IdRef , IdRef , ) , VectorTimesMatrix ( IdResultType , IdResult , IdRef , IdRef , ) , MatrixTimesVector ( IdResultType , IdResult , IdRef , IdRef , ) , MatrixTimesMatrix ( IdResultType , IdResult , IdRef , IdRef , ) , OuterProduct ( IdResultType , IdResult , IdRef , IdRef , ) , Dot ( IdResultType , IdResult , IdRef , IdRef , ) , IAddCarry ( IdResultType , IdResult , IdRef , IdRef , ) , ISubBorrow ( IdResultType , IdResult , IdRef , IdRef , ) , UMulExtended ( IdResultType , IdResult , IdRef , IdRef , ) , SMulExtended ( IdResultType , IdResult , IdRef , IdRef , ) , Any ( IdResultType , IdResult , IdRef , ) , All ( IdResultType , IdResult , IdRef , ) , IsNan ( IdResultType , IdResult , IdRef , ) , IsInf ( IdResultType , IdResult , IdRef , ) , IsFinite ( IdResultType , IdResult , IdRef , ) , IsNormal ( IdResultType , IdResult , IdRef , ) , SignBitSet ( IdResultType , IdResult , IdRef , ) , LessOrGreater ( IdResultType , IdResult , IdRef , IdRef , ) , Ordered ( IdResultType , IdResult , IdRef , IdRef , ) , Unordered ( IdResultType , IdResult , IdRef , IdRef , ) , LogicalEqual ( IdResultType , IdResult , IdRef , IdRef , ) , LogicalNotEqual ( IdResultType , IdResult , IdRef , IdRef , ) , LogicalOr ( IdResultType , IdResult , IdRef , IdRef , ) , LogicalAnd ( IdResultType , IdResult , IdRef , IdRef , ) , LogicalNot ( IdResultType , IdResult , IdRef , ) , Select ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , IEqual ( IdResultType , IdResult , IdRef , IdRef , ) , INotEqual ( IdResultType , IdResult , IdRef , IdRef , ) , UGreaterThan ( IdResultType , IdResult , IdRef , IdRef , ) , SGreaterThan ( IdResultType , IdResult , IdRef , IdRef , ) , UGreaterThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , SGreaterThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , ULessThan ( IdResultType , IdResult , IdRef , IdRef , ) , SLessThan ( IdResultType , IdResult , IdRef , IdRef , ) , ULessThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , SLessThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FOrdEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FUnordEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FOrdNotEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FUnordNotEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FOrdLessThan ( IdResultType , IdResult , IdRef , IdRef , ) , FUnordLessThan ( IdResultType , IdResult , IdRef , IdRef , ) , FOrdGreaterThan ( IdResultType , IdResult , IdRef , IdRef , ) , FUnordGreaterThan ( IdResultType , IdResult , IdRef , IdRef , ) , FOrdLessThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FUnordLessThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FOrdGreaterThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , FUnordGreaterThanEqual ( IdResultType , IdResult , IdRef , IdRef , ) , ShiftRightLogical ( IdResultType , IdResult , IdRef , IdRef , ) , ShiftRightArithmetic ( IdResultType , IdResult , IdRef , IdRef , ) , ShiftLeftLogical ( IdResultType , IdResult , IdRef , IdRef , ) , BitwiseOr ( IdResultType , IdResult , IdRef , IdRef , ) , BitwiseXor ( IdResultType , IdResult , IdRef , IdRef , ) , BitwiseAnd ( IdResultType , IdResult , IdRef , IdRef , ) , Not ( IdResultType , IdResult , IdRef , ) , BitFieldInsert ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , BitFieldSExtract ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , BitFieldUExtract ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , BitReverse ( IdResultType , IdResult , IdRef , ) , BitCount ( IdResultType , IdResult , IdRef , ) , DPdx ( IdResultType , IdResult , IdRef , ) , DPdy ( IdResultType , IdResult , IdRef , ) , Fwidth ( IdResultType , IdResult , IdRef , ) , DPdxFine ( IdResultType , IdResult , IdRef , ) , DPdyFine ( IdResultType , IdResult , IdRef , ) , FwidthFine ( IdResultType , IdResult , IdRef , ) , DPdxCoarse ( IdResultType , IdResult , IdRef , ) , DPdyCoarse ( IdResultType , IdResult , IdRef , ) , FwidthCoarse ( IdResultType , IdResult , IdRef , ) , EmitVertex , EndPrimitive , EmitStreamVertex ( IdRef , ) , EndStreamPrimitive ( IdRef , ) , ControlBarrier ( IdScope , IdScope , IdMemorySemantics , ) , MemoryBarrier ( IdScope , IdMemorySemantics , ) , AtomicLoad ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , ) , AtomicStore ( IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicExchange ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicCompareExchange ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdMemorySemantics , IdRef , IdRef , ) , AtomicCompareExchangeWeak ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdMemorySemantics , IdRef , IdRef , ) , AtomicIIncrement ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , ) , AtomicIDecrement ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , ) , AtomicIAdd ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicISub ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicSMin ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicUMin ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicSMax ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicUMax ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicAnd ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicOr ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , AtomicXor ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , IdRef , ) , Phi ( IdResultType , IdResult , Vec < PairIdRefIdRef > , ) , LoopMerge ( IdRef , IdRef , LoopControl , ) , SelectionMerge ( IdRef , SelectionControl , ) , Label ( IdResult , ) , Branch ( IdRef , ) , BranchConditional ( IdRef , IdRef , IdRef , Vec < LiteralInteger > , ) , Switch ( IdRef , IdRef , Vec < PairLiteralIntegerIdRef > , ) , Kill , Return , ReturnValue ( IdRef , ) , Unreachable , LifetimeStart ( IdRef , LiteralInteger , ) , LifetimeStop ( IdRef , LiteralInteger , ) , GroupAsyncCopy ( IdResultType , IdResult , IdScope , IdRef , IdRef , IdRef , IdRef , IdRef , ) , GroupWaitEvents ( IdScope , IdRef , IdRef , ) , GroupAll ( IdResultType , IdResult , IdScope , IdRef , ) , GroupAny ( IdResultType , IdResult , IdScope , IdRef , ) , GroupBroadcast ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupIAdd ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupFAdd ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupFMin ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupUMin ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupSMin ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupFMax ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupUMax ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupSMax ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , ReadPipe ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , WritePipe ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , ReservedReadPipe ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , ReservedWritePipe ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , ReserveReadPipePackets ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , ReserveWritePipePackets ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , CommitReadPipe ( IdRef , IdRef , IdRef , IdRef , ) , CommitWritePipe ( IdRef , IdRef , IdRef , IdRef , ) , IsValidReserveId ( IdResultType , IdResult , IdRef , ) , GetNumPipePackets ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , GetMaxPipePackets ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , GroupReserveReadPipePackets ( IdResultType , IdResult , IdScope , IdRef , IdRef , IdRef , IdRef , ) , GroupReserveWritePipePackets ( IdResultType , IdResult , IdScope , IdRef , IdRef , IdRef , IdRef , ) , GroupCommitReadPipe ( IdScope , IdRef , IdRef , IdRef , IdRef , ) , GroupCommitWritePipe ( IdScope , IdRef , IdRef , IdRef , IdRef , ) , EnqueueMarker ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , EnqueueKernel ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , Vec < IdRef > , ) , GetKernelNDrangeSubGroupCount ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , ) , GetKernelNDrangeMaxSubGroupSize ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , ) , GetKernelWorkGroupSize ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , GetKernelPreferredWorkGroupSizeMultiple ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , RetainEvent ( IdRef , ) , ReleaseEvent ( IdRef , ) , CreateUserEvent ( IdResultType , IdResult , ) , IsValidEvent ( IdResultType , IdResult , IdRef , ) , SetUserEventStatus ( IdRef , IdRef , ) , CaptureEventProfilingInfo ( IdRef , IdRef , IdRef , ) , GetDefaultQueue ( IdResultType , IdResult , ) , BuildNDRange ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , ImageSparseSampleImplicitLod ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , ImageSparseSampleExplicitLod ( IdResultType , IdResult , IdRef , IdRef , ImageOperands , ) , ImageSparseSampleDrefImplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageSparseSampleDrefExplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , ImageOperands , ) , ImageSparseSampleProjImplicitLod ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , ImageSparseSampleProjExplicitLod ( IdResultType , IdResult , IdRef , IdRef , ImageOperands , ) , ImageSparseSampleProjDrefImplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageSparseSampleProjDrefExplicitLod ( IdResultType , IdResult , IdRef , IdRef , IdRef , ImageOperands , ) , ImageSparseFetch ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , ImageSparseGather ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageSparseDrefGather ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , ImageSparseTexelsResident ( IdResultType , IdResult , IdRef , ) , NoLine , AtomicFlagTestAndSet ( IdResultType , IdResult , IdRef , IdScope , IdMemorySemantics , ) , AtomicFlagClear ( IdRef , IdScope , IdMemorySemantics , ) , ImageSparseRead ( IdResultType , IdResult , IdRef , IdRef , Option < ImageOperands > , ) , SizeOf ( IdResultType , IdResult , IdRef , ) , TypePipeStorage ( IdResult , ) , ConstantPipeStorage ( IdResultType , IdResult , LiteralInteger , LiteralInteger , LiteralInteger , ) , CreatePipeFromPipeStorage ( IdResultType , IdResult , IdRef , ) , GetKernelLocalSizeForSubgroupCount ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , ) , GetKernelMaxNumSubgroups ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , TypeNamedBarrier ( IdResult , ) , NamedBarrierInitialize ( IdResultType , IdResult , IdRef , ) , MemoryNamedBarrier ( IdRef , IdScope , IdMemorySemantics , ) , ModuleProcessed ( LiteralString , ) , ExecutionModeId ( IdRef , ExecutionMode , ) , DecorateId ( IdRef , Decoration , ) , GroupNonUniformElect ( IdResultType , IdResult , IdScope , ) , GroupNonUniformAll ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformAny ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformAllEqual ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformBroadcast ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupNonUniformBroadcastFirst ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformBallot ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformInverseBallot ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformBallotBitExtract ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupNonUniformBallotBitCount ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupNonUniformBallotFindLSB ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformBallotFindMSB ( IdResultType , IdResult , IdScope , IdRef , ) , GroupNonUniformShuffle ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupNonUniformShuffleXor ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupNonUniformShuffleUp ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupNonUniformShuffleDown ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupNonUniformIAdd ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformFAdd ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformIMul ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformFMul ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformSMin ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformUMin ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformFMin ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformSMax ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformUMax ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformFMax ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformBitwiseAnd ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformBitwiseOr ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformBitwiseXor ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformLogicalAnd ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformLogicalOr ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformLogicalXor ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , Option < IdRef > , ) , GroupNonUniformQuadBroadcast ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , GroupNonUniformQuadSwap ( IdResultType , IdResult , IdScope , IdRef , IdRef , ) , CopyLogical ( IdResultType , IdResult , IdRef , ) , PtrEqual ( IdResultType , IdResult , IdRef , IdRef , ) , PtrNotEqual ( IdResultType , IdResult , IdRef , IdRef , ) , PtrDiff ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupBallotKHR ( IdResultType , IdResult , IdRef , ) , SubgroupFirstInvocationKHR ( IdResultType , IdResult , IdRef , ) , SubgroupAllKHR ( IdResultType , IdResult , IdRef , ) , SubgroupAnyKHR ( IdResultType , IdResult , IdRef , ) , SubgroupAllEqualKHR ( IdResultType , IdResult , IdRef , ) , SubgroupReadInvocationKHR ( IdResultType , IdResult , IdRef , IdRef , ) , GroupIAddNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupFAddNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupFMinNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupUMinNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupSMinNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupFMaxNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupUMaxNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , GroupSMaxNonUniformAMD ( IdResultType , IdResult , IdScope , GroupOperation , IdRef , ) , FragmentMaskFetchAMD ( IdResultType , IdResult , IdRef , IdRef , ) , FragmentFetchAMD ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , ReadClockKHR ( IdResultType , IdResult , IdScope , ) , ImageSampleFootprintNV ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , Option < ImageOperands > , ) , GroupNonUniformPartitionNV ( IdResultType , IdResult , IdRef , ) , WritePackedPrimitiveIndices4x8NV ( IdRef , IdRef , ) , ReportIntersectionNV ( IdResultType , IdResult , IdRef , IdRef , ) , IgnoreIntersectionNV , TerminateRayNV , TraceNV ( IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , TypeAccelerationStructureNV ( IdResult , ) , ExecuteCallableNV ( IdRef , IdRef , ) , TypeCooperativeMatrixNV ( IdResult , IdRef , IdScope , IdRef , IdRef , ) , CooperativeMatrixLoadNV ( IdResultType , IdResult , IdRef , IdRef , IdRef , Option < MemoryAccess > , ) , CooperativeMatrixStoreNV ( IdRef , IdRef , IdRef , IdRef , Option < MemoryAccess > , ) , CooperativeMatrixMulAddNV ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , CooperativeMatrixLengthNV ( IdResultType , IdResult , IdRef , ) , BeginInvocationInterlockEXT , EndInvocationInterlockEXT , DemoteToHelperInvocationEXT , IsHelperInvocationEXT ( IdResultType , IdResult , ) , SubgroupShuffleINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupShuffleDownINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupShuffleUpINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupShuffleXorINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupBlockReadINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupBlockWriteINTEL ( IdRef , IdRef , ) , SubgroupImageBlockReadINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupImageBlockWriteINTEL ( IdRef , IdRef , IdRef , ) , SubgroupImageMediaBlockReadINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupImageMediaBlockWriteINTEL ( IdRef , IdRef , IdRef , IdRef , IdRef , ) , UCountLeadingZerosINTEL ( IdResultType , IdResult , IdRef , ) , UCountTrailingZerosINTEL ( IdResultType , IdResult , IdRef , ) , AbsISubINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , AbsUSubINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , IAddSatINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , UAddSatINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , IAverageINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , UAverageINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , IAverageRoundedINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , UAverageRoundedINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , ISubSatINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , USubSatINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , IMul32x16INTEL ( IdResultType , IdResult , IdRef , IdRef , ) , UMul32x16INTEL ( IdResultType , IdResult , IdRef , IdRef , ) , DecorateString ( IdRef , Decoration , ) , DecorateStringGOOGLE ( IdRef , Decoration , ) , MemberDecorateString ( IdRef , LiteralInteger , Decoration , ) , MemberDecorateStringGOOGLE ( IdRef , LiteralInteger , Decoration , ) , VmeImageINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , TypeVmeImageINTEL ( IdResult , IdRef , ) , TypeAvcImePayloadINTEL ( IdResult , ) , TypeAvcRefPayloadINTEL ( IdResult , ) , TypeAvcSicPayloadINTEL ( IdResult , ) , TypeAvcMcePayloadINTEL ( IdResult , ) , TypeAvcMceResultINTEL ( IdResult , ) , TypeAvcImeResultINTEL ( IdResult , ) , TypeAvcImeResultSingleReferenceStreamoutINTEL ( IdResult , ) , TypeAvcImeResultDualReferenceStreamoutINTEL ( IdResult , ) , TypeAvcImeSingleReferenceStreaminINTEL ( IdResult , ) , TypeAvcImeDualReferenceStreaminINTEL ( IdResult , ) , TypeAvcRefResultINTEL ( IdResult , ) , TypeAvcSicResultINTEL ( IdResult , ) , SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceGetDefaultInterShapePenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceSetInterShapePenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceSetInterDirectionPenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL ( IdResultType , IdResult , ) , SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL ( IdResultType , IdResult , ) , SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL ( IdResultType , IdResult , ) , SubgroupAvcMceSetMotionVectorCostFunctionINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL ( IdResultType , IdResult , ) , SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL ( IdResultType , IdResult , ) , SubgroupAvcMceSetAcOnlyHaarINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcMceConvertToImePayloadINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceConvertToImeResultINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceConvertToRefPayloadINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceConvertToRefResultINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceConvertToSicPayloadINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceConvertToSicResultINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetMotionVectorsINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetInterDistortionsINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetBestInterDistortionsINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetInterMajorShapeINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetInterMinorShapeINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetInterDirectionsINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetInterMotionVectorCountINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetInterReferenceIdsINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeInitializeINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeSetSingleReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeSetDualReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeRefWindowSizeINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeAdjustRefOffsetINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeConvertToMcePayloadINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeSetMaxMotionVectorCountINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeSetUnidirectionalMixDisableINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeSetWeightedSadINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithSingleReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithDualReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcImeConvertToMceResultINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeGetSingleReferenceStreaminINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeGetDualReferenceStreaminINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeStripSingleReferenceStreamoutINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeStripDualReferenceStreamoutINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcImeGetBorderReachedINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcImeGetTruncatedSearchIndicationINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcFmeInitializeINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcBmeInitializeINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcRefConvertToMcePayloadINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcRefSetBidirectionalMixDisableINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcRefSetBilinearFilterEnableINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcRefEvaluateWithSingleReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcRefEvaluateWithDualReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcRefEvaluateWithMultiReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcRefConvertToMceResultINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicInitializeINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicConfigureSkcINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcSicConfigureIpeLumaINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcSicConfigureIpeLumaChromaINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcSicGetMotionVectorMaskINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcSicConvertToMcePayloadINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicSetIntraLumaShapePenaltyINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcSicSetBilinearFilterEnableINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicSetSkcForwardTransformEnableINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcSicSetBlockBasedRawSkipSadINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcSicEvaluateIpeINTEL ( IdResultType , IdResult , IdRef , IdRef , ) , SubgroupAvcSicEvaluateWithSingleReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcSicEvaluateWithDualReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcSicEvaluateWithMultiReferenceINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , ) , SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL ( IdResultType , IdResult , IdRef , IdRef , IdRef , IdRef , ) , SubgroupAvcSicConvertToMceResultINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetIpeLumaShapeINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetBestIpeLumaDistortionINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetBestIpeChromaDistortionINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetPackedIpeLumaModesINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetIpeChromaModeINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL ( IdResultType , IdResult , IdRef , ) , SubgroupAvcSicGetInterRawSadsINTEL ( IdResultType , IdResult , IdRef , ) , None ( u16 ) , } impl Instruction { pub fn from_raw ( op_code : u16 , mut data : & [ u32 ] ) -> Self { match op_code { 0u16 => Instruction :: Nop , 1u16 => { println ! ( "{}, {:?}" , "Undef" , data ) ; let instr = Instruction :: Undef ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 2u16 => { println ! ( "{}, {:?}" , "SourceContinued" , data ) ; let instr = Instruction :: SourceContinued ( { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 3u16 => { println ! ( "{}, {:?}" , "Source" , data ) ; let instr = Instruction :: Source ( { let ( v , d ) = SourceLanguage :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , { if data . len ( ) > 0 { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 4u16 => { println ! ( "{}, {:?}" , "SourceExtension" , data ) ; let instr = Instruction :: SourceExtension ( { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5u16 => { println ! ( "{}, {:?}" , "Name" , data ) ; let instr = Instruction :: Name ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 6u16 => { println ! ( "{}, {:?}" , "MemberName" , data ) ; let instr = Instruction :: MemberName ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 7u16 => { println ! ( "{}, {:?}" , "String" , data ) ; let instr = Instruction :: String ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 8u16 => { println ! ( "{}, {:?}" , "Line" , data ) ; let instr = Instruction :: Line ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 10u16 => { println ! ( "{}, {:?}" , "Extension" , data ) ; let instr = Instruction :: Extension ( { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 11u16 => { println ! ( "{}, {:?}" , "ExtInstImport" , data ) ; let instr = Instruction :: ExtInstImport ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 12u16 => { println ! ( "{}, {:?}" , "ExtInst" , data ) ; let instr = Instruction :: ExtInst ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralExtInstInteger :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 14u16 => { println ! ( "{}, {:?}" , "MemoryModel" , data ) ; let instr = Instruction :: MemoryModel ( { let ( v , d ) = AddressingModel :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = MemoryModel :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 15u16 => { println ! ( "{}, {:?}" , "EntryPoint" , data ) ; let instr = Instruction :: EntryPoint ( { let ( v , d ) = ExecutionModel :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 16u16 => { println ! ( "{}, {:?}" , "ExecutionMode" , data ) ; let instr = Instruction :: ExecutionMode ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ExecutionMode :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 17u16 => { println ! ( "{}, {:?}" , "Capability" , data ) ; let instr = Instruction :: Capability ( { let ( v , d ) = Capability :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 19u16 => { println ! ( "{}, {:?}" , "TypeVoid" , data ) ; let instr = Instruction :: TypeVoid ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 20u16 => { println ! ( "{}, {:?}" , "TypeBool" , data ) ; let instr = Instruction :: TypeBool ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 21u16 => { println ! ( "{}, {:?}" , "TypeInt" , data ) ; let instr = Instruction :: TypeInt ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 22u16 => { println ! ( "{}, {:?}" , "TypeFloat" , data ) ; let instr = Instruction :: TypeFloat ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 23u16 => { println ! ( "{}, {:?}" , "TypeVector" , data ) ; let instr = Instruction :: TypeVector ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 24u16 => { println ! ( "{}, {:?}" , "TypeMatrix" , data ) ; let instr = Instruction :: TypeMatrix ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 25u16 => { println ! ( "{}, {:?}" , "TypeImage" , data ) ; let instr = Instruction :: TypeImage ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Dim :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageFormat :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = AccessQualifier :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 26u16 => { println ! ( "{}, {:?}" , "TypeSampler" , data ) ; let instr = Instruction :: TypeSampler ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 27u16 => { println ! ( "{}, {:?}" , "TypeSampledImage" , data ) ; let instr = Instruction :: TypeSampledImage ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 28u16 => { println ! ( "{}, {:?}" , "TypeArray" , data ) ; let instr = Instruction :: TypeArray ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 29u16 => { println ! ( "{}, {:?}" , "TypeRuntimeArray" , data ) ; let instr = Instruction :: TypeRuntimeArray ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 30u16 => { println ! ( "{}, {:?}" , "TypeStruct" , data ) ; let instr = Instruction :: TypeStruct ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 31u16 => { println ! ( "{}, {:?}" , "TypeOpaque" , data ) ; let instr = Instruction :: TypeOpaque ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 32u16 => { println ! ( "{}, {:?}" , "TypePointer" , data ) ; let instr = Instruction :: TypePointer ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = StorageClass :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 33u16 => { println ! ( "{}, {:?}" , "TypeFunction" , data ) ; let instr = Instruction :: TypeFunction ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 34u16 => { println ! ( "{}, {:?}" , "TypeEvent" , data ) ; let instr = Instruction :: TypeEvent ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 35u16 => { println ! ( "{}, {:?}" , "TypeDeviceEvent" , data ) ; let instr = Instruction :: TypeDeviceEvent ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 36u16 => { println ! ( "{}, {:?}" , "TypeReserveId" , data ) ; let instr = Instruction :: TypeReserveId ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 37u16 => { println ! ( "{}, {:?}" , "TypeQueue" , data ) ; let instr = Instruction :: TypeQueue ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 38u16 => { println ! ( "{}, {:?}" , "TypePipe" , data ) ; let instr = Instruction :: TypePipe ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = AccessQualifier :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 39u16 => { println ! ( "{}, {:?}" , "TypeForwardPointer" , data ) ; let instr = Instruction :: TypeForwardPointer ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = StorageClass :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 41u16 => { println ! ( "{}, {:?}" , "ConstantTrue" , data ) ; let instr = Instruction :: ConstantTrue ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 42u16 => { println ! ( "{}, {:?}" , "ConstantFalse" , data ) ; let instr = Instruction :: ConstantFalse ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 43u16 => { println ! ( "{}, {:?}" , "Constant" , data ) ; let instr = Instruction :: Constant ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralContextDependentNumber :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 44u16 => { println ! ( "{}, {:?}" , "ConstantComposite" , data ) ; let instr = Instruction :: ConstantComposite ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 45u16 => { println ! ( "{}, {:?}" , "ConstantSampler" , data ) ; let instr = Instruction :: ConstantSampler ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = SamplerAddressingMode :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = SamplerFilterMode :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 46u16 => { println ! ( "{}, {:?}" , "ConstantNull" , data ) ; let instr = Instruction :: ConstantNull ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 48u16 => { println ! ( "{}, {:?}" , "SpecConstantTrue" , data ) ; let instr = Instruction :: SpecConstantTrue ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 49u16 => { println ! ( "{}, {:?}" , "SpecConstantFalse" , data ) ; let instr = Instruction :: SpecConstantFalse ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 50u16 => { println ! ( "{}, {:?}" , "SpecConstant" , data ) ; let instr = Instruction :: SpecConstant ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralContextDependentNumber :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 51u16 => { println ! ( "{}, {:?}" , "SpecConstantComposite" , data ) ; let instr = Instruction :: SpecConstantComposite ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 52u16 => { println ! ( "{}, {:?}" , "SpecConstantOp" , data ) ; let instr = Instruction :: SpecConstantOp ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralSpecConstantOpInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 54u16 => { println ! ( "{}, {:?}" , "Function" , data ) ; let instr = Instruction :: Function ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = FunctionControl :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 55u16 => { println ! ( "{}, {:?}" , "FunctionParameter" , data ) ; let instr = Instruction :: FunctionParameter ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 56u16 => Instruction :: FunctionEnd , 57u16 => { println ! ( "{}, {:?}" , "FunctionCall" , data ) ; let instr = Instruction :: FunctionCall ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 59u16 => { println ! ( "{}, {:?}" , "Variable" , data ) ; let instr = Instruction :: Variable ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = StorageClass :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 60u16 => { println ! ( "{}, {:?}" , "ImageTexelPointer" , data ) ; let instr = Instruction :: ImageTexelPointer ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 61u16 => { println ! ( "{}, {:?}" , "Load" , data ) ; let instr = Instruction :: Load ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 62u16 => { println ! ( "{}, {:?}" , "Store" , data ) ; let instr = Instruction :: Store ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 63u16 => { println ! ( "{}, {:?}" , "CopyMemory" , data ) ; let instr = Instruction :: CopyMemory ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 64u16 => { println ! ( "{}, {:?}" , "CopyMemorySized" , data ) ; let instr = Instruction :: CopyMemorySized ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 65u16 => { println ! ( "{}, {:?}" , "AccessChain" , data ) ; let instr = Instruction :: AccessChain ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 66u16 => { println ! ( "{}, {:?}" , "InBoundsAccessChain" , data ) ; let instr = Instruction :: InBoundsAccessChain ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 67u16 => { println ! ( "{}, {:?}" , "PtrAccessChain" , data ) ; let instr = Instruction :: PtrAccessChain ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 68u16 => { println ! ( "{}, {:?}" , "ArrayLength" , data ) ; let instr = Instruction :: ArrayLength ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 69u16 => { println ! ( "{}, {:?}" , "GenericPtrMemSemantics" , data ) ; let instr = Instruction :: GenericPtrMemSemantics ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 70u16 => { println ! ( "{}, {:?}" , "InBoundsPtrAccessChain" , data ) ; let instr = Instruction :: InBoundsPtrAccessChain ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 71u16 => { println ! ( "{}, {:?}" , "Decorate" , data ) ; let instr = Instruction :: Decorate ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Decoration :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 72u16 => { println ! ( "{}, {:?}" , "MemberDecorate" , data ) ; let instr = Instruction :: MemberDecorate ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Decoration :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 73u16 => { println ! ( "{}, {:?}" , "DecorationGroup" , data ) ; let instr = Instruction :: DecorationGroup ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 74u16 => { println ! ( "{}, {:?}" , "GroupDecorate" , data ) ; let instr = Instruction :: GroupDecorate ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 75u16 => { println ! ( "{}, {:?}" , "GroupMemberDecorate" , data ) ; let instr = Instruction :: GroupMemberDecorate ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = PairIdRefLiteralInteger :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 77u16 => { println ! ( "{}, {:?}" , "VectorExtractDynamic" , data ) ; let instr = Instruction :: VectorExtractDynamic ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 78u16 => { println ! ( "{}, {:?}" , "VectorInsertDynamic" , data ) ; let instr = Instruction :: VectorInsertDynamic ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 79u16 => { println ! ( "{}, {:?}" , "VectorShuffle" , data ) ; let instr = Instruction :: VectorShuffle ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 80u16 => { println ! ( "{}, {:?}" , "CompositeConstruct" , data ) ; let instr = Instruction :: CompositeConstruct ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 81u16 => { println ! ( "{}, {:?}" , "CompositeExtract" , data ) ; let instr = Instruction :: CompositeExtract ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 82u16 => { println ! ( "{}, {:?}" , "CompositeInsert" , data ) ; let instr = Instruction :: CompositeInsert ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 83u16 => { println ! ( "{}, {:?}" , "CopyObject" , data ) ; let instr = Instruction :: CopyObject ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 84u16 => { println ! ( "{}, {:?}" , "Transpose" , data ) ; let instr = Instruction :: Transpose ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 86u16 => { println ! ( "{}, {:?}" , "SampledImage" , data ) ; let instr = Instruction :: SampledImage ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 87u16 => { println ! ( "{}, {:?}" , "ImageSampleImplicitLod" , data ) ; let instr = Instruction :: ImageSampleImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 88u16 => { println ! ( "{}, {:?}" , "ImageSampleExplicitLod" , data ) ; let instr = Instruction :: ImageSampleExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 89u16 => { println ! ( "{}, {:?}" , "ImageSampleDrefImplicitLod" , data ) ; let instr = Instruction :: ImageSampleDrefImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 90u16 => { println ! ( "{}, {:?}" , "ImageSampleDrefExplicitLod" , data ) ; let instr = Instruction :: ImageSampleDrefExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 91u16 => { println ! ( "{}, {:?}" , "ImageSampleProjImplicitLod" , data ) ; let instr = Instruction :: ImageSampleProjImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 92u16 => { println ! ( "{}, {:?}" , "ImageSampleProjExplicitLod" , data ) ; let instr = Instruction :: ImageSampleProjExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 93u16 => { println ! ( "{}, {:?}" , "ImageSampleProjDrefImplicitLod" , data ) ; let instr = Instruction :: ImageSampleProjDrefImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 94u16 => { println ! ( "{}, {:?}" , "ImageSampleProjDrefExplicitLod" , data ) ; let instr = Instruction :: ImageSampleProjDrefExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 95u16 => { println ! ( "{}, {:?}" , "ImageFetch" , data ) ; let instr = Instruction :: ImageFetch ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 96u16 => { println ! ( "{}, {:?}" , "ImageGather" , data ) ; let instr = Instruction :: ImageGather ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 97u16 => { println ! ( "{}, {:?}" , "ImageDrefGather" , data ) ; let instr = Instruction :: ImageDrefGather ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 98u16 => { println ! ( "{}, {:?}" , "ImageRead" , data ) ; let instr = Instruction :: ImageRead ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 99u16 => { println ! ( "{}, {:?}" , "ImageWrite" , data ) ; let instr = Instruction :: ImageWrite ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 100u16 => { println ! ( "{}, {:?}" , "Image" , data ) ; let instr = Instruction :: Image ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 101u16 => { println ! ( "{}, {:?}" , "ImageQueryFormat" , data ) ; let instr = Instruction :: ImageQueryFormat ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 102u16 => { println ! ( "{}, {:?}" , "ImageQueryOrder" , data ) ; let instr = Instruction :: ImageQueryOrder ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 103u16 => { println ! ( "{}, {:?}" , "ImageQuerySizeLod" , data ) ; let instr = Instruction :: ImageQuerySizeLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 104u16 => { println ! ( "{}, {:?}" , "ImageQuerySize" , data ) ; let instr = Instruction :: ImageQuerySize ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 105u16 => { println ! ( "{}, {:?}" , "ImageQueryLod" , data ) ; let instr = Instruction :: ImageQueryLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 106u16 => { println ! ( "{}, {:?}" , "ImageQueryLevels" , data ) ; let instr = Instruction :: ImageQueryLevels ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 107u16 => { println ! ( "{}, {:?}" , "ImageQuerySamples" , data ) ; let instr = Instruction :: ImageQuerySamples ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 109u16 => { println ! ( "{}, {:?}" , "ConvertFToU" , data ) ; let instr = Instruction :: ConvertFToU ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 110u16 => { println ! ( "{}, {:?}" , "ConvertFToS" , data ) ; let instr = Instruction :: ConvertFToS ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 111u16 => { println ! ( "{}, {:?}" , "ConvertSToF" , data ) ; let instr = Instruction :: ConvertSToF ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 112u16 => { println ! ( "{}, {:?}" , "ConvertUToF" , data ) ; let instr = Instruction :: ConvertUToF ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 113u16 => { println ! ( "{}, {:?}" , "UConvert" , data ) ; let instr = Instruction :: UConvert ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 114u16 => { println ! ( "{}, {:?}" , "SConvert" , data ) ; let instr = Instruction :: SConvert ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 115u16 => { println ! ( "{}, {:?}" , "FConvert" , data ) ; let instr = Instruction :: FConvert ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 116u16 => { println ! ( "{}, {:?}" , "QuantizeToF16" , data ) ; let instr = Instruction :: QuantizeToF16 ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 117u16 => { println ! ( "{}, {:?}" , "ConvertPtrToU" , data ) ; let instr = Instruction :: ConvertPtrToU ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 118u16 => { println ! ( "{}, {:?}" , "SatConvertSToU" , data ) ; let instr = Instruction :: SatConvertSToU ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 119u16 => { println ! ( "{}, {:?}" , "SatConvertUToS" , data ) ; let instr = Instruction :: SatConvertUToS ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 120u16 => { println ! ( "{}, {:?}" , "ConvertUToPtr" , data ) ; let instr = Instruction :: ConvertUToPtr ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 121u16 => { println ! ( "{}, {:?}" , "PtrCastToGeneric" , data ) ; let instr = Instruction :: PtrCastToGeneric ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 122u16 => { println ! ( "{}, {:?}" , "GenericCastToPtr" , data ) ; let instr = Instruction :: GenericCastToPtr ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 123u16 => { println ! ( "{}, {:?}" , "GenericCastToPtrExplicit" , data ) ; let instr = Instruction :: GenericCastToPtrExplicit ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = StorageClass :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 124u16 => { println ! ( "{}, {:?}" , "Bitcast" , data ) ; let instr = Instruction :: Bitcast ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 126u16 => { println ! ( "{}, {:?}" , "SNegate" , data ) ; let instr = Instruction :: SNegate ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 127u16 => { println ! ( "{}, {:?}" , "FNegate" , data ) ; let instr = Instruction :: FNegate ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 128u16 => { println ! ( "{}, {:?}" , "IAdd" , data ) ; let instr = Instruction :: IAdd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 129u16 => { println ! ( "{}, {:?}" , "FAdd" , data ) ; let instr = Instruction :: FAdd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 130u16 => { println ! ( "{}, {:?}" , "ISub" , data ) ; let instr = Instruction :: ISub ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 131u16 => { println ! ( "{}, {:?}" , "FSub" , data ) ; let instr = Instruction :: FSub ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 132u16 => { println ! ( "{}, {:?}" , "IMul" , data ) ; let instr = Instruction :: IMul ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 133u16 => { println ! ( "{}, {:?}" , "FMul" , data ) ; let instr = Instruction :: FMul ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 134u16 => { println ! ( "{}, {:?}" , "UDiv" , data ) ; let instr = Instruction :: UDiv ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 135u16 => { println ! ( "{}, {:?}" , "SDiv" , data ) ; let instr = Instruction :: SDiv ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 136u16 => { println ! ( "{}, {:?}" , "FDiv" , data ) ; let instr = Instruction :: FDiv ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 137u16 => { println ! ( "{}, {:?}" , "UMod" , data ) ; let instr = Instruction :: UMod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 138u16 => { println ! ( "{}, {:?}" , "SRem" , data ) ; let instr = Instruction :: SRem ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 139u16 => { println ! ( "{}, {:?}" , "SMod" , data ) ; let instr = Instruction :: SMod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 140u16 => { println ! ( "{}, {:?}" , "FRem" , data ) ; let instr = Instruction :: FRem ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 141u16 => { println ! ( "{}, {:?}" , "FMod" , data ) ; let instr = Instruction :: FMod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 142u16 => { println ! ( "{}, {:?}" , "VectorTimesScalar" , data ) ; let instr = Instruction :: VectorTimesScalar ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 143u16 => { println ! ( "{}, {:?}" , "MatrixTimesScalar" , data ) ; let instr = Instruction :: MatrixTimesScalar ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 144u16 => { println ! ( "{}, {:?}" , "VectorTimesMatrix" , data ) ; let instr = Instruction :: VectorTimesMatrix ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 145u16 => { println ! ( "{}, {:?}" , "MatrixTimesVector" , data ) ; let instr = Instruction :: MatrixTimesVector ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 146u16 => { println ! ( "{}, {:?}" , "MatrixTimesMatrix" , data ) ; let instr = Instruction :: MatrixTimesMatrix ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 147u16 => { println ! ( "{}, {:?}" , "OuterProduct" , data ) ; let instr = Instruction :: OuterProduct ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 148u16 => { println ! ( "{}, {:?}" , "Dot" , data ) ; let instr = Instruction :: Dot ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 149u16 => { println ! ( "{}, {:?}" , "IAddCarry" , data ) ; let instr = Instruction :: IAddCarry ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 150u16 => { println ! ( "{}, {:?}" , "ISubBorrow" , data ) ; let instr = Instruction :: ISubBorrow ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 151u16 => { println ! ( "{}, {:?}" , "UMulExtended" , data ) ; let instr = Instruction :: UMulExtended ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 152u16 => { println ! ( "{}, {:?}" , "SMulExtended" , data ) ; let instr = Instruction :: SMulExtended ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 154u16 => { println ! ( "{}, {:?}" , "Any" , data ) ; let instr = Instruction :: Any ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 155u16 => { println ! ( "{}, {:?}" , "All" , data ) ; let instr = Instruction :: All ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 156u16 => { println ! ( "{}, {:?}" , "IsNan" , data ) ; let instr = Instruction :: IsNan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 157u16 => { println ! ( "{}, {:?}" , "IsInf" , data ) ; let instr = Instruction :: IsInf ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 158u16 => { println ! ( "{}, {:?}" , "IsFinite" , data ) ; let instr = Instruction :: IsFinite ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 159u16 => { println ! ( "{}, {:?}" , "IsNormal" , data ) ; let instr = Instruction :: IsNormal ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 160u16 => { println ! ( "{}, {:?}" , "SignBitSet" , data ) ; let instr = Instruction :: SignBitSet ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 161u16 => { println ! ( "{}, {:?}" , "LessOrGreater" , data ) ; let instr = Instruction :: LessOrGreater ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 162u16 => { println ! ( "{}, {:?}" , "Ordered" , data ) ; let instr = Instruction :: Ordered ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 163u16 => { println ! ( "{}, {:?}" , "Unordered" , data ) ; let instr = Instruction :: Unordered ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 164u16 => { println ! ( "{}, {:?}" , "LogicalEqual" , data ) ; let instr = Instruction :: LogicalEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 165u16 => { println ! ( "{}, {:?}" , "LogicalNotEqual" , data ) ; let instr = Instruction :: LogicalNotEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 166u16 => { println ! ( "{}, {:?}" , "LogicalOr" , data ) ; let instr = Instruction :: LogicalOr ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 167u16 => { println ! ( "{}, {:?}" , "LogicalAnd" , data ) ; let instr = Instruction :: LogicalAnd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 168u16 => { println ! ( "{}, {:?}" , "LogicalNot" , data ) ; let instr = Instruction :: LogicalNot ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 169u16 => { println ! ( "{}, {:?}" , "Select" , data ) ; let instr = Instruction :: Select ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 170u16 => { println ! ( "{}, {:?}" , "IEqual" , data ) ; let instr = Instruction :: IEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 171u16 => { println ! ( "{}, {:?}" , "INotEqual" , data ) ; let instr = Instruction :: INotEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 172u16 => { println ! ( "{}, {:?}" , "UGreaterThan" , data ) ; let instr = Instruction :: UGreaterThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 173u16 => { println ! ( "{}, {:?}" , "SGreaterThan" , data ) ; let instr = Instruction :: SGreaterThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 174u16 => { println ! ( "{}, {:?}" , "UGreaterThanEqual" , data ) ; let instr = Instruction :: UGreaterThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 175u16 => { println ! ( "{}, {:?}" , "SGreaterThanEqual" , data ) ; let instr = Instruction :: SGreaterThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 176u16 => { println ! ( "{}, {:?}" , "ULessThan" , data ) ; let instr = Instruction :: ULessThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 177u16 => { println ! ( "{}, {:?}" , "SLessThan" , data ) ; let instr = Instruction :: SLessThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 178u16 => { println ! ( "{}, {:?}" , "ULessThanEqual" , data ) ; let instr = Instruction :: ULessThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 179u16 => { println ! ( "{}, {:?}" , "SLessThanEqual" , data ) ; let instr = Instruction :: SLessThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 180u16 => { println ! ( "{}, {:?}" , "FOrdEqual" , data ) ; let instr = Instruction :: FOrdEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 181u16 => { println ! ( "{}, {:?}" , "FUnordEqual" , data ) ; let instr = Instruction :: FUnordEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 182u16 => { println ! ( "{}, {:?}" , "FOrdNotEqual" , data ) ; let instr = Instruction :: FOrdNotEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 183u16 => { println ! ( "{}, {:?}" , "FUnordNotEqual" , data ) ; let instr = Instruction :: FUnordNotEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 184u16 => { println ! ( "{}, {:?}" , "FOrdLessThan" , data ) ; let instr = Instruction :: FOrdLessThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 185u16 => { println ! ( "{}, {:?}" , "FUnordLessThan" , data ) ; let instr = Instruction :: FUnordLessThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 186u16 => { println ! ( "{}, {:?}" , "FOrdGreaterThan" , data ) ; let instr = Instruction :: FOrdGreaterThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 187u16 => { println ! ( "{}, {:?}" , "FUnordGreaterThan" , data ) ; let instr = Instruction :: FUnordGreaterThan ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 188u16 => { println ! ( "{}, {:?}" , "FOrdLessThanEqual" , data ) ; let instr = Instruction :: FOrdLessThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 189u16 => { println ! ( "{}, {:?}" , "FUnordLessThanEqual" , data ) ; let instr = Instruction :: FUnordLessThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 190u16 => { println ! ( "{}, {:?}" , "FOrdGreaterThanEqual" , data ) ; let instr = Instruction :: FOrdGreaterThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 191u16 => { println ! ( "{}, {:?}" , "FUnordGreaterThanEqual" , data ) ; let instr = Instruction :: FUnordGreaterThanEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 194u16 => { println ! ( "{}, {:?}" , "ShiftRightLogical" , data ) ; let instr = Instruction :: ShiftRightLogical ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 195u16 => { println ! ( "{}, {:?}" , "ShiftRightArithmetic" , data ) ; let instr = Instruction :: ShiftRightArithmetic ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 196u16 => { println ! ( "{}, {:?}" , "ShiftLeftLogical" , data ) ; let instr = Instruction :: ShiftLeftLogical ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 197u16 => { println ! ( "{}, {:?}" , "BitwiseOr" , data ) ; let instr = Instruction :: BitwiseOr ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 198u16 => { println ! ( "{}, {:?}" , "BitwiseXor" , data ) ; let instr = Instruction :: BitwiseXor ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 199u16 => { println ! ( "{}, {:?}" , "BitwiseAnd" , data ) ; let instr = Instruction :: BitwiseAnd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 200u16 => { println ! ( "{}, {:?}" , "Not" , data ) ; let instr = Instruction :: Not ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 201u16 => { println ! ( "{}, {:?}" , "BitFieldInsert" , data ) ; let instr = Instruction :: BitFieldInsert ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 202u16 => { println ! ( "{}, {:?}" , "BitFieldSExtract" , data ) ; let instr = Instruction :: BitFieldSExtract ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 203u16 => { println ! ( "{}, {:?}" , "BitFieldUExtract" , data ) ; let instr = Instruction :: BitFieldUExtract ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 204u16 => { println ! ( "{}, {:?}" , "BitReverse" , data ) ; let instr = Instruction :: BitReverse ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 205u16 => { println ! ( "{}, {:?}" , "BitCount" , data ) ; let instr = Instruction :: BitCount ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 207u16 => { println ! ( "{}, {:?}" , "DPdx" , data ) ; let instr = Instruction :: DPdx ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 208u16 => { println ! ( "{}, {:?}" , "DPdy" , data ) ; let instr = Instruction :: DPdy ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 209u16 => { println ! ( "{}, {:?}" , "Fwidth" , data ) ; let instr = Instruction :: Fwidth ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 210u16 => { println ! ( "{}, {:?}" , "DPdxFine" , data ) ; let instr = Instruction :: DPdxFine ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 211u16 => { println ! ( "{}, {:?}" , "DPdyFine" , data ) ; let instr = Instruction :: DPdyFine ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 212u16 => { println ! ( "{}, {:?}" , "FwidthFine" , data ) ; let instr = Instruction :: FwidthFine ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 213u16 => { println ! ( "{}, {:?}" , "DPdxCoarse" , data ) ; let instr = Instruction :: DPdxCoarse ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 214u16 => { println ! ( "{}, {:?}" , "DPdyCoarse" , data ) ; let instr = Instruction :: DPdyCoarse ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 215u16 => { println ! ( "{}, {:?}" , "FwidthCoarse" , data ) ; let instr = Instruction :: FwidthCoarse ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 218u16 => Instruction :: EmitVertex , 219u16 => Instruction :: EndPrimitive , 220u16 => { println ! ( "{}, {:?}" , "EmitStreamVertex" , data ) ; let instr = Instruction :: EmitStreamVertex ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 221u16 => { println ! ( "{}, {:?}" , "EndStreamPrimitive" , data ) ; let instr = Instruction :: EndStreamPrimitive ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 224u16 => { println ! ( "{}, {:?}" , "ControlBarrier" , data ) ; let instr = Instruction :: ControlBarrier ( { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 225u16 => { println ! ( "{}, {:?}" , "MemoryBarrier" , data ) ; let instr = Instruction :: MemoryBarrier ( { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 227u16 => { println ! ( "{}, {:?}" , "AtomicLoad" , data ) ; let instr = Instruction :: AtomicLoad ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 228u16 => { println ! ( "{}, {:?}" , "AtomicStore" , data ) ; let instr = Instruction :: AtomicStore ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 229u16 => { println ! ( "{}, {:?}" , "AtomicExchange" , data ) ; let instr = Instruction :: AtomicExchange ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 230u16 => { println ! ( "{}, {:?}" , "AtomicCompareExchange" , data ) ; let instr = Instruction :: AtomicCompareExchange ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 231u16 => { println ! ( "{}, {:?}" , "AtomicCompareExchangeWeak" , data ) ; let instr = Instruction :: AtomicCompareExchangeWeak ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 232u16 => { println ! ( "{}, {:?}" , "AtomicIIncrement" , data ) ; let instr = Instruction :: AtomicIIncrement ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 233u16 => { println ! ( "{}, {:?}" , "AtomicIDecrement" , data ) ; let instr = Instruction :: AtomicIDecrement ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 234u16 => { println ! ( "{}, {:?}" , "AtomicIAdd" , data ) ; let instr = Instruction :: AtomicIAdd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 235u16 => { println ! ( "{}, {:?}" , "AtomicISub" , data ) ; let instr = Instruction :: AtomicISub ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 236u16 => { println ! ( "{}, {:?}" , "AtomicSMin" , data ) ; let instr = Instruction :: AtomicSMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 237u16 => { println ! ( "{}, {:?}" , "AtomicUMin" , data ) ; let instr = Instruction :: AtomicUMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 238u16 => { println ! ( "{}, {:?}" , "AtomicSMax" , data ) ; let instr = Instruction :: AtomicSMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 239u16 => { println ! ( "{}, {:?}" , "AtomicUMax" , data ) ; let instr = Instruction :: AtomicUMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 240u16 => { println ! ( "{}, {:?}" , "AtomicAnd" , data ) ; let instr = Instruction :: AtomicAnd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 241u16 => { println ! ( "{}, {:?}" , "AtomicOr" , data ) ; let instr = Instruction :: AtomicOr ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 242u16 => { println ! ( "{}, {:?}" , "AtomicXor" , data ) ; let instr = Instruction :: AtomicXor ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 245u16 => { println ! ( "{}, {:?}" , "Phi" , data ) ; let instr = Instruction :: Phi ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = PairIdRefIdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 246u16 => { println ! ( "{}, {:?}" , "LoopMerge" , data ) ; let instr = Instruction :: LoopMerge ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LoopControl :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 247u16 => { println ! ( "{}, {:?}" , "SelectionMerge" , data ) ; let instr = Instruction :: SelectionMerge ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = SelectionControl :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 248u16 => { println ! ( "{}, {:?}" , "Label" , data ) ; let instr = Instruction :: Label ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 249u16 => { println ! ( "{}, {:?}" , "Branch" , data ) ; let instr = Instruction :: Branch ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 250u16 => { println ! ( "{}, {:?}" , "BranchConditional" , data ) ; let instr = Instruction :: BranchConditional ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 251u16 => { println ! ( "{}, {:?}" , "Switch" , data ) ; let instr = Instruction :: Switch ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = PairLiteralIntegerIdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 252u16 => Instruction :: Kill , 253u16 => Instruction :: Return , 254u16 => { println ! ( "{}, {:?}" , "ReturnValue" , data ) ; let instr = Instruction :: ReturnValue ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 255u16 => Instruction :: Unreachable , 256u16 => { println ! ( "{}, {:?}" , "LifetimeStart" , data ) ; let instr = Instruction :: LifetimeStart ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 257u16 => { println ! ( "{}, {:?}" , "LifetimeStop" , data ) ; let instr = Instruction :: LifetimeStop ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 259u16 => { println ! ( "{}, {:?}" , "GroupAsyncCopy" , data ) ; let instr = Instruction :: GroupAsyncCopy ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 260u16 => { println ! ( "{}, {:?}" , "GroupWaitEvents" , data ) ; let instr = Instruction :: GroupWaitEvents ( { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 261u16 => { println ! ( "{}, {:?}" , "GroupAll" , data ) ; let instr = Instruction :: GroupAll ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 262u16 => { println ! ( "{}, {:?}" , "GroupAny" , data ) ; let instr = Instruction :: GroupAny ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 263u16 => { println ! ( "{}, {:?}" , "GroupBroadcast" , data ) ; let instr = Instruction :: GroupBroadcast ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 264u16 => { println ! ( "{}, {:?}" , "GroupIAdd" , data ) ; let instr = Instruction :: GroupIAdd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 265u16 => { println ! ( "{}, {:?}" , "GroupFAdd" , data ) ; let instr = Instruction :: GroupFAdd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 266u16 => { println ! ( "{}, {:?}" , "GroupFMin" , data ) ; let instr = Instruction :: GroupFMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 267u16 => { println ! ( "{}, {:?}" , "GroupUMin" , data ) ; let instr = Instruction :: GroupUMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 268u16 => { println ! ( "{}, {:?}" , "GroupSMin" , data ) ; let instr = Instruction :: GroupSMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 269u16 => { println ! ( "{}, {:?}" , "GroupFMax" , data ) ; let instr = Instruction :: GroupFMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 270u16 => { println ! ( "{}, {:?}" , "GroupUMax" , data ) ; let instr = Instruction :: GroupUMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 271u16 => { println ! ( "{}, {:?}" , "GroupSMax" , data ) ; let instr = Instruction :: GroupSMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 274u16 => { println ! ( "{}, {:?}" , "ReadPipe" , data ) ; let instr = Instruction :: ReadPipe ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 275u16 => { println ! ( "{}, {:?}" , "WritePipe" , data ) ; let instr = Instruction :: WritePipe ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 276u16 => { println ! ( "{}, {:?}" , "ReservedReadPipe" , data ) ; let instr = Instruction :: ReservedReadPipe ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 277u16 => { println ! ( "{}, {:?}" , "ReservedWritePipe" , data ) ; let instr = Instruction :: ReservedWritePipe ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 278u16 => { println ! ( "{}, {:?}" , "ReserveReadPipePackets" , data ) ; let instr = Instruction :: ReserveReadPipePackets ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 279u16 => { println ! ( "{}, {:?}" , "ReserveWritePipePackets" , data ) ; let instr = Instruction :: ReserveWritePipePackets ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 280u16 => { println ! ( "{}, {:?}" , "CommitReadPipe" , data ) ; let instr = Instruction :: CommitReadPipe ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 281u16 => { println ! ( "{}, {:?}" , "CommitWritePipe" , data ) ; let instr = Instruction :: CommitWritePipe ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 282u16 => { println ! ( "{}, {:?}" , "IsValidReserveId" , data ) ; let instr = Instruction :: IsValidReserveId ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 283u16 => { println ! ( "{}, {:?}" , "GetNumPipePackets" , data ) ; let instr = Instruction :: GetNumPipePackets ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 284u16 => { println ! ( "{}, {:?}" , "GetMaxPipePackets" , data ) ; let instr = Instruction :: GetMaxPipePackets ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 285u16 => { println ! ( "{}, {:?}" , "GroupReserveReadPipePackets" , data ) ; let instr = Instruction :: GroupReserveReadPipePackets ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 286u16 => { println ! ( "{}, {:?}" , "GroupReserveWritePipePackets" , data ) ; let instr = Instruction :: GroupReserveWritePipePackets ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 287u16 => { println ! ( "{}, {:?}" , "GroupCommitReadPipe" , data ) ; let instr = Instruction :: GroupCommitReadPipe ( { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 288u16 => { println ! ( "{}, {:?}" , "GroupCommitWritePipe" , data ) ; let instr = Instruction :: GroupCommitWritePipe ( { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 291u16 => { println ! ( "{}, {:?}" , "EnqueueMarker" , data ) ; let instr = Instruction :: EnqueueMarker ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 292u16 => { println ! ( "{}, {:?}" , "EnqueueKernel" , data ) ; let instr = Instruction :: EnqueueKernel ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let mut v = vec ! [ ] ; while data . len ( ) > 0 { let ( s , d ) = IdRef :: from_raw ( data ) ; data = d ; v . push ( s ) ; } v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 293u16 => { println ! ( "{}, {:?}" , "GetKernelNDrangeSubGroupCount" , data ) ; let instr = Instruction :: GetKernelNDrangeSubGroupCount ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 294u16 => { println ! ( "{}, {:?}" , "GetKernelNDrangeMaxSubGroupSize" , data ) ; let instr = Instruction :: GetKernelNDrangeMaxSubGroupSize ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 295u16 => { println ! ( "{}, {:?}" , "GetKernelWorkGroupSize" , data ) ; let instr = Instruction :: GetKernelWorkGroupSize ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 296u16 => { println ! ( "{}, {:?}" , "GetKernelPreferredWorkGroupSizeMultiple" , data ) ; let instr = Instruction :: GetKernelPreferredWorkGroupSizeMultiple ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 297u16 => { println ! ( "{}, {:?}" , "RetainEvent" , data ) ; let instr = Instruction :: RetainEvent ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 298u16 => { println ! ( "{}, {:?}" , "ReleaseEvent" , data ) ; let instr = Instruction :: ReleaseEvent ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 299u16 => { println ! ( "{}, {:?}" , "CreateUserEvent" , data ) ; let instr = Instruction :: CreateUserEvent ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 300u16 => { println ! ( "{}, {:?}" , "IsValidEvent" , data ) ; let instr = Instruction :: IsValidEvent ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 301u16 => { println ! ( "{}, {:?}" , "SetUserEventStatus" , data ) ; let instr = Instruction :: SetUserEventStatus ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 302u16 => { println ! ( "{}, {:?}" , "CaptureEventProfilingInfo" , data ) ; let instr = Instruction :: CaptureEventProfilingInfo ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 303u16 => { println ! ( "{}, {:?}" , "GetDefaultQueue" , data ) ; let instr = Instruction :: GetDefaultQueue ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 304u16 => { println ! ( "{}, {:?}" , "BuildNDRange" , data ) ; let instr = Instruction :: BuildNDRange ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 305u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleImplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 306u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleExplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 307u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleDrefImplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleDrefImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 308u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleDrefExplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleDrefExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 309u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleProjImplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleProjImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 310u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleProjExplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleProjExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 311u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleProjDrefImplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleProjDrefImplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 312u16 => { println ! ( "{}, {:?}" , "ImageSparseSampleProjDrefExplicitLod" , data ) ; let instr = Instruction :: ImageSparseSampleProjDrefExplicitLod ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 313u16 => { println ! ( "{}, {:?}" , "ImageSparseFetch" , data ) ; let instr = Instruction :: ImageSparseFetch ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 314u16 => { println ! ( "{}, {:?}" , "ImageSparseGather" , data ) ; let instr = Instruction :: ImageSparseGather ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 315u16 => { println ! ( "{}, {:?}" , "ImageSparseDrefGather" , data ) ; let instr = Instruction :: ImageSparseDrefGather ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 316u16 => { println ! ( "{}, {:?}" , "ImageSparseTexelsResident" , data ) ; let instr = Instruction :: ImageSparseTexelsResident ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 317u16 => Instruction :: NoLine , 318u16 => { println ! ( "{}, {:?}" , "AtomicFlagTestAndSet" , data ) ; let instr = Instruction :: AtomicFlagTestAndSet ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 319u16 => { println ! ( "{}, {:?}" , "AtomicFlagClear" , data ) ; let instr = Instruction :: AtomicFlagClear ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 320u16 => { println ! ( "{}, {:?}" , "ImageSparseRead" , data ) ; let instr = Instruction :: ImageSparseRead ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 321u16 => { println ! ( "{}, {:?}" , "SizeOf" , data ) ; let instr = Instruction :: SizeOf ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 322u16 => { println ! ( "{}, {:?}" , "TypePipeStorage" , data ) ; let instr = Instruction :: TypePipeStorage ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 323u16 => { println ! ( "{}, {:?}" , "ConstantPipeStorage" , data ) ; let instr = Instruction :: ConstantPipeStorage ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 324u16 => { println ! ( "{}, {:?}" , "CreatePipeFromPipeStorage" , data ) ; let instr = Instruction :: CreatePipeFromPipeStorage ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 325u16 => { println ! ( "{}, {:?}" , "GetKernelLocalSizeForSubgroupCount" , data ) ; let instr = Instruction :: GetKernelLocalSizeForSubgroupCount ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 326u16 => { println ! ( "{}, {:?}" , "GetKernelMaxNumSubgroups" , data ) ; let instr = Instruction :: GetKernelMaxNumSubgroups ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 327u16 => { println ! ( "{}, {:?}" , "TypeNamedBarrier" , data ) ; let instr = Instruction :: TypeNamedBarrier ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 328u16 => { println ! ( "{}, {:?}" , "NamedBarrierInitialize" , data ) ; let instr = Instruction :: NamedBarrierInitialize ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 329u16 => { println ! ( "{}, {:?}" , "MemoryNamedBarrier" , data ) ; let instr = Instruction :: MemoryNamedBarrier ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdMemorySemantics :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 330u16 => { println ! ( "{}, {:?}" , "ModuleProcessed" , data ) ; let instr = Instruction :: ModuleProcessed ( { let ( v , d ) = LiteralString :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 331u16 => { println ! ( "{}, {:?}" , "ExecutionModeId" , data ) ; let instr = Instruction :: ExecutionModeId ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = ExecutionMode :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 332u16 => { println ! ( "{}, {:?}" , "DecorateId" , data ) ; let instr = Instruction :: DecorateId ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Decoration :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 333u16 => { println ! ( "{}, {:?}" , "GroupNonUniformElect" , data ) ; let instr = Instruction :: GroupNonUniformElect ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 334u16 => { println ! ( "{}, {:?}" , "GroupNonUniformAll" , data ) ; let instr = Instruction :: GroupNonUniformAll ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 335u16 => { println ! ( "{}, {:?}" , "GroupNonUniformAny" , data ) ; let instr = Instruction :: GroupNonUniformAny ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 336u16 => { println ! ( "{}, {:?}" , "GroupNonUniformAllEqual" , data ) ; let instr = Instruction :: GroupNonUniformAllEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 337u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBroadcast" , data ) ; let instr = Instruction :: GroupNonUniformBroadcast ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 338u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBroadcastFirst" , data ) ; let instr = Instruction :: GroupNonUniformBroadcastFirst ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 339u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBallot" , data ) ; let instr = Instruction :: GroupNonUniformBallot ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 340u16 => { println ! ( "{}, {:?}" , "GroupNonUniformInverseBallot" , data ) ; let instr = Instruction :: GroupNonUniformInverseBallot ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 341u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBallotBitExtract" , data ) ; let instr = Instruction :: GroupNonUniformBallotBitExtract ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 342u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBallotBitCount" , data ) ; let instr = Instruction :: GroupNonUniformBallotBitCount ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 343u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBallotFindLSB" , data ) ; let instr = Instruction :: GroupNonUniformBallotFindLSB ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 344u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBallotFindMSB" , data ) ; let instr = Instruction :: GroupNonUniformBallotFindMSB ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 345u16 => { println ! ( "{}, {:?}" , "GroupNonUniformShuffle" , data ) ; let instr = Instruction :: GroupNonUniformShuffle ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 346u16 => { println ! ( "{}, {:?}" , "GroupNonUniformShuffleXor" , data ) ; let instr = Instruction :: GroupNonUniformShuffleXor ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 347u16 => { println ! ( "{}, {:?}" , "GroupNonUniformShuffleUp" , data ) ; let instr = Instruction :: GroupNonUniformShuffleUp ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 348u16 => { println ! ( "{}, {:?}" , "GroupNonUniformShuffleDown" , data ) ; let instr = Instruction :: GroupNonUniformShuffleDown ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 349u16 => { println ! ( "{}, {:?}" , "GroupNonUniformIAdd" , data ) ; let instr = Instruction :: GroupNonUniformIAdd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 350u16 => { println ! ( "{}, {:?}" , "GroupNonUniformFAdd" , data ) ; let instr = Instruction :: GroupNonUniformFAdd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 351u16 => { println ! ( "{}, {:?}" , "GroupNonUniformIMul" , data ) ; let instr = Instruction :: GroupNonUniformIMul ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 352u16 => { println ! ( "{}, {:?}" , "GroupNonUniformFMul" , data ) ; let instr = Instruction :: GroupNonUniformFMul ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 353u16 => { println ! ( "{}, {:?}" , "GroupNonUniformSMin" , data ) ; let instr = Instruction :: GroupNonUniformSMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 354u16 => { println ! ( "{}, {:?}" , "GroupNonUniformUMin" , data ) ; let instr = Instruction :: GroupNonUniformUMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 355u16 => { println ! ( "{}, {:?}" , "GroupNonUniformFMin" , data ) ; let instr = Instruction :: GroupNonUniformFMin ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 356u16 => { println ! ( "{}, {:?}" , "GroupNonUniformSMax" , data ) ; let instr = Instruction :: GroupNonUniformSMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 357u16 => { println ! ( "{}, {:?}" , "GroupNonUniformUMax" , data ) ; let instr = Instruction :: GroupNonUniformUMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 358u16 => { println ! ( "{}, {:?}" , "GroupNonUniformFMax" , data ) ; let instr = Instruction :: GroupNonUniformFMax ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 359u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBitwiseAnd" , data ) ; let instr = Instruction :: GroupNonUniformBitwiseAnd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 360u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBitwiseOr" , data ) ; let instr = Instruction :: GroupNonUniformBitwiseOr ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 361u16 => { println ! ( "{}, {:?}" , "GroupNonUniformBitwiseXor" , data ) ; let instr = Instruction :: GroupNonUniformBitwiseXor ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 362u16 => { println ! ( "{}, {:?}" , "GroupNonUniformLogicalAnd" , data ) ; let instr = Instruction :: GroupNonUniformLogicalAnd ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 363u16 => { println ! ( "{}, {:?}" , "GroupNonUniformLogicalOr" , data ) ; let instr = Instruction :: GroupNonUniformLogicalOr ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 364u16 => { println ! ( "{}, {:?}" , "GroupNonUniformLogicalXor" , data ) ; let instr = Instruction :: GroupNonUniformLogicalXor ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 365u16 => { println ! ( "{}, {:?}" , "GroupNonUniformQuadBroadcast" , data ) ; let instr = Instruction :: GroupNonUniformQuadBroadcast ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 366u16 => { println ! ( "{}, {:?}" , "GroupNonUniformQuadSwap" , data ) ; let instr = Instruction :: GroupNonUniformQuadSwap ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 400u16 => { println ! ( "{}, {:?}" , "CopyLogical" , data ) ; let instr = Instruction :: CopyLogical ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 401u16 => { println ! ( "{}, {:?}" , "PtrEqual" , data ) ; let instr = Instruction :: PtrEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 402u16 => { println ! ( "{}, {:?}" , "PtrNotEqual" , data ) ; let instr = Instruction :: PtrNotEqual ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 403u16 => { println ! ( "{}, {:?}" , "PtrDiff" , data ) ; let instr = Instruction :: PtrDiff ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 4421u16 => { println ! ( "{}, {:?}" , "SubgroupBallotKHR" , data ) ; let instr = Instruction :: SubgroupBallotKHR ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 4422u16 => { println ! ( "{}, {:?}" , "SubgroupFirstInvocationKHR" , data ) ; let instr = Instruction :: SubgroupFirstInvocationKHR ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 4428u16 => { println ! ( "{}, {:?}" , "SubgroupAllKHR" , data ) ; let instr = Instruction :: SubgroupAllKHR ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 4429u16 => { println ! ( "{}, {:?}" , "SubgroupAnyKHR" , data ) ; let instr = Instruction :: SubgroupAnyKHR ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 4430u16 => { println ! ( "{}, {:?}" , "SubgroupAllEqualKHR" , data ) ; let instr = Instruction :: SubgroupAllEqualKHR ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 4432u16 => { println ! ( "{}, {:?}" , "SubgroupReadInvocationKHR" , data ) ; let instr = Instruction :: SubgroupReadInvocationKHR ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5000u16 => { println ! ( "{}, {:?}" , "GroupIAddNonUniformAMD" , data ) ; let instr = Instruction :: GroupIAddNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5001u16 => { println ! ( "{}, {:?}" , "GroupFAddNonUniformAMD" , data ) ; let instr = Instruction :: GroupFAddNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5002u16 => { println ! ( "{}, {:?}" , "GroupFMinNonUniformAMD" , data ) ; let instr = Instruction :: GroupFMinNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5003u16 => { println ! ( "{}, {:?}" , "GroupUMinNonUniformAMD" , data ) ; let instr = Instruction :: GroupUMinNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5004u16 => { println ! ( "{}, {:?}" , "GroupSMinNonUniformAMD" , data ) ; let instr = Instruction :: GroupSMinNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5005u16 => { println ! ( "{}, {:?}" , "GroupFMaxNonUniformAMD" , data ) ; let instr = Instruction :: GroupFMaxNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5006u16 => { println ! ( "{}, {:?}" , "GroupUMaxNonUniformAMD" , data ) ; let instr = Instruction :: GroupUMaxNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5007u16 => { println ! ( "{}, {:?}" , "GroupSMaxNonUniformAMD" , data ) ; let instr = Instruction :: GroupSMaxNonUniformAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = GroupOperation :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5011u16 => { println ! ( "{}, {:?}" , "FragmentMaskFetchAMD" , data ) ; let instr = Instruction :: FragmentMaskFetchAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5012u16 => { println ! ( "{}, {:?}" , "FragmentFetchAMD" , data ) ; let instr = Instruction :: FragmentFetchAMD ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5056u16 => { println ! ( "{}, {:?}" , "ReadClockKHR" , data ) ; let instr = Instruction :: ReadClockKHR ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5283u16 => { println ! ( "{}, {:?}" , "ImageSampleFootprintNV" , data ) ; let instr = Instruction :: ImageSampleFootprintNV ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = ImageOperands :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5296u16 => { println ! ( "{}, {:?}" , "GroupNonUniformPartitionNV" , data ) ; let instr = Instruction :: GroupNonUniformPartitionNV ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5299u16 => { println ! ( "{}, {:?}" , "WritePackedPrimitiveIndices4x8NV" , data ) ; let instr = Instruction :: WritePackedPrimitiveIndices4x8NV ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5334u16 => { println ! ( "{}, {:?}" , "ReportIntersectionNV" , data ) ; let instr = Instruction :: ReportIntersectionNV ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5335u16 => Instruction :: IgnoreIntersectionNV , 5336u16 => Instruction :: TerminateRayNV , 5337u16 => { println ! ( "{}, {:?}" , "TraceNV" , data ) ; let instr = Instruction :: TraceNV ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5341u16 => { println ! ( "{}, {:?}" , "TypeAccelerationStructureNV" , data ) ; let instr = Instruction :: TypeAccelerationStructureNV ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5344u16 => { println ! ( "{}, {:?}" , "ExecuteCallableNV" , data ) ; let instr = Instruction :: ExecuteCallableNV ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5358u16 => { println ! ( "{}, {:?}" , "TypeCooperativeMatrixNV" , data ) ; let instr = Instruction :: TypeCooperativeMatrixNV ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdScope :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5359u16 => { println ! ( "{}, {:?}" , "CooperativeMatrixLoadNV" , data ) ; let instr = Instruction :: CooperativeMatrixLoadNV ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5360u16 => { println ! ( "{}, {:?}" , "CooperativeMatrixStoreNV" , data ) ; let instr = Instruction :: CooperativeMatrixStoreNV ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { if data . len ( ) > 0 { let ( v , d ) = MemoryAccess :: from_raw ( data ) ; data = d ; Some ( v ) } else { None } } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5361u16 => { println ! ( "{}, {:?}" , "CooperativeMatrixMulAddNV" , data ) ; let instr = Instruction :: CooperativeMatrixMulAddNV ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5362u16 => { println ! ( "{}, {:?}" , "CooperativeMatrixLengthNV" , data ) ; let instr = Instruction :: CooperativeMatrixLengthNV ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5364u16 => Instruction :: BeginInvocationInterlockEXT , 5365u16 => Instruction :: EndInvocationInterlockEXT , 5380u16 => Instruction :: DemoteToHelperInvocationEXT , 5381u16 => { println ! ( "{}, {:?}" , "IsHelperInvocationEXT" , data ) ; let instr = Instruction :: IsHelperInvocationEXT ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5571u16 => { println ! ( "{}, {:?}" , "SubgroupShuffleINTEL" , data ) ; let instr = Instruction :: SubgroupShuffleINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5572u16 => { println ! ( "{}, {:?}" , "SubgroupShuffleDownINTEL" , data ) ; let instr = Instruction :: SubgroupShuffleDownINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5573u16 => { println ! ( "{}, {:?}" , "SubgroupShuffleUpINTEL" , data ) ; let instr = Instruction :: SubgroupShuffleUpINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5574u16 => { println ! ( "{}, {:?}" , "SubgroupShuffleXorINTEL" , data ) ; let instr = Instruction :: SubgroupShuffleXorINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5575u16 => { println ! ( "{}, {:?}" , "SubgroupBlockReadINTEL" , data ) ; let instr = Instruction :: SubgroupBlockReadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5576u16 => { println ! ( "{}, {:?}" , "SubgroupBlockWriteINTEL" , data ) ; let instr = Instruction :: SubgroupBlockWriteINTEL ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5577u16 => { println ! ( "{}, {:?}" , "SubgroupImageBlockReadINTEL" , data ) ; let instr = Instruction :: SubgroupImageBlockReadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5578u16 => { println ! ( "{}, {:?}" , "SubgroupImageBlockWriteINTEL" , data ) ; let instr = Instruction :: SubgroupImageBlockWriteINTEL ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5580u16 => { println ! ( "{}, {:?}" , "SubgroupImageMediaBlockReadINTEL" , data ) ; let instr = Instruction :: SubgroupImageMediaBlockReadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5581u16 => { println ! ( "{}, {:?}" , "SubgroupImageMediaBlockWriteINTEL" , data ) ; let instr = Instruction :: SubgroupImageMediaBlockWriteINTEL ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5585u16 => { println ! ( "{}, {:?}" , "UCountLeadingZerosINTEL" , data ) ; let instr = Instruction :: UCountLeadingZerosINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5586u16 => { println ! ( "{}, {:?}" , "UCountTrailingZerosINTEL" , data ) ; let instr = Instruction :: UCountTrailingZerosINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5587u16 => { println ! ( "{}, {:?}" , "AbsISubINTEL" , data ) ; let instr = Instruction :: AbsISubINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5588u16 => { println ! ( "{}, {:?}" , "AbsUSubINTEL" , data ) ; let instr = Instruction :: AbsUSubINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5589u16 => { println ! ( "{}, {:?}" , "IAddSatINTEL" , data ) ; let instr = Instruction :: IAddSatINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5590u16 => { println ! ( "{}, {:?}" , "UAddSatINTEL" , data ) ; let instr = Instruction :: UAddSatINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5591u16 => { println ! ( "{}, {:?}" , "IAverageINTEL" , data ) ; let instr = Instruction :: IAverageINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5592u16 => { println ! ( "{}, {:?}" , "UAverageINTEL" , data ) ; let instr = Instruction :: UAverageINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5593u16 => { println ! ( "{}, {:?}" , "IAverageRoundedINTEL" , data ) ; let instr = Instruction :: IAverageRoundedINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5594u16 => { println ! ( "{}, {:?}" , "UAverageRoundedINTEL" , data ) ; let instr = Instruction :: UAverageRoundedINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5595u16 => { println ! ( "{}, {:?}" , "ISubSatINTEL" , data ) ; let instr = Instruction :: ISubSatINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5596u16 => { println ! ( "{}, {:?}" , "USubSatINTEL" , data ) ; let instr = Instruction :: USubSatINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5597u16 => { println ! ( "{}, {:?}" , "IMul32x16INTEL" , data ) ; let instr = Instruction :: IMul32x16INTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5598u16 => { println ! ( "{}, {:?}" , "UMul32x16INTEL" , data ) ; let instr = Instruction :: UMul32x16INTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5632u16 => { println ! ( "{}, {:?}" , "DecorateString" , data ) ; let instr = Instruction :: DecorateString ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Decoration :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5632u16 => { println ! ( "{}, {:?}" , "DecorateStringGOOGLE" , data ) ; let instr = Instruction :: DecorateStringGOOGLE ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Decoration :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5633u16 => { println ! ( "{}, {:?}" , "MemberDecorateString" , data ) ; let instr = Instruction :: MemberDecorateString ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Decoration :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5633u16 => { println ! ( "{}, {:?}" , "MemberDecorateStringGOOGLE" , data ) ; let instr = Instruction :: MemberDecorateStringGOOGLE ( { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = LiteralInteger :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = Decoration :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5699u16 => { println ! ( "{}, {:?}" , "VmeImageINTEL" , data ) ; let instr = Instruction :: VmeImageINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5700u16 => { println ! ( "{}, {:?}" , "TypeVmeImageINTEL" , data ) ; let instr = Instruction :: TypeVmeImageINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5701u16 => { println ! ( "{}, {:?}" , "TypeAvcImePayloadINTEL" , data ) ; let instr = Instruction :: TypeAvcImePayloadINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5702u16 => { println ! ( "{}, {:?}" , "TypeAvcRefPayloadINTEL" , data ) ; let instr = Instruction :: TypeAvcRefPayloadINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5703u16 => { println ! ( "{}, {:?}" , "TypeAvcSicPayloadINTEL" , data ) ; let instr = Instruction :: TypeAvcSicPayloadINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5704u16 => { println ! ( "{}, {:?}" , "TypeAvcMcePayloadINTEL" , data ) ; let instr = Instruction :: TypeAvcMcePayloadINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5705u16 => { println ! ( "{}, {:?}" , "TypeAvcMceResultINTEL" , data ) ; let instr = Instruction :: TypeAvcMceResultINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5706u16 => { println ! ( "{}, {:?}" , "TypeAvcImeResultINTEL" , data ) ; let instr = Instruction :: TypeAvcImeResultINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5707u16 => { println ! ( "{}, {:?}" , "TypeAvcImeResultSingleReferenceStreamoutINTEL" , data ) ; let instr = Instruction :: TypeAvcImeResultSingleReferenceStreamoutINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5708u16 => { println ! ( "{}, {:?}" , "TypeAvcImeResultDualReferenceStreamoutINTEL" , data ) ; let instr = Instruction :: TypeAvcImeResultDualReferenceStreamoutINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5709u16 => { println ! ( "{}, {:?}" , "TypeAvcImeSingleReferenceStreaminINTEL" , data ) ; let instr = Instruction :: TypeAvcImeSingleReferenceStreaminINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5710u16 => { println ! ( "{}, {:?}" , "TypeAvcImeDualReferenceStreaminINTEL" , data ) ; let instr = Instruction :: TypeAvcImeDualReferenceStreaminINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5711u16 => { println ! ( "{}, {:?}" , "TypeAvcRefResultINTEL" , data ) ; let instr = Instruction :: TypeAvcRefResultINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5712u16 => { println ! ( "{}, {:?}" , "TypeAvcSicResultINTEL" , data ) ; let instr = Instruction :: TypeAvcSicResultINTEL ( { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5713u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5714u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5715u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultInterShapePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultInterShapePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5716u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetInterShapePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetInterShapePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5717u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5718u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetInterDirectionPenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetInterDirectionPenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5719u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5720u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5721u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5722u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5723u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5724u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetMotionVectorCostFunctionINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetMotionVectorCostFunctionINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5725u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5726u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5727u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5728u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetAcOnlyHaarINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetAcOnlyHaarINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5729u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5730u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5731u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5732u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceConvertToImePayloadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceConvertToImePayloadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5733u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceConvertToImeResultINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceConvertToImeResultINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5734u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceConvertToRefPayloadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceConvertToRefPayloadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5735u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceConvertToRefResultINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceConvertToRefResultINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5736u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceConvertToSicPayloadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceConvertToSicPayloadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5737u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceConvertToSicResultINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceConvertToSicResultINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5738u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetMotionVectorsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetMotionVectorsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5739u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetInterDistortionsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetInterDistortionsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5740u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetBestInterDistortionsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetBestInterDistortionsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5741u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetInterMajorShapeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetInterMajorShapeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5742u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetInterMinorShapeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetInterMinorShapeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5743u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetInterDirectionsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetInterDirectionsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5744u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetInterMotionVectorCountINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetInterMotionVectorCountINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5745u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetInterReferenceIdsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetInterReferenceIdsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5746u16 => { println ! ( "{}, {:?}" , "SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL" , data ) ; let instr = Instruction :: SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5747u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeInitializeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeInitializeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5748u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeSetSingleReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeSetSingleReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5749u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeSetDualReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeSetDualReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5750u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeRefWindowSizeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeRefWindowSizeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5751u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeAdjustRefOffsetINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeAdjustRefOffsetINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5752u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeConvertToMcePayloadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeConvertToMcePayloadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5753u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeSetMaxMotionVectorCountINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeSetMaxMotionVectorCountINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5754u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeSetUnidirectionalMixDisableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeSetUnidirectionalMixDisableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5755u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5756u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeSetWeightedSadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeSetWeightedSadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5757u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithSingleReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithSingleReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5758u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithDualReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithDualReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5759u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5760u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5761u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5762u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5763u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5764u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5765u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeConvertToMceResultINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeConvertToMceResultINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5766u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetSingleReferenceStreaminINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetSingleReferenceStreaminINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5767u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetDualReferenceStreaminINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetDualReferenceStreaminINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5768u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeStripSingleReferenceStreamoutINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeStripSingleReferenceStreamoutINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5769u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeStripDualReferenceStreamoutINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeStripDualReferenceStreamoutINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5770u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5771u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5772u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5773u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5774u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5775u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5776u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetBorderReachedINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetBorderReachedINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5777u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetTruncatedSearchIndicationINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetTruncatedSearchIndicationINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5778u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5779u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5780u16 => { println ! ( "{}, {:?}" , "SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL" , data ) ; let instr = Instruction :: SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5781u16 => { println ! ( "{}, {:?}" , "SubgroupAvcFmeInitializeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcFmeInitializeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5782u16 => { println ! ( "{}, {:?}" , "SubgroupAvcBmeInitializeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcBmeInitializeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5783u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefConvertToMcePayloadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefConvertToMcePayloadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5784u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefSetBidirectionalMixDisableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefSetBidirectionalMixDisableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5785u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefSetBilinearFilterEnableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefSetBilinearFilterEnableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5786u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefEvaluateWithSingleReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefEvaluateWithSingleReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5787u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefEvaluateWithDualReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefEvaluateWithDualReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5788u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefEvaluateWithMultiReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefEvaluateWithMultiReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5789u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5790u16 => { println ! ( "{}, {:?}" , "SubgroupAvcRefConvertToMceResultINTEL" , data ) ; let instr = Instruction :: SubgroupAvcRefConvertToMceResultINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5791u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicInitializeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicInitializeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5792u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicConfigureSkcINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicConfigureSkcINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5793u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicConfigureIpeLumaINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicConfigureIpeLumaINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5794u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicConfigureIpeLumaChromaINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicConfigureIpeLumaChromaINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5795u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetMotionVectorMaskINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetMotionVectorMaskINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5796u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicConvertToMcePayloadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicConvertToMcePayloadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5797u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicSetIntraLumaShapePenaltyINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicSetIntraLumaShapePenaltyINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5798u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5799u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5800u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicSetBilinearFilterEnableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicSetBilinearFilterEnableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5801u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicSetSkcForwardTransformEnableINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicSetSkcForwardTransformEnableINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5802u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicSetBlockBasedRawSkipSadINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicSetBlockBasedRawSkipSadINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5803u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicEvaluateIpeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicEvaluateIpeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5804u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicEvaluateWithSingleReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicEvaluateWithSingleReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5805u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicEvaluateWithDualReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicEvaluateWithDualReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5806u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicEvaluateWithMultiReferenceINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicEvaluateWithMultiReferenceINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5807u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5808u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicConvertToMceResultINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicConvertToMceResultINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5809u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetIpeLumaShapeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetIpeLumaShapeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5810u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetBestIpeLumaDistortionINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetBestIpeLumaDistortionINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5811u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetBestIpeChromaDistortionINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetBestIpeChromaDistortionINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5812u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetPackedIpeLumaModesINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetPackedIpeLumaModesINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5813u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetIpeChromaModeINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetIpeChromaModeINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5814u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5815u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , 5816u16 => { println ! ( "{}, {:?}" , "SubgroupAvcSicGetInterRawSadsINTEL" , data ) ; let instr = Instruction :: SubgroupAvcSicGetInterRawSadsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ; assert_eq ! ( data . len ( ) , 0 ) ; instr } , _ => Instruction :: None ( op_code ) } } }
+#![allow(non_upper_case_globals)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
+#![allow(unused)]
+
+use serde::{Deserialize, Serialize};
+
+pub const MAGIC: u64 = 0x07230203;
+pub const VERSION: (u8, u8) = (1u8, 4u8);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct ImageOperands(pub u32);
+
+impl ImageOperands {
+    pub const None: Self = ImageOperands(0u32);
+    pub const Bias: Self = ImageOperands(1u32);
+    pub const Lod: Self = ImageOperands(2u32);
+    pub const Grad: Self = ImageOperands(4u32);
+    pub const ConstOffset: Self = ImageOperands(8u32);
+    pub const Offset: Self = ImageOperands(16u32);
+    pub const ConstOffsets: Self = ImageOperands(32u32);
+    pub const Sample: Self = ImageOperands(64u32);
+    pub const MinLod: Self = ImageOperands(128u32);
+    pub const MakeTexelAvailableKHR: Self = ImageOperands(256u32);
+    pub const MakeTexelVisibleKHR: Self = ImageOperands(512u32);
+    pub const NonPrivateTexelKHR: Self = ImageOperands(1024u32);
+    pub const VolatileTexelKHR: Self = ImageOperands(2048u32);
+    pub const SignExtend: Self = ImageOperands(4096u32);
+    pub const ZeroExtend: Self = ImageOperands(8192u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "None" => Some(ImageOperands::None),
+            "Bias" => Some(ImageOperands::Bias),
+            "Lod" => Some(ImageOperands::Lod),
+            "Grad" => Some(ImageOperands::Grad),
+            "ConstOffset" => Some(ImageOperands::ConstOffset),
+            "Offset" => Some(ImageOperands::Offset),
+            "ConstOffsets" => Some(ImageOperands::ConstOffsets),
+            "Sample" => Some(ImageOperands::Sample),
+            "MinLod" => Some(ImageOperands::MinLod),
+            "MakeTexelAvailableKHR" => Some(ImageOperands::MakeTexelAvailableKHR),
+            "MakeTexelVisibleKHR" => Some(ImageOperands::MakeTexelVisibleKHR),
+            "NonPrivateTexelKHR" => Some(ImageOperands::NonPrivateTexelKHR),
+            "VolatileTexelKHR" => Some(ImageOperands::VolatileTexelKHR),
+            "SignExtend" => Some(ImageOperands::SignExtend),
+            "ZeroExtend" => Some(ImageOperands::ZeroExtend),
+            _ => None,
+        }
+    }
+}
+
+impl Default for ImageOperands {
+    fn default() -> ImageOperands {
+        ImageOperands(0)
+    }
+}
+
+impl ImageOperands {
+    #[inline]
+    pub const fn empty() -> ImageOperands {
+        ImageOperands(0)
+    }
+    #[inline]
+    pub const fn all() -> ImageOperands {
+        ImageOperands(8192u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (ImageOperands(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == ImageOperands::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & ImageOperands::all() == ImageOperands::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: ImageOperands) -> bool {
+        self & other != ImageOperands::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: ImageOperands) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for ImageOperands {
+    type Output = ImageOperands;
+    #[inline]
+    fn bitor(self, rhs: ImageOperands) -> ImageOperands {
+        ImageOperands(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for ImageOperands {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: ImageOperands) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for ImageOperands {
+    type Output = ImageOperands;
+    #[inline]
+    fn bitand(self, rhs: ImageOperands) -> ImageOperands {
+        ImageOperands(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for ImageOperands {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: ImageOperands) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for ImageOperands {
+    type Output = ImageOperands;
+    #[inline]
+    fn bitxor(self, rhs: ImageOperands) -> ImageOperands {
+        ImageOperands(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for ImageOperands {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: ImageOperands) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for ImageOperands {
+    type Output = ImageOperands;
+    #[inline]
+    fn sub(self, rhs: ImageOperands) -> ImageOperands {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for ImageOperands {
+    #[inline]
+    fn sub_assign(&mut self, rhs: ImageOperands) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for ImageOperands {
+    type Output = ImageOperands;
+    #[inline]
+    fn not(self) -> ImageOperands {
+        self ^ ImageOperands::all()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct FPFastMathMode(pub u32);
+
+impl FPFastMathMode {
+    pub const None: Self = FPFastMathMode(0u32);
+    pub const NotNaN: Self = FPFastMathMode(1u32);
+    pub const NotInf: Self = FPFastMathMode(2u32);
+    pub const NSZ: Self = FPFastMathMode(4u32);
+    pub const AllowRecip: Self = FPFastMathMode(8u32);
+    pub const Fast: Self = FPFastMathMode(16u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "None" => Some(FPFastMathMode::None),
+            "NotNaN" => Some(FPFastMathMode::NotNaN),
+            "NotInf" => Some(FPFastMathMode::NotInf),
+            "NSZ" => Some(FPFastMathMode::NSZ),
+            "AllowRecip" => Some(FPFastMathMode::AllowRecip),
+            "Fast" => Some(FPFastMathMode::Fast),
+            _ => None,
+        }
+    }
+}
+
+impl Default for FPFastMathMode {
+    fn default() -> FPFastMathMode {
+        FPFastMathMode(0)
+    }
+}
+
+impl FPFastMathMode {
+    #[inline]
+    pub const fn empty() -> FPFastMathMode {
+        FPFastMathMode(0)
+    }
+    #[inline]
+    pub const fn all() -> FPFastMathMode {
+        FPFastMathMode(16u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (FPFastMathMode(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == FPFastMathMode::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & FPFastMathMode::all() == FPFastMathMode::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: FPFastMathMode) -> bool {
+        self & other != FPFastMathMode::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: FPFastMathMode) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for FPFastMathMode {
+    type Output = FPFastMathMode;
+    #[inline]
+    fn bitor(self, rhs: FPFastMathMode) -> FPFastMathMode {
+        FPFastMathMode(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for FPFastMathMode {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: FPFastMathMode) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for FPFastMathMode {
+    type Output = FPFastMathMode;
+    #[inline]
+    fn bitand(self, rhs: FPFastMathMode) -> FPFastMathMode {
+        FPFastMathMode(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for FPFastMathMode {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: FPFastMathMode) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for FPFastMathMode {
+    type Output = FPFastMathMode;
+    #[inline]
+    fn bitxor(self, rhs: FPFastMathMode) -> FPFastMathMode {
+        FPFastMathMode(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for FPFastMathMode {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: FPFastMathMode) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for FPFastMathMode {
+    type Output = FPFastMathMode;
+    #[inline]
+    fn sub(self, rhs: FPFastMathMode) -> FPFastMathMode {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for FPFastMathMode {
+    #[inline]
+    fn sub_assign(&mut self, rhs: FPFastMathMode) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for FPFastMathMode {
+    type Output = FPFastMathMode;
+    #[inline]
+    fn not(self) -> FPFastMathMode {
+        self ^ FPFastMathMode::all()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct SelectionControl(pub u32);
+
+impl SelectionControl {
+    pub const None: Self = SelectionControl(0u32);
+    pub const Flatten: Self = SelectionControl(1u32);
+    pub const DontFlatten: Self = SelectionControl(2u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "None" => Some(SelectionControl::None),
+            "Flatten" => Some(SelectionControl::Flatten),
+            "DontFlatten" => Some(SelectionControl::DontFlatten),
+            _ => None,
+        }
+    }
+}
+
+impl Default for SelectionControl {
+    fn default() -> SelectionControl {
+        SelectionControl(0)
+    }
+}
+
+impl SelectionControl {
+    #[inline]
+    pub const fn empty() -> SelectionControl {
+        SelectionControl(0)
+    }
+    #[inline]
+    pub const fn all() -> SelectionControl {
+        SelectionControl(2u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (SelectionControl(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == SelectionControl::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & SelectionControl::all() == SelectionControl::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: SelectionControl) -> bool {
+        self & other != SelectionControl::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: SelectionControl) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for SelectionControl {
+    type Output = SelectionControl;
+    #[inline]
+    fn bitor(self, rhs: SelectionControl) -> SelectionControl {
+        SelectionControl(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for SelectionControl {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: SelectionControl) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for SelectionControl {
+    type Output = SelectionControl;
+    #[inline]
+    fn bitand(self, rhs: SelectionControl) -> SelectionControl {
+        SelectionControl(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for SelectionControl {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: SelectionControl) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for SelectionControl {
+    type Output = SelectionControl;
+    #[inline]
+    fn bitxor(self, rhs: SelectionControl) -> SelectionControl {
+        SelectionControl(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for SelectionControl {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: SelectionControl) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for SelectionControl {
+    type Output = SelectionControl;
+    #[inline]
+    fn sub(self, rhs: SelectionControl) -> SelectionControl {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for SelectionControl {
+    #[inline]
+    fn sub_assign(&mut self, rhs: SelectionControl) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for SelectionControl {
+    type Output = SelectionControl;
+    #[inline]
+    fn not(self) -> SelectionControl {
+        self ^ SelectionControl::all()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct LoopControl(pub u32);
+
+impl LoopControl {
+    pub const None: Self = LoopControl(0u32);
+    pub const Unroll: Self = LoopControl(1u32);
+    pub const DontUnroll: Self = LoopControl(2u32);
+    pub const DependencyInfinite: Self = LoopControl(4u32);
+    pub const DependencyLength: Self = LoopControl(8u32);
+    pub const MinIterations: Self = LoopControl(16u32);
+    pub const MaxIterations: Self = LoopControl(32u32);
+    pub const IterationMultiple: Self = LoopControl(64u32);
+    pub const PeelCount: Self = LoopControl(128u32);
+    pub const PartialCount: Self = LoopControl(256u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "None" => Some(LoopControl::None),
+            "Unroll" => Some(LoopControl::Unroll),
+            "DontUnroll" => Some(LoopControl::DontUnroll),
+            "DependencyInfinite" => Some(LoopControl::DependencyInfinite),
+            "DependencyLength" => Some(LoopControl::DependencyLength),
+            "MinIterations" => Some(LoopControl::MinIterations),
+            "MaxIterations" => Some(LoopControl::MaxIterations),
+            "IterationMultiple" => Some(LoopControl::IterationMultiple),
+            "PeelCount" => Some(LoopControl::PeelCount),
+            "PartialCount" => Some(LoopControl::PartialCount),
+            _ => None,
+        }
+    }
+}
+
+impl Default for LoopControl {
+    fn default() -> LoopControl {
+        LoopControl(0)
+    }
+}
+
+impl LoopControl {
+    #[inline]
+    pub const fn empty() -> LoopControl {
+        LoopControl(0)
+    }
+    #[inline]
+    pub const fn all() -> LoopControl {
+        LoopControl(256u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (LoopControl(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == LoopControl::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & LoopControl::all() == LoopControl::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: LoopControl) -> bool {
+        self & other != LoopControl::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: LoopControl) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for LoopControl {
+    type Output = LoopControl;
+    #[inline]
+    fn bitor(self, rhs: LoopControl) -> LoopControl {
+        LoopControl(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for LoopControl {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: LoopControl) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for LoopControl {
+    type Output = LoopControl;
+    #[inline]
+    fn bitand(self, rhs: LoopControl) -> LoopControl {
+        LoopControl(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for LoopControl {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: LoopControl) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for LoopControl {
+    type Output = LoopControl;
+    #[inline]
+    fn bitxor(self, rhs: LoopControl) -> LoopControl {
+        LoopControl(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for LoopControl {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: LoopControl) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for LoopControl {
+    type Output = LoopControl;
+    #[inline]
+    fn sub(self, rhs: LoopControl) -> LoopControl {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for LoopControl {
+    #[inline]
+    fn sub_assign(&mut self, rhs: LoopControl) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for LoopControl {
+    type Output = LoopControl;
+    #[inline]
+    fn not(self) -> LoopControl {
+        self ^ LoopControl::all()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct FunctionControl(pub u32);
+
+impl FunctionControl {
+    pub const None: Self = FunctionControl(0u32);
+    pub const Inline: Self = FunctionControl(1u32);
+    pub const DontInline: Self = FunctionControl(2u32);
+    pub const Pure: Self = FunctionControl(4u32);
+    pub const Const: Self = FunctionControl(8u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "None" => Some(FunctionControl::None),
+            "Inline" => Some(FunctionControl::Inline),
+            "DontInline" => Some(FunctionControl::DontInline),
+            "Pure" => Some(FunctionControl::Pure),
+            "Const" => Some(FunctionControl::Const),
+            _ => None,
+        }
+    }
+}
+
+impl Default for FunctionControl {
+    fn default() -> FunctionControl {
+        FunctionControl(0)
+    }
+}
+
+impl FunctionControl {
+    #[inline]
+    pub const fn empty() -> FunctionControl {
+        FunctionControl(0)
+    }
+    #[inline]
+    pub const fn all() -> FunctionControl {
+        FunctionControl(8u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (FunctionControl(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == FunctionControl::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & FunctionControl::all() == FunctionControl::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: FunctionControl) -> bool {
+        self & other != FunctionControl::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: FunctionControl) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for FunctionControl {
+    type Output = FunctionControl;
+    #[inline]
+    fn bitor(self, rhs: FunctionControl) -> FunctionControl {
+        FunctionControl(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for FunctionControl {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: FunctionControl) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for FunctionControl {
+    type Output = FunctionControl;
+    #[inline]
+    fn bitand(self, rhs: FunctionControl) -> FunctionControl {
+        FunctionControl(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for FunctionControl {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: FunctionControl) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for FunctionControl {
+    type Output = FunctionControl;
+    #[inline]
+    fn bitxor(self, rhs: FunctionControl) -> FunctionControl {
+        FunctionControl(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for FunctionControl {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: FunctionControl) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for FunctionControl {
+    type Output = FunctionControl;
+    #[inline]
+    fn sub(self, rhs: FunctionControl) -> FunctionControl {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for FunctionControl {
+    #[inline]
+    fn sub_assign(&mut self, rhs: FunctionControl) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for FunctionControl {
+    type Output = FunctionControl;
+    #[inline]
+    fn not(self) -> FunctionControl {
+        self ^ FunctionControl::all()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct MemorySemantics(pub u32);
+
+impl MemorySemantics {
+    pub const Relaxed: Self = MemorySemantics(0u32);
+    pub const None: Self = MemorySemantics(0u32);
+    pub const Acquire: Self = MemorySemantics(2u32);
+    pub const Release: Self = MemorySemantics(4u32);
+    pub const AcquireRelease: Self = MemorySemantics(8u32);
+    pub const SequentiallyConsistent: Self = MemorySemantics(16u32);
+    pub const UniformMemory: Self = MemorySemantics(64u32);
+    pub const SubgroupMemory: Self = MemorySemantics(128u32);
+    pub const WorkgroupMemory: Self = MemorySemantics(256u32);
+    pub const CrossWorkgroupMemory: Self = MemorySemantics(512u32);
+    pub const AtomicCounterMemory: Self = MemorySemantics(1024u32);
+    pub const ImageMemory: Self = MemorySemantics(2048u32);
+    pub const OutputMemoryKHR: Self = MemorySemantics(4096u32);
+    pub const MakeAvailableKHR: Self = MemorySemantics(8192u32);
+    pub const MakeVisibleKHR: Self = MemorySemantics(16384u32);
+    pub const Volatile: Self = MemorySemantics(32768u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "Relaxed" => Some(MemorySemantics::Relaxed),
+            "None" => Some(MemorySemantics::None),
+            "Acquire" => Some(MemorySemantics::Acquire),
+            "Release" => Some(MemorySemantics::Release),
+            "AcquireRelease" => Some(MemorySemantics::AcquireRelease),
+            "SequentiallyConsistent" => Some(MemorySemantics::SequentiallyConsistent),
+            "UniformMemory" => Some(MemorySemantics::UniformMemory),
+            "SubgroupMemory" => Some(MemorySemantics::SubgroupMemory),
+            "WorkgroupMemory" => Some(MemorySemantics::WorkgroupMemory),
+            "CrossWorkgroupMemory" => Some(MemorySemantics::CrossWorkgroupMemory),
+            "AtomicCounterMemory" => Some(MemorySemantics::AtomicCounterMemory),
+            "ImageMemory" => Some(MemorySemantics::ImageMemory),
+            "OutputMemoryKHR" => Some(MemorySemantics::OutputMemoryKHR),
+            "MakeAvailableKHR" => Some(MemorySemantics::MakeAvailableKHR),
+            "MakeVisibleKHR" => Some(MemorySemantics::MakeVisibleKHR),
+            "Volatile" => Some(MemorySemantics::Volatile),
+            _ => None,
+        }
+    }
+}
+
+impl Default for MemorySemantics {
+    fn default() -> MemorySemantics {
+        MemorySemantics(0)
+    }
+}
+
+impl MemorySemantics {
+    #[inline]
+    pub const fn empty() -> MemorySemantics {
+        MemorySemantics(0)
+    }
+    #[inline]
+    pub const fn all() -> MemorySemantics {
+        MemorySemantics(32768u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (MemorySemantics(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == MemorySemantics::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & MemorySemantics::all() == MemorySemantics::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: MemorySemantics) -> bool {
+        self & other != MemorySemantics::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: MemorySemantics) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for MemorySemantics {
+    type Output = MemorySemantics;
+    #[inline]
+    fn bitor(self, rhs: MemorySemantics) -> MemorySemantics {
+        MemorySemantics(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for MemorySemantics {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: MemorySemantics) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for MemorySemantics {
+    type Output = MemorySemantics;
+    #[inline]
+    fn bitand(self, rhs: MemorySemantics) -> MemorySemantics {
+        MemorySemantics(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for MemorySemantics {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: MemorySemantics) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for MemorySemantics {
+    type Output = MemorySemantics;
+    #[inline]
+    fn bitxor(self, rhs: MemorySemantics) -> MemorySemantics {
+        MemorySemantics(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for MemorySemantics {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: MemorySemantics) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for MemorySemantics {
+    type Output = MemorySemantics;
+    #[inline]
+    fn sub(self, rhs: MemorySemantics) -> MemorySemantics {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for MemorySemantics {
+    #[inline]
+    fn sub_assign(&mut self, rhs: MemorySemantics) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for MemorySemantics {
+    type Output = MemorySemantics;
+    #[inline]
+    fn not(self) -> MemorySemantics {
+        self ^ MemorySemantics::all()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct MemoryAccess(pub u32);
+
+impl MemoryAccess {
+    pub const None: Self = MemoryAccess(0u32);
+    pub const Volatile: Self = MemoryAccess(1u32);
+    pub const Aligned: Self = MemoryAccess(2u32);
+    pub const Nontemporal: Self = MemoryAccess(4u32);
+    pub const MakePointerAvailableKHR: Self = MemoryAccess(8u32);
+    pub const MakePointerVisibleKHR: Self = MemoryAccess(16u32);
+    pub const NonPrivatePointerKHR: Self = MemoryAccess(32u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "None" => Some(MemoryAccess::None),
+            "Volatile" => Some(MemoryAccess::Volatile),
+            "Aligned" => Some(MemoryAccess::Aligned),
+            "Nontemporal" => Some(MemoryAccess::Nontemporal),
+            "MakePointerAvailableKHR" => Some(MemoryAccess::MakePointerAvailableKHR),
+            "MakePointerVisibleKHR" => Some(MemoryAccess::MakePointerVisibleKHR),
+            "NonPrivatePointerKHR" => Some(MemoryAccess::NonPrivatePointerKHR),
+            _ => None,
+        }
+    }
+}
+
+impl Default for MemoryAccess {
+    fn default() -> MemoryAccess {
+        MemoryAccess(0)
+    }
+}
+
+impl MemoryAccess {
+    #[inline]
+    pub const fn empty() -> MemoryAccess {
+        MemoryAccess(0)
+    }
+    #[inline]
+    pub const fn all() -> MemoryAccess {
+        MemoryAccess(32u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (MemoryAccess(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == MemoryAccess::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & MemoryAccess::all() == MemoryAccess::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: MemoryAccess) -> bool {
+        self & other != MemoryAccess::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: MemoryAccess) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for MemoryAccess {
+    type Output = MemoryAccess;
+    #[inline]
+    fn bitor(self, rhs: MemoryAccess) -> MemoryAccess {
+        MemoryAccess(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for MemoryAccess {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: MemoryAccess) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for MemoryAccess {
+    type Output = MemoryAccess;
+    #[inline]
+    fn bitand(self, rhs: MemoryAccess) -> MemoryAccess {
+        MemoryAccess(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for MemoryAccess {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: MemoryAccess) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for MemoryAccess {
+    type Output = MemoryAccess;
+    #[inline]
+    fn bitxor(self, rhs: MemoryAccess) -> MemoryAccess {
+        MemoryAccess(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for MemoryAccess {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: MemoryAccess) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for MemoryAccess {
+    type Output = MemoryAccess;
+    #[inline]
+    fn sub(self, rhs: MemoryAccess) -> MemoryAccess {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for MemoryAccess {
+    #[inline]
+    fn sub_assign(&mut self, rhs: MemoryAccess) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for MemoryAccess {
+    type Output = MemoryAccess;
+    #[inline]
+    fn not(self) -> MemoryAccess {
+        self ^ MemoryAccess::all()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct KernelProfilingInfo(pub u32);
+
+impl KernelProfilingInfo {
+    pub const None: Self = KernelProfilingInfo(0u32);
+    pub const CmdExecTime: Self = KernelProfilingInfo(1u32);
+    pub fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "None" => Some(KernelProfilingInfo::None),
+            "CmdExecTime" => Some(KernelProfilingInfo::CmdExecTime),
+            _ => None,
+        }
+    }
+}
+
+impl Default for KernelProfilingInfo {
+    fn default() -> KernelProfilingInfo {
+        KernelProfilingInfo(0)
+    }
+}
+
+impl KernelProfilingInfo {
+    #[inline]
+    pub const fn empty() -> KernelProfilingInfo {
+        KernelProfilingInfo(0)
+    }
+    #[inline]
+    pub const fn all() -> KernelProfilingInfo {
+        KernelProfilingInfo(1u32 as u32)
+    }
+    #[inline]
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (KernelProfilingInfo(data[0]), &data[1..])
+    }
+    #[inline]
+    pub const fn as_raw(self) -> u32 {
+        self.0
+    }
+    #[inline]
+    pub fn is_empty(self) -> bool {
+        self == KernelProfilingInfo::empty()
+    }
+    #[inline]
+    pub fn is_all(self) -> bool {
+        self & KernelProfilingInfo::all() == KernelProfilingInfo::all()
+    }
+    #[inline]
+    pub fn intersects(self, other: KernelProfilingInfo) -> bool {
+        self & other != KernelProfilingInfo::empty()
+    }
+    #[doc = r" Returns whether `other` is a subset of `self`"]
+    #[inline]
+    pub fn contains(self, other: KernelProfilingInfo) -> bool {
+        self & other == other
+    }
+}
+
+impl ::std::ops::BitOr for KernelProfilingInfo {
+    type Output = KernelProfilingInfo;
+    #[inline]
+    fn bitor(self, rhs: KernelProfilingInfo) -> KernelProfilingInfo {
+        KernelProfilingInfo(self.0 | rhs.0)
+    }
+}
+
+impl ::std::ops::BitOrAssign for KernelProfilingInfo {
+    #[inline]
+    fn bitor_assign(&mut self, rhs: KernelProfilingInfo) {
+        *self = *self | rhs
+    }
+}
+
+impl ::std::ops::BitAnd for KernelProfilingInfo {
+    type Output = KernelProfilingInfo;
+    #[inline]
+    fn bitand(self, rhs: KernelProfilingInfo) -> KernelProfilingInfo {
+        KernelProfilingInfo(self.0 & rhs.0)
+    }
+}
+
+impl ::std::ops::BitAndAssign for KernelProfilingInfo {
+    #[inline]
+    fn bitand_assign(&mut self, rhs: KernelProfilingInfo) {
+        *self = *self & rhs
+    }
+}
+
+impl ::std::ops::BitXor for KernelProfilingInfo {
+    type Output = KernelProfilingInfo;
+    #[inline]
+    fn bitxor(self, rhs: KernelProfilingInfo) -> KernelProfilingInfo {
+        KernelProfilingInfo(self.0 ^ rhs.0)
+    }
+}
+
+impl ::std::ops::BitXorAssign for KernelProfilingInfo {
+    #[inline]
+    fn bitxor_assign(&mut self, rhs: KernelProfilingInfo) {
+        *self = *self ^ rhs
+    }
+}
+
+impl ::std::ops::Sub for KernelProfilingInfo {
+    type Output = KernelProfilingInfo;
+    #[inline]
+    fn sub(self, rhs: KernelProfilingInfo) -> KernelProfilingInfo {
+        self & !rhs
+    }
+}
+
+impl ::std::ops::SubAssign for KernelProfilingInfo {
+    #[inline]
+    fn sub_assign(&mut self, rhs: KernelProfilingInfo) {
+        *self = *self - rhs
+    }
+}
+
+impl ::std::ops::Not for KernelProfilingInfo {
+    type Output = KernelProfilingInfo;
+    #[inline]
+    fn not(self) -> KernelProfilingInfo {
+        self ^ KernelProfilingInfo::all()
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum SourceLanguage {
+    Unknown,
+    ESSL,
+    GLSL,
+    OpenCL_C,
+    OpenCL_CPP,
+    HLSL,
+}
+
+impl SourceLanguage {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (SourceLanguage::Unknown, data),
+            1u32 => (SourceLanguage::ESSL, data),
+            2u32 => (SourceLanguage::GLSL, data),
+            3u32 => (SourceLanguage::OpenCL_C, data),
+            4u32 => (SourceLanguage::OpenCL_CPP, data),
+            5u32 => (SourceLanguage::HLSL, data),
+            _ => panic!("Unknown value for Enum: {}", "SourceLanguage"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum ExecutionModel {
+    Vertex,
+    TessellationControl,
+    TessellationEvaluation,
+    Geometry,
+    Fragment,
+    GLCompute,
+    Kernel,
+    TaskNV,
+    MeshNV,
+    RayGenerationNV,
+    IntersectionNV,
+    AnyHitNV,
+    ClosestHitNV,
+    MissNV,
+    CallableNV,
+}
+
+impl ExecutionModel {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (ExecutionModel::Vertex, data),
+            1u32 => (ExecutionModel::TessellationControl, data),
+            2u32 => (ExecutionModel::TessellationEvaluation, data),
+            3u32 => (ExecutionModel::Geometry, data),
+            4u32 => (ExecutionModel::Fragment, data),
+            5u32 => (ExecutionModel::GLCompute, data),
+            6u32 => (ExecutionModel::Kernel, data),
+            5267u32 => (ExecutionModel::TaskNV, data),
+            5268u32 => (ExecutionModel::MeshNV, data),
+            5313u32 => (ExecutionModel::RayGenerationNV, data),
+            5314u32 => (ExecutionModel::IntersectionNV, data),
+            5315u32 => (ExecutionModel::AnyHitNV, data),
+            5316u32 => (ExecutionModel::ClosestHitNV, data),
+            5317u32 => (ExecutionModel::MissNV, data),
+            5318u32 => (ExecutionModel::CallableNV, data),
+            _ => panic!("Unknown value for Enum: {}", "ExecutionModel"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum AddressingModel {
+    Logical,
+    Physical32,
+    Physical64,
+    PhysicalStorageBuffer64EXT,
+}
+
+impl AddressingModel {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (AddressingModel::Logical, data),
+            1u32 => (AddressingModel::Physical32, data),
+            2u32 => (AddressingModel::Physical64, data),
+            5348u32 => (AddressingModel::PhysicalStorageBuffer64EXT, data),
+            _ => panic!("Unknown value for Enum: {}", "AddressingModel"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum MemoryModel {
+    Simple,
+    GLSL450,
+    OpenCL,
+    VulkanKHR,
+}
+
+impl MemoryModel {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (MemoryModel::Simple, data),
+            1u32 => (MemoryModel::GLSL450, data),
+            2u32 => (MemoryModel::OpenCL, data),
+            3u32 => (MemoryModel::VulkanKHR, data),
+            _ => panic!("Unknown value for Enum: {}", "MemoryModel"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum ExecutionMode {
+    Invocations(LiteralInteger),
+    SpacingEqual,
+    SpacingFractionalEven,
+    SpacingFractionalOdd,
+    VertexOrderCw,
+    VertexOrderCcw,
+    PixelCenterInteger,
+    OriginUpperLeft,
+    OriginLowerLeft,
+    EarlyFragmentTests,
+    PointMode,
+    Xfb,
+    DepthReplacing,
+    DepthGreater,
+    DepthLess,
+    DepthUnchanged,
+    LocalSize(LiteralInteger, LiteralInteger, LiteralInteger),
+    LocalSizeHint(LiteralInteger, LiteralInteger, LiteralInteger),
+    InputPoints,
+    InputLines,
+    InputLinesAdjacency,
+    Triangles,
+    InputTrianglesAdjacency,
+    Quads,
+    Isolines,
+    OutputVertices(LiteralInteger),
+    OutputPoints,
+    OutputLineStrip,
+    OutputTriangleStrip,
+    VecTypeHint(LiteralInteger),
+    ContractionOff,
+    Initializer,
+    Finalizer,
+    SubgroupSize(LiteralInteger),
+    SubgroupsPerWorkgroup(LiteralInteger),
+    SubgroupsPerWorkgroupId(IdRef),
+    LocalSizeId(IdRef, IdRef, IdRef),
+    LocalSizeHintId(IdRef),
+    PostDepthCoverage,
+    DenormPreserve(LiteralInteger),
+    DenormFlushToZero(LiteralInteger),
+    SignedZeroInfNanPreserve(LiteralInteger),
+    RoundingModeRTE(LiteralInteger),
+    RoundingModeRTZ(LiteralInteger),
+    StencilRefReplacingEXT,
+    OutputLinesNV,
+    OutputPrimitivesNV(LiteralInteger),
+    DerivativeGroupQuadsNV,
+    DerivativeGroupLinearNV,
+    OutputTrianglesNV,
+    PixelInterlockOrderedEXT,
+    PixelInterlockUnorderedEXT,
+    SampleInterlockOrderedEXT,
+    SampleInterlockUnorderedEXT,
+    ShadingRateInterlockOrderedEXT,
+    ShadingRateInterlockUnorderedEXT,
+}
+
+impl ExecutionMode {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => {
+                let s = ExecutionMode::Invocations({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            1u32 => (ExecutionMode::SpacingEqual, data),
+            2u32 => (ExecutionMode::SpacingFractionalEven, data),
+            3u32 => (ExecutionMode::SpacingFractionalOdd, data),
+            4u32 => (ExecutionMode::VertexOrderCw, data),
+            5u32 => (ExecutionMode::VertexOrderCcw, data),
+            6u32 => (ExecutionMode::PixelCenterInteger, data),
+            7u32 => (ExecutionMode::OriginUpperLeft, data),
+            8u32 => (ExecutionMode::OriginLowerLeft, data),
+            9u32 => (ExecutionMode::EarlyFragmentTests, data),
+            10u32 => (ExecutionMode::PointMode, data),
+            11u32 => (ExecutionMode::Xfb, data),
+            12u32 => (ExecutionMode::DepthReplacing, data),
+            14u32 => (ExecutionMode::DepthGreater, data),
+            15u32 => (ExecutionMode::DepthLess, data),
+            16u32 => (ExecutionMode::DepthUnchanged, data),
+            17u32 => {
+                let s = ExecutionMode::LocalSize(
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                (s, data)
+            }
+            18u32 => {
+                let s = ExecutionMode::LocalSizeHint(
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                (s, data)
+            }
+            19u32 => (ExecutionMode::InputPoints, data),
+            20u32 => (ExecutionMode::InputLines, data),
+            21u32 => (ExecutionMode::InputLinesAdjacency, data),
+            22u32 => (ExecutionMode::Triangles, data),
+            23u32 => (ExecutionMode::InputTrianglesAdjacency, data),
+            24u32 => (ExecutionMode::Quads, data),
+            25u32 => (ExecutionMode::Isolines, data),
+            26u32 => {
+                let s = ExecutionMode::OutputVertices({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            27u32 => (ExecutionMode::OutputPoints, data),
+            28u32 => (ExecutionMode::OutputLineStrip, data),
+            29u32 => (ExecutionMode::OutputTriangleStrip, data),
+            30u32 => {
+                let s = ExecutionMode::VecTypeHint({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            31u32 => (ExecutionMode::ContractionOff, data),
+            33u32 => (ExecutionMode::Initializer, data),
+            34u32 => (ExecutionMode::Finalizer, data),
+            35u32 => {
+                let s = ExecutionMode::SubgroupSize({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            36u32 => {
+                let s = ExecutionMode::SubgroupsPerWorkgroup({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            37u32 => {
+                let s = ExecutionMode::SubgroupsPerWorkgroupId({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            38u32 => {
+                let s = ExecutionMode::LocalSizeId(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                (s, data)
+            }
+            39u32 => {
+                let s = ExecutionMode::LocalSizeHintId({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            4446u32 => (ExecutionMode::PostDepthCoverage, data),
+            4459u32 => {
+                let s = ExecutionMode::DenormPreserve({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            4460u32 => {
+                let s = ExecutionMode::DenormFlushToZero({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            4461u32 => {
+                let s = ExecutionMode::SignedZeroInfNanPreserve({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            4462u32 => {
+                let s = ExecutionMode::RoundingModeRTE({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            4463u32 => {
+                let s = ExecutionMode::RoundingModeRTZ({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            5027u32 => (ExecutionMode::StencilRefReplacingEXT, data),
+            5269u32 => (ExecutionMode::OutputLinesNV, data),
+            5270u32 => {
+                let s = ExecutionMode::OutputPrimitivesNV({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            5289u32 => (ExecutionMode::DerivativeGroupQuadsNV, data),
+            5290u32 => (ExecutionMode::DerivativeGroupLinearNV, data),
+            5298u32 => (ExecutionMode::OutputTrianglesNV, data),
+            5366u32 => (ExecutionMode::PixelInterlockOrderedEXT, data),
+            5367u32 => (ExecutionMode::PixelInterlockUnorderedEXT, data),
+            5368u32 => (ExecutionMode::SampleInterlockOrderedEXT, data),
+            5369u32 => (ExecutionMode::SampleInterlockUnorderedEXT, data),
+            5370u32 => (ExecutionMode::ShadingRateInterlockOrderedEXT, data),
+            5371u32 => (ExecutionMode::ShadingRateInterlockUnorderedEXT, data),
+            _ => panic!("Unknown value for Enum: {}", "ExecutionMode"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum StorageClass {
+    UniformConstant,
+    Input,
+    Uniform,
+    Output,
+    Workgroup,
+    CrossWorkgroup,
+    Private,
+    Function,
+    Generic,
+    PushConstant,
+    AtomicCounter,
+    Image,
+    StorageBuffer,
+    CallableDataNV,
+    IncomingCallableDataNV,
+    RayPayloadNV,
+    HitAttributeNV,
+    IncomingRayPayloadNV,
+    ShaderRecordBufferNV,
+    PhysicalStorageBufferEXT,
+}
+
+impl StorageClass {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (StorageClass::UniformConstant, data),
+            1u32 => (StorageClass::Input, data),
+            2u32 => (StorageClass::Uniform, data),
+            3u32 => (StorageClass::Output, data),
+            4u32 => (StorageClass::Workgroup, data),
+            5u32 => (StorageClass::CrossWorkgroup, data),
+            6u32 => (StorageClass::Private, data),
+            7u32 => (StorageClass::Function, data),
+            8u32 => (StorageClass::Generic, data),
+            9u32 => (StorageClass::PushConstant, data),
+            10u32 => (StorageClass::AtomicCounter, data),
+            11u32 => (StorageClass::Image, data),
+            12u32 => (StorageClass::StorageBuffer, data),
+            5328u32 => (StorageClass::CallableDataNV, data),
+            5329u32 => (StorageClass::IncomingCallableDataNV, data),
+            5338u32 => (StorageClass::RayPayloadNV, data),
+            5339u32 => (StorageClass::HitAttributeNV, data),
+            5342u32 => (StorageClass::IncomingRayPayloadNV, data),
+            5343u32 => (StorageClass::ShaderRecordBufferNV, data),
+            5349u32 => (StorageClass::PhysicalStorageBufferEXT, data),
+            _ => panic!("Unknown value for Enum: {}", "StorageClass"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum Dim {
+    _1D,
+    _2D,
+    _3D,
+    Cube,
+    Rect,
+    Buffer,
+    SubpassData,
+}
+
+impl Dim {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (Dim::_1D, data),
+            1u32 => (Dim::_2D, data),
+            2u32 => (Dim::_3D, data),
+            3u32 => (Dim::Cube, data),
+            4u32 => (Dim::Rect, data),
+            5u32 => (Dim::Buffer, data),
+            6u32 => (Dim::SubpassData, data),
+            _ => panic!("Unknown value for Enum: {}", "Dim"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum SamplerAddressingMode {
+    None,
+    ClampToEdge,
+    Clamp,
+    Repeat,
+    RepeatMirrored,
+}
+
+impl SamplerAddressingMode {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (SamplerAddressingMode::None, data),
+            1u32 => (SamplerAddressingMode::ClampToEdge, data),
+            2u32 => (SamplerAddressingMode::Clamp, data),
+            3u32 => (SamplerAddressingMode::Repeat, data),
+            4u32 => (SamplerAddressingMode::RepeatMirrored, data),
+            _ => panic!("Unknown value for Enum: {}", "SamplerAddressingMode"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum SamplerFilterMode {
+    Nearest,
+    Linear,
+}
+
+impl SamplerFilterMode {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (SamplerFilterMode::Nearest, data),
+            1u32 => (SamplerFilterMode::Linear, data),
+            _ => panic!("Unknown value for Enum: {}", "SamplerFilterMode"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum ImageFormat {
+    Unknown,
+    Rgba32f,
+    Rgba16f,
+    R32f,
+    Rgba8,
+    Rgba8Snorm,
+    Rg32f,
+    Rg16f,
+    R11fG11fB10f,
+    R16f,
+    Rgba16,
+    Rgb10A2,
+    Rg16,
+    Rg8,
+    R16,
+    R8,
+    Rgba16Snorm,
+    Rg16Snorm,
+    Rg8Snorm,
+    R16Snorm,
+    R8Snorm,
+    Rgba32i,
+    Rgba16i,
+    Rgba8i,
+    R32i,
+    Rg32i,
+    Rg16i,
+    Rg8i,
+    R16i,
+    R8i,
+    Rgba32ui,
+    Rgba16ui,
+    Rgba8ui,
+    R32ui,
+    Rgb10a2ui,
+    Rg32ui,
+    Rg16ui,
+    Rg8ui,
+    R16ui,
+    R8ui,
+}
+
+impl ImageFormat {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (ImageFormat::Unknown, data),
+            1u32 => (ImageFormat::Rgba32f, data),
+            2u32 => (ImageFormat::Rgba16f, data),
+            3u32 => (ImageFormat::R32f, data),
+            4u32 => (ImageFormat::Rgba8, data),
+            5u32 => (ImageFormat::Rgba8Snorm, data),
+            6u32 => (ImageFormat::Rg32f, data),
+            7u32 => (ImageFormat::Rg16f, data),
+            8u32 => (ImageFormat::R11fG11fB10f, data),
+            9u32 => (ImageFormat::R16f, data),
+            10u32 => (ImageFormat::Rgba16, data),
+            11u32 => (ImageFormat::Rgb10A2, data),
+            12u32 => (ImageFormat::Rg16, data),
+            13u32 => (ImageFormat::Rg8, data),
+            14u32 => (ImageFormat::R16, data),
+            15u32 => (ImageFormat::R8, data),
+            16u32 => (ImageFormat::Rgba16Snorm, data),
+            17u32 => (ImageFormat::Rg16Snorm, data),
+            18u32 => (ImageFormat::Rg8Snorm, data),
+            19u32 => (ImageFormat::R16Snorm, data),
+            20u32 => (ImageFormat::R8Snorm, data),
+            21u32 => (ImageFormat::Rgba32i, data),
+            22u32 => (ImageFormat::Rgba16i, data),
+            23u32 => (ImageFormat::Rgba8i, data),
+            24u32 => (ImageFormat::R32i, data),
+            25u32 => (ImageFormat::Rg32i, data),
+            26u32 => (ImageFormat::Rg16i, data),
+            27u32 => (ImageFormat::Rg8i, data),
+            28u32 => (ImageFormat::R16i, data),
+            29u32 => (ImageFormat::R8i, data),
+            30u32 => (ImageFormat::Rgba32ui, data),
+            31u32 => (ImageFormat::Rgba16ui, data),
+            32u32 => (ImageFormat::Rgba8ui, data),
+            33u32 => (ImageFormat::R32ui, data),
+            34u32 => (ImageFormat::Rgb10a2ui, data),
+            35u32 => (ImageFormat::Rg32ui, data),
+            36u32 => (ImageFormat::Rg16ui, data),
+            37u32 => (ImageFormat::Rg8ui, data),
+            38u32 => (ImageFormat::R16ui, data),
+            39u32 => (ImageFormat::R8ui, data),
+            _ => panic!("Unknown value for Enum: {}", "ImageFormat"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum ImageChannelOrder {
+    R,
+    A,
+    RG,
+    RA,
+    RGB,
+    RGBA,
+    BGRA,
+    ARGB,
+    Intensity,
+    Luminance,
+    Rx,
+    RGx,
+    RGBx,
+    Depth,
+    DepthStencil,
+    sRGB,
+    sRGBx,
+    sRGBA,
+    sBGRA,
+    ABGR,
+}
+
+impl ImageChannelOrder {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (ImageChannelOrder::R, data),
+            1u32 => (ImageChannelOrder::A, data),
+            2u32 => (ImageChannelOrder::RG, data),
+            3u32 => (ImageChannelOrder::RA, data),
+            4u32 => (ImageChannelOrder::RGB, data),
+            5u32 => (ImageChannelOrder::RGBA, data),
+            6u32 => (ImageChannelOrder::BGRA, data),
+            7u32 => (ImageChannelOrder::ARGB, data),
+            8u32 => (ImageChannelOrder::Intensity, data),
+            9u32 => (ImageChannelOrder::Luminance, data),
+            10u32 => (ImageChannelOrder::Rx, data),
+            11u32 => (ImageChannelOrder::RGx, data),
+            12u32 => (ImageChannelOrder::RGBx, data),
+            13u32 => (ImageChannelOrder::Depth, data),
+            14u32 => (ImageChannelOrder::DepthStencil, data),
+            15u32 => (ImageChannelOrder::sRGB, data),
+            16u32 => (ImageChannelOrder::sRGBx, data),
+            17u32 => (ImageChannelOrder::sRGBA, data),
+            18u32 => (ImageChannelOrder::sBGRA, data),
+            19u32 => (ImageChannelOrder::ABGR, data),
+            _ => panic!("Unknown value for Enum: {}", "ImageChannelOrder"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum ImageChannelDataType {
+    SnormInt8,
+    SnormInt16,
+    UnormInt8,
+    UnormInt16,
+    UnormShort565,
+    UnormShort555,
+    UnormInt101010,
+    SignedInt8,
+    SignedInt16,
+    SignedInt32,
+    UnsignedInt8,
+    UnsignedInt16,
+    UnsignedInt32,
+    HalfFloat,
+    Float,
+    UnormInt24,
+    UnormInt101010_2,
+}
+
+impl ImageChannelDataType {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (ImageChannelDataType::SnormInt8, data),
+            1u32 => (ImageChannelDataType::SnormInt16, data),
+            2u32 => (ImageChannelDataType::UnormInt8, data),
+            3u32 => (ImageChannelDataType::UnormInt16, data),
+            4u32 => (ImageChannelDataType::UnormShort565, data),
+            5u32 => (ImageChannelDataType::UnormShort555, data),
+            6u32 => (ImageChannelDataType::UnormInt101010, data),
+            7u32 => (ImageChannelDataType::SignedInt8, data),
+            8u32 => (ImageChannelDataType::SignedInt16, data),
+            9u32 => (ImageChannelDataType::SignedInt32, data),
+            10u32 => (ImageChannelDataType::UnsignedInt8, data),
+            11u32 => (ImageChannelDataType::UnsignedInt16, data),
+            12u32 => (ImageChannelDataType::UnsignedInt32, data),
+            13u32 => (ImageChannelDataType::HalfFloat, data),
+            14u32 => (ImageChannelDataType::Float, data),
+            15u32 => (ImageChannelDataType::UnormInt24, data),
+            16u32 => (ImageChannelDataType::UnormInt101010_2, data),
+            _ => panic!("Unknown value for Enum: {}", "ImageChannelDataType"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum FPRoundingMode {
+    RTE,
+    RTZ,
+    RTP,
+    RTN,
+}
+
+impl FPRoundingMode {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (FPRoundingMode::RTE, data),
+            1u32 => (FPRoundingMode::RTZ, data),
+            2u32 => (FPRoundingMode::RTP, data),
+            3u32 => (FPRoundingMode::RTN, data),
+            _ => panic!("Unknown value for Enum: {}", "FPRoundingMode"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum LinkageType {
+    Export,
+    Import,
+}
+
+impl LinkageType {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (LinkageType::Export, data),
+            1u32 => (LinkageType::Import, data),
+            _ => panic!("Unknown value for Enum: {}", "LinkageType"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum AccessQualifier {
+    ReadOnly,
+    WriteOnly,
+    ReadWrite,
+}
+
+impl AccessQualifier {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (AccessQualifier::ReadOnly, data),
+            1u32 => (AccessQualifier::WriteOnly, data),
+            2u32 => (AccessQualifier::ReadWrite, data),
+            _ => panic!("Unknown value for Enum: {}", "AccessQualifier"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum FunctionParameterAttribute {
+    Zext,
+    Sext,
+    ByVal,
+    Sret,
+    NoAlias,
+    NoCapture,
+    NoWrite,
+    NoReadWrite,
+}
+
+impl FunctionParameterAttribute {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (FunctionParameterAttribute::Zext, data),
+            1u32 => (FunctionParameterAttribute::Sext, data),
+            2u32 => (FunctionParameterAttribute::ByVal, data),
+            3u32 => (FunctionParameterAttribute::Sret, data),
+            4u32 => (FunctionParameterAttribute::NoAlias, data),
+            5u32 => (FunctionParameterAttribute::NoCapture, data),
+            6u32 => (FunctionParameterAttribute::NoWrite, data),
+            7u32 => (FunctionParameterAttribute::NoReadWrite, data),
+            _ => panic!("Unknown value for Enum: {}", "FunctionParameterAttribute"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum Decoration {
+    RelaxedPrecision,
+    SpecId(LiteralInteger),
+    Block,
+    BufferBlock,
+    RowMajor,
+    ColMajor,
+    ArrayStride(LiteralInteger),
+    MatrixStride(LiteralInteger),
+    GLSLShared,
+    GLSLPacked,
+    CPacked,
+    BuiltIn(BuiltIn),
+    NoPerspective,
+    Flat,
+    Patch,
+    Centroid,
+    Sample,
+    Invariant,
+    Restrict,
+    Aliased,
+    Volatile,
+    Constant,
+    Coherent,
+    NonWritable,
+    NonReadable,
+    Uniform,
+    UniformId(IdScope),
+    SaturatedConversion,
+    Stream(LiteralInteger),
+    Location(LiteralInteger),
+    Component(LiteralInteger),
+    Index(LiteralInteger),
+    Binding(LiteralInteger),
+    DescriptorSet(LiteralInteger),
+    Offset(LiteralInteger),
+    XfbBuffer(LiteralInteger),
+    XfbStride(LiteralInteger),
+    FuncParamAttr(FunctionParameterAttribute),
+    FPRoundingMode(FPRoundingMode),
+    FPFastMathMode(FPFastMathMode),
+    LinkageAttributes(LiteralString, LinkageType),
+    NoContraction,
+    InputAttachmentIndex(LiteralInteger),
+    Alignment(LiteralInteger),
+    MaxByteOffset(LiteralInteger),
+    AlignmentId(IdRef),
+    MaxByteOffsetId(IdRef),
+    NoSignedWrap,
+    NoUnsignedWrap,
+    ExplicitInterpAMD,
+    OverrideCoverageNV,
+    PassthroughNV,
+    ViewportRelativeNV,
+    SecondaryViewportRelativeNV(LiteralInteger),
+    PerPrimitiveNV,
+    PerViewNV,
+    PerTaskNV,
+    PerVertexNV,
+    NonUniformEXT,
+    RestrictPointerEXT,
+    AliasedPointerEXT,
+    CounterBuffer(IdRef),
+    UserSemantic(LiteralString),
+    UserTypeGOOGLE(LiteralString),
+}
+
+impl Decoration {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (Decoration::RelaxedPrecision, data),
+            1u32 => {
+                let s = Decoration::SpecId({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            2u32 => (Decoration::Block, data),
+            3u32 => (Decoration::BufferBlock, data),
+            4u32 => (Decoration::RowMajor, data),
+            5u32 => (Decoration::ColMajor, data),
+            6u32 => {
+                let s = Decoration::ArrayStride({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            7u32 => {
+                let s = Decoration::MatrixStride({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            8u32 => (Decoration::GLSLShared, data),
+            9u32 => (Decoration::GLSLPacked, data),
+            10u32 => (Decoration::CPacked, data),
+            11u32 => {
+                let s = Decoration::BuiltIn({
+                    let (v, d) = BuiltIn::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            13u32 => (Decoration::NoPerspective, data),
+            14u32 => (Decoration::Flat, data),
+            15u32 => (Decoration::Patch, data),
+            16u32 => (Decoration::Centroid, data),
+            17u32 => (Decoration::Sample, data),
+            18u32 => (Decoration::Invariant, data),
+            19u32 => (Decoration::Restrict, data),
+            20u32 => (Decoration::Aliased, data),
+            21u32 => (Decoration::Volatile, data),
+            22u32 => (Decoration::Constant, data),
+            23u32 => (Decoration::Coherent, data),
+            24u32 => (Decoration::NonWritable, data),
+            25u32 => (Decoration::NonReadable, data),
+            26u32 => (Decoration::Uniform, data),
+            27u32 => {
+                let s = Decoration::UniformId({
+                    let (v, d) = IdScope::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            28u32 => (Decoration::SaturatedConversion, data),
+            29u32 => {
+                let s = Decoration::Stream({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            30u32 => {
+                let s = Decoration::Location({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            31u32 => {
+                let s = Decoration::Component({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            32u32 => {
+                let s = Decoration::Index({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            33u32 => {
+                let s = Decoration::Binding({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            34u32 => {
+                let s = Decoration::DescriptorSet({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            35u32 => {
+                let s = Decoration::Offset({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            36u32 => {
+                let s = Decoration::XfbBuffer({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            37u32 => {
+                let s = Decoration::XfbStride({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            38u32 => {
+                let s = Decoration::FuncParamAttr({
+                    let (v, d) = FunctionParameterAttribute::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            39u32 => {
+                let s = Decoration::FPRoundingMode({
+                    let (v, d) = FPRoundingMode::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            40u32 => {
+                let s = Decoration::FPFastMathMode({
+                    let (v, d) = FPFastMathMode::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            41u32 => {
+                let s = Decoration::LinkageAttributes(
+                    {
+                        let (v, d) = LiteralString::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LinkageType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                (s, data)
+            }
+            42u32 => (Decoration::NoContraction, data),
+            43u32 => {
+                let s = Decoration::InputAttachmentIndex({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            44u32 => {
+                let s = Decoration::Alignment({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            45u32 => {
+                let s = Decoration::MaxByteOffset({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            46u32 => {
+                let s = Decoration::AlignmentId({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            47u32 => {
+                let s = Decoration::MaxByteOffsetId({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            4469u32 => (Decoration::NoSignedWrap, data),
+            4470u32 => (Decoration::NoUnsignedWrap, data),
+            4999u32 => (Decoration::ExplicitInterpAMD, data),
+            5248u32 => (Decoration::OverrideCoverageNV, data),
+            5250u32 => (Decoration::PassthroughNV, data),
+            5252u32 => (Decoration::ViewportRelativeNV, data),
+            5256u32 => {
+                let s = Decoration::SecondaryViewportRelativeNV({
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            5271u32 => (Decoration::PerPrimitiveNV, data),
+            5272u32 => (Decoration::PerViewNV, data),
+            5273u32 => (Decoration::PerTaskNV, data),
+            5285u32 => (Decoration::PerVertexNV, data),
+            5300u32 => (Decoration::NonUniformEXT, data),
+            5355u32 => (Decoration::RestrictPointerEXT, data),
+            5356u32 => (Decoration::AliasedPointerEXT, data),
+            5634u32 => {
+                let s = Decoration::CounterBuffer({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            5635u32 => {
+                let s = Decoration::UserSemantic({
+                    let (v, d) = LiteralString::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            5636u32 => {
+                let s = Decoration::UserTypeGOOGLE({
+                    let (v, d) = LiteralString::from_raw(data);
+                    data = d;
+                    v
+                });
+                (s, data)
+            }
+            _ => panic!("Unknown value for Enum: {}", "Decoration"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum BuiltIn {
+    Position,
+    PointSize,
+    ClipDistance,
+    CullDistance,
+    VertexId,
+    InstanceId,
+    PrimitiveId,
+    InvocationId,
+    Layer,
+    ViewportIndex,
+    TessLevelOuter,
+    TessLevelInner,
+    TessCoord,
+    PatchVertices,
+    FragCoord,
+    PointCoord,
+    FrontFacing,
+    SampleId,
+    SamplePosition,
+    SampleMask,
+    FragDepth,
+    HelperInvocation,
+    NumWorkgroups,
+    WorkgroupSize,
+    WorkgroupId,
+    LocalInvocationId,
+    GlobalInvocationId,
+    LocalInvocationIndex,
+    WorkDim,
+    GlobalSize,
+    EnqueuedWorkgroupSize,
+    GlobalOffset,
+    GlobalLinearId,
+    SubgroupSize,
+    SubgroupMaxSize,
+    NumSubgroups,
+    NumEnqueuedSubgroups,
+    SubgroupId,
+    SubgroupLocalInvocationId,
+    VertexIndex,
+    InstanceIndex,
+    SubgroupEqMask,
+    SubgroupGeMask,
+    SubgroupGtMask,
+    SubgroupLeMask,
+    SubgroupLtMask,
+    BaseVertex,
+    BaseInstance,
+    DrawIndex,
+    DeviceIndex,
+    ViewIndex,
+    BaryCoordNoPerspAMD,
+    BaryCoordNoPerspCentroidAMD,
+    BaryCoordNoPerspSampleAMD,
+    BaryCoordSmoothAMD,
+    BaryCoordSmoothCentroidAMD,
+    BaryCoordSmoothSampleAMD,
+    BaryCoordPullModelAMD,
+    FragStencilRefEXT,
+    ViewportMaskNV,
+    SecondaryPositionNV,
+    SecondaryViewportMaskNV,
+    PositionPerViewNV,
+    ViewportMaskPerViewNV,
+    FullyCoveredEXT,
+    TaskCountNV,
+    PrimitiveCountNV,
+    PrimitiveIndicesNV,
+    ClipDistancePerViewNV,
+    CullDistancePerViewNV,
+    LayerPerViewNV,
+    MeshViewCountNV,
+    MeshViewIndicesNV,
+    BaryCoordNV,
+    BaryCoordNoPerspNV,
+    FragSizeEXT,
+    FragInvocationCountEXT,
+    LaunchIdNV,
+    LaunchSizeNV,
+    WorldRayOriginNV,
+    WorldRayDirectionNV,
+    ObjectRayOriginNV,
+    ObjectRayDirectionNV,
+    RayTminNV,
+    RayTmaxNV,
+    InstanceCustomIndexNV,
+    ObjectToWorldNV,
+    WorldToObjectNV,
+    HitTNV,
+    HitKindNV,
+    IncomingRayFlagsNV,
+    WarpsPerSMNV,
+    SMCountNV,
+    WarpIDNV,
+    SMIDNV,
+}
+
+impl BuiltIn {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (BuiltIn::Position, data),
+            1u32 => (BuiltIn::PointSize, data),
+            3u32 => (BuiltIn::ClipDistance, data),
+            4u32 => (BuiltIn::CullDistance, data),
+            5u32 => (BuiltIn::VertexId, data),
+            6u32 => (BuiltIn::InstanceId, data),
+            7u32 => (BuiltIn::PrimitiveId, data),
+            8u32 => (BuiltIn::InvocationId, data),
+            9u32 => (BuiltIn::Layer, data),
+            10u32 => (BuiltIn::ViewportIndex, data),
+            11u32 => (BuiltIn::TessLevelOuter, data),
+            12u32 => (BuiltIn::TessLevelInner, data),
+            13u32 => (BuiltIn::TessCoord, data),
+            14u32 => (BuiltIn::PatchVertices, data),
+            15u32 => (BuiltIn::FragCoord, data),
+            16u32 => (BuiltIn::PointCoord, data),
+            17u32 => (BuiltIn::FrontFacing, data),
+            18u32 => (BuiltIn::SampleId, data),
+            19u32 => (BuiltIn::SamplePosition, data),
+            20u32 => (BuiltIn::SampleMask, data),
+            22u32 => (BuiltIn::FragDepth, data),
+            23u32 => (BuiltIn::HelperInvocation, data),
+            24u32 => (BuiltIn::NumWorkgroups, data),
+            25u32 => (BuiltIn::WorkgroupSize, data),
+            26u32 => (BuiltIn::WorkgroupId, data),
+            27u32 => (BuiltIn::LocalInvocationId, data),
+            28u32 => (BuiltIn::GlobalInvocationId, data),
+            29u32 => (BuiltIn::LocalInvocationIndex, data),
+            30u32 => (BuiltIn::WorkDim, data),
+            31u32 => (BuiltIn::GlobalSize, data),
+            32u32 => (BuiltIn::EnqueuedWorkgroupSize, data),
+            33u32 => (BuiltIn::GlobalOffset, data),
+            34u32 => (BuiltIn::GlobalLinearId, data),
+            36u32 => (BuiltIn::SubgroupSize, data),
+            37u32 => (BuiltIn::SubgroupMaxSize, data),
+            38u32 => (BuiltIn::NumSubgroups, data),
+            39u32 => (BuiltIn::NumEnqueuedSubgroups, data),
+            40u32 => (BuiltIn::SubgroupId, data),
+            41u32 => (BuiltIn::SubgroupLocalInvocationId, data),
+            42u32 => (BuiltIn::VertexIndex, data),
+            43u32 => (BuiltIn::InstanceIndex, data),
+            4416u32 => (BuiltIn::SubgroupEqMask, data),
+            4417u32 => (BuiltIn::SubgroupGeMask, data),
+            4418u32 => (BuiltIn::SubgroupGtMask, data),
+            4419u32 => (BuiltIn::SubgroupLeMask, data),
+            4420u32 => (BuiltIn::SubgroupLtMask, data),
+            4424u32 => (BuiltIn::BaseVertex, data),
+            4425u32 => (BuiltIn::BaseInstance, data),
+            4426u32 => (BuiltIn::DrawIndex, data),
+            4438u32 => (BuiltIn::DeviceIndex, data),
+            4440u32 => (BuiltIn::ViewIndex, data),
+            4992u32 => (BuiltIn::BaryCoordNoPerspAMD, data),
+            4993u32 => (BuiltIn::BaryCoordNoPerspCentroidAMD, data),
+            4994u32 => (BuiltIn::BaryCoordNoPerspSampleAMD, data),
+            4995u32 => (BuiltIn::BaryCoordSmoothAMD, data),
+            4996u32 => (BuiltIn::BaryCoordSmoothCentroidAMD, data),
+            4997u32 => (BuiltIn::BaryCoordSmoothSampleAMD, data),
+            4998u32 => (BuiltIn::BaryCoordPullModelAMD, data),
+            5014u32 => (BuiltIn::FragStencilRefEXT, data),
+            5253u32 => (BuiltIn::ViewportMaskNV, data),
+            5257u32 => (BuiltIn::SecondaryPositionNV, data),
+            5258u32 => (BuiltIn::SecondaryViewportMaskNV, data),
+            5261u32 => (BuiltIn::PositionPerViewNV, data),
+            5262u32 => (BuiltIn::ViewportMaskPerViewNV, data),
+            5264u32 => (BuiltIn::FullyCoveredEXT, data),
+            5274u32 => (BuiltIn::TaskCountNV, data),
+            5275u32 => (BuiltIn::PrimitiveCountNV, data),
+            5276u32 => (BuiltIn::PrimitiveIndicesNV, data),
+            5277u32 => (BuiltIn::ClipDistancePerViewNV, data),
+            5278u32 => (BuiltIn::CullDistancePerViewNV, data),
+            5279u32 => (BuiltIn::LayerPerViewNV, data),
+            5280u32 => (BuiltIn::MeshViewCountNV, data),
+            5281u32 => (BuiltIn::MeshViewIndicesNV, data),
+            5286u32 => (BuiltIn::BaryCoordNV, data),
+            5287u32 => (BuiltIn::BaryCoordNoPerspNV, data),
+            5292u32 => (BuiltIn::FragSizeEXT, data),
+            5293u32 => (BuiltIn::FragInvocationCountEXT, data),
+            5319u32 => (BuiltIn::LaunchIdNV, data),
+            5320u32 => (BuiltIn::LaunchSizeNV, data),
+            5321u32 => (BuiltIn::WorldRayOriginNV, data),
+            5322u32 => (BuiltIn::WorldRayDirectionNV, data),
+            5323u32 => (BuiltIn::ObjectRayOriginNV, data),
+            5324u32 => (BuiltIn::ObjectRayDirectionNV, data),
+            5325u32 => (BuiltIn::RayTminNV, data),
+            5326u32 => (BuiltIn::RayTmaxNV, data),
+            5327u32 => (BuiltIn::InstanceCustomIndexNV, data),
+            5330u32 => (BuiltIn::ObjectToWorldNV, data),
+            5331u32 => (BuiltIn::WorldToObjectNV, data),
+            5332u32 => (BuiltIn::HitTNV, data),
+            5333u32 => (BuiltIn::HitKindNV, data),
+            5351u32 => (BuiltIn::IncomingRayFlagsNV, data),
+            5374u32 => (BuiltIn::WarpsPerSMNV, data),
+            5375u32 => (BuiltIn::SMCountNV, data),
+            5376u32 => (BuiltIn::WarpIDNV, data),
+            5377u32 => (BuiltIn::SMIDNV, data),
+            _ => panic!("Unknown value for Enum: {}", "BuiltIn"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum Scope {
+    CrossDevice,
+    Device,
+    Workgroup,
+    Subgroup,
+    Invocation,
+    QueueFamilyKHR,
+}
+
+impl Scope {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (Scope::CrossDevice, data),
+            1u32 => (Scope::Device, data),
+            2u32 => (Scope::Workgroup, data),
+            3u32 => (Scope::Subgroup, data),
+            4u32 => (Scope::Invocation, data),
+            5u32 => (Scope::QueueFamilyKHR, data),
+            _ => panic!("Unknown value for Enum: {}", "Scope"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum GroupOperation {
+    Reduce,
+    InclusiveScan,
+    ExclusiveScan,
+    ClusteredReduce,
+    PartitionedReduceNV,
+    PartitionedInclusiveScanNV,
+    PartitionedExclusiveScanNV,
+}
+
+impl GroupOperation {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (GroupOperation::Reduce, data),
+            1u32 => (GroupOperation::InclusiveScan, data),
+            2u32 => (GroupOperation::ExclusiveScan, data),
+            3u32 => (GroupOperation::ClusteredReduce, data),
+            6u32 => (GroupOperation::PartitionedReduceNV, data),
+            7u32 => (GroupOperation::PartitionedInclusiveScanNV, data),
+            8u32 => (GroupOperation::PartitionedExclusiveScanNV, data),
+            _ => panic!("Unknown value for Enum: {}", "GroupOperation"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum KernelEnqueueFlags {
+    NoWait,
+    WaitKernel,
+    WaitWorkGroup,
+}
+
+impl KernelEnqueueFlags {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (KernelEnqueueFlags::NoWait, data),
+            1u32 => (KernelEnqueueFlags::WaitKernel, data),
+            2u32 => (KernelEnqueueFlags::WaitWorkGroup, data),
+            _ => panic!("Unknown value for Enum: {}", "KernelEnqueueFlags"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[repr(u32)]
+pub enum Capability {
+    Matrix,
+    Shader,
+    Geometry,
+    Tessellation,
+    Addresses,
+    Linkage,
+    Kernel,
+    Vector16,
+    Float16Buffer,
+    Float16,
+    Float64,
+    Int64,
+    Int64Atomics,
+    ImageBasic,
+    ImageReadWrite,
+    ImageMipmap,
+    Pipes,
+    Groups,
+    DeviceEnqueue,
+    LiteralSampler,
+    AtomicStorage,
+    Int16,
+    TessellationPointSize,
+    GeometryPointSize,
+    ImageGatherExtended,
+    StorageImageMultisample,
+    UniformBufferArrayDynamicIndexing,
+    SampledImageArrayDynamicIndexing,
+    StorageBufferArrayDynamicIndexing,
+    StorageImageArrayDynamicIndexing,
+    ClipDistance,
+    CullDistance,
+    ImageCubeArray,
+    SampleRateShading,
+    ImageRect,
+    SampledRect,
+    GenericPointer,
+    Int8,
+    InputAttachment,
+    SparseResidency,
+    MinLod,
+    Sampled1D,
+    Image1D,
+    SampledCubeArray,
+    SampledBuffer,
+    ImageBuffer,
+    ImageMSArray,
+    StorageImageExtendedFormats,
+    ImageQuery,
+    DerivativeControl,
+    InterpolationFunction,
+    TransformFeedback,
+    GeometryStreams,
+    StorageImageReadWithoutFormat,
+    StorageImageWriteWithoutFormat,
+    MultiViewport,
+    SubgroupDispatch,
+    NamedBarrier,
+    PipeStorage,
+    GroupNonUniform,
+    GroupNonUniformVote,
+    GroupNonUniformArithmetic,
+    GroupNonUniformBallot,
+    GroupNonUniformShuffle,
+    GroupNonUniformShuffleRelative,
+    GroupNonUniformClustered,
+    GroupNonUniformQuad,
+    SubgroupBallotKHR,
+    DrawParameters,
+    SubgroupVoteKHR,
+    StorageBuffer16BitAccess,
+    UniformAndStorageBuffer16BitAccess,
+    StoragePushConstant16,
+    StorageInputOutput16,
+    DeviceGroup,
+    MultiView,
+    VariablePointersStorageBuffer,
+    VariablePointers,
+    AtomicStorageOps,
+    SampleMaskPostDepthCoverage,
+    StorageBuffer8BitAccess,
+    UniformAndStorageBuffer8BitAccess,
+    StoragePushConstant8,
+    DenormPreserve,
+    DenormFlushToZero,
+    SignedZeroInfNanPreserve,
+    RoundingModeRTE,
+    RoundingModeRTZ,
+    Float16ImageAMD,
+    ImageGatherBiasLodAMD,
+    FragmentMaskAMD,
+    StencilExportEXT,
+    ImageReadWriteLodAMD,
+    ShaderClockKHR,
+    SampleMaskOverrideCoverageNV,
+    GeometryShaderPassthroughNV,
+    ShaderViewportIndexLayerEXT,
+    ShaderViewportMaskNV,
+    ShaderStereoViewNV,
+    PerViewAttributesNV,
+    FragmentFullyCoveredEXT,
+    MeshShadingNV,
+    ImageFootprintNV,
+    FragmentBarycentricNV,
+    ComputeDerivativeGroupQuadsNV,
+    FragmentDensityEXT,
+    GroupNonUniformPartitionedNV,
+    ShaderNonUniformEXT,
+    RuntimeDescriptorArrayEXT,
+    InputAttachmentArrayDynamicIndexingEXT,
+    UniformTexelBufferArrayDynamicIndexingEXT,
+    StorageTexelBufferArrayDynamicIndexingEXT,
+    UniformBufferArrayNonUniformIndexingEXT,
+    SampledImageArrayNonUniformIndexingEXT,
+    StorageBufferArrayNonUniformIndexingEXT,
+    StorageImageArrayNonUniformIndexingEXT,
+    InputAttachmentArrayNonUniformIndexingEXT,
+    UniformTexelBufferArrayNonUniformIndexingEXT,
+    StorageTexelBufferArrayNonUniformIndexingEXT,
+    RayTracingNV,
+    VulkanMemoryModelKHR,
+    VulkanMemoryModelDeviceScopeKHR,
+    PhysicalStorageBufferAddressesEXT,
+    ComputeDerivativeGroupLinearNV,
+    CooperativeMatrixNV,
+    FragmentShaderSampleInterlockEXT,
+    FragmentShaderShadingRateInterlockEXT,
+    ShaderSMBuiltinsNV,
+    FragmentShaderPixelInterlockEXT,
+    DemoteToHelperInvocationEXT,
+    SubgroupShuffleINTEL,
+    SubgroupBufferBlockIOINTEL,
+    SubgroupImageBlockIOINTEL,
+    SubgroupImageMediaBlockIOINTEL,
+    IntegerFunctions2INTEL,
+    SubgroupAvcMotionEstimationINTEL,
+    SubgroupAvcMotionEstimationIntraINTEL,
+    SubgroupAvcMotionEstimationChromaINTEL,
+}
+
+impl Capability {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        let value = data[0];
+        data = &data[1..];
+        match value {
+            0u32 => (Capability::Matrix, data),
+            1u32 => (Capability::Shader, data),
+            2u32 => (Capability::Geometry, data),
+            3u32 => (Capability::Tessellation, data),
+            4u32 => (Capability::Addresses, data),
+            5u32 => (Capability::Linkage, data),
+            6u32 => (Capability::Kernel, data),
+            7u32 => (Capability::Vector16, data),
+            8u32 => (Capability::Float16Buffer, data),
+            9u32 => (Capability::Float16, data),
+            10u32 => (Capability::Float64, data),
+            11u32 => (Capability::Int64, data),
+            12u32 => (Capability::Int64Atomics, data),
+            13u32 => (Capability::ImageBasic, data),
+            14u32 => (Capability::ImageReadWrite, data),
+            15u32 => (Capability::ImageMipmap, data),
+            17u32 => (Capability::Pipes, data),
+            18u32 => (Capability::Groups, data),
+            19u32 => (Capability::DeviceEnqueue, data),
+            20u32 => (Capability::LiteralSampler, data),
+            21u32 => (Capability::AtomicStorage, data),
+            22u32 => (Capability::Int16, data),
+            23u32 => (Capability::TessellationPointSize, data),
+            24u32 => (Capability::GeometryPointSize, data),
+            25u32 => (Capability::ImageGatherExtended, data),
+            27u32 => (Capability::StorageImageMultisample, data),
+            28u32 => (Capability::UniformBufferArrayDynamicIndexing, data),
+            29u32 => (Capability::SampledImageArrayDynamicIndexing, data),
+            30u32 => (Capability::StorageBufferArrayDynamicIndexing, data),
+            31u32 => (Capability::StorageImageArrayDynamicIndexing, data),
+            32u32 => (Capability::ClipDistance, data),
+            33u32 => (Capability::CullDistance, data),
+            34u32 => (Capability::ImageCubeArray, data),
+            35u32 => (Capability::SampleRateShading, data),
+            36u32 => (Capability::ImageRect, data),
+            37u32 => (Capability::SampledRect, data),
+            38u32 => (Capability::GenericPointer, data),
+            39u32 => (Capability::Int8, data),
+            40u32 => (Capability::InputAttachment, data),
+            41u32 => (Capability::SparseResidency, data),
+            42u32 => (Capability::MinLod, data),
+            43u32 => (Capability::Sampled1D, data),
+            44u32 => (Capability::Image1D, data),
+            45u32 => (Capability::SampledCubeArray, data),
+            46u32 => (Capability::SampledBuffer, data),
+            47u32 => (Capability::ImageBuffer, data),
+            48u32 => (Capability::ImageMSArray, data),
+            49u32 => (Capability::StorageImageExtendedFormats, data),
+            50u32 => (Capability::ImageQuery, data),
+            51u32 => (Capability::DerivativeControl, data),
+            52u32 => (Capability::InterpolationFunction, data),
+            53u32 => (Capability::TransformFeedback, data),
+            54u32 => (Capability::GeometryStreams, data),
+            55u32 => (Capability::StorageImageReadWithoutFormat, data),
+            56u32 => (Capability::StorageImageWriteWithoutFormat, data),
+            57u32 => (Capability::MultiViewport, data),
+            58u32 => (Capability::SubgroupDispatch, data),
+            59u32 => (Capability::NamedBarrier, data),
+            60u32 => (Capability::PipeStorage, data),
+            61u32 => (Capability::GroupNonUniform, data),
+            62u32 => (Capability::GroupNonUniformVote, data),
+            63u32 => (Capability::GroupNonUniformArithmetic, data),
+            64u32 => (Capability::GroupNonUniformBallot, data),
+            65u32 => (Capability::GroupNonUniformShuffle, data),
+            66u32 => (Capability::GroupNonUniformShuffleRelative, data),
+            67u32 => (Capability::GroupNonUniformClustered, data),
+            68u32 => (Capability::GroupNonUniformQuad, data),
+            4423u32 => (Capability::SubgroupBallotKHR, data),
+            4427u32 => (Capability::DrawParameters, data),
+            4431u32 => (Capability::SubgroupVoteKHR, data),
+            4433u32 => (Capability::StorageBuffer16BitAccess, data),
+            4434u32 => (Capability::UniformAndStorageBuffer16BitAccess, data),
+            4435u32 => (Capability::StoragePushConstant16, data),
+            4436u32 => (Capability::StorageInputOutput16, data),
+            4437u32 => (Capability::DeviceGroup, data),
+            4439u32 => (Capability::MultiView, data),
+            4441u32 => (Capability::VariablePointersStorageBuffer, data),
+            4442u32 => (Capability::VariablePointers, data),
+            4445u32 => (Capability::AtomicStorageOps, data),
+            4447u32 => (Capability::SampleMaskPostDepthCoverage, data),
+            4448u32 => (Capability::StorageBuffer8BitAccess, data),
+            4449u32 => (Capability::UniformAndStorageBuffer8BitAccess, data),
+            4450u32 => (Capability::StoragePushConstant8, data),
+            4464u32 => (Capability::DenormPreserve, data),
+            4465u32 => (Capability::DenormFlushToZero, data),
+            4466u32 => (Capability::SignedZeroInfNanPreserve, data),
+            4467u32 => (Capability::RoundingModeRTE, data),
+            4468u32 => (Capability::RoundingModeRTZ, data),
+            5008u32 => (Capability::Float16ImageAMD, data),
+            5009u32 => (Capability::ImageGatherBiasLodAMD, data),
+            5010u32 => (Capability::FragmentMaskAMD, data),
+            5013u32 => (Capability::StencilExportEXT, data),
+            5015u32 => (Capability::ImageReadWriteLodAMD, data),
+            5055u32 => (Capability::ShaderClockKHR, data),
+            5249u32 => (Capability::SampleMaskOverrideCoverageNV, data),
+            5251u32 => (Capability::GeometryShaderPassthroughNV, data),
+            5254u32 => (Capability::ShaderViewportIndexLayerEXT, data),
+            5255u32 => (Capability::ShaderViewportMaskNV, data),
+            5259u32 => (Capability::ShaderStereoViewNV, data),
+            5260u32 => (Capability::PerViewAttributesNV, data),
+            5265u32 => (Capability::FragmentFullyCoveredEXT, data),
+            5266u32 => (Capability::MeshShadingNV, data),
+            5282u32 => (Capability::ImageFootprintNV, data),
+            5284u32 => (Capability::FragmentBarycentricNV, data),
+            5288u32 => (Capability::ComputeDerivativeGroupQuadsNV, data),
+            5291u32 => (Capability::FragmentDensityEXT, data),
+            5297u32 => (Capability::GroupNonUniformPartitionedNV, data),
+            5301u32 => (Capability::ShaderNonUniformEXT, data),
+            5302u32 => (Capability::RuntimeDescriptorArrayEXT, data),
+            5303u32 => (Capability::InputAttachmentArrayDynamicIndexingEXT, data),
+            5304u32 => (Capability::UniformTexelBufferArrayDynamicIndexingEXT, data),
+            5305u32 => (Capability::StorageTexelBufferArrayDynamicIndexingEXT, data),
+            5306u32 => (Capability::UniformBufferArrayNonUniformIndexingEXT, data),
+            5307u32 => (Capability::SampledImageArrayNonUniformIndexingEXT, data),
+            5308u32 => (Capability::StorageBufferArrayNonUniformIndexingEXT, data),
+            5309u32 => (Capability::StorageImageArrayNonUniformIndexingEXT, data),
+            5310u32 => (Capability::InputAttachmentArrayNonUniformIndexingEXT, data),
+            5311u32 => (
+                Capability::UniformTexelBufferArrayNonUniformIndexingEXT,
+                data,
+            ),
+            5312u32 => (
+                Capability::StorageTexelBufferArrayNonUniformIndexingEXT,
+                data,
+            ),
+            5340u32 => (Capability::RayTracingNV, data),
+            5345u32 => (Capability::VulkanMemoryModelKHR, data),
+            5346u32 => (Capability::VulkanMemoryModelDeviceScopeKHR, data),
+            5347u32 => (Capability::PhysicalStorageBufferAddressesEXT, data),
+            5350u32 => (Capability::ComputeDerivativeGroupLinearNV, data),
+            5357u32 => (Capability::CooperativeMatrixNV, data),
+            5363u32 => (Capability::FragmentShaderSampleInterlockEXT, data),
+            5372u32 => (Capability::FragmentShaderShadingRateInterlockEXT, data),
+            5373u32 => (Capability::ShaderSMBuiltinsNV, data),
+            5378u32 => (Capability::FragmentShaderPixelInterlockEXT, data),
+            5379u32 => (Capability::DemoteToHelperInvocationEXT, data),
+            5568u32 => (Capability::SubgroupShuffleINTEL, data),
+            5569u32 => (Capability::SubgroupBufferBlockIOINTEL, data),
+            5570u32 => (Capability::SubgroupImageBlockIOINTEL, data),
+            5579u32 => (Capability::SubgroupImageMediaBlockIOINTEL, data),
+            5584u32 => (Capability::IntegerFunctions2INTEL, data),
+            5696u32 => (Capability::SubgroupAvcMotionEstimationINTEL, data),
+            5697u32 => (Capability::SubgroupAvcMotionEstimationIntraINTEL, data),
+            5698u32 => (Capability::SubgroupAvcMotionEstimationChromaINTEL, data),
+            _ => panic!("Unknown value for Enum: {}", "Capability"),
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct IdResultType(pub u32);
+
+impl IdResultType {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct IdResult(pub u32);
+
+impl IdResult {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct IdMemorySemantics(pub u32);
+
+impl IdMemorySemantics {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct IdScope(pub u32);
+
+impl IdScope {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct IdRef(pub u32);
+
+impl IdRef {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct LiteralInteger(pub u32);
+
+impl LiteralInteger {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct LiteralString(pub String);
+
+impl LiteralString {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        let res = parse_string(data);
+        (Self(res.0), res.1)
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct LiteralContextDependentNumber(pub u32);
+
+impl LiteralContextDependentNumber {
+    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct LiteralExtInstInteger(pub u32);
+
+impl LiteralExtInstInteger {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct LiteralSpecConstantOpInteger(pub u32);
+
+impl LiteralSpecConstantOpInteger {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        (Self(data[0]), &data[1..])
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct PairLiteralIntegerIdRef(pub LiteralInteger, pub IdRef);
+
+impl PairLiteralIntegerIdRef {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        (
+            Self(
+                {
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                },
+                {
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                },
+            ),
+            data,
+        )
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct PairIdRefLiteralInteger(pub IdRef, pub LiteralInteger);
+
+impl PairIdRefLiteralInteger {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        (
+            Self(
+                {
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                },
+                {
+                    let (v, d) = LiteralInteger::from_raw(data);
+                    data = d;
+                    v
+                },
+            ),
+            data,
+        )
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub struct PairIdRefIdRef(pub IdRef, pub IdRef);
+
+impl PairIdRefIdRef {
+    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+        (
+            Self(
+                {
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                },
+                {
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                },
+            ),
+            data,
+        )
+    }
+}
+
+fn parse_string(data: &[u32]) -> (String, &[u32]) {
+    let bytes = data
+        .iter()
+        .flat_map(|&n| {
+            let b1 = (n & 0xff) as u8;
+            let b2 = ((n >> 8) & 0xff) as u8;
+            let b3 = ((n >> 16) & 0xff) as u8;
+            let b4 = ((n >> 24) & 0xff) as u8;
+            vec![b1, b2, b3, b4].into_iter()
+        })
+        .take_while(|&b| b != 0)
+        .collect::<Vec<u8>>();
+    let r = 1 + bytes.len() / 4;
+    let s = String::from_utf8(bytes).expect("Shader content is not UTF-8");
+    (s, &data[r..])
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub enum Instruction {
+    Nop,
+    Undef(IdResultType, IdResult),
+    SourceContinued(LiteralString),
+    Source(
+        SourceLanguage,
+        LiteralInteger,
+        Option<IdRef>,
+        Option<LiteralString>,
+    ),
+    SourceExtension(LiteralString),
+    Name(IdRef, LiteralString),
+    MemberName(IdRef, LiteralInteger, LiteralString),
+    String(IdResult, LiteralString),
+    Line(IdRef, LiteralInteger, LiteralInteger),
+    Extension(LiteralString),
+    ExtInstImport(IdResult, LiteralString),
+    ExtInst(
+        IdResultType,
+        IdResult,
+        IdRef,
+        LiteralExtInstInteger,
+        Vec<IdRef>,
+    ),
+    MemoryModel(AddressingModel, MemoryModel),
+    EntryPoint(ExecutionModel, IdRef, LiteralString, Vec<IdRef>),
+    ExecutionMode(IdRef, ExecutionMode),
+    Capability(Capability),
+    TypeVoid(IdResult),
+    TypeBool(IdResult),
+    TypeInt(IdResult, LiteralInteger, LiteralInteger),
+    TypeFloat(IdResult, LiteralInteger),
+    TypeVector(IdResult, IdRef, LiteralInteger),
+    TypeMatrix(IdResult, IdRef, LiteralInteger),
+    TypeImage(
+        IdResult,
+        IdRef,
+        Dim,
+        LiteralInteger,
+        LiteralInteger,
+        LiteralInteger,
+        LiteralInteger,
+        ImageFormat,
+        Option<AccessQualifier>,
+    ),
+    TypeSampler(IdResult),
+    TypeSampledImage(IdResult, IdRef),
+    TypeArray(IdResult, IdRef, IdRef),
+    TypeRuntimeArray(IdResult, IdRef),
+    TypeStruct(IdResult, Vec<IdRef>),
+    TypeOpaque(IdResult, LiteralString),
+    TypePointer(IdResult, StorageClass, IdRef),
+    TypeFunction(IdResult, IdRef, Vec<IdRef>),
+    TypeEvent(IdResult),
+    TypeDeviceEvent(IdResult),
+    TypeReserveId(IdResult),
+    TypeQueue(IdResult),
+    TypePipe(IdResult, AccessQualifier),
+    TypeForwardPointer(IdRef, StorageClass),
+    ConstantTrue(IdResultType, IdResult),
+    ConstantFalse(IdResultType, IdResult),
+    Constant(IdResultType, IdResult, LiteralContextDependentNumber),
+    ConstantComposite(IdResultType, IdResult, Vec<IdRef>),
+    ConstantSampler(
+        IdResultType,
+        IdResult,
+        SamplerAddressingMode,
+        LiteralInteger,
+        SamplerFilterMode,
+    ),
+    ConstantNull(IdResultType, IdResult),
+    SpecConstantTrue(IdResultType, IdResult),
+    SpecConstantFalse(IdResultType, IdResult),
+    SpecConstant(IdResultType, IdResult, LiteralContextDependentNumber),
+    SpecConstantComposite(IdResultType, IdResult, Vec<IdRef>),
+    SpecConstantOp(IdResultType, IdResult, LiteralSpecConstantOpInteger),
+    Function(IdResultType, IdResult, FunctionControl, IdRef),
+    FunctionParameter(IdResultType, IdResult),
+    FunctionEnd,
+    FunctionCall(IdResultType, IdResult, IdRef, Vec<IdRef>),
+    Variable(IdResultType, IdResult, StorageClass, Option<IdRef>),
+    ImageTexelPointer(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    Load(IdResultType, IdResult, IdRef, Option<MemoryAccess>),
+    Store(IdRef, IdRef, Option<MemoryAccess>),
+    CopyMemory(IdRef, IdRef, Option<MemoryAccess>, Option<MemoryAccess>),
+    CopyMemorySized(
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<MemoryAccess>,
+        Option<MemoryAccess>,
+    ),
+    AccessChain(IdResultType, IdResult, IdRef, Vec<IdRef>),
+    InBoundsAccessChain(IdResultType, IdResult, IdRef, Vec<IdRef>),
+    PtrAccessChain(IdResultType, IdResult, IdRef, IdRef, Vec<IdRef>),
+    ArrayLength(IdResultType, IdResult, IdRef, LiteralInteger),
+    GenericPtrMemSemantics(IdResultType, IdResult, IdRef),
+    InBoundsPtrAccessChain(IdResultType, IdResult, IdRef, IdRef, Vec<IdRef>),
+    Decorate(IdRef, Decoration),
+    MemberDecorate(IdRef, LiteralInteger, Decoration),
+    DecorationGroup(IdResult),
+    GroupDecorate(IdRef, Vec<IdRef>),
+    GroupMemberDecorate(IdRef, Vec<PairIdRefLiteralInteger>),
+    VectorExtractDynamic(IdResultType, IdResult, IdRef, IdRef),
+    VectorInsertDynamic(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    VectorShuffle(IdResultType, IdResult, IdRef, IdRef, Vec<LiteralInteger>),
+    CompositeConstruct(IdResultType, IdResult, Vec<IdRef>),
+    CompositeExtract(IdResultType, IdResult, IdRef, Vec<LiteralInteger>),
+    CompositeInsert(IdResultType, IdResult, IdRef, IdRef, Vec<LiteralInteger>),
+    CopyObject(IdResultType, IdResult, IdRef),
+    Transpose(IdResultType, IdResult, IdRef),
+    SampledImage(IdResultType, IdResult, IdRef, IdRef),
+    ImageSampleImplicitLod(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    ImageSampleExplicitLod(IdResultType, IdResult, IdRef, IdRef, ImageOperands),
+    ImageSampleDrefImplicitLod(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageSampleDrefExplicitLod(IdResultType, IdResult, IdRef, IdRef, IdRef, ImageOperands),
+    ImageSampleProjImplicitLod(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    ImageSampleProjExplicitLod(IdResultType, IdResult, IdRef, IdRef, ImageOperands),
+    ImageSampleProjDrefImplicitLod(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageSampleProjDrefExplicitLod(IdResultType, IdResult, IdRef, IdRef, IdRef, ImageOperands),
+    ImageFetch(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    ImageGather(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageDrefGather(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageRead(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    ImageWrite(IdRef, IdRef, IdRef, Option<ImageOperands>),
+    Image(IdResultType, IdResult, IdRef),
+    ImageQueryFormat(IdResultType, IdResult, IdRef),
+    ImageQueryOrder(IdResultType, IdResult, IdRef),
+    ImageQuerySizeLod(IdResultType, IdResult, IdRef, IdRef),
+    ImageQuerySize(IdResultType, IdResult, IdRef),
+    ImageQueryLod(IdResultType, IdResult, IdRef, IdRef),
+    ImageQueryLevels(IdResultType, IdResult, IdRef),
+    ImageQuerySamples(IdResultType, IdResult, IdRef),
+    ConvertFToU(IdResultType, IdResult, IdRef),
+    ConvertFToS(IdResultType, IdResult, IdRef),
+    ConvertSToF(IdResultType, IdResult, IdRef),
+    ConvertUToF(IdResultType, IdResult, IdRef),
+    UConvert(IdResultType, IdResult, IdRef),
+    SConvert(IdResultType, IdResult, IdRef),
+    FConvert(IdResultType, IdResult, IdRef),
+    QuantizeToF16(IdResultType, IdResult, IdRef),
+    ConvertPtrToU(IdResultType, IdResult, IdRef),
+    SatConvertSToU(IdResultType, IdResult, IdRef),
+    SatConvertUToS(IdResultType, IdResult, IdRef),
+    ConvertUToPtr(IdResultType, IdResult, IdRef),
+    PtrCastToGeneric(IdResultType, IdResult, IdRef),
+    GenericCastToPtr(IdResultType, IdResult, IdRef),
+    GenericCastToPtrExplicit(IdResultType, IdResult, IdRef, StorageClass),
+    Bitcast(IdResultType, IdResult, IdRef),
+    SNegate(IdResultType, IdResult, IdRef),
+    FNegate(IdResultType, IdResult, IdRef),
+    IAdd(IdResultType, IdResult, IdRef, IdRef),
+    FAdd(IdResultType, IdResult, IdRef, IdRef),
+    ISub(IdResultType, IdResult, IdRef, IdRef),
+    FSub(IdResultType, IdResult, IdRef, IdRef),
+    IMul(IdResultType, IdResult, IdRef, IdRef),
+    FMul(IdResultType, IdResult, IdRef, IdRef),
+    UDiv(IdResultType, IdResult, IdRef, IdRef),
+    SDiv(IdResultType, IdResult, IdRef, IdRef),
+    FDiv(IdResultType, IdResult, IdRef, IdRef),
+    UMod(IdResultType, IdResult, IdRef, IdRef),
+    SRem(IdResultType, IdResult, IdRef, IdRef),
+    SMod(IdResultType, IdResult, IdRef, IdRef),
+    FRem(IdResultType, IdResult, IdRef, IdRef),
+    FMod(IdResultType, IdResult, IdRef, IdRef),
+    VectorTimesScalar(IdResultType, IdResult, IdRef, IdRef),
+    MatrixTimesScalar(IdResultType, IdResult, IdRef, IdRef),
+    VectorTimesMatrix(IdResultType, IdResult, IdRef, IdRef),
+    MatrixTimesVector(IdResultType, IdResult, IdRef, IdRef),
+    MatrixTimesMatrix(IdResultType, IdResult, IdRef, IdRef),
+    OuterProduct(IdResultType, IdResult, IdRef, IdRef),
+    Dot(IdResultType, IdResult, IdRef, IdRef),
+    IAddCarry(IdResultType, IdResult, IdRef, IdRef),
+    ISubBorrow(IdResultType, IdResult, IdRef, IdRef),
+    UMulExtended(IdResultType, IdResult, IdRef, IdRef),
+    SMulExtended(IdResultType, IdResult, IdRef, IdRef),
+    Any(IdResultType, IdResult, IdRef),
+    All(IdResultType, IdResult, IdRef),
+    IsNan(IdResultType, IdResult, IdRef),
+    IsInf(IdResultType, IdResult, IdRef),
+    IsFinite(IdResultType, IdResult, IdRef),
+    IsNormal(IdResultType, IdResult, IdRef),
+    SignBitSet(IdResultType, IdResult, IdRef),
+    LessOrGreater(IdResultType, IdResult, IdRef, IdRef),
+    Ordered(IdResultType, IdResult, IdRef, IdRef),
+    Unordered(IdResultType, IdResult, IdRef, IdRef),
+    LogicalEqual(IdResultType, IdResult, IdRef, IdRef),
+    LogicalNotEqual(IdResultType, IdResult, IdRef, IdRef),
+    LogicalOr(IdResultType, IdResult, IdRef, IdRef),
+    LogicalAnd(IdResultType, IdResult, IdRef, IdRef),
+    LogicalNot(IdResultType, IdResult, IdRef),
+    Select(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    IEqual(IdResultType, IdResult, IdRef, IdRef),
+    INotEqual(IdResultType, IdResult, IdRef, IdRef),
+    UGreaterThan(IdResultType, IdResult, IdRef, IdRef),
+    SGreaterThan(IdResultType, IdResult, IdRef, IdRef),
+    UGreaterThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    SGreaterThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    ULessThan(IdResultType, IdResult, IdRef, IdRef),
+    SLessThan(IdResultType, IdResult, IdRef, IdRef),
+    ULessThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    SLessThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    FOrdEqual(IdResultType, IdResult, IdRef, IdRef),
+    FUnordEqual(IdResultType, IdResult, IdRef, IdRef),
+    FOrdNotEqual(IdResultType, IdResult, IdRef, IdRef),
+    FUnordNotEqual(IdResultType, IdResult, IdRef, IdRef),
+    FOrdLessThan(IdResultType, IdResult, IdRef, IdRef),
+    FUnordLessThan(IdResultType, IdResult, IdRef, IdRef),
+    FOrdGreaterThan(IdResultType, IdResult, IdRef, IdRef),
+    FUnordGreaterThan(IdResultType, IdResult, IdRef, IdRef),
+    FOrdLessThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    FUnordLessThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    FOrdGreaterThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    FUnordGreaterThanEqual(IdResultType, IdResult, IdRef, IdRef),
+    ShiftRightLogical(IdResultType, IdResult, IdRef, IdRef),
+    ShiftRightArithmetic(IdResultType, IdResult, IdRef, IdRef),
+    ShiftLeftLogical(IdResultType, IdResult, IdRef, IdRef),
+    BitwiseOr(IdResultType, IdResult, IdRef, IdRef),
+    BitwiseXor(IdResultType, IdResult, IdRef, IdRef),
+    BitwiseAnd(IdResultType, IdResult, IdRef, IdRef),
+    Not(IdResultType, IdResult, IdRef),
+    BitFieldInsert(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    BitFieldSExtract(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    BitFieldUExtract(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    BitReverse(IdResultType, IdResult, IdRef),
+    BitCount(IdResultType, IdResult, IdRef),
+    DPdx(IdResultType, IdResult, IdRef),
+    DPdy(IdResultType, IdResult, IdRef),
+    Fwidth(IdResultType, IdResult, IdRef),
+    DPdxFine(IdResultType, IdResult, IdRef),
+    DPdyFine(IdResultType, IdResult, IdRef),
+    FwidthFine(IdResultType, IdResult, IdRef),
+    DPdxCoarse(IdResultType, IdResult, IdRef),
+    DPdyCoarse(IdResultType, IdResult, IdRef),
+    FwidthCoarse(IdResultType, IdResult, IdRef),
+    EmitVertex,
+    EndPrimitive,
+    EmitStreamVertex(IdRef),
+    EndStreamPrimitive(IdRef),
+    ControlBarrier(IdScope, IdScope, IdMemorySemantics),
+    MemoryBarrier(IdScope, IdMemorySemantics),
+    AtomicLoad(IdResultType, IdResult, IdRef, IdScope, IdMemorySemantics),
+    AtomicStore(IdRef, IdScope, IdMemorySemantics, IdRef),
+    AtomicExchange(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicCompareExchange(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdMemorySemantics,
+        IdRef,
+        IdRef,
+    ),
+    AtomicCompareExchangeWeak(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdMemorySemantics,
+        IdRef,
+        IdRef,
+    ),
+    AtomicIIncrement(IdResultType, IdResult, IdRef, IdScope, IdMemorySemantics),
+    AtomicIDecrement(IdResultType, IdResult, IdRef, IdScope, IdMemorySemantics),
+    AtomicIAdd(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicISub(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicSMin(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicUMin(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicSMax(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicUMax(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicAnd(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicOr(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    AtomicXor(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdScope,
+        IdMemorySemantics,
+        IdRef,
+    ),
+    Phi(IdResultType, IdResult, Vec<PairIdRefIdRef>),
+    LoopMerge(IdRef, IdRef, LoopControl),
+    SelectionMerge(IdRef, SelectionControl),
+    Label(IdResult),
+    Branch(IdRef),
+    BranchConditional(IdRef, IdRef, IdRef, Vec<LiteralInteger>),
+    Switch(IdRef, IdRef, Vec<PairLiteralIntegerIdRef>),
+    Kill,
+    Return,
+    ReturnValue(IdRef),
+    Unreachable,
+    LifetimeStart(IdRef, LiteralInteger),
+    LifetimeStop(IdRef, LiteralInteger),
+    GroupAsyncCopy(
+        IdResultType,
+        IdResult,
+        IdScope,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    GroupWaitEvents(IdScope, IdRef, IdRef),
+    GroupAll(IdResultType, IdResult, IdScope, IdRef),
+    GroupAny(IdResultType, IdResult, IdScope, IdRef),
+    GroupBroadcast(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupIAdd(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupFAdd(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupFMin(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupUMin(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupSMin(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupFMax(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupUMax(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupSMax(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    ReadPipe(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    WritePipe(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    ReservedReadPipe(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    ReservedWritePipe(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    ReserveReadPipePackets(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    ReserveWritePipePackets(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    CommitReadPipe(IdRef, IdRef, IdRef, IdRef),
+    CommitWritePipe(IdRef, IdRef, IdRef, IdRef),
+    IsValidReserveId(IdResultType, IdResult, IdRef),
+    GetNumPipePackets(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    GetMaxPipePackets(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    GroupReserveReadPipePackets(IdResultType, IdResult, IdScope, IdRef, IdRef, IdRef, IdRef),
+    GroupReserveWritePipePackets(IdResultType, IdResult, IdScope, IdRef, IdRef, IdRef, IdRef),
+    GroupCommitReadPipe(IdScope, IdRef, IdRef, IdRef, IdRef),
+    GroupCommitWritePipe(IdScope, IdRef, IdRef, IdRef, IdRef),
+    EnqueueMarker(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    EnqueueKernel(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        Vec<IdRef>,
+    ),
+    GetKernelNDrangeSubGroupCount(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef, IdRef),
+    GetKernelNDrangeMaxSubGroupSize(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef, IdRef),
+    GetKernelWorkGroupSize(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    GetKernelPreferredWorkGroupSizeMultiple(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    RetainEvent(IdRef),
+    ReleaseEvent(IdRef),
+    CreateUserEvent(IdResultType, IdResult),
+    IsValidEvent(IdResultType, IdResult, IdRef),
+    SetUserEventStatus(IdRef, IdRef),
+    CaptureEventProfilingInfo(IdRef, IdRef, IdRef),
+    GetDefaultQueue(IdResultType, IdResult),
+    BuildNDRange(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    ImageSparseSampleImplicitLod(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    ImageSparseSampleExplicitLod(IdResultType, IdResult, IdRef, IdRef, ImageOperands),
+    ImageSparseSampleDrefImplicitLod(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageSparseSampleDrefExplicitLod(IdResultType, IdResult, IdRef, IdRef, IdRef, ImageOperands),
+    ImageSparseSampleProjImplicitLod(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    ImageSparseSampleProjExplicitLod(IdResultType, IdResult, IdRef, IdRef, ImageOperands),
+    ImageSparseSampleProjDrefImplicitLod(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageSparseSampleProjDrefExplicitLod(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        ImageOperands,
+    ),
+    ImageSparseFetch(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    ImageSparseGather(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageSparseDrefGather(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    ImageSparseTexelsResident(IdResultType, IdResult, IdRef),
+    NoLine,
+    AtomicFlagTestAndSet(IdResultType, IdResult, IdRef, IdScope, IdMemorySemantics),
+    AtomicFlagClear(IdRef, IdScope, IdMemorySemantics),
+    ImageSparseRead(IdResultType, IdResult, IdRef, IdRef, Option<ImageOperands>),
+    SizeOf(IdResultType, IdResult, IdRef),
+    TypePipeStorage(IdResult),
+    ConstantPipeStorage(
+        IdResultType,
+        IdResult,
+        LiteralInteger,
+        LiteralInteger,
+        LiteralInteger,
+    ),
+    CreatePipeFromPipeStorage(IdResultType, IdResult, IdRef),
+    GetKernelLocalSizeForSubgroupCount(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef, IdRef),
+    GetKernelMaxNumSubgroups(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    TypeNamedBarrier(IdResult),
+    NamedBarrierInitialize(IdResultType, IdResult, IdRef),
+    MemoryNamedBarrier(IdRef, IdScope, IdMemorySemantics),
+    ModuleProcessed(LiteralString),
+    ExecutionModeId(IdRef, ExecutionMode),
+    DecorateId(IdRef, Decoration),
+    GroupNonUniformElect(IdResultType, IdResult, IdScope),
+    GroupNonUniformAll(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformAny(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformAllEqual(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformBroadcast(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupNonUniformBroadcastFirst(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformBallot(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformInverseBallot(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformBallotBitExtract(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupNonUniformBallotBitCount(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupNonUniformBallotFindLSB(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformBallotFindMSB(IdResultType, IdResult, IdScope, IdRef),
+    GroupNonUniformShuffle(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupNonUniformShuffleXor(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupNonUniformShuffleUp(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupNonUniformShuffleDown(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupNonUniformIAdd(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformFAdd(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformIMul(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformFMul(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformSMin(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformUMin(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformFMin(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformSMax(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformUMax(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformFMax(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformBitwiseAnd(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformBitwiseOr(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformBitwiseXor(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformLogicalAnd(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformLogicalOr(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformLogicalXor(
+        IdResultType,
+        IdResult,
+        IdScope,
+        GroupOperation,
+        IdRef,
+        Option<IdRef>,
+    ),
+    GroupNonUniformQuadBroadcast(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    GroupNonUniformQuadSwap(IdResultType, IdResult, IdScope, IdRef, IdRef),
+    CopyLogical(IdResultType, IdResult, IdRef),
+    PtrEqual(IdResultType, IdResult, IdRef, IdRef),
+    PtrNotEqual(IdResultType, IdResult, IdRef, IdRef),
+    PtrDiff(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupBallotKHR(IdResultType, IdResult, IdRef),
+    SubgroupFirstInvocationKHR(IdResultType, IdResult, IdRef),
+    SubgroupAllKHR(IdResultType, IdResult, IdRef),
+    SubgroupAnyKHR(IdResultType, IdResult, IdRef),
+    SubgroupAllEqualKHR(IdResultType, IdResult, IdRef),
+    SubgroupReadInvocationKHR(IdResultType, IdResult, IdRef, IdRef),
+    GroupIAddNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupFAddNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupFMinNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupUMinNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupSMinNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupFMaxNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupUMaxNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    GroupSMaxNonUniformAMD(IdResultType, IdResult, IdScope, GroupOperation, IdRef),
+    FragmentMaskFetchAMD(IdResultType, IdResult, IdRef, IdRef),
+    FragmentFetchAMD(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    ReadClockKHR(IdResultType, IdResult, IdScope),
+    ImageSampleFootprintNV(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<ImageOperands>,
+    ),
+    GroupNonUniformPartitionNV(IdResultType, IdResult, IdRef),
+    WritePackedPrimitiveIndices4x8NV(IdRef, IdRef),
+    ReportIntersectionNV(IdResultType, IdResult, IdRef, IdRef),
+    IgnoreIntersectionNV,
+    TerminateRayNV,
+    TraceNV(
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    TypeAccelerationStructureNV(IdResult),
+    ExecuteCallableNV(IdRef, IdRef),
+    TypeCooperativeMatrixNV(IdResult, IdRef, IdScope, IdRef, IdRef),
+    CooperativeMatrixLoadNV(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        Option<MemoryAccess>,
+    ),
+    CooperativeMatrixStoreNV(IdRef, IdRef, IdRef, IdRef, Option<MemoryAccess>),
+    CooperativeMatrixMulAddNV(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    CooperativeMatrixLengthNV(IdResultType, IdResult, IdRef),
+    BeginInvocationInterlockEXT,
+    EndInvocationInterlockEXT,
+    DemoteToHelperInvocationEXT,
+    IsHelperInvocationEXT(IdResultType, IdResult),
+    SubgroupShuffleINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupShuffleDownINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupShuffleUpINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupShuffleXorINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupBlockReadINTEL(IdResultType, IdResult, IdRef),
+    SubgroupBlockWriteINTEL(IdRef, IdRef),
+    SubgroupImageBlockReadINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupImageBlockWriteINTEL(IdRef, IdRef, IdRef),
+    SubgroupImageMediaBlockReadINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    SubgroupImageMediaBlockWriteINTEL(IdRef, IdRef, IdRef, IdRef, IdRef),
+    UCountLeadingZerosINTEL(IdResultType, IdResult, IdRef),
+    UCountTrailingZerosINTEL(IdResultType, IdResult, IdRef),
+    AbsISubINTEL(IdResultType, IdResult, IdRef, IdRef),
+    AbsUSubINTEL(IdResultType, IdResult, IdRef, IdRef),
+    IAddSatINTEL(IdResultType, IdResult, IdRef, IdRef),
+    UAddSatINTEL(IdResultType, IdResult, IdRef, IdRef),
+    IAverageINTEL(IdResultType, IdResult, IdRef, IdRef),
+    UAverageINTEL(IdResultType, IdResult, IdRef, IdRef),
+    IAverageRoundedINTEL(IdResultType, IdResult, IdRef, IdRef),
+    UAverageRoundedINTEL(IdResultType, IdResult, IdRef, IdRef),
+    ISubSatINTEL(IdResultType, IdResult, IdRef, IdRef),
+    USubSatINTEL(IdResultType, IdResult, IdRef, IdRef),
+    IMul32x16INTEL(IdResultType, IdResult, IdRef, IdRef),
+    UMul32x16INTEL(IdResultType, IdResult, IdRef, IdRef),
+    DecorateString(IdRef, Decoration),
+    DecorateStringGOOGLE(IdRef, Decoration),
+    MemberDecorateString(IdRef, LiteralInteger, Decoration),
+    MemberDecorateStringGOOGLE(IdRef, LiteralInteger, Decoration),
+    VmeImageINTEL(IdResultType, IdResult, IdRef, IdRef),
+    TypeVmeImageINTEL(IdResult, IdRef),
+    TypeAvcImePayloadINTEL(IdResult),
+    TypeAvcRefPayloadINTEL(IdResult),
+    TypeAvcSicPayloadINTEL(IdResult),
+    TypeAvcMcePayloadINTEL(IdResult),
+    TypeAvcMceResultINTEL(IdResult),
+    TypeAvcImeResultINTEL(IdResult),
+    TypeAvcImeResultSingleReferenceStreamoutINTEL(IdResult),
+    TypeAvcImeResultDualReferenceStreamoutINTEL(IdResult),
+    TypeAvcImeSingleReferenceStreaminINTEL(IdResult),
+    TypeAvcImeDualReferenceStreaminINTEL(IdResult),
+    TypeAvcRefResultINTEL(IdResult),
+    TypeAvcSicResultINTEL(IdResult),
+    SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceSetInterShapePenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceSetInterDirectionPenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(IdResultType, IdResult),
+    SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(IdResultType, IdResult),
+    SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(IdResultType, IdResult),
+    SubgroupAvcMceSetMotionVectorCostFunctionINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(IdResultType, IdResult),
+    SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(IdResultType, IdResult),
+    SubgroupAvcMceSetAcOnlyHaarINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcMceConvertToImePayloadINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceConvertToImeResultINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceConvertToRefPayloadINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceConvertToRefResultINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceConvertToSicPayloadINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceConvertToSicResultINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetMotionVectorsINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetInterDistortionsINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetBestInterDistortionsINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetInterMajorShapeINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetInterMinorShapeINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetInterDirectionsINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetInterMotionVectorCountINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetInterReferenceIdsINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeInitializeINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupAvcImeSetSingleReferenceINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupAvcImeSetDualReferenceINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    SubgroupAvcImeRefWindowSizeINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcImeAdjustRefOffsetINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef, IdRef),
+    SubgroupAvcImeConvertToMcePayloadINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeSetMaxMotionVectorCountINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcImeSetUnidirectionalMixDisableINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcImeSetWeightedSadINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcImeEvaluateWithSingleReferenceINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupAvcImeEvaluateWithDualReferenceINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeConvertToMceResultINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeGetSingleReferenceStreaminINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeGetDualReferenceStreaminINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeStripSingleReferenceStreamoutINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeStripDualReferenceStreamoutINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcImeGetBorderReachedINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcImeGetTruncatedSearchIndicationINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcFmeInitializeINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcBmeInitializeINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcRefConvertToMcePayloadINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcRefSetBidirectionalMixDisableINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcRefSetBilinearFilterEnableINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcRefEvaluateWithSingleReferenceINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupAvcRefEvaluateWithDualReferenceINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcRefEvaluateWithMultiReferenceINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcRefConvertToMceResultINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicInitializeINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicConfigureSkcINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcSicConfigureIpeLumaINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcSicConfigureIpeLumaChromaINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcSicGetMotionVectorMaskINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcSicConvertToMcePayloadINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcSicSetBilinearFilterEnableINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicSetSkcForwardTransformEnableINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcSicEvaluateIpeINTEL(IdResultType, IdResult, IdRef, IdRef),
+    SubgroupAvcSicEvaluateWithSingleReferenceINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupAvcSicEvaluateWithDualReferenceINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcSicEvaluateWithMultiReferenceINTEL(IdResultType, IdResult, IdRef, IdRef, IdRef),
+    SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(
+        IdResultType,
+        IdResult,
+        IdRef,
+        IdRef,
+        IdRef,
+        IdRef,
+    ),
+    SubgroupAvcSicConvertToMceResultINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetIpeLumaShapeINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetBestIpeLumaDistortionINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetBestIpeChromaDistortionINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetPackedIpeLumaModesINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetIpeChromaModeINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(IdResultType, IdResult, IdRef),
+    SubgroupAvcSicGetInterRawSadsINTEL(IdResultType, IdResult, IdRef),
+    None(u16),
+}
+
+impl Instruction {
+    pub fn from_raw(op_code: u16, mut data: &[u32]) -> Self {
+        match op_code {
+            0u16 => Instruction::Nop,
+            1u16 => {
+                println!("{}, {:?}", "Undef", data);
+                let instr = Instruction::Undef(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            2u16 => {
+                println!("{}, {:?}", "SourceContinued", data);
+                let instr = Instruction::SourceContinued({
+                    let (v, d) = LiteralString::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            3u16 => {
+                println!("{}, {:?}", "Source", data);
+                let instr = Instruction::Source(
+                    {
+                        let (v, d) = SourceLanguage::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = LiteralString::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            4u16 => {
+                println!("{}, {:?}", "SourceExtension", data);
+                let instr = Instruction::SourceExtension({
+                    let (v, d) = LiteralString::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5u16 => {
+                println!("{}, {:?}", "Name", data);
+                let instr = Instruction::Name(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralString::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            6u16 => {
+                println!("{}, {:?}", "MemberName", data);
+                let instr = Instruction::MemberName(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralString::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            7u16 => {
+                println!("{}, {:?}", "String", data);
+                let instr = Instruction::String(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralString::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            8u16 => {
+                println!("{}, {:?}", "Line", data);
+                let instr = Instruction::Line(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            10u16 => {
+                println!("{}, {:?}", "Extension", data);
+                let instr = Instruction::Extension({
+                    let (v, d) = LiteralString::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            11u16 => {
+                println!("{}, {:?}", "ExtInstImport", data);
+                let instr = Instruction::ExtInstImport(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralString::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            12u16 => {
+                println!("{}, {:?}", "ExtInst", data);
+                let instr = Instruction::ExtInst(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralExtInstInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            14u16 => {
+                println!("{}, {:?}", "MemoryModel", data);
+                let instr = Instruction::MemoryModel(
+                    {
+                        let (v, d) = AddressingModel::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = MemoryModel::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            15u16 => {
+                println!("{}, {:?}", "EntryPoint", data);
+                let instr = Instruction::EntryPoint(
+                    {
+                        let (v, d) = ExecutionModel::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralString::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            16u16 => {
+                println!("{}, {:?}", "ExecutionMode", data);
+                let instr = Instruction::ExecutionMode(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ExecutionMode::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            17u16 => {
+                println!("{}, {:?}", "Capability", data);
+                let instr = Instruction::Capability({
+                    let (v, d) = Capability::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            19u16 => {
+                println!("{}, {:?}", "TypeVoid", data);
+                let instr = Instruction::TypeVoid({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            20u16 => {
+                println!("{}, {:?}", "TypeBool", data);
+                let instr = Instruction::TypeBool({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            21u16 => {
+                println!("{}, {:?}", "TypeInt", data);
+                let instr = Instruction::TypeInt(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            22u16 => {
+                println!("{}, {:?}", "TypeFloat", data);
+                let instr = Instruction::TypeFloat(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            23u16 => {
+                println!("{}, {:?}", "TypeVector", data);
+                let instr = Instruction::TypeVector(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            24u16 => {
+                println!("{}, {:?}", "TypeMatrix", data);
+                let instr = Instruction::TypeMatrix(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            25u16 => {
+                println!("{}, {:?}", "TypeImage", data);
+                let instr = Instruction::TypeImage(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Dim::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageFormat::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = AccessQualifier::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            26u16 => {
+                println!("{}, {:?}", "TypeSampler", data);
+                let instr = Instruction::TypeSampler({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            27u16 => {
+                println!("{}, {:?}", "TypeSampledImage", data);
+                let instr = Instruction::TypeSampledImage(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            28u16 => {
+                println!("{}, {:?}", "TypeArray", data);
+                let instr = Instruction::TypeArray(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            29u16 => {
+                println!("{}, {:?}", "TypeRuntimeArray", data);
+                let instr = Instruction::TypeRuntimeArray(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            30u16 => {
+                println!("{}, {:?}", "TypeStruct", data);
+                let instr = Instruction::TypeStruct(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            31u16 => {
+                println!("{}, {:?}", "TypeOpaque", data);
+                let instr = Instruction::TypeOpaque(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralString::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            32u16 => {
+                println!("{}, {:?}", "TypePointer", data);
+                let instr = Instruction::TypePointer(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = StorageClass::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            33u16 => {
+                println!("{}, {:?}", "TypeFunction", data);
+                let instr = Instruction::TypeFunction(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            34u16 => {
+                println!("{}, {:?}", "TypeEvent", data);
+                let instr = Instruction::TypeEvent({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            35u16 => {
+                println!("{}, {:?}", "TypeDeviceEvent", data);
+                let instr = Instruction::TypeDeviceEvent({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            36u16 => {
+                println!("{}, {:?}", "TypeReserveId", data);
+                let instr = Instruction::TypeReserveId({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            37u16 => {
+                println!("{}, {:?}", "TypeQueue", data);
+                let instr = Instruction::TypeQueue({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            38u16 => {
+                println!("{}, {:?}", "TypePipe", data);
+                let instr = Instruction::TypePipe(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = AccessQualifier::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            39u16 => {
+                println!("{}, {:?}", "TypeForwardPointer", data);
+                let instr = Instruction::TypeForwardPointer(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = StorageClass::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            41u16 => {
+                println!("{}, {:?}", "ConstantTrue", data);
+                let instr = Instruction::ConstantTrue(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            42u16 => {
+                println!("{}, {:?}", "ConstantFalse", data);
+                let instr = Instruction::ConstantFalse(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            43u16 => {
+                println!("{}, {:?}", "Constant", data);
+                let instr = Instruction::Constant(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralContextDependentNumber::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            44u16 => {
+                println!("{}, {:?}", "ConstantComposite", data);
+                let instr = Instruction::ConstantComposite(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            45u16 => {
+                println!("{}, {:?}", "ConstantSampler", data);
+                let instr = Instruction::ConstantSampler(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = SamplerAddressingMode::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = SamplerFilterMode::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            46u16 => {
+                println!("{}, {:?}", "ConstantNull", data);
+                let instr = Instruction::ConstantNull(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            48u16 => {
+                println!("{}, {:?}", "SpecConstantTrue", data);
+                let instr = Instruction::SpecConstantTrue(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            49u16 => {
+                println!("{}, {:?}", "SpecConstantFalse", data);
+                let instr = Instruction::SpecConstantFalse(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            50u16 => {
+                println!("{}, {:?}", "SpecConstant", data);
+                let instr = Instruction::SpecConstant(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralContextDependentNumber::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            51u16 => {
+                println!("{}, {:?}", "SpecConstantComposite", data);
+                let instr = Instruction::SpecConstantComposite(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            52u16 => {
+                println!("{}, {:?}", "SpecConstantOp", data);
+                let instr = Instruction::SpecConstantOp(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralSpecConstantOpInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            54u16 => {
+                println!("{}, {:?}", "Function", data);
+                let instr = Instruction::Function(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = FunctionControl::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            55u16 => {
+                println!("{}, {:?}", "FunctionParameter", data);
+                let instr = Instruction::FunctionParameter(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            56u16 => Instruction::FunctionEnd,
+            57u16 => {
+                println!("{}, {:?}", "FunctionCall", data);
+                let instr = Instruction::FunctionCall(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            59u16 => {
+                println!("{}, {:?}", "Variable", data);
+                let instr = Instruction::Variable(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = StorageClass::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            60u16 => {
+                println!("{}, {:?}", "ImageTexelPointer", data);
+                let instr = Instruction::ImageTexelPointer(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            61u16 => {
+                println!("{}, {:?}", "Load", data);
+                let instr = Instruction::Load(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            62u16 => {
+                println!("{}, {:?}", "Store", data);
+                let instr = Instruction::Store(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            63u16 => {
+                println!("{}, {:?}", "CopyMemory", data);
+                let instr = Instruction::CopyMemory(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            64u16 => {
+                println!("{}, {:?}", "CopyMemorySized", data);
+                let instr = Instruction::CopyMemorySized(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            65u16 => {
+                println!("{}, {:?}", "AccessChain", data);
+                let instr = Instruction::AccessChain(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            66u16 => {
+                println!("{}, {:?}", "InBoundsAccessChain", data);
+                let instr = Instruction::InBoundsAccessChain(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            67u16 => {
+                println!("{}, {:?}", "PtrAccessChain", data);
+                let instr = Instruction::PtrAccessChain(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            68u16 => {
+                println!("{}, {:?}", "ArrayLength", data);
+                let instr = Instruction::ArrayLength(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            69u16 => {
+                println!("{}, {:?}", "GenericPtrMemSemantics", data);
+                let instr = Instruction::GenericPtrMemSemantics(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            70u16 => {
+                println!("{}, {:?}", "InBoundsPtrAccessChain", data);
+                let instr = Instruction::InBoundsPtrAccessChain(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            71u16 => {
+                println!("{}, {:?}", "Decorate", data);
+                let instr = Instruction::Decorate(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Decoration::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            72u16 => {
+                println!("{}, {:?}", "MemberDecorate", data);
+                let instr = Instruction::MemberDecorate(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Decoration::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            73u16 => {
+                println!("{}, {:?}", "DecorationGroup", data);
+                let instr = Instruction::DecorationGroup({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            74u16 => {
+                println!("{}, {:?}", "GroupDecorate", data);
+                let instr = Instruction::GroupDecorate(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            75u16 => {
+                println!("{}, {:?}", "GroupMemberDecorate", data);
+                let instr = Instruction::GroupMemberDecorate(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = PairIdRefLiteralInteger::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            77u16 => {
+                println!("{}, {:?}", "VectorExtractDynamic", data);
+                let instr = Instruction::VectorExtractDynamic(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            78u16 => {
+                println!("{}, {:?}", "VectorInsertDynamic", data);
+                let instr = Instruction::VectorInsertDynamic(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            79u16 => {
+                println!("{}, {:?}", "VectorShuffle", data);
+                let instr = Instruction::VectorShuffle(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = LiteralInteger::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            80u16 => {
+                println!("{}, {:?}", "CompositeConstruct", data);
+                let instr = Instruction::CompositeConstruct(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            81u16 => {
+                println!("{}, {:?}", "CompositeExtract", data);
+                let instr = Instruction::CompositeExtract(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = LiteralInteger::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            82u16 => {
+                println!("{}, {:?}", "CompositeInsert", data);
+                let instr = Instruction::CompositeInsert(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = LiteralInteger::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            83u16 => {
+                println!("{}, {:?}", "CopyObject", data);
+                let instr = Instruction::CopyObject(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            84u16 => {
+                println!("{}, {:?}", "Transpose", data);
+                let instr = Instruction::Transpose(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            86u16 => {
+                println!("{}, {:?}", "SampledImage", data);
+                let instr = Instruction::SampledImage(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            87u16 => {
+                println!("{}, {:?}", "ImageSampleImplicitLod", data);
+                let instr = Instruction::ImageSampleImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            88u16 => {
+                println!("{}, {:?}", "ImageSampleExplicitLod", data);
+                let instr = Instruction::ImageSampleExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            89u16 => {
+                println!("{}, {:?}", "ImageSampleDrefImplicitLod", data);
+                let instr = Instruction::ImageSampleDrefImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            90u16 => {
+                println!("{}, {:?}", "ImageSampleDrefExplicitLod", data);
+                let instr = Instruction::ImageSampleDrefExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            91u16 => {
+                println!("{}, {:?}", "ImageSampleProjImplicitLod", data);
+                let instr = Instruction::ImageSampleProjImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            92u16 => {
+                println!("{}, {:?}", "ImageSampleProjExplicitLod", data);
+                let instr = Instruction::ImageSampleProjExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            93u16 => {
+                println!("{}, {:?}", "ImageSampleProjDrefImplicitLod", data);
+                let instr = Instruction::ImageSampleProjDrefImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            94u16 => {
+                println!("{}, {:?}", "ImageSampleProjDrefExplicitLod", data);
+                let instr = Instruction::ImageSampleProjDrefExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            95u16 => {
+                println!("{}, {:?}", "ImageFetch", data);
+                let instr = Instruction::ImageFetch(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            96u16 => {
+                println!("{}, {:?}", "ImageGather", data);
+                let instr = Instruction::ImageGather(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            97u16 => {
+                println!("{}, {:?}", "ImageDrefGather", data);
+                let instr = Instruction::ImageDrefGather(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            98u16 => {
+                println!("{}, {:?}", "ImageRead", data);
+                let instr = Instruction::ImageRead(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            99u16 => {
+                println!("{}, {:?}", "ImageWrite", data);
+                let instr = Instruction::ImageWrite(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            100u16 => {
+                println!("{}, {:?}", "Image", data);
+                let instr = Instruction::Image(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            101u16 => {
+                println!("{}, {:?}", "ImageQueryFormat", data);
+                let instr = Instruction::ImageQueryFormat(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            102u16 => {
+                println!("{}, {:?}", "ImageQueryOrder", data);
+                let instr = Instruction::ImageQueryOrder(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            103u16 => {
+                println!("{}, {:?}", "ImageQuerySizeLod", data);
+                let instr = Instruction::ImageQuerySizeLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            104u16 => {
+                println!("{}, {:?}", "ImageQuerySize", data);
+                let instr = Instruction::ImageQuerySize(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            105u16 => {
+                println!("{}, {:?}", "ImageQueryLod", data);
+                let instr = Instruction::ImageQueryLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            106u16 => {
+                println!("{}, {:?}", "ImageQueryLevels", data);
+                let instr = Instruction::ImageQueryLevels(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            107u16 => {
+                println!("{}, {:?}", "ImageQuerySamples", data);
+                let instr = Instruction::ImageQuerySamples(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            109u16 => {
+                println!("{}, {:?}", "ConvertFToU", data);
+                let instr = Instruction::ConvertFToU(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            110u16 => {
+                println!("{}, {:?}", "ConvertFToS", data);
+                let instr = Instruction::ConvertFToS(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            111u16 => {
+                println!("{}, {:?}", "ConvertSToF", data);
+                let instr = Instruction::ConvertSToF(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            112u16 => {
+                println!("{}, {:?}", "ConvertUToF", data);
+                let instr = Instruction::ConvertUToF(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            113u16 => {
+                println!("{}, {:?}", "UConvert", data);
+                let instr = Instruction::UConvert(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            114u16 => {
+                println!("{}, {:?}", "SConvert", data);
+                let instr = Instruction::SConvert(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            115u16 => {
+                println!("{}, {:?}", "FConvert", data);
+                let instr = Instruction::FConvert(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            116u16 => {
+                println!("{}, {:?}", "QuantizeToF16", data);
+                let instr = Instruction::QuantizeToF16(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            117u16 => {
+                println!("{}, {:?}", "ConvertPtrToU", data);
+                let instr = Instruction::ConvertPtrToU(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            118u16 => {
+                println!("{}, {:?}", "SatConvertSToU", data);
+                let instr = Instruction::SatConvertSToU(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            119u16 => {
+                println!("{}, {:?}", "SatConvertUToS", data);
+                let instr = Instruction::SatConvertUToS(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            120u16 => {
+                println!("{}, {:?}", "ConvertUToPtr", data);
+                let instr = Instruction::ConvertUToPtr(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            121u16 => {
+                println!("{}, {:?}", "PtrCastToGeneric", data);
+                let instr = Instruction::PtrCastToGeneric(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            122u16 => {
+                println!("{}, {:?}", "GenericCastToPtr", data);
+                let instr = Instruction::GenericCastToPtr(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            123u16 => {
+                println!("{}, {:?}", "GenericCastToPtrExplicit", data);
+                let instr = Instruction::GenericCastToPtrExplicit(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = StorageClass::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            124u16 => {
+                println!("{}, {:?}", "Bitcast", data);
+                let instr = Instruction::Bitcast(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            126u16 => {
+                println!("{}, {:?}", "SNegate", data);
+                let instr = Instruction::SNegate(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            127u16 => {
+                println!("{}, {:?}", "FNegate", data);
+                let instr = Instruction::FNegate(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            128u16 => {
+                println!("{}, {:?}", "IAdd", data);
+                let instr = Instruction::IAdd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            129u16 => {
+                println!("{}, {:?}", "FAdd", data);
+                let instr = Instruction::FAdd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            130u16 => {
+                println!("{}, {:?}", "ISub", data);
+                let instr = Instruction::ISub(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            131u16 => {
+                println!("{}, {:?}", "FSub", data);
+                let instr = Instruction::FSub(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            132u16 => {
+                println!("{}, {:?}", "IMul", data);
+                let instr = Instruction::IMul(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            133u16 => {
+                println!("{}, {:?}", "FMul", data);
+                let instr = Instruction::FMul(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            134u16 => {
+                println!("{}, {:?}", "UDiv", data);
+                let instr = Instruction::UDiv(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            135u16 => {
+                println!("{}, {:?}", "SDiv", data);
+                let instr = Instruction::SDiv(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            136u16 => {
+                println!("{}, {:?}", "FDiv", data);
+                let instr = Instruction::FDiv(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            137u16 => {
+                println!("{}, {:?}", "UMod", data);
+                let instr = Instruction::UMod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            138u16 => {
+                println!("{}, {:?}", "SRem", data);
+                let instr = Instruction::SRem(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            139u16 => {
+                println!("{}, {:?}", "SMod", data);
+                let instr = Instruction::SMod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            140u16 => {
+                println!("{}, {:?}", "FRem", data);
+                let instr = Instruction::FRem(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            141u16 => {
+                println!("{}, {:?}", "FMod", data);
+                let instr = Instruction::FMod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            142u16 => {
+                println!("{}, {:?}", "VectorTimesScalar", data);
+                let instr = Instruction::VectorTimesScalar(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            143u16 => {
+                println!("{}, {:?}", "MatrixTimesScalar", data);
+                let instr = Instruction::MatrixTimesScalar(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            144u16 => {
+                println!("{}, {:?}", "VectorTimesMatrix", data);
+                let instr = Instruction::VectorTimesMatrix(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            145u16 => {
+                println!("{}, {:?}", "MatrixTimesVector", data);
+                let instr = Instruction::MatrixTimesVector(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            146u16 => {
+                println!("{}, {:?}", "MatrixTimesMatrix", data);
+                let instr = Instruction::MatrixTimesMatrix(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            147u16 => {
+                println!("{}, {:?}", "OuterProduct", data);
+                let instr = Instruction::OuterProduct(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            148u16 => {
+                println!("{}, {:?}", "Dot", data);
+                let instr = Instruction::Dot(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            149u16 => {
+                println!("{}, {:?}", "IAddCarry", data);
+                let instr = Instruction::IAddCarry(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            150u16 => {
+                println!("{}, {:?}", "ISubBorrow", data);
+                let instr = Instruction::ISubBorrow(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            151u16 => {
+                println!("{}, {:?}", "UMulExtended", data);
+                let instr = Instruction::UMulExtended(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            152u16 => {
+                println!("{}, {:?}", "SMulExtended", data);
+                let instr = Instruction::SMulExtended(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            154u16 => {
+                println!("{}, {:?}", "Any", data);
+                let instr = Instruction::Any(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            155u16 => {
+                println!("{}, {:?}", "All", data);
+                let instr = Instruction::All(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            156u16 => {
+                println!("{}, {:?}", "IsNan", data);
+                let instr = Instruction::IsNan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            157u16 => {
+                println!("{}, {:?}", "IsInf", data);
+                let instr = Instruction::IsInf(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            158u16 => {
+                println!("{}, {:?}", "IsFinite", data);
+                let instr = Instruction::IsFinite(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            159u16 => {
+                println!("{}, {:?}", "IsNormal", data);
+                let instr = Instruction::IsNormal(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            160u16 => {
+                println!("{}, {:?}", "SignBitSet", data);
+                let instr = Instruction::SignBitSet(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            161u16 => {
+                println!("{}, {:?}", "LessOrGreater", data);
+                let instr = Instruction::LessOrGreater(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            162u16 => {
+                println!("{}, {:?}", "Ordered", data);
+                let instr = Instruction::Ordered(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            163u16 => {
+                println!("{}, {:?}", "Unordered", data);
+                let instr = Instruction::Unordered(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            164u16 => {
+                println!("{}, {:?}", "LogicalEqual", data);
+                let instr = Instruction::LogicalEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            165u16 => {
+                println!("{}, {:?}", "LogicalNotEqual", data);
+                let instr = Instruction::LogicalNotEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            166u16 => {
+                println!("{}, {:?}", "LogicalOr", data);
+                let instr = Instruction::LogicalOr(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            167u16 => {
+                println!("{}, {:?}", "LogicalAnd", data);
+                let instr = Instruction::LogicalAnd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            168u16 => {
+                println!("{}, {:?}", "LogicalNot", data);
+                let instr = Instruction::LogicalNot(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            169u16 => {
+                println!("{}, {:?}", "Select", data);
+                let instr = Instruction::Select(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            170u16 => {
+                println!("{}, {:?}", "IEqual", data);
+                let instr = Instruction::IEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            171u16 => {
+                println!("{}, {:?}", "INotEqual", data);
+                let instr = Instruction::INotEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            172u16 => {
+                println!("{}, {:?}", "UGreaterThan", data);
+                let instr = Instruction::UGreaterThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            173u16 => {
+                println!("{}, {:?}", "SGreaterThan", data);
+                let instr = Instruction::SGreaterThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            174u16 => {
+                println!("{}, {:?}", "UGreaterThanEqual", data);
+                let instr = Instruction::UGreaterThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            175u16 => {
+                println!("{}, {:?}", "SGreaterThanEqual", data);
+                let instr = Instruction::SGreaterThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            176u16 => {
+                println!("{}, {:?}", "ULessThan", data);
+                let instr = Instruction::ULessThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            177u16 => {
+                println!("{}, {:?}", "SLessThan", data);
+                let instr = Instruction::SLessThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            178u16 => {
+                println!("{}, {:?}", "ULessThanEqual", data);
+                let instr = Instruction::ULessThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            179u16 => {
+                println!("{}, {:?}", "SLessThanEqual", data);
+                let instr = Instruction::SLessThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            180u16 => {
+                println!("{}, {:?}", "FOrdEqual", data);
+                let instr = Instruction::FOrdEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            181u16 => {
+                println!("{}, {:?}", "FUnordEqual", data);
+                let instr = Instruction::FUnordEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            182u16 => {
+                println!("{}, {:?}", "FOrdNotEqual", data);
+                let instr = Instruction::FOrdNotEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            183u16 => {
+                println!("{}, {:?}", "FUnordNotEqual", data);
+                let instr = Instruction::FUnordNotEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            184u16 => {
+                println!("{}, {:?}", "FOrdLessThan", data);
+                let instr = Instruction::FOrdLessThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            185u16 => {
+                println!("{}, {:?}", "FUnordLessThan", data);
+                let instr = Instruction::FUnordLessThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            186u16 => {
+                println!("{}, {:?}", "FOrdGreaterThan", data);
+                let instr = Instruction::FOrdGreaterThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            187u16 => {
+                println!("{}, {:?}", "FUnordGreaterThan", data);
+                let instr = Instruction::FUnordGreaterThan(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            188u16 => {
+                println!("{}, {:?}", "FOrdLessThanEqual", data);
+                let instr = Instruction::FOrdLessThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            189u16 => {
+                println!("{}, {:?}", "FUnordLessThanEqual", data);
+                let instr = Instruction::FUnordLessThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            190u16 => {
+                println!("{}, {:?}", "FOrdGreaterThanEqual", data);
+                let instr = Instruction::FOrdGreaterThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            191u16 => {
+                println!("{}, {:?}", "FUnordGreaterThanEqual", data);
+                let instr = Instruction::FUnordGreaterThanEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            194u16 => {
+                println!("{}, {:?}", "ShiftRightLogical", data);
+                let instr = Instruction::ShiftRightLogical(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            195u16 => {
+                println!("{}, {:?}", "ShiftRightArithmetic", data);
+                let instr = Instruction::ShiftRightArithmetic(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            196u16 => {
+                println!("{}, {:?}", "ShiftLeftLogical", data);
+                let instr = Instruction::ShiftLeftLogical(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            197u16 => {
+                println!("{}, {:?}", "BitwiseOr", data);
+                let instr = Instruction::BitwiseOr(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            198u16 => {
+                println!("{}, {:?}", "BitwiseXor", data);
+                let instr = Instruction::BitwiseXor(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            199u16 => {
+                println!("{}, {:?}", "BitwiseAnd", data);
+                let instr = Instruction::BitwiseAnd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            200u16 => {
+                println!("{}, {:?}", "Not", data);
+                let instr = Instruction::Not(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            201u16 => {
+                println!("{}, {:?}", "BitFieldInsert", data);
+                let instr = Instruction::BitFieldInsert(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            202u16 => {
+                println!("{}, {:?}", "BitFieldSExtract", data);
+                let instr = Instruction::BitFieldSExtract(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            203u16 => {
+                println!("{}, {:?}", "BitFieldUExtract", data);
+                let instr = Instruction::BitFieldUExtract(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            204u16 => {
+                println!("{}, {:?}", "BitReverse", data);
+                let instr = Instruction::BitReverse(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            205u16 => {
+                println!("{}, {:?}", "BitCount", data);
+                let instr = Instruction::BitCount(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            207u16 => {
+                println!("{}, {:?}", "DPdx", data);
+                let instr = Instruction::DPdx(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            208u16 => {
+                println!("{}, {:?}", "DPdy", data);
+                let instr = Instruction::DPdy(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            209u16 => {
+                println!("{}, {:?}", "Fwidth", data);
+                let instr = Instruction::Fwidth(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            210u16 => {
+                println!("{}, {:?}", "DPdxFine", data);
+                let instr = Instruction::DPdxFine(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            211u16 => {
+                println!("{}, {:?}", "DPdyFine", data);
+                let instr = Instruction::DPdyFine(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            212u16 => {
+                println!("{}, {:?}", "FwidthFine", data);
+                let instr = Instruction::FwidthFine(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            213u16 => {
+                println!("{}, {:?}", "DPdxCoarse", data);
+                let instr = Instruction::DPdxCoarse(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            214u16 => {
+                println!("{}, {:?}", "DPdyCoarse", data);
+                let instr = Instruction::DPdyCoarse(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            215u16 => {
+                println!("{}, {:?}", "FwidthCoarse", data);
+                let instr = Instruction::FwidthCoarse(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            218u16 => Instruction::EmitVertex,
+            219u16 => Instruction::EndPrimitive,
+            220u16 => {
+                println!("{}, {:?}", "EmitStreamVertex", data);
+                let instr = Instruction::EmitStreamVertex({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            221u16 => {
+                println!("{}, {:?}", "EndStreamPrimitive", data);
+                let instr = Instruction::EndStreamPrimitive({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            224u16 => {
+                println!("{}, {:?}", "ControlBarrier", data);
+                let instr = Instruction::ControlBarrier(
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            225u16 => {
+                println!("{}, {:?}", "MemoryBarrier", data);
+                let instr = Instruction::MemoryBarrier(
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            227u16 => {
+                println!("{}, {:?}", "AtomicLoad", data);
+                let instr = Instruction::AtomicLoad(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            228u16 => {
+                println!("{}, {:?}", "AtomicStore", data);
+                let instr = Instruction::AtomicStore(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            229u16 => {
+                println!("{}, {:?}", "AtomicExchange", data);
+                let instr = Instruction::AtomicExchange(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            230u16 => {
+                println!("{}, {:?}", "AtomicCompareExchange", data);
+                let instr = Instruction::AtomicCompareExchange(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            231u16 => {
+                println!("{}, {:?}", "AtomicCompareExchangeWeak", data);
+                let instr = Instruction::AtomicCompareExchangeWeak(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            232u16 => {
+                println!("{}, {:?}", "AtomicIIncrement", data);
+                let instr = Instruction::AtomicIIncrement(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            233u16 => {
+                println!("{}, {:?}", "AtomicIDecrement", data);
+                let instr = Instruction::AtomicIDecrement(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            234u16 => {
+                println!("{}, {:?}", "AtomicIAdd", data);
+                let instr = Instruction::AtomicIAdd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            235u16 => {
+                println!("{}, {:?}", "AtomicISub", data);
+                let instr = Instruction::AtomicISub(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            236u16 => {
+                println!("{}, {:?}", "AtomicSMin", data);
+                let instr = Instruction::AtomicSMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            237u16 => {
+                println!("{}, {:?}", "AtomicUMin", data);
+                let instr = Instruction::AtomicUMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            238u16 => {
+                println!("{}, {:?}", "AtomicSMax", data);
+                let instr = Instruction::AtomicSMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            239u16 => {
+                println!("{}, {:?}", "AtomicUMax", data);
+                let instr = Instruction::AtomicUMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            240u16 => {
+                println!("{}, {:?}", "AtomicAnd", data);
+                let instr = Instruction::AtomicAnd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            241u16 => {
+                println!("{}, {:?}", "AtomicOr", data);
+                let instr = Instruction::AtomicOr(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            242u16 => {
+                println!("{}, {:?}", "AtomicXor", data);
+                let instr = Instruction::AtomicXor(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            245u16 => {
+                println!("{}, {:?}", "Phi", data);
+                let instr = Instruction::Phi(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = PairIdRefIdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            246u16 => {
+                println!("{}, {:?}", "LoopMerge", data);
+                let instr = Instruction::LoopMerge(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LoopControl::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            247u16 => {
+                println!("{}, {:?}", "SelectionMerge", data);
+                let instr = Instruction::SelectionMerge(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = SelectionControl::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            248u16 => {
+                println!("{}, {:?}", "Label", data);
+                let instr = Instruction::Label({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            249u16 => {
+                println!("{}, {:?}", "Branch", data);
+                let instr = Instruction::Branch({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            250u16 => {
+                println!("{}, {:?}", "BranchConditional", data);
+                let instr = Instruction::BranchConditional(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = LiteralInteger::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            251u16 => {
+                println!("{}, {:?}", "Switch", data);
+                let instr = Instruction::Switch(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = PairLiteralIntegerIdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            252u16 => Instruction::Kill,
+            253u16 => Instruction::Return,
+            254u16 => {
+                println!("{}, {:?}", "ReturnValue", data);
+                let instr = Instruction::ReturnValue({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            255u16 => Instruction::Unreachable,
+            256u16 => {
+                println!("{}, {:?}", "LifetimeStart", data);
+                let instr = Instruction::LifetimeStart(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            257u16 => {
+                println!("{}, {:?}", "LifetimeStop", data);
+                let instr = Instruction::LifetimeStop(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            259u16 => {
+                println!("{}, {:?}", "GroupAsyncCopy", data);
+                let instr = Instruction::GroupAsyncCopy(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            260u16 => {
+                println!("{}, {:?}", "GroupWaitEvents", data);
+                let instr = Instruction::GroupWaitEvents(
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            261u16 => {
+                println!("{}, {:?}", "GroupAll", data);
+                let instr = Instruction::GroupAll(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            262u16 => {
+                println!("{}, {:?}", "GroupAny", data);
+                let instr = Instruction::GroupAny(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            263u16 => {
+                println!("{}, {:?}", "GroupBroadcast", data);
+                let instr = Instruction::GroupBroadcast(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            264u16 => {
+                println!("{}, {:?}", "GroupIAdd", data);
+                let instr = Instruction::GroupIAdd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            265u16 => {
+                println!("{}, {:?}", "GroupFAdd", data);
+                let instr = Instruction::GroupFAdd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            266u16 => {
+                println!("{}, {:?}", "GroupFMin", data);
+                let instr = Instruction::GroupFMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            267u16 => {
+                println!("{}, {:?}", "GroupUMin", data);
+                let instr = Instruction::GroupUMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            268u16 => {
+                println!("{}, {:?}", "GroupSMin", data);
+                let instr = Instruction::GroupSMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            269u16 => {
+                println!("{}, {:?}", "GroupFMax", data);
+                let instr = Instruction::GroupFMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            270u16 => {
+                println!("{}, {:?}", "GroupUMax", data);
+                let instr = Instruction::GroupUMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            271u16 => {
+                println!("{}, {:?}", "GroupSMax", data);
+                let instr = Instruction::GroupSMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            274u16 => {
+                println!("{}, {:?}", "ReadPipe", data);
+                let instr = Instruction::ReadPipe(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            275u16 => {
+                println!("{}, {:?}", "WritePipe", data);
+                let instr = Instruction::WritePipe(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            276u16 => {
+                println!("{}, {:?}", "ReservedReadPipe", data);
+                let instr = Instruction::ReservedReadPipe(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            277u16 => {
+                println!("{}, {:?}", "ReservedWritePipe", data);
+                let instr = Instruction::ReservedWritePipe(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            278u16 => {
+                println!("{}, {:?}", "ReserveReadPipePackets", data);
+                let instr = Instruction::ReserveReadPipePackets(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            279u16 => {
+                println!("{}, {:?}", "ReserveWritePipePackets", data);
+                let instr = Instruction::ReserveWritePipePackets(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            280u16 => {
+                println!("{}, {:?}", "CommitReadPipe", data);
+                let instr = Instruction::CommitReadPipe(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            281u16 => {
+                println!("{}, {:?}", "CommitWritePipe", data);
+                let instr = Instruction::CommitWritePipe(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            282u16 => {
+                println!("{}, {:?}", "IsValidReserveId", data);
+                let instr = Instruction::IsValidReserveId(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            283u16 => {
+                println!("{}, {:?}", "GetNumPipePackets", data);
+                let instr = Instruction::GetNumPipePackets(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            284u16 => {
+                println!("{}, {:?}", "GetMaxPipePackets", data);
+                let instr = Instruction::GetMaxPipePackets(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            285u16 => {
+                println!("{}, {:?}", "GroupReserveReadPipePackets", data);
+                let instr = Instruction::GroupReserveReadPipePackets(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            286u16 => {
+                println!("{}, {:?}", "GroupReserveWritePipePackets", data);
+                let instr = Instruction::GroupReserveWritePipePackets(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            287u16 => {
+                println!("{}, {:?}", "GroupCommitReadPipe", data);
+                let instr = Instruction::GroupCommitReadPipe(
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            288u16 => {
+                println!("{}, {:?}", "GroupCommitWritePipe", data);
+                let instr = Instruction::GroupCommitWritePipe(
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            291u16 => {
+                println!("{}, {:?}", "EnqueueMarker", data);
+                let instr = Instruction::EnqueueMarker(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            292u16 => {
+                println!("{}, {:?}", "EnqueueKernel", data);
+                let instr = Instruction::EnqueueKernel(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let mut v = vec![];
+                        while data.len() > 0 {
+                            let (s, d) = IdRef::from_raw(data);
+                            data = d;
+                            v.push(s);
+                        }
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            293u16 => {
+                println!("{}, {:?}", "GetKernelNDrangeSubGroupCount", data);
+                let instr = Instruction::GetKernelNDrangeSubGroupCount(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            294u16 => {
+                println!("{}, {:?}", "GetKernelNDrangeMaxSubGroupSize", data);
+                let instr = Instruction::GetKernelNDrangeMaxSubGroupSize(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            295u16 => {
+                println!("{}, {:?}", "GetKernelWorkGroupSize", data);
+                let instr = Instruction::GetKernelWorkGroupSize(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            296u16 => {
+                println!("{}, {:?}", "GetKernelPreferredWorkGroupSizeMultiple", data);
+                let instr = Instruction::GetKernelPreferredWorkGroupSizeMultiple(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            297u16 => {
+                println!("{}, {:?}", "RetainEvent", data);
+                let instr = Instruction::RetainEvent({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            298u16 => {
+                println!("{}, {:?}", "ReleaseEvent", data);
+                let instr = Instruction::ReleaseEvent({
+                    let (v, d) = IdRef::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            299u16 => {
+                println!("{}, {:?}", "CreateUserEvent", data);
+                let instr = Instruction::CreateUserEvent(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            300u16 => {
+                println!("{}, {:?}", "IsValidEvent", data);
+                let instr = Instruction::IsValidEvent(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            301u16 => {
+                println!("{}, {:?}", "SetUserEventStatus", data);
+                let instr = Instruction::SetUserEventStatus(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            302u16 => {
+                println!("{}, {:?}", "CaptureEventProfilingInfo", data);
+                let instr = Instruction::CaptureEventProfilingInfo(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            303u16 => {
+                println!("{}, {:?}", "GetDefaultQueue", data);
+                let instr = Instruction::GetDefaultQueue(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            304u16 => {
+                println!("{}, {:?}", "BuildNDRange", data);
+                let instr = Instruction::BuildNDRange(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            305u16 => {
+                println!("{}, {:?}", "ImageSparseSampleImplicitLod", data);
+                let instr = Instruction::ImageSparseSampleImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            306u16 => {
+                println!("{}, {:?}", "ImageSparseSampleExplicitLod", data);
+                let instr = Instruction::ImageSparseSampleExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            307u16 => {
+                println!("{}, {:?}", "ImageSparseSampleDrefImplicitLod", data);
+                let instr = Instruction::ImageSparseSampleDrefImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            308u16 => {
+                println!("{}, {:?}", "ImageSparseSampleDrefExplicitLod", data);
+                let instr = Instruction::ImageSparseSampleDrefExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            309u16 => {
+                println!("{}, {:?}", "ImageSparseSampleProjImplicitLod", data);
+                let instr = Instruction::ImageSparseSampleProjImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            310u16 => {
+                println!("{}, {:?}", "ImageSparseSampleProjExplicitLod", data);
+                let instr = Instruction::ImageSparseSampleProjExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            311u16 => {
+                println!("{}, {:?}", "ImageSparseSampleProjDrefImplicitLod", data);
+                let instr = Instruction::ImageSparseSampleProjDrefImplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            312u16 => {
+                println!("{}, {:?}", "ImageSparseSampleProjDrefExplicitLod", data);
+                let instr = Instruction::ImageSparseSampleProjDrefExplicitLod(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ImageOperands::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            313u16 => {
+                println!("{}, {:?}", "ImageSparseFetch", data);
+                let instr = Instruction::ImageSparseFetch(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            314u16 => {
+                println!("{}, {:?}", "ImageSparseGather", data);
+                let instr = Instruction::ImageSparseGather(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            315u16 => {
+                println!("{}, {:?}", "ImageSparseDrefGather", data);
+                let instr = Instruction::ImageSparseDrefGather(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            316u16 => {
+                println!("{}, {:?}", "ImageSparseTexelsResident", data);
+                let instr = Instruction::ImageSparseTexelsResident(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            317u16 => Instruction::NoLine,
+            318u16 => {
+                println!("{}, {:?}", "AtomicFlagTestAndSet", data);
+                let instr = Instruction::AtomicFlagTestAndSet(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            319u16 => {
+                println!("{}, {:?}", "AtomicFlagClear", data);
+                let instr = Instruction::AtomicFlagClear(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            320u16 => {
+                println!("{}, {:?}", "ImageSparseRead", data);
+                let instr = Instruction::ImageSparseRead(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            321u16 => {
+                println!("{}, {:?}", "SizeOf", data);
+                let instr = Instruction::SizeOf(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            322u16 => {
+                println!("{}, {:?}", "TypePipeStorage", data);
+                let instr = Instruction::TypePipeStorage({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            323u16 => {
+                println!("{}, {:?}", "ConstantPipeStorage", data);
+                let instr = Instruction::ConstantPipeStorage(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            324u16 => {
+                println!("{}, {:?}", "CreatePipeFromPipeStorage", data);
+                let instr = Instruction::CreatePipeFromPipeStorage(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            325u16 => {
+                println!("{}, {:?}", "GetKernelLocalSizeForSubgroupCount", data);
+                let instr = Instruction::GetKernelLocalSizeForSubgroupCount(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            326u16 => {
+                println!("{}, {:?}", "GetKernelMaxNumSubgroups", data);
+                let instr = Instruction::GetKernelMaxNumSubgroups(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            327u16 => {
+                println!("{}, {:?}", "TypeNamedBarrier", data);
+                let instr = Instruction::TypeNamedBarrier({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            328u16 => {
+                println!("{}, {:?}", "NamedBarrierInitialize", data);
+                let instr = Instruction::NamedBarrierInitialize(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            329u16 => {
+                println!("{}, {:?}", "MemoryNamedBarrier", data);
+                let instr = Instruction::MemoryNamedBarrier(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdMemorySemantics::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            330u16 => {
+                println!("{}, {:?}", "ModuleProcessed", data);
+                let instr = Instruction::ModuleProcessed({
+                    let (v, d) = LiteralString::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            331u16 => {
+                println!("{}, {:?}", "ExecutionModeId", data);
+                let instr = Instruction::ExecutionModeId(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = ExecutionMode::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            332u16 => {
+                println!("{}, {:?}", "DecorateId", data);
+                let instr = Instruction::DecorateId(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Decoration::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            333u16 => {
+                println!("{}, {:?}", "GroupNonUniformElect", data);
+                let instr = Instruction::GroupNonUniformElect(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            334u16 => {
+                println!("{}, {:?}", "GroupNonUniformAll", data);
+                let instr = Instruction::GroupNonUniformAll(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            335u16 => {
+                println!("{}, {:?}", "GroupNonUniformAny", data);
+                let instr = Instruction::GroupNonUniformAny(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            336u16 => {
+                println!("{}, {:?}", "GroupNonUniformAllEqual", data);
+                let instr = Instruction::GroupNonUniformAllEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            337u16 => {
+                println!("{}, {:?}", "GroupNonUniformBroadcast", data);
+                let instr = Instruction::GroupNonUniformBroadcast(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            338u16 => {
+                println!("{}, {:?}", "GroupNonUniformBroadcastFirst", data);
+                let instr = Instruction::GroupNonUniformBroadcastFirst(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            339u16 => {
+                println!("{}, {:?}", "GroupNonUniformBallot", data);
+                let instr = Instruction::GroupNonUniformBallot(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            340u16 => {
+                println!("{}, {:?}", "GroupNonUniformInverseBallot", data);
+                let instr = Instruction::GroupNonUniformInverseBallot(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            341u16 => {
+                println!("{}, {:?}", "GroupNonUniformBallotBitExtract", data);
+                let instr = Instruction::GroupNonUniformBallotBitExtract(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            342u16 => {
+                println!("{}, {:?}", "GroupNonUniformBallotBitCount", data);
+                let instr = Instruction::GroupNonUniformBallotBitCount(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            343u16 => {
+                println!("{}, {:?}", "GroupNonUniformBallotFindLSB", data);
+                let instr = Instruction::GroupNonUniformBallotFindLSB(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            344u16 => {
+                println!("{}, {:?}", "GroupNonUniformBallotFindMSB", data);
+                let instr = Instruction::GroupNonUniformBallotFindMSB(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            345u16 => {
+                println!("{}, {:?}", "GroupNonUniformShuffle", data);
+                let instr = Instruction::GroupNonUniformShuffle(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            346u16 => {
+                println!("{}, {:?}", "GroupNonUniformShuffleXor", data);
+                let instr = Instruction::GroupNonUniformShuffleXor(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            347u16 => {
+                println!("{}, {:?}", "GroupNonUniformShuffleUp", data);
+                let instr = Instruction::GroupNonUniformShuffleUp(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            348u16 => {
+                println!("{}, {:?}", "GroupNonUniformShuffleDown", data);
+                let instr = Instruction::GroupNonUniformShuffleDown(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            349u16 => {
+                println!("{}, {:?}", "GroupNonUniformIAdd", data);
+                let instr = Instruction::GroupNonUniformIAdd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            350u16 => {
+                println!("{}, {:?}", "GroupNonUniformFAdd", data);
+                let instr = Instruction::GroupNonUniformFAdd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            351u16 => {
+                println!("{}, {:?}", "GroupNonUniformIMul", data);
+                let instr = Instruction::GroupNonUniformIMul(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            352u16 => {
+                println!("{}, {:?}", "GroupNonUniformFMul", data);
+                let instr = Instruction::GroupNonUniformFMul(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            353u16 => {
+                println!("{}, {:?}", "GroupNonUniformSMin", data);
+                let instr = Instruction::GroupNonUniformSMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            354u16 => {
+                println!("{}, {:?}", "GroupNonUniformUMin", data);
+                let instr = Instruction::GroupNonUniformUMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            355u16 => {
+                println!("{}, {:?}", "GroupNonUniformFMin", data);
+                let instr = Instruction::GroupNonUniformFMin(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            356u16 => {
+                println!("{}, {:?}", "GroupNonUniformSMax", data);
+                let instr = Instruction::GroupNonUniformSMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            357u16 => {
+                println!("{}, {:?}", "GroupNonUniformUMax", data);
+                let instr = Instruction::GroupNonUniformUMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            358u16 => {
+                println!("{}, {:?}", "GroupNonUniformFMax", data);
+                let instr = Instruction::GroupNonUniformFMax(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            359u16 => {
+                println!("{}, {:?}", "GroupNonUniformBitwiseAnd", data);
+                let instr = Instruction::GroupNonUniformBitwiseAnd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            360u16 => {
+                println!("{}, {:?}", "GroupNonUniformBitwiseOr", data);
+                let instr = Instruction::GroupNonUniformBitwiseOr(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            361u16 => {
+                println!("{}, {:?}", "GroupNonUniformBitwiseXor", data);
+                let instr = Instruction::GroupNonUniformBitwiseXor(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            362u16 => {
+                println!("{}, {:?}", "GroupNonUniformLogicalAnd", data);
+                let instr = Instruction::GroupNonUniformLogicalAnd(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            363u16 => {
+                println!("{}, {:?}", "GroupNonUniformLogicalOr", data);
+                let instr = Instruction::GroupNonUniformLogicalOr(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            364u16 => {
+                println!("{}, {:?}", "GroupNonUniformLogicalXor", data);
+                let instr = Instruction::GroupNonUniformLogicalXor(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            365u16 => {
+                println!("{}, {:?}", "GroupNonUniformQuadBroadcast", data);
+                let instr = Instruction::GroupNonUniformQuadBroadcast(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            366u16 => {
+                println!("{}, {:?}", "GroupNonUniformQuadSwap", data);
+                let instr = Instruction::GroupNonUniformQuadSwap(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            400u16 => {
+                println!("{}, {:?}", "CopyLogical", data);
+                let instr = Instruction::CopyLogical(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            401u16 => {
+                println!("{}, {:?}", "PtrEqual", data);
+                let instr = Instruction::PtrEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            402u16 => {
+                println!("{}, {:?}", "PtrNotEqual", data);
+                let instr = Instruction::PtrNotEqual(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            403u16 => {
+                println!("{}, {:?}", "PtrDiff", data);
+                let instr = Instruction::PtrDiff(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            4421u16 => {
+                println!("{}, {:?}", "SubgroupBallotKHR", data);
+                let instr = Instruction::SubgroupBallotKHR(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            4422u16 => {
+                println!("{}, {:?}", "SubgroupFirstInvocationKHR", data);
+                let instr = Instruction::SubgroupFirstInvocationKHR(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            4428u16 => {
+                println!("{}, {:?}", "SubgroupAllKHR", data);
+                let instr = Instruction::SubgroupAllKHR(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            4429u16 => {
+                println!("{}, {:?}", "SubgroupAnyKHR", data);
+                let instr = Instruction::SubgroupAnyKHR(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            4430u16 => {
+                println!("{}, {:?}", "SubgroupAllEqualKHR", data);
+                let instr = Instruction::SubgroupAllEqualKHR(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            4432u16 => {
+                println!("{}, {:?}", "SubgroupReadInvocationKHR", data);
+                let instr = Instruction::SubgroupReadInvocationKHR(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5000u16 => {
+                println!("{}, {:?}", "GroupIAddNonUniformAMD", data);
+                let instr = Instruction::GroupIAddNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5001u16 => {
+                println!("{}, {:?}", "GroupFAddNonUniformAMD", data);
+                let instr = Instruction::GroupFAddNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5002u16 => {
+                println!("{}, {:?}", "GroupFMinNonUniformAMD", data);
+                let instr = Instruction::GroupFMinNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5003u16 => {
+                println!("{}, {:?}", "GroupUMinNonUniformAMD", data);
+                let instr = Instruction::GroupUMinNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5004u16 => {
+                println!("{}, {:?}", "GroupSMinNonUniformAMD", data);
+                let instr = Instruction::GroupSMinNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5005u16 => {
+                println!("{}, {:?}", "GroupFMaxNonUniformAMD", data);
+                let instr = Instruction::GroupFMaxNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5006u16 => {
+                println!("{}, {:?}", "GroupUMaxNonUniformAMD", data);
+                let instr = Instruction::GroupUMaxNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5007u16 => {
+                println!("{}, {:?}", "GroupSMaxNonUniformAMD", data);
+                let instr = Instruction::GroupSMaxNonUniformAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = GroupOperation::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5011u16 => {
+                println!("{}, {:?}", "FragmentMaskFetchAMD", data);
+                let instr = Instruction::FragmentMaskFetchAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5012u16 => {
+                println!("{}, {:?}", "FragmentFetchAMD", data);
+                let instr = Instruction::FragmentFetchAMD(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5056u16 => {
+                println!("{}, {:?}", "ReadClockKHR", data);
+                let instr = Instruction::ReadClockKHR(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5283u16 => {
+                println!("{}, {:?}", "ImageSampleFootprintNV", data);
+                let instr = Instruction::ImageSampleFootprintNV(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = ImageOperands::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5296u16 => {
+                println!("{}, {:?}", "GroupNonUniformPartitionNV", data);
+                let instr = Instruction::GroupNonUniformPartitionNV(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5299u16 => {
+                println!("{}, {:?}", "WritePackedPrimitiveIndices4x8NV", data);
+                let instr = Instruction::WritePackedPrimitiveIndices4x8NV(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5334u16 => {
+                println!("{}, {:?}", "ReportIntersectionNV", data);
+                let instr = Instruction::ReportIntersectionNV(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5335u16 => Instruction::IgnoreIntersectionNV,
+            5336u16 => Instruction::TerminateRayNV,
+            5337u16 => {
+                println!("{}, {:?}", "TraceNV", data);
+                let instr = Instruction::TraceNV(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5341u16 => {
+                println!("{}, {:?}", "TypeAccelerationStructureNV", data);
+                let instr = Instruction::TypeAccelerationStructureNV({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5344u16 => {
+                println!("{}, {:?}", "ExecuteCallableNV", data);
+                let instr = Instruction::ExecuteCallableNV(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5358u16 => {
+                println!("{}, {:?}", "TypeCooperativeMatrixNV", data);
+                let instr = Instruction::TypeCooperativeMatrixNV(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdScope::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5359u16 => {
+                println!("{}, {:?}", "CooperativeMatrixLoadNV", data);
+                let instr = Instruction::CooperativeMatrixLoadNV(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5360u16 => {
+                println!("{}, {:?}", "CooperativeMatrixStoreNV", data);
+                let instr = Instruction::CooperativeMatrixStoreNV(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        if data.len() > 0 {
+                            let (v, d) = MemoryAccess::from_raw(data);
+                            data = d;
+                            Some(v)
+                        } else {
+                            None
+                        }
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5361u16 => {
+                println!("{}, {:?}", "CooperativeMatrixMulAddNV", data);
+                let instr = Instruction::CooperativeMatrixMulAddNV(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5362u16 => {
+                println!("{}, {:?}", "CooperativeMatrixLengthNV", data);
+                let instr = Instruction::CooperativeMatrixLengthNV(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5364u16 => Instruction::BeginInvocationInterlockEXT,
+            5365u16 => Instruction::EndInvocationInterlockEXT,
+            5380u16 => Instruction::DemoteToHelperInvocationEXT,
+            5381u16 => {
+                println!("{}, {:?}", "IsHelperInvocationEXT", data);
+                let instr = Instruction::IsHelperInvocationEXT(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5571u16 => {
+                println!("{}, {:?}", "SubgroupShuffleINTEL", data);
+                let instr = Instruction::SubgroupShuffleINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5572u16 => {
+                println!("{}, {:?}", "SubgroupShuffleDownINTEL", data);
+                let instr = Instruction::SubgroupShuffleDownINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5573u16 => {
+                println!("{}, {:?}", "SubgroupShuffleUpINTEL", data);
+                let instr = Instruction::SubgroupShuffleUpINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5574u16 => {
+                println!("{}, {:?}", "SubgroupShuffleXorINTEL", data);
+                let instr = Instruction::SubgroupShuffleXorINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5575u16 => {
+                println!("{}, {:?}", "SubgroupBlockReadINTEL", data);
+                let instr = Instruction::SubgroupBlockReadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5576u16 => {
+                println!("{}, {:?}", "SubgroupBlockWriteINTEL", data);
+                let instr = Instruction::SubgroupBlockWriteINTEL(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5577u16 => {
+                println!("{}, {:?}", "SubgroupImageBlockReadINTEL", data);
+                let instr = Instruction::SubgroupImageBlockReadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5578u16 => {
+                println!("{}, {:?}", "SubgroupImageBlockWriteINTEL", data);
+                let instr = Instruction::SubgroupImageBlockWriteINTEL(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5580u16 => {
+                println!("{}, {:?}", "SubgroupImageMediaBlockReadINTEL", data);
+                let instr = Instruction::SubgroupImageMediaBlockReadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5581u16 => {
+                println!("{}, {:?}", "SubgroupImageMediaBlockWriteINTEL", data);
+                let instr = Instruction::SubgroupImageMediaBlockWriteINTEL(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5585u16 => {
+                println!("{}, {:?}", "UCountLeadingZerosINTEL", data);
+                let instr = Instruction::UCountLeadingZerosINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5586u16 => {
+                println!("{}, {:?}", "UCountTrailingZerosINTEL", data);
+                let instr = Instruction::UCountTrailingZerosINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5587u16 => {
+                println!("{}, {:?}", "AbsISubINTEL", data);
+                let instr = Instruction::AbsISubINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5588u16 => {
+                println!("{}, {:?}", "AbsUSubINTEL", data);
+                let instr = Instruction::AbsUSubINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5589u16 => {
+                println!("{}, {:?}", "IAddSatINTEL", data);
+                let instr = Instruction::IAddSatINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5590u16 => {
+                println!("{}, {:?}", "UAddSatINTEL", data);
+                let instr = Instruction::UAddSatINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5591u16 => {
+                println!("{}, {:?}", "IAverageINTEL", data);
+                let instr = Instruction::IAverageINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5592u16 => {
+                println!("{}, {:?}", "UAverageINTEL", data);
+                let instr = Instruction::UAverageINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5593u16 => {
+                println!("{}, {:?}", "IAverageRoundedINTEL", data);
+                let instr = Instruction::IAverageRoundedINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5594u16 => {
+                println!("{}, {:?}", "UAverageRoundedINTEL", data);
+                let instr = Instruction::UAverageRoundedINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5595u16 => {
+                println!("{}, {:?}", "ISubSatINTEL", data);
+                let instr = Instruction::ISubSatINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5596u16 => {
+                println!("{}, {:?}", "USubSatINTEL", data);
+                let instr = Instruction::USubSatINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5597u16 => {
+                println!("{}, {:?}", "IMul32x16INTEL", data);
+                let instr = Instruction::IMul32x16INTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5598u16 => {
+                println!("{}, {:?}", "UMul32x16INTEL", data);
+                let instr = Instruction::UMul32x16INTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5632u16 => {
+                println!("{}, {:?}", "DecorateString", data);
+                let instr = Instruction::DecorateString(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Decoration::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5632u16 => {
+                println!("{}, {:?}", "DecorateStringGOOGLE", data);
+                let instr = Instruction::DecorateStringGOOGLE(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Decoration::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5633u16 => {
+                println!("{}, {:?}", "MemberDecorateString", data);
+                let instr = Instruction::MemberDecorateString(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Decoration::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5633u16 => {
+                println!("{}, {:?}", "MemberDecorateStringGOOGLE", data);
+                let instr = Instruction::MemberDecorateStringGOOGLE(
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = LiteralInteger::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = Decoration::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5699u16 => {
+                println!("{}, {:?}", "VmeImageINTEL", data);
+                let instr = Instruction::VmeImageINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5700u16 => {
+                println!("{}, {:?}", "TypeVmeImageINTEL", data);
+                let instr = Instruction::TypeVmeImageINTEL(
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5701u16 => {
+                println!("{}, {:?}", "TypeAvcImePayloadINTEL", data);
+                let instr = Instruction::TypeAvcImePayloadINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5702u16 => {
+                println!("{}, {:?}", "TypeAvcRefPayloadINTEL", data);
+                let instr = Instruction::TypeAvcRefPayloadINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5703u16 => {
+                println!("{}, {:?}", "TypeAvcSicPayloadINTEL", data);
+                let instr = Instruction::TypeAvcSicPayloadINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5704u16 => {
+                println!("{}, {:?}", "TypeAvcMcePayloadINTEL", data);
+                let instr = Instruction::TypeAvcMcePayloadINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5705u16 => {
+                println!("{}, {:?}", "TypeAvcMceResultINTEL", data);
+                let instr = Instruction::TypeAvcMceResultINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5706u16 => {
+                println!("{}, {:?}", "TypeAvcImeResultINTEL", data);
+                let instr = Instruction::TypeAvcImeResultINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5707u16 => {
+                println!(
+                    "{}, {:?}",
+                    "TypeAvcImeResultSingleReferenceStreamoutINTEL", data
+                );
+                let instr = Instruction::TypeAvcImeResultSingleReferenceStreamoutINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5708u16 => {
+                println!(
+                    "{}, {:?}",
+                    "TypeAvcImeResultDualReferenceStreamoutINTEL", data
+                );
+                let instr = Instruction::TypeAvcImeResultDualReferenceStreamoutINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5709u16 => {
+                println!("{}, {:?}", "TypeAvcImeSingleReferenceStreaminINTEL", data);
+                let instr = Instruction::TypeAvcImeSingleReferenceStreaminINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5710u16 => {
+                println!("{}, {:?}", "TypeAvcImeDualReferenceStreaminINTEL", data);
+                let instr = Instruction::TypeAvcImeDualReferenceStreaminINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5711u16 => {
+                println!("{}, {:?}", "TypeAvcRefResultINTEL", data);
+                let instr = Instruction::TypeAvcRefResultINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5712u16 => {
+                println!("{}, {:?}", "TypeAvcSicResultINTEL", data);
+                let instr = Instruction::TypeAvcSicResultINTEL({
+                    let (v, d) = IdResult::from_raw(data);
+                    data = d;
+                    v
+                });
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5713u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL", data
+                );
+                let instr =
+                    Instruction::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(
+                        {
+                            let (v, d) = IdResultType::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdResult::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                    );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5714u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5715u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultInterShapePenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5716u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceSetInterShapePenaltyINTEL", data);
+                let instr = Instruction::SubgroupAvcMceSetInterShapePenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5717u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5718u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceSetInterDirectionPenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceSetInterDirectionPenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5719u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5720u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5721u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5722u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5723u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5724u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceSetMotionVectorCostFunctionINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5725u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5726u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5727u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5728u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceSetAcOnlyHaarINTEL", data);
+                let instr = Instruction::SubgroupAvcMceSetAcOnlyHaarINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5729u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5730u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL", data
+                );
+                let instr =
+                    Instruction::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(
+                        {
+                            let (v, d) = IdResultType::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdResult::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                    );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5731u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL", data
+                );
+                let instr =
+                    Instruction::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(
+                        {
+                            let (v, d) = IdResultType::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdResult::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                    );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5732u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceConvertToImePayloadINTEL", data);
+                let instr = Instruction::SubgroupAvcMceConvertToImePayloadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5733u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceConvertToImeResultINTEL", data);
+                let instr = Instruction::SubgroupAvcMceConvertToImeResultINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5734u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceConvertToRefPayloadINTEL", data);
+                let instr = Instruction::SubgroupAvcMceConvertToRefPayloadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5735u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceConvertToRefResultINTEL", data);
+                let instr = Instruction::SubgroupAvcMceConvertToRefResultINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5736u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceConvertToSicPayloadINTEL", data);
+                let instr = Instruction::SubgroupAvcMceConvertToSicPayloadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5737u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceConvertToSicResultINTEL", data);
+                let instr = Instruction::SubgroupAvcMceConvertToSicResultINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5738u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceGetMotionVectorsINTEL", data);
+                let instr = Instruction::SubgroupAvcMceGetMotionVectorsINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5739u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceGetInterDistortionsINTEL", data);
+                let instr = Instruction::SubgroupAvcMceGetInterDistortionsINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5740u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetBestInterDistortionsINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetBestInterDistortionsINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5741u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceGetInterMajorShapeINTEL", data);
+                let instr = Instruction::SubgroupAvcMceGetInterMajorShapeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5742u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceGetInterMinorShapeINTEL", data);
+                let instr = Instruction::SubgroupAvcMceGetInterMinorShapeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5743u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceGetInterDirectionsINTEL", data);
+                let instr = Instruction::SubgroupAvcMceGetInterDirectionsINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5744u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetInterMotionVectorCountINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcMceGetInterMotionVectorCountINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5745u16 => {
+                println!("{}, {:?}", "SubgroupAvcMceGetInterReferenceIdsINTEL", data);
+                let instr = Instruction::SubgroupAvcMceGetInterReferenceIdsINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5746u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL", data
+                );
+                let instr =
+                    Instruction::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(
+                        {
+                            let (v, d) = IdResultType::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdResult::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                    );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5747u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeInitializeINTEL", data);
+                let instr = Instruction::SubgroupAvcImeInitializeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5748u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeSetSingleReferenceINTEL", data);
+                let instr = Instruction::SubgroupAvcImeSetSingleReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5749u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeSetDualReferenceINTEL", data);
+                let instr = Instruction::SubgroupAvcImeSetDualReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5750u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeRefWindowSizeINTEL", data);
+                let instr = Instruction::SubgroupAvcImeRefWindowSizeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5751u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeAdjustRefOffsetINTEL", data);
+                let instr = Instruction::SubgroupAvcImeAdjustRefOffsetINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5752u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeConvertToMcePayloadINTEL", data);
+                let instr = Instruction::SubgroupAvcImeConvertToMcePayloadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5753u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeSetMaxMotionVectorCountINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeSetMaxMotionVectorCountINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5754u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeSetUnidirectionalMixDisableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5755u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5756u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeSetWeightedSadINTEL", data);
+                let instr = Instruction::SubgroupAvcImeSetWeightedSadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5757u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithSingleReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5758u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithDualReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5759u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5760u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5761u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5762u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5763u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5764u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5765u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeConvertToMceResultINTEL", data);
+                let instr = Instruction::SubgroupAvcImeConvertToMceResultINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5766u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetSingleReferenceStreaminINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetSingleReferenceStreaminINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5767u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetDualReferenceStreaminINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetDualReferenceStreaminINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5768u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeStripSingleReferenceStreamoutINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5769u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeStripDualReferenceStreamoutINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeStripDualReferenceStreamoutINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5770u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL({
+                                                                                                                   let (v, d) = IdResultType::from_raw(data);
+                                                                                                                   data = d;
+                                                                                                                   v
+                                                                                                               }, {
+                                                                                                                   let (v, d) = IdResult::from_raw(data);
+                                                                                                                   data = d;
+                                                                                                                   v
+                                                                                                               }, {
+                                                                                                                   let (v, d) = IdRef::from_raw(data);
+                                                                                                                   data = d;
+                                                                                                                   v
+                                                                                                               }, {
+                                                                                                                   let (v, d) = IdRef::from_raw(data);
+                                                                                                                   data = d;
+                                                                                                                   v
+                                                                                                               }, );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5771u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL({
+                                                                                                                 let (v, d) = IdResultType::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, {
+                                                                                                                 let (v, d) = IdResult::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, {
+                                                                                                                 let (v, d) = IdRef::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, {
+                                                                                                                 let (v, d) = IdRef::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5772u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL({
+                                                                                                                  let (v, d) = IdResultType::from_raw(data);
+                                                                                                                  data = d;
+                                                                                                                  v
+                                                                                                              }, {
+                                                                                                                  let (v, d) = IdResult::from_raw(data);
+                                                                                                                  data = d;
+                                                                                                                  v
+                                                                                                              }, {
+                                                                                                                  let (v, d) = IdRef::from_raw(data);
+                                                                                                                  data = d;
+                                                                                                                  v
+                                                                                                              }, {
+                                                                                                                  let (v, d) = IdRef::from_raw(data);
+                                                                                                                  data = d;
+                                                                                                                  v
+                                                                                                              }, );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5773u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL({
+                                                                                                                 let (v, d) = IdResultType::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, {
+                                                                                                                 let (v, d) = IdResult::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, {
+                                                                                                                 let (v, d) = IdRef::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, {
+                                                                                                                 let (v, d) = IdRef::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, {
+                                                                                                                 let (v, d) = IdRef::from_raw(data);
+                                                                                                                 data = d;
+                                                                                                                 v
+                                                                                                             }, );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5774u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL", data
+                );
+                let instr =
+                    Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(
+                        {
+                            let (v, d) = IdResultType::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdResult::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                    );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5775u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL", data
+                );
+                let instr =
+                    Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(
+                        {
+                            let (v, d) = IdResultType::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdResult::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                        {
+                            let (v, d) = IdRef::from_raw(data);
+                            data = d;
+                            v
+                        },
+                    );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5776u16 => {
+                println!("{}, {:?}", "SubgroupAvcImeGetBorderReachedINTEL", data);
+                let instr = Instruction::SubgroupAvcImeGetBorderReachedINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5777u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetTruncatedSearchIndicationINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5778u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5779u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5780u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5781u16 => {
+                println!("{}, {:?}", "SubgroupAvcFmeInitializeINTEL", data);
+                let instr = Instruction::SubgroupAvcFmeInitializeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5782u16 => {
+                println!("{}, {:?}", "SubgroupAvcBmeInitializeINTEL", data);
+                let instr = Instruction::SubgroupAvcBmeInitializeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5783u16 => {
+                println!("{}, {:?}", "SubgroupAvcRefConvertToMcePayloadINTEL", data);
+                let instr = Instruction::SubgroupAvcRefConvertToMcePayloadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5784u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcRefSetBidirectionalMixDisableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcRefSetBidirectionalMixDisableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5785u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcRefSetBilinearFilterEnableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcRefSetBilinearFilterEnableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5786u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcRefEvaluateWithSingleReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5787u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcRefEvaluateWithDualReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcRefEvaluateWithDualReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5788u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcRefEvaluateWithMultiReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5789u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5790u16 => {
+                println!("{}, {:?}", "SubgroupAvcRefConvertToMceResultINTEL", data);
+                let instr = Instruction::SubgroupAvcRefConvertToMceResultINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5791u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicInitializeINTEL", data);
+                let instr = Instruction::SubgroupAvcSicInitializeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5792u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicConfigureSkcINTEL", data);
+                let instr = Instruction::SubgroupAvcSicConfigureSkcINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5793u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicConfigureIpeLumaINTEL", data);
+                let instr = Instruction::SubgroupAvcSicConfigureIpeLumaINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5794u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicConfigureIpeLumaChromaINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicConfigureIpeLumaChromaINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5795u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicGetMotionVectorMaskINTEL", data);
+                let instr = Instruction::SubgroupAvcSicGetMotionVectorMaskINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5796u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicConvertToMcePayloadINTEL", data);
+                let instr = Instruction::SubgroupAvcSicConvertToMcePayloadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5797u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicSetIntraLumaShapePenaltyINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5798u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5799u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5800u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicSetBilinearFilterEnableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicSetBilinearFilterEnableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5801u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicSetSkcForwardTransformEnableINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5802u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicSetBlockBasedRawSkipSadINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5803u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicEvaluateIpeINTEL", data);
+                let instr = Instruction::SubgroupAvcSicEvaluateIpeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5804u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicEvaluateWithSingleReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5805u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicEvaluateWithDualReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicEvaluateWithDualReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5806u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicEvaluateWithMultiReferenceINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5807u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5808u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicConvertToMceResultINTEL", data);
+                let instr = Instruction::SubgroupAvcSicConvertToMceResultINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5809u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicGetIpeLumaShapeINTEL", data);
+                let instr = Instruction::SubgroupAvcSicGetIpeLumaShapeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5810u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicGetBestIpeLumaDistortionINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5811u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicGetBestIpeChromaDistortionINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5812u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicGetPackedIpeLumaModesINTEL", data);
+                let instr = Instruction::SubgroupAvcSicGetPackedIpeLumaModesINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5813u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicGetIpeChromaModeINTEL", data);
+                let instr = Instruction::SubgroupAvcSicGetIpeChromaModeINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5814u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5815u16 => {
+                println!(
+                    "{}, {:?}",
+                    "SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL", data
+                );
+                let instr = Instruction::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            5816u16 => {
+                println!("{}, {:?}", "SubgroupAvcSicGetInterRawSadsINTEL", data);
+                let instr = Instruction::SubgroupAvcSicGetInterRawSadsINTEL(
+                    {
+                        let (v, d) = IdResultType::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdResult::from_raw(data);
+                        data = d;
+                        v
+                    },
+                    {
+                        let (v, d) = IdRef::from_raw(data);
+                        data = d;
+                        v
+                    },
+                );
+                assert_eq!(data.len(), 0);
+                instr
+            }
+            _ => Instruction::None(op_code),
+        }
+    }
+}
