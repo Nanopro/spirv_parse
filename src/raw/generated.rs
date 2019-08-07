@@ -4120,7 +4120,6 @@ impl Instruction {
         match op_code {
             0u16 => Instruction::Nop,
             1u16 => {
-                println!("{}, {:?}", "Undef", data);
                 let instr = Instruction::Undef(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4137,7 +4136,6 @@ impl Instruction {
                 instr
             }
             2u16 => {
-                println!("{}, {:?}", "SourceContinued", data);
                 let instr = Instruction::SourceContinued({
                     let (v, d) = LiteralString::from_raw(data);
                     data = d;
@@ -4147,7 +4145,6 @@ impl Instruction {
                 instr
             }
             3u16 => {
-                println!("{}, {:?}", "Source", data);
                 let instr = Instruction::Source(
                     {
                         let (v, d) = SourceLanguage::from_raw(data);
@@ -4182,7 +4179,6 @@ impl Instruction {
                 instr
             }
             4u16 => {
-                println!("{}, {:?}", "SourceExtension", data);
                 let instr = Instruction::SourceExtension({
                     let (v, d) = LiteralString::from_raw(data);
                     data = d;
@@ -4192,7 +4188,6 @@ impl Instruction {
                 instr
             }
             5u16 => {
-                println!("{}, {:?}", "Name", data);
                 let instr = Instruction::Name(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -4209,7 +4204,6 @@ impl Instruction {
                 instr
             }
             6u16 => {
-                println!("{}, {:?}", "MemberName", data);
                 let instr = Instruction::MemberName(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -4231,7 +4225,6 @@ impl Instruction {
                 instr
             }
             7u16 => {
-                println!("{}, {:?}", "String", data);
                 let instr = Instruction::String(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4248,7 +4241,6 @@ impl Instruction {
                 instr
             }
             8u16 => {
-                println!("{}, {:?}", "Line", data);
                 let instr = Instruction::Line(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -4270,7 +4262,6 @@ impl Instruction {
                 instr
             }
             10u16 => {
-                println!("{}, {:?}", "Extension", data);
                 let instr = Instruction::Extension({
                     let (v, d) = LiteralString::from_raw(data);
                     data = d;
@@ -4280,7 +4271,6 @@ impl Instruction {
                 instr
             }
             11u16 => {
-                println!("{}, {:?}", "ExtInstImport", data);
                 let instr = Instruction::ExtInstImport(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4297,7 +4287,6 @@ impl Instruction {
                 instr
             }
             12u16 => {
-                println!("{}, {:?}", "ExtInst", data);
                 let instr = Instruction::ExtInst(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4333,7 +4322,6 @@ impl Instruction {
                 instr
             }
             14u16 => {
-                println!("{}, {:?}", "MemoryModel", data);
                 let instr = Instruction::MemoryModel(
                     {
                         let (v, d) = AddressingModel::from_raw(data);
@@ -4350,7 +4338,6 @@ impl Instruction {
                 instr
             }
             15u16 => {
-                println!("{}, {:?}", "EntryPoint", data);
                 let instr = Instruction::EntryPoint(
                     {
                         let (v, d) = ExecutionModel::from_raw(data);
@@ -4381,7 +4368,6 @@ impl Instruction {
                 instr
             }
             16u16 => {
-                println!("{}, {:?}", "ExecutionMode", data);
                 let instr = Instruction::ExecutionMode(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -4398,7 +4384,6 @@ impl Instruction {
                 instr
             }
             17u16 => {
-                println!("{}, {:?}", "Capability", data);
                 let instr = Instruction::Capability({
                     let (v, d) = Capability::from_raw(data);
                     data = d;
@@ -4408,7 +4393,6 @@ impl Instruction {
                 instr
             }
             19u16 => {
-                println!("{}, {:?}", "TypeVoid", data);
                 let instr = Instruction::TypeVoid({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -4418,7 +4402,6 @@ impl Instruction {
                 instr
             }
             20u16 => {
-                println!("{}, {:?}", "TypeBool", data);
                 let instr = Instruction::TypeBool({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -4428,7 +4411,6 @@ impl Instruction {
                 instr
             }
             21u16 => {
-                println!("{}, {:?}", "TypeInt", data);
                 let instr = Instruction::TypeInt(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4450,7 +4432,6 @@ impl Instruction {
                 instr
             }
             22u16 => {
-                println!("{}, {:?}", "TypeFloat", data);
                 let instr = Instruction::TypeFloat(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4467,7 +4448,6 @@ impl Instruction {
                 instr
             }
             23u16 => {
-                println!("{}, {:?}", "TypeVector", data);
                 let instr = Instruction::TypeVector(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4489,7 +4469,6 @@ impl Instruction {
                 instr
             }
             24u16 => {
-                println!("{}, {:?}", "TypeMatrix", data);
                 let instr = Instruction::TypeMatrix(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4511,7 +4490,6 @@ impl Instruction {
                 instr
             }
             25u16 => {
-                println!("{}, {:?}", "TypeImage", data);
                 let instr = Instruction::TypeImage(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4567,7 +4545,6 @@ impl Instruction {
                 instr
             }
             26u16 => {
-                println!("{}, {:?}", "TypeSampler", data);
                 let instr = Instruction::TypeSampler({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -4577,7 +4554,6 @@ impl Instruction {
                 instr
             }
             27u16 => {
-                println!("{}, {:?}", "TypeSampledImage", data);
                 let instr = Instruction::TypeSampledImage(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4594,7 +4570,6 @@ impl Instruction {
                 instr
             }
             28u16 => {
-                println!("{}, {:?}", "TypeArray", data);
                 let instr = Instruction::TypeArray(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4616,7 +4591,6 @@ impl Instruction {
                 instr
             }
             29u16 => {
-                println!("{}, {:?}", "TypeRuntimeArray", data);
                 let instr = Instruction::TypeRuntimeArray(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4633,7 +4607,6 @@ impl Instruction {
                 instr
             }
             30u16 => {
-                println!("{}, {:?}", "TypeStruct", data);
                 let instr = Instruction::TypeStruct(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4654,7 +4627,6 @@ impl Instruction {
                 instr
             }
             31u16 => {
-                println!("{}, {:?}", "TypeOpaque", data);
                 let instr = Instruction::TypeOpaque(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4671,7 +4643,6 @@ impl Instruction {
                 instr
             }
             32u16 => {
-                println!("{}, {:?}", "TypePointer", data);
                 let instr = Instruction::TypePointer(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4693,7 +4664,6 @@ impl Instruction {
                 instr
             }
             33u16 => {
-                println!("{}, {:?}", "TypeFunction", data);
                 let instr = Instruction::TypeFunction(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4719,7 +4689,6 @@ impl Instruction {
                 instr
             }
             34u16 => {
-                println!("{}, {:?}", "TypeEvent", data);
                 let instr = Instruction::TypeEvent({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -4729,7 +4698,6 @@ impl Instruction {
                 instr
             }
             35u16 => {
-                println!("{}, {:?}", "TypeDeviceEvent", data);
                 let instr = Instruction::TypeDeviceEvent({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -4739,7 +4707,6 @@ impl Instruction {
                 instr
             }
             36u16 => {
-                println!("{}, {:?}", "TypeReserveId", data);
                 let instr = Instruction::TypeReserveId({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -4749,7 +4716,6 @@ impl Instruction {
                 instr
             }
             37u16 => {
-                println!("{}, {:?}", "TypeQueue", data);
                 let instr = Instruction::TypeQueue({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -4759,7 +4725,6 @@ impl Instruction {
                 instr
             }
             38u16 => {
-                println!("{}, {:?}", "TypePipe", data);
                 let instr = Instruction::TypePipe(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -4776,7 +4741,6 @@ impl Instruction {
                 instr
             }
             39u16 => {
-                println!("{}, {:?}", "TypeForwardPointer", data);
                 let instr = Instruction::TypeForwardPointer(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -4793,7 +4757,6 @@ impl Instruction {
                 instr
             }
             41u16 => {
-                println!("{}, {:?}", "ConstantTrue", data);
                 let instr = Instruction::ConstantTrue(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4810,7 +4773,6 @@ impl Instruction {
                 instr
             }
             42u16 => {
-                println!("{}, {:?}", "ConstantFalse", data);
                 let instr = Instruction::ConstantFalse(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4827,7 +4789,6 @@ impl Instruction {
                 instr
             }
             43u16 => {
-                println!("{}, {:?}", "Constant", data);
                 let instr = Instruction::Constant(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4849,7 +4810,6 @@ impl Instruction {
                 instr
             }
             44u16 => {
-                println!("{}, {:?}", "ConstantComposite", data);
                 let instr = Instruction::ConstantComposite(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4875,7 +4835,6 @@ impl Instruction {
                 instr
             }
             45u16 => {
-                println!("{}, {:?}", "ConstantSampler", data);
                 let instr = Instruction::ConstantSampler(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4907,7 +4866,6 @@ impl Instruction {
                 instr
             }
             46u16 => {
-                println!("{}, {:?}", "ConstantNull", data);
                 let instr = Instruction::ConstantNull(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4924,7 +4882,6 @@ impl Instruction {
                 instr
             }
             48u16 => {
-                println!("{}, {:?}", "SpecConstantTrue", data);
                 let instr = Instruction::SpecConstantTrue(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4941,7 +4898,6 @@ impl Instruction {
                 instr
             }
             49u16 => {
-                println!("{}, {:?}", "SpecConstantFalse", data);
                 let instr = Instruction::SpecConstantFalse(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4958,7 +4914,6 @@ impl Instruction {
                 instr
             }
             50u16 => {
-                println!("{}, {:?}", "SpecConstant", data);
                 let instr = Instruction::SpecConstant(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -4980,7 +4935,6 @@ impl Instruction {
                 instr
             }
             51u16 => {
-                println!("{}, {:?}", "SpecConstantComposite", data);
                 let instr = Instruction::SpecConstantComposite(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5006,7 +4960,6 @@ impl Instruction {
                 instr
             }
             52u16 => {
-                println!("{}, {:?}", "SpecConstantOp", data);
                 let instr = Instruction::SpecConstantOp(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5028,7 +4981,6 @@ impl Instruction {
                 instr
             }
             54u16 => {
-                println!("{}, {:?}", "Function", data);
                 let instr = Instruction::Function(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5055,7 +5007,6 @@ impl Instruction {
                 instr
             }
             55u16 => {
-                println!("{}, {:?}", "FunctionParameter", data);
                 let instr = Instruction::FunctionParameter(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5073,7 +5024,6 @@ impl Instruction {
             }
             56u16 => Instruction::FunctionEnd,
             57u16 => {
-                println!("{}, {:?}", "FunctionCall", data);
                 let instr = Instruction::FunctionCall(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5104,7 +5054,6 @@ impl Instruction {
                 instr
             }
             59u16 => {
-                println!("{}, {:?}", "Variable", data);
                 let instr = Instruction::Variable(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5135,7 +5084,6 @@ impl Instruction {
                 instr
             }
             60u16 => {
-                println!("{}, {:?}", "ImageTexelPointer", data);
                 let instr = Instruction::ImageTexelPointer(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5167,7 +5115,6 @@ impl Instruction {
                 instr
             }
             61u16 => {
-                println!("{}, {:?}", "Load", data);
                 let instr = Instruction::Load(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5198,7 +5145,6 @@ impl Instruction {
                 instr
             }
             62u16 => {
-                println!("{}, {:?}", "Store", data);
                 let instr = Instruction::Store(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -5224,7 +5170,6 @@ impl Instruction {
                 instr
             }
             63u16 => {
-                println!("{}, {:?}", "CopyMemory", data);
                 let instr = Instruction::CopyMemory(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -5259,7 +5204,6 @@ impl Instruction {
                 instr
             }
             64u16 => {
-                println!("{}, {:?}", "CopyMemorySized", data);
                 let instr = Instruction::CopyMemorySized(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -5299,7 +5243,6 @@ impl Instruction {
                 instr
             }
             65u16 => {
-                println!("{}, {:?}", "AccessChain", data);
                 let instr = Instruction::AccessChain(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5330,7 +5273,6 @@ impl Instruction {
                 instr
             }
             66u16 => {
-                println!("{}, {:?}", "InBoundsAccessChain", data);
                 let instr = Instruction::InBoundsAccessChain(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5361,7 +5303,6 @@ impl Instruction {
                 instr
             }
             67u16 => {
-                println!("{}, {:?}", "PtrAccessChain", data);
                 let instr = Instruction::PtrAccessChain(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5397,7 +5338,6 @@ impl Instruction {
                 instr
             }
             68u16 => {
-                println!("{}, {:?}", "ArrayLength", data);
                 let instr = Instruction::ArrayLength(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5424,7 +5364,6 @@ impl Instruction {
                 instr
             }
             69u16 => {
-                println!("{}, {:?}", "GenericPtrMemSemantics", data);
                 let instr = Instruction::GenericPtrMemSemantics(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5446,7 +5385,6 @@ impl Instruction {
                 instr
             }
             70u16 => {
-                println!("{}, {:?}", "InBoundsPtrAccessChain", data);
                 let instr = Instruction::InBoundsPtrAccessChain(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5482,7 +5420,6 @@ impl Instruction {
                 instr
             }
             71u16 => {
-                println!("{}, {:?}", "Decorate", data);
                 let instr = Instruction::Decorate(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -5499,7 +5436,6 @@ impl Instruction {
                 instr
             }
             72u16 => {
-                println!("{}, {:?}", "MemberDecorate", data);
                 let instr = Instruction::MemberDecorate(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -5521,7 +5457,6 @@ impl Instruction {
                 instr
             }
             73u16 => {
-                println!("{}, {:?}", "DecorationGroup", data);
                 let instr = Instruction::DecorationGroup({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -5531,7 +5466,6 @@ impl Instruction {
                 instr
             }
             74u16 => {
-                println!("{}, {:?}", "GroupDecorate", data);
                 let instr = Instruction::GroupDecorate(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -5552,7 +5486,6 @@ impl Instruction {
                 instr
             }
             75u16 => {
-                println!("{}, {:?}", "GroupMemberDecorate", data);
                 let instr = Instruction::GroupMemberDecorate(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -5573,7 +5506,6 @@ impl Instruction {
                 instr
             }
             77u16 => {
-                println!("{}, {:?}", "VectorExtractDynamic", data);
                 let instr = Instruction::VectorExtractDynamic(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5600,7 +5532,6 @@ impl Instruction {
                 instr
             }
             78u16 => {
-                println!("{}, {:?}", "VectorInsertDynamic", data);
                 let instr = Instruction::VectorInsertDynamic(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5632,7 +5563,6 @@ impl Instruction {
                 instr
             }
             79u16 => {
-                println!("{}, {:?}", "VectorShuffle", data);
                 let instr = Instruction::VectorShuffle(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5668,7 +5598,6 @@ impl Instruction {
                 instr
             }
             80u16 => {
-                println!("{}, {:?}", "CompositeConstruct", data);
                 let instr = Instruction::CompositeConstruct(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5694,7 +5623,6 @@ impl Instruction {
                 instr
             }
             81u16 => {
-                println!("{}, {:?}", "CompositeExtract", data);
                 let instr = Instruction::CompositeExtract(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5725,7 +5653,6 @@ impl Instruction {
                 instr
             }
             82u16 => {
-                println!("{}, {:?}", "CompositeInsert", data);
                 let instr = Instruction::CompositeInsert(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5761,7 +5688,6 @@ impl Instruction {
                 instr
             }
             83u16 => {
-                println!("{}, {:?}", "CopyObject", data);
                 let instr = Instruction::CopyObject(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5783,7 +5709,6 @@ impl Instruction {
                 instr
             }
             84u16 => {
-                println!("{}, {:?}", "Transpose", data);
                 let instr = Instruction::Transpose(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5805,7 +5730,6 @@ impl Instruction {
                 instr
             }
             86u16 => {
-                println!("{}, {:?}", "SampledImage", data);
                 let instr = Instruction::SampledImage(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5832,7 +5756,6 @@ impl Instruction {
                 instr
             }
             87u16 => {
-                println!("{}, {:?}", "ImageSampleImplicitLod", data);
                 let instr = Instruction::ImageSampleImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5868,7 +5791,6 @@ impl Instruction {
                 instr
             }
             88u16 => {
-                println!("{}, {:?}", "ImageSampleExplicitLod", data);
                 let instr = Instruction::ImageSampleExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5900,7 +5822,6 @@ impl Instruction {
                 instr
             }
             89u16 => {
-                println!("{}, {:?}", "ImageSampleDrefImplicitLod", data);
                 let instr = Instruction::ImageSampleDrefImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5941,7 +5862,6 @@ impl Instruction {
                 instr
             }
             90u16 => {
-                println!("{}, {:?}", "ImageSampleDrefExplicitLod", data);
                 let instr = Instruction::ImageSampleDrefExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -5978,7 +5898,6 @@ impl Instruction {
                 instr
             }
             91u16 => {
-                println!("{}, {:?}", "ImageSampleProjImplicitLod", data);
                 let instr = Instruction::ImageSampleProjImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6014,7 +5933,6 @@ impl Instruction {
                 instr
             }
             92u16 => {
-                println!("{}, {:?}", "ImageSampleProjExplicitLod", data);
                 let instr = Instruction::ImageSampleProjExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6046,7 +5964,6 @@ impl Instruction {
                 instr
             }
             93u16 => {
-                println!("{}, {:?}", "ImageSampleProjDrefImplicitLod", data);
                 let instr = Instruction::ImageSampleProjDrefImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6087,7 +6004,6 @@ impl Instruction {
                 instr
             }
             94u16 => {
-                println!("{}, {:?}", "ImageSampleProjDrefExplicitLod", data);
                 let instr = Instruction::ImageSampleProjDrefExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6124,7 +6040,6 @@ impl Instruction {
                 instr
             }
             95u16 => {
-                println!("{}, {:?}", "ImageFetch", data);
                 let instr = Instruction::ImageFetch(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6160,7 +6075,6 @@ impl Instruction {
                 instr
             }
             96u16 => {
-                println!("{}, {:?}", "ImageGather", data);
                 let instr = Instruction::ImageGather(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6201,7 +6115,6 @@ impl Instruction {
                 instr
             }
             97u16 => {
-                println!("{}, {:?}", "ImageDrefGather", data);
                 let instr = Instruction::ImageDrefGather(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6242,7 +6155,6 @@ impl Instruction {
                 instr
             }
             98u16 => {
-                println!("{}, {:?}", "ImageRead", data);
                 let instr = Instruction::ImageRead(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6278,7 +6190,6 @@ impl Instruction {
                 instr
             }
             99u16 => {
-                println!("{}, {:?}", "ImageWrite", data);
                 let instr = Instruction::ImageWrite(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -6309,7 +6220,6 @@ impl Instruction {
                 instr
             }
             100u16 => {
-                println!("{}, {:?}", "Image", data);
                 let instr = Instruction::Image(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6331,7 +6241,6 @@ impl Instruction {
                 instr
             }
             101u16 => {
-                println!("{}, {:?}", "ImageQueryFormat", data);
                 let instr = Instruction::ImageQueryFormat(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6353,7 +6262,6 @@ impl Instruction {
                 instr
             }
             102u16 => {
-                println!("{}, {:?}", "ImageQueryOrder", data);
                 let instr = Instruction::ImageQueryOrder(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6375,7 +6283,6 @@ impl Instruction {
                 instr
             }
             103u16 => {
-                println!("{}, {:?}", "ImageQuerySizeLod", data);
                 let instr = Instruction::ImageQuerySizeLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6402,7 +6309,6 @@ impl Instruction {
                 instr
             }
             104u16 => {
-                println!("{}, {:?}", "ImageQuerySize", data);
                 let instr = Instruction::ImageQuerySize(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6424,7 +6330,6 @@ impl Instruction {
                 instr
             }
             105u16 => {
-                println!("{}, {:?}", "ImageQueryLod", data);
                 let instr = Instruction::ImageQueryLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6451,7 +6356,6 @@ impl Instruction {
                 instr
             }
             106u16 => {
-                println!("{}, {:?}", "ImageQueryLevels", data);
                 let instr = Instruction::ImageQueryLevels(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6473,7 +6377,6 @@ impl Instruction {
                 instr
             }
             107u16 => {
-                println!("{}, {:?}", "ImageQuerySamples", data);
                 let instr = Instruction::ImageQuerySamples(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6495,7 +6398,6 @@ impl Instruction {
                 instr
             }
             109u16 => {
-                println!("{}, {:?}", "ConvertFToU", data);
                 let instr = Instruction::ConvertFToU(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6517,7 +6419,6 @@ impl Instruction {
                 instr
             }
             110u16 => {
-                println!("{}, {:?}", "ConvertFToS", data);
                 let instr = Instruction::ConvertFToS(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6539,7 +6440,6 @@ impl Instruction {
                 instr
             }
             111u16 => {
-                println!("{}, {:?}", "ConvertSToF", data);
                 let instr = Instruction::ConvertSToF(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6561,7 +6461,6 @@ impl Instruction {
                 instr
             }
             112u16 => {
-                println!("{}, {:?}", "ConvertUToF", data);
                 let instr = Instruction::ConvertUToF(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6583,7 +6482,6 @@ impl Instruction {
                 instr
             }
             113u16 => {
-                println!("{}, {:?}", "UConvert", data);
                 let instr = Instruction::UConvert(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6605,7 +6503,6 @@ impl Instruction {
                 instr
             }
             114u16 => {
-                println!("{}, {:?}", "SConvert", data);
                 let instr = Instruction::SConvert(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6627,7 +6524,6 @@ impl Instruction {
                 instr
             }
             115u16 => {
-                println!("{}, {:?}", "FConvert", data);
                 let instr = Instruction::FConvert(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6649,7 +6545,6 @@ impl Instruction {
                 instr
             }
             116u16 => {
-                println!("{}, {:?}", "QuantizeToF16", data);
                 let instr = Instruction::QuantizeToF16(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6671,7 +6566,6 @@ impl Instruction {
                 instr
             }
             117u16 => {
-                println!("{}, {:?}", "ConvertPtrToU", data);
                 let instr = Instruction::ConvertPtrToU(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6693,7 +6587,6 @@ impl Instruction {
                 instr
             }
             118u16 => {
-                println!("{}, {:?}", "SatConvertSToU", data);
                 let instr = Instruction::SatConvertSToU(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6715,7 +6608,6 @@ impl Instruction {
                 instr
             }
             119u16 => {
-                println!("{}, {:?}", "SatConvertUToS", data);
                 let instr = Instruction::SatConvertUToS(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6737,7 +6629,6 @@ impl Instruction {
                 instr
             }
             120u16 => {
-                println!("{}, {:?}", "ConvertUToPtr", data);
                 let instr = Instruction::ConvertUToPtr(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6759,7 +6650,6 @@ impl Instruction {
                 instr
             }
             121u16 => {
-                println!("{}, {:?}", "PtrCastToGeneric", data);
                 let instr = Instruction::PtrCastToGeneric(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6781,7 +6671,6 @@ impl Instruction {
                 instr
             }
             122u16 => {
-                println!("{}, {:?}", "GenericCastToPtr", data);
                 let instr = Instruction::GenericCastToPtr(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6803,7 +6692,6 @@ impl Instruction {
                 instr
             }
             123u16 => {
-                println!("{}, {:?}", "GenericCastToPtrExplicit", data);
                 let instr = Instruction::GenericCastToPtrExplicit(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6830,7 +6718,6 @@ impl Instruction {
                 instr
             }
             124u16 => {
-                println!("{}, {:?}", "Bitcast", data);
                 let instr = Instruction::Bitcast(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6852,7 +6739,6 @@ impl Instruction {
                 instr
             }
             126u16 => {
-                println!("{}, {:?}", "SNegate", data);
                 let instr = Instruction::SNegate(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6874,7 +6760,6 @@ impl Instruction {
                 instr
             }
             127u16 => {
-                println!("{}, {:?}", "FNegate", data);
                 let instr = Instruction::FNegate(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6896,7 +6781,6 @@ impl Instruction {
                 instr
             }
             128u16 => {
-                println!("{}, {:?}", "IAdd", data);
                 let instr = Instruction::IAdd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6923,7 +6807,6 @@ impl Instruction {
                 instr
             }
             129u16 => {
-                println!("{}, {:?}", "FAdd", data);
                 let instr = Instruction::FAdd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6950,7 +6833,6 @@ impl Instruction {
                 instr
             }
             130u16 => {
-                println!("{}, {:?}", "ISub", data);
                 let instr = Instruction::ISub(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -6977,7 +6859,6 @@ impl Instruction {
                 instr
             }
             131u16 => {
-                println!("{}, {:?}", "FSub", data);
                 let instr = Instruction::FSub(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7004,7 +6885,6 @@ impl Instruction {
                 instr
             }
             132u16 => {
-                println!("{}, {:?}", "IMul", data);
                 let instr = Instruction::IMul(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7031,7 +6911,6 @@ impl Instruction {
                 instr
             }
             133u16 => {
-                println!("{}, {:?}", "FMul", data);
                 let instr = Instruction::FMul(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7058,7 +6937,6 @@ impl Instruction {
                 instr
             }
             134u16 => {
-                println!("{}, {:?}", "UDiv", data);
                 let instr = Instruction::UDiv(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7085,7 +6963,6 @@ impl Instruction {
                 instr
             }
             135u16 => {
-                println!("{}, {:?}", "SDiv", data);
                 let instr = Instruction::SDiv(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7112,7 +6989,6 @@ impl Instruction {
                 instr
             }
             136u16 => {
-                println!("{}, {:?}", "FDiv", data);
                 let instr = Instruction::FDiv(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7139,7 +7015,6 @@ impl Instruction {
                 instr
             }
             137u16 => {
-                println!("{}, {:?}", "UMod", data);
                 let instr = Instruction::UMod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7166,7 +7041,6 @@ impl Instruction {
                 instr
             }
             138u16 => {
-                println!("{}, {:?}", "SRem", data);
                 let instr = Instruction::SRem(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7193,7 +7067,6 @@ impl Instruction {
                 instr
             }
             139u16 => {
-                println!("{}, {:?}", "SMod", data);
                 let instr = Instruction::SMod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7220,7 +7093,6 @@ impl Instruction {
                 instr
             }
             140u16 => {
-                println!("{}, {:?}", "FRem", data);
                 let instr = Instruction::FRem(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7247,7 +7119,6 @@ impl Instruction {
                 instr
             }
             141u16 => {
-                println!("{}, {:?}", "FMod", data);
                 let instr = Instruction::FMod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7274,7 +7145,6 @@ impl Instruction {
                 instr
             }
             142u16 => {
-                println!("{}, {:?}", "VectorTimesScalar", data);
                 let instr = Instruction::VectorTimesScalar(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7301,7 +7171,6 @@ impl Instruction {
                 instr
             }
             143u16 => {
-                println!("{}, {:?}", "MatrixTimesScalar", data);
                 let instr = Instruction::MatrixTimesScalar(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7328,7 +7197,6 @@ impl Instruction {
                 instr
             }
             144u16 => {
-                println!("{}, {:?}", "VectorTimesMatrix", data);
                 let instr = Instruction::VectorTimesMatrix(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7355,7 +7223,6 @@ impl Instruction {
                 instr
             }
             145u16 => {
-                println!("{}, {:?}", "MatrixTimesVector", data);
                 let instr = Instruction::MatrixTimesVector(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7382,7 +7249,6 @@ impl Instruction {
                 instr
             }
             146u16 => {
-                println!("{}, {:?}", "MatrixTimesMatrix", data);
                 let instr = Instruction::MatrixTimesMatrix(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7409,7 +7275,6 @@ impl Instruction {
                 instr
             }
             147u16 => {
-                println!("{}, {:?}", "OuterProduct", data);
                 let instr = Instruction::OuterProduct(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7436,7 +7301,6 @@ impl Instruction {
                 instr
             }
             148u16 => {
-                println!("{}, {:?}", "Dot", data);
                 let instr = Instruction::Dot(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7463,7 +7327,6 @@ impl Instruction {
                 instr
             }
             149u16 => {
-                println!("{}, {:?}", "IAddCarry", data);
                 let instr = Instruction::IAddCarry(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7490,7 +7353,6 @@ impl Instruction {
                 instr
             }
             150u16 => {
-                println!("{}, {:?}", "ISubBorrow", data);
                 let instr = Instruction::ISubBorrow(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7517,7 +7379,6 @@ impl Instruction {
                 instr
             }
             151u16 => {
-                println!("{}, {:?}", "UMulExtended", data);
                 let instr = Instruction::UMulExtended(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7544,7 +7405,6 @@ impl Instruction {
                 instr
             }
             152u16 => {
-                println!("{}, {:?}", "SMulExtended", data);
                 let instr = Instruction::SMulExtended(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7571,7 +7431,6 @@ impl Instruction {
                 instr
             }
             154u16 => {
-                println!("{}, {:?}", "Any", data);
                 let instr = Instruction::Any(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7593,7 +7452,6 @@ impl Instruction {
                 instr
             }
             155u16 => {
-                println!("{}, {:?}", "All", data);
                 let instr = Instruction::All(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7615,7 +7473,6 @@ impl Instruction {
                 instr
             }
             156u16 => {
-                println!("{}, {:?}", "IsNan", data);
                 let instr = Instruction::IsNan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7637,7 +7494,6 @@ impl Instruction {
                 instr
             }
             157u16 => {
-                println!("{}, {:?}", "IsInf", data);
                 let instr = Instruction::IsInf(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7659,7 +7515,6 @@ impl Instruction {
                 instr
             }
             158u16 => {
-                println!("{}, {:?}", "IsFinite", data);
                 let instr = Instruction::IsFinite(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7681,7 +7536,6 @@ impl Instruction {
                 instr
             }
             159u16 => {
-                println!("{}, {:?}", "IsNormal", data);
                 let instr = Instruction::IsNormal(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7703,7 +7557,6 @@ impl Instruction {
                 instr
             }
             160u16 => {
-                println!("{}, {:?}", "SignBitSet", data);
                 let instr = Instruction::SignBitSet(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7725,7 +7578,6 @@ impl Instruction {
                 instr
             }
             161u16 => {
-                println!("{}, {:?}", "LessOrGreater", data);
                 let instr = Instruction::LessOrGreater(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7752,7 +7604,6 @@ impl Instruction {
                 instr
             }
             162u16 => {
-                println!("{}, {:?}", "Ordered", data);
                 let instr = Instruction::Ordered(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7779,7 +7630,6 @@ impl Instruction {
                 instr
             }
             163u16 => {
-                println!("{}, {:?}", "Unordered", data);
                 let instr = Instruction::Unordered(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7806,7 +7656,6 @@ impl Instruction {
                 instr
             }
             164u16 => {
-                println!("{}, {:?}", "LogicalEqual", data);
                 let instr = Instruction::LogicalEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7833,7 +7682,6 @@ impl Instruction {
                 instr
             }
             165u16 => {
-                println!("{}, {:?}", "LogicalNotEqual", data);
                 let instr = Instruction::LogicalNotEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7860,7 +7708,6 @@ impl Instruction {
                 instr
             }
             166u16 => {
-                println!("{}, {:?}", "LogicalOr", data);
                 let instr = Instruction::LogicalOr(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7887,7 +7734,6 @@ impl Instruction {
                 instr
             }
             167u16 => {
-                println!("{}, {:?}", "LogicalAnd", data);
                 let instr = Instruction::LogicalAnd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7914,7 +7760,6 @@ impl Instruction {
                 instr
             }
             168u16 => {
-                println!("{}, {:?}", "LogicalNot", data);
                 let instr = Instruction::LogicalNot(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7936,7 +7781,6 @@ impl Instruction {
                 instr
             }
             169u16 => {
-                println!("{}, {:?}", "Select", data);
                 let instr = Instruction::Select(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7968,7 +7812,6 @@ impl Instruction {
                 instr
             }
             170u16 => {
-                println!("{}, {:?}", "IEqual", data);
                 let instr = Instruction::IEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -7995,7 +7838,6 @@ impl Instruction {
                 instr
             }
             171u16 => {
-                println!("{}, {:?}", "INotEqual", data);
                 let instr = Instruction::INotEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8022,7 +7864,6 @@ impl Instruction {
                 instr
             }
             172u16 => {
-                println!("{}, {:?}", "UGreaterThan", data);
                 let instr = Instruction::UGreaterThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8049,7 +7890,6 @@ impl Instruction {
                 instr
             }
             173u16 => {
-                println!("{}, {:?}", "SGreaterThan", data);
                 let instr = Instruction::SGreaterThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8076,7 +7916,6 @@ impl Instruction {
                 instr
             }
             174u16 => {
-                println!("{}, {:?}", "UGreaterThanEqual", data);
                 let instr = Instruction::UGreaterThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8103,7 +7942,6 @@ impl Instruction {
                 instr
             }
             175u16 => {
-                println!("{}, {:?}", "SGreaterThanEqual", data);
                 let instr = Instruction::SGreaterThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8130,7 +7968,6 @@ impl Instruction {
                 instr
             }
             176u16 => {
-                println!("{}, {:?}", "ULessThan", data);
                 let instr = Instruction::ULessThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8157,7 +7994,6 @@ impl Instruction {
                 instr
             }
             177u16 => {
-                println!("{}, {:?}", "SLessThan", data);
                 let instr = Instruction::SLessThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8184,7 +8020,6 @@ impl Instruction {
                 instr
             }
             178u16 => {
-                println!("{}, {:?}", "ULessThanEqual", data);
                 let instr = Instruction::ULessThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8211,7 +8046,6 @@ impl Instruction {
                 instr
             }
             179u16 => {
-                println!("{}, {:?}", "SLessThanEqual", data);
                 let instr = Instruction::SLessThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8238,7 +8072,6 @@ impl Instruction {
                 instr
             }
             180u16 => {
-                println!("{}, {:?}", "FOrdEqual", data);
                 let instr = Instruction::FOrdEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8265,7 +8098,6 @@ impl Instruction {
                 instr
             }
             181u16 => {
-                println!("{}, {:?}", "FUnordEqual", data);
                 let instr = Instruction::FUnordEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8292,7 +8124,6 @@ impl Instruction {
                 instr
             }
             182u16 => {
-                println!("{}, {:?}", "FOrdNotEqual", data);
                 let instr = Instruction::FOrdNotEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8319,7 +8150,6 @@ impl Instruction {
                 instr
             }
             183u16 => {
-                println!("{}, {:?}", "FUnordNotEqual", data);
                 let instr = Instruction::FUnordNotEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8346,7 +8176,6 @@ impl Instruction {
                 instr
             }
             184u16 => {
-                println!("{}, {:?}", "FOrdLessThan", data);
                 let instr = Instruction::FOrdLessThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8373,7 +8202,6 @@ impl Instruction {
                 instr
             }
             185u16 => {
-                println!("{}, {:?}", "FUnordLessThan", data);
                 let instr = Instruction::FUnordLessThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8400,7 +8228,6 @@ impl Instruction {
                 instr
             }
             186u16 => {
-                println!("{}, {:?}", "FOrdGreaterThan", data);
                 let instr = Instruction::FOrdGreaterThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8427,7 +8254,6 @@ impl Instruction {
                 instr
             }
             187u16 => {
-                println!("{}, {:?}", "FUnordGreaterThan", data);
                 let instr = Instruction::FUnordGreaterThan(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8454,7 +8280,6 @@ impl Instruction {
                 instr
             }
             188u16 => {
-                println!("{}, {:?}", "FOrdLessThanEqual", data);
                 let instr = Instruction::FOrdLessThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8481,7 +8306,6 @@ impl Instruction {
                 instr
             }
             189u16 => {
-                println!("{}, {:?}", "FUnordLessThanEqual", data);
                 let instr = Instruction::FUnordLessThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8508,7 +8332,6 @@ impl Instruction {
                 instr
             }
             190u16 => {
-                println!("{}, {:?}", "FOrdGreaterThanEqual", data);
                 let instr = Instruction::FOrdGreaterThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8535,7 +8358,6 @@ impl Instruction {
                 instr
             }
             191u16 => {
-                println!("{}, {:?}", "FUnordGreaterThanEqual", data);
                 let instr = Instruction::FUnordGreaterThanEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8562,7 +8384,6 @@ impl Instruction {
                 instr
             }
             194u16 => {
-                println!("{}, {:?}", "ShiftRightLogical", data);
                 let instr = Instruction::ShiftRightLogical(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8589,7 +8410,6 @@ impl Instruction {
                 instr
             }
             195u16 => {
-                println!("{}, {:?}", "ShiftRightArithmetic", data);
                 let instr = Instruction::ShiftRightArithmetic(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8616,7 +8436,6 @@ impl Instruction {
                 instr
             }
             196u16 => {
-                println!("{}, {:?}", "ShiftLeftLogical", data);
                 let instr = Instruction::ShiftLeftLogical(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8643,7 +8462,6 @@ impl Instruction {
                 instr
             }
             197u16 => {
-                println!("{}, {:?}", "BitwiseOr", data);
                 let instr = Instruction::BitwiseOr(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8670,7 +8488,6 @@ impl Instruction {
                 instr
             }
             198u16 => {
-                println!("{}, {:?}", "BitwiseXor", data);
                 let instr = Instruction::BitwiseXor(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8697,7 +8514,6 @@ impl Instruction {
                 instr
             }
             199u16 => {
-                println!("{}, {:?}", "BitwiseAnd", data);
                 let instr = Instruction::BitwiseAnd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8724,7 +8540,6 @@ impl Instruction {
                 instr
             }
             200u16 => {
-                println!("{}, {:?}", "Not", data);
                 let instr = Instruction::Not(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8746,7 +8561,6 @@ impl Instruction {
                 instr
             }
             201u16 => {
-                println!("{}, {:?}", "BitFieldInsert", data);
                 let instr = Instruction::BitFieldInsert(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8783,7 +8597,6 @@ impl Instruction {
                 instr
             }
             202u16 => {
-                println!("{}, {:?}", "BitFieldSExtract", data);
                 let instr = Instruction::BitFieldSExtract(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8815,7 +8628,6 @@ impl Instruction {
                 instr
             }
             203u16 => {
-                println!("{}, {:?}", "BitFieldUExtract", data);
                 let instr = Instruction::BitFieldUExtract(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8847,7 +8659,6 @@ impl Instruction {
                 instr
             }
             204u16 => {
-                println!("{}, {:?}", "BitReverse", data);
                 let instr = Instruction::BitReverse(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8869,7 +8680,6 @@ impl Instruction {
                 instr
             }
             205u16 => {
-                println!("{}, {:?}", "BitCount", data);
                 let instr = Instruction::BitCount(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8891,7 +8701,6 @@ impl Instruction {
                 instr
             }
             207u16 => {
-                println!("{}, {:?}", "DPdx", data);
                 let instr = Instruction::DPdx(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8913,7 +8722,6 @@ impl Instruction {
                 instr
             }
             208u16 => {
-                println!("{}, {:?}", "DPdy", data);
                 let instr = Instruction::DPdy(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8935,7 +8743,6 @@ impl Instruction {
                 instr
             }
             209u16 => {
-                println!("{}, {:?}", "Fwidth", data);
                 let instr = Instruction::Fwidth(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8957,7 +8764,6 @@ impl Instruction {
                 instr
             }
             210u16 => {
-                println!("{}, {:?}", "DPdxFine", data);
                 let instr = Instruction::DPdxFine(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -8979,7 +8785,6 @@ impl Instruction {
                 instr
             }
             211u16 => {
-                println!("{}, {:?}", "DPdyFine", data);
                 let instr = Instruction::DPdyFine(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9001,7 +8806,6 @@ impl Instruction {
                 instr
             }
             212u16 => {
-                println!("{}, {:?}", "FwidthFine", data);
                 let instr = Instruction::FwidthFine(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9023,7 +8827,6 @@ impl Instruction {
                 instr
             }
             213u16 => {
-                println!("{}, {:?}", "DPdxCoarse", data);
                 let instr = Instruction::DPdxCoarse(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9045,7 +8848,6 @@ impl Instruction {
                 instr
             }
             214u16 => {
-                println!("{}, {:?}", "DPdyCoarse", data);
                 let instr = Instruction::DPdyCoarse(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9067,7 +8869,6 @@ impl Instruction {
                 instr
             }
             215u16 => {
-                println!("{}, {:?}", "FwidthCoarse", data);
                 let instr = Instruction::FwidthCoarse(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9091,7 +8892,6 @@ impl Instruction {
             218u16 => Instruction::EmitVertex,
             219u16 => Instruction::EndPrimitive,
             220u16 => {
-                println!("{}, {:?}", "EmitStreamVertex", data);
                 let instr = Instruction::EmitStreamVertex({
                     let (v, d) = IdRef::from_raw(data);
                     data = d;
@@ -9101,7 +8901,6 @@ impl Instruction {
                 instr
             }
             221u16 => {
-                println!("{}, {:?}", "EndStreamPrimitive", data);
                 let instr = Instruction::EndStreamPrimitive({
                     let (v, d) = IdRef::from_raw(data);
                     data = d;
@@ -9111,7 +8910,6 @@ impl Instruction {
                 instr
             }
             224u16 => {
-                println!("{}, {:?}", "ControlBarrier", data);
                 let instr = Instruction::ControlBarrier(
                     {
                         let (v, d) = IdScope::from_raw(data);
@@ -9133,7 +8931,6 @@ impl Instruction {
                 instr
             }
             225u16 => {
-                println!("{}, {:?}", "MemoryBarrier", data);
                 let instr = Instruction::MemoryBarrier(
                     {
                         let (v, d) = IdScope::from_raw(data);
@@ -9150,7 +8947,6 @@ impl Instruction {
                 instr
             }
             227u16 => {
-                println!("{}, {:?}", "AtomicLoad", data);
                 let instr = Instruction::AtomicLoad(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9182,7 +8978,6 @@ impl Instruction {
                 instr
             }
             228u16 => {
-                println!("{}, {:?}", "AtomicStore", data);
                 let instr = Instruction::AtomicStore(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -9209,7 +9004,6 @@ impl Instruction {
                 instr
             }
             229u16 => {
-                println!("{}, {:?}", "AtomicExchange", data);
                 let instr = Instruction::AtomicExchange(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9246,7 +9040,6 @@ impl Instruction {
                 instr
             }
             230u16 => {
-                println!("{}, {:?}", "AtomicCompareExchange", data);
                 let instr = Instruction::AtomicCompareExchange(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9293,7 +9086,6 @@ impl Instruction {
                 instr
             }
             231u16 => {
-                println!("{}, {:?}", "AtomicCompareExchangeWeak", data);
                 let instr = Instruction::AtomicCompareExchangeWeak(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9340,7 +9132,6 @@ impl Instruction {
                 instr
             }
             232u16 => {
-                println!("{}, {:?}", "AtomicIIncrement", data);
                 let instr = Instruction::AtomicIIncrement(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9372,7 +9163,6 @@ impl Instruction {
                 instr
             }
             233u16 => {
-                println!("{}, {:?}", "AtomicIDecrement", data);
                 let instr = Instruction::AtomicIDecrement(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9404,7 +9194,6 @@ impl Instruction {
                 instr
             }
             234u16 => {
-                println!("{}, {:?}", "AtomicIAdd", data);
                 let instr = Instruction::AtomicIAdd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9441,7 +9230,6 @@ impl Instruction {
                 instr
             }
             235u16 => {
-                println!("{}, {:?}", "AtomicISub", data);
                 let instr = Instruction::AtomicISub(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9478,7 +9266,6 @@ impl Instruction {
                 instr
             }
             236u16 => {
-                println!("{}, {:?}", "AtomicSMin", data);
                 let instr = Instruction::AtomicSMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9515,7 +9302,6 @@ impl Instruction {
                 instr
             }
             237u16 => {
-                println!("{}, {:?}", "AtomicUMin", data);
                 let instr = Instruction::AtomicUMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9552,7 +9338,6 @@ impl Instruction {
                 instr
             }
             238u16 => {
-                println!("{}, {:?}", "AtomicSMax", data);
                 let instr = Instruction::AtomicSMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9589,7 +9374,6 @@ impl Instruction {
                 instr
             }
             239u16 => {
-                println!("{}, {:?}", "AtomicUMax", data);
                 let instr = Instruction::AtomicUMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9626,7 +9410,6 @@ impl Instruction {
                 instr
             }
             240u16 => {
-                println!("{}, {:?}", "AtomicAnd", data);
                 let instr = Instruction::AtomicAnd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9663,7 +9446,6 @@ impl Instruction {
                 instr
             }
             241u16 => {
-                println!("{}, {:?}", "AtomicOr", data);
                 let instr = Instruction::AtomicOr(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9700,7 +9482,6 @@ impl Instruction {
                 instr
             }
             242u16 => {
-                println!("{}, {:?}", "AtomicXor", data);
                 let instr = Instruction::AtomicXor(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9737,7 +9518,6 @@ impl Instruction {
                 instr
             }
             245u16 => {
-                println!("{}, {:?}", "Phi", data);
                 let instr = Instruction::Phi(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9763,7 +9543,6 @@ impl Instruction {
                 instr
             }
             246u16 => {
-                println!("{}, {:?}", "LoopMerge", data);
                 let instr = Instruction::LoopMerge(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -9785,7 +9564,6 @@ impl Instruction {
                 instr
             }
             247u16 => {
-                println!("{}, {:?}", "SelectionMerge", data);
                 let instr = Instruction::SelectionMerge(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -9802,7 +9580,6 @@ impl Instruction {
                 instr
             }
             248u16 => {
-                println!("{}, {:?}", "Label", data);
                 let instr = Instruction::Label({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -9812,7 +9589,6 @@ impl Instruction {
                 instr
             }
             249u16 => {
-                println!("{}, {:?}", "Branch", data);
                 let instr = Instruction::Branch({
                     let (v, d) = IdRef::from_raw(data);
                     data = d;
@@ -9822,7 +9598,6 @@ impl Instruction {
                 instr
             }
             250u16 => {
-                println!("{}, {:?}", "BranchConditional", data);
                 let instr = Instruction::BranchConditional(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -9853,7 +9628,6 @@ impl Instruction {
                 instr
             }
             251u16 => {
-                println!("{}, {:?}", "Switch", data);
                 let instr = Instruction::Switch(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -9881,7 +9655,6 @@ impl Instruction {
             252u16 => Instruction::Kill,
             253u16 => Instruction::Return,
             254u16 => {
-                println!("{}, {:?}", "ReturnValue", data);
                 let instr = Instruction::ReturnValue({
                     let (v, d) = IdRef::from_raw(data);
                     data = d;
@@ -9892,7 +9665,6 @@ impl Instruction {
             }
             255u16 => Instruction::Unreachable,
             256u16 => {
-                println!("{}, {:?}", "LifetimeStart", data);
                 let instr = Instruction::LifetimeStart(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -9909,7 +9681,6 @@ impl Instruction {
                 instr
             }
             257u16 => {
-                println!("{}, {:?}", "LifetimeStop", data);
                 let instr = Instruction::LifetimeStop(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -9926,7 +9697,6 @@ impl Instruction {
                 instr
             }
             259u16 => {
-                println!("{}, {:?}", "GroupAsyncCopy", data);
                 let instr = Instruction::GroupAsyncCopy(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -9973,7 +9743,6 @@ impl Instruction {
                 instr
             }
             260u16 => {
-                println!("{}, {:?}", "GroupWaitEvents", data);
                 let instr = Instruction::GroupWaitEvents(
                     {
                         let (v, d) = IdScope::from_raw(data);
@@ -9995,7 +9764,6 @@ impl Instruction {
                 instr
             }
             261u16 => {
-                println!("{}, {:?}", "GroupAll", data);
                 let instr = Instruction::GroupAll(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10022,7 +9790,6 @@ impl Instruction {
                 instr
             }
             262u16 => {
-                println!("{}, {:?}", "GroupAny", data);
                 let instr = Instruction::GroupAny(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10049,7 +9816,6 @@ impl Instruction {
                 instr
             }
             263u16 => {
-                println!("{}, {:?}", "GroupBroadcast", data);
                 let instr = Instruction::GroupBroadcast(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10081,7 +9847,6 @@ impl Instruction {
                 instr
             }
             264u16 => {
-                println!("{}, {:?}", "GroupIAdd", data);
                 let instr = Instruction::GroupIAdd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10113,7 +9878,6 @@ impl Instruction {
                 instr
             }
             265u16 => {
-                println!("{}, {:?}", "GroupFAdd", data);
                 let instr = Instruction::GroupFAdd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10145,7 +9909,6 @@ impl Instruction {
                 instr
             }
             266u16 => {
-                println!("{}, {:?}", "GroupFMin", data);
                 let instr = Instruction::GroupFMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10177,7 +9940,6 @@ impl Instruction {
                 instr
             }
             267u16 => {
-                println!("{}, {:?}", "GroupUMin", data);
                 let instr = Instruction::GroupUMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10209,7 +9971,6 @@ impl Instruction {
                 instr
             }
             268u16 => {
-                println!("{}, {:?}", "GroupSMin", data);
                 let instr = Instruction::GroupSMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10241,7 +10002,6 @@ impl Instruction {
                 instr
             }
             269u16 => {
-                println!("{}, {:?}", "GroupFMax", data);
                 let instr = Instruction::GroupFMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10273,7 +10033,6 @@ impl Instruction {
                 instr
             }
             270u16 => {
-                println!("{}, {:?}", "GroupUMax", data);
                 let instr = Instruction::GroupUMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10305,7 +10064,6 @@ impl Instruction {
                 instr
             }
             271u16 => {
-                println!("{}, {:?}", "GroupSMax", data);
                 let instr = Instruction::GroupSMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10337,7 +10095,6 @@ impl Instruction {
                 instr
             }
             274u16 => {
-                println!("{}, {:?}", "ReadPipe", data);
                 let instr = Instruction::ReadPipe(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10374,7 +10131,6 @@ impl Instruction {
                 instr
             }
             275u16 => {
-                println!("{}, {:?}", "WritePipe", data);
                 let instr = Instruction::WritePipe(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10411,7 +10167,6 @@ impl Instruction {
                 instr
             }
             276u16 => {
-                println!("{}, {:?}", "ReservedReadPipe", data);
                 let instr = Instruction::ReservedReadPipe(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10458,7 +10213,6 @@ impl Instruction {
                 instr
             }
             277u16 => {
-                println!("{}, {:?}", "ReservedWritePipe", data);
                 let instr = Instruction::ReservedWritePipe(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10505,7 +10259,6 @@ impl Instruction {
                 instr
             }
             278u16 => {
-                println!("{}, {:?}", "ReserveReadPipePackets", data);
                 let instr = Instruction::ReserveReadPipePackets(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10542,7 +10295,6 @@ impl Instruction {
                 instr
             }
             279u16 => {
-                println!("{}, {:?}", "ReserveWritePipePackets", data);
                 let instr = Instruction::ReserveWritePipePackets(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10579,7 +10331,6 @@ impl Instruction {
                 instr
             }
             280u16 => {
-                println!("{}, {:?}", "CommitReadPipe", data);
                 let instr = Instruction::CommitReadPipe(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -10606,7 +10357,6 @@ impl Instruction {
                 instr
             }
             281u16 => {
-                println!("{}, {:?}", "CommitWritePipe", data);
                 let instr = Instruction::CommitWritePipe(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -10633,7 +10383,6 @@ impl Instruction {
                 instr
             }
             282u16 => {
-                println!("{}, {:?}", "IsValidReserveId", data);
                 let instr = Instruction::IsValidReserveId(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10655,7 +10404,6 @@ impl Instruction {
                 instr
             }
             283u16 => {
-                println!("{}, {:?}", "GetNumPipePackets", data);
                 let instr = Instruction::GetNumPipePackets(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10687,7 +10435,6 @@ impl Instruction {
                 instr
             }
             284u16 => {
-                println!("{}, {:?}", "GetMaxPipePackets", data);
                 let instr = Instruction::GetMaxPipePackets(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10719,7 +10466,6 @@ impl Instruction {
                 instr
             }
             285u16 => {
-                println!("{}, {:?}", "GroupReserveReadPipePackets", data);
                 let instr = Instruction::GroupReserveReadPipePackets(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10761,7 +10507,6 @@ impl Instruction {
                 instr
             }
             286u16 => {
-                println!("{}, {:?}", "GroupReserveWritePipePackets", data);
                 let instr = Instruction::GroupReserveWritePipePackets(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10803,7 +10548,6 @@ impl Instruction {
                 instr
             }
             287u16 => {
-                println!("{}, {:?}", "GroupCommitReadPipe", data);
                 let instr = Instruction::GroupCommitReadPipe(
                     {
                         let (v, d) = IdScope::from_raw(data);
@@ -10835,7 +10579,6 @@ impl Instruction {
                 instr
             }
             288u16 => {
-                println!("{}, {:?}", "GroupCommitWritePipe", data);
                 let instr = Instruction::GroupCommitWritePipe(
                     {
                         let (v, d) = IdScope::from_raw(data);
@@ -10867,7 +10610,6 @@ impl Instruction {
                 instr
             }
             291u16 => {
-                println!("{}, {:?}", "EnqueueMarker", data);
                 let instr = Instruction::EnqueueMarker(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10904,7 +10646,6 @@ impl Instruction {
                 instr
             }
             292u16 => {
-                println!("{}, {:?}", "EnqueueKernel", data);
                 let instr = Instruction::EnqueueKernel(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -10980,7 +10721,6 @@ impl Instruction {
                 instr
             }
             293u16 => {
-                println!("{}, {:?}", "GetKernelNDrangeSubGroupCount", data);
                 let instr = Instruction::GetKernelNDrangeSubGroupCount(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11022,7 +10762,6 @@ impl Instruction {
                 instr
             }
             294u16 => {
-                println!("{}, {:?}", "GetKernelNDrangeMaxSubGroupSize", data);
                 let instr = Instruction::GetKernelNDrangeMaxSubGroupSize(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11064,7 +10803,6 @@ impl Instruction {
                 instr
             }
             295u16 => {
-                println!("{}, {:?}", "GetKernelWorkGroupSize", data);
                 let instr = Instruction::GetKernelWorkGroupSize(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11101,7 +10839,6 @@ impl Instruction {
                 instr
             }
             296u16 => {
-                println!("{}, {:?}", "GetKernelPreferredWorkGroupSizeMultiple", data);
                 let instr = Instruction::GetKernelPreferredWorkGroupSizeMultiple(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11138,7 +10875,6 @@ impl Instruction {
                 instr
             }
             297u16 => {
-                println!("{}, {:?}", "RetainEvent", data);
                 let instr = Instruction::RetainEvent({
                     let (v, d) = IdRef::from_raw(data);
                     data = d;
@@ -11148,7 +10884,6 @@ impl Instruction {
                 instr
             }
             298u16 => {
-                println!("{}, {:?}", "ReleaseEvent", data);
                 let instr = Instruction::ReleaseEvent({
                     let (v, d) = IdRef::from_raw(data);
                     data = d;
@@ -11158,7 +10893,6 @@ impl Instruction {
                 instr
             }
             299u16 => {
-                println!("{}, {:?}", "CreateUserEvent", data);
                 let instr = Instruction::CreateUserEvent(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11175,7 +10909,6 @@ impl Instruction {
                 instr
             }
             300u16 => {
-                println!("{}, {:?}", "IsValidEvent", data);
                 let instr = Instruction::IsValidEvent(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11197,7 +10930,6 @@ impl Instruction {
                 instr
             }
             301u16 => {
-                println!("{}, {:?}", "SetUserEventStatus", data);
                 let instr = Instruction::SetUserEventStatus(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -11214,7 +10946,6 @@ impl Instruction {
                 instr
             }
             302u16 => {
-                println!("{}, {:?}", "CaptureEventProfilingInfo", data);
                 let instr = Instruction::CaptureEventProfilingInfo(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -11236,7 +10967,6 @@ impl Instruction {
                 instr
             }
             303u16 => {
-                println!("{}, {:?}", "GetDefaultQueue", data);
                 let instr = Instruction::GetDefaultQueue(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11253,7 +10983,6 @@ impl Instruction {
                 instr
             }
             304u16 => {
-                println!("{}, {:?}", "BuildNDRange", data);
                 let instr = Instruction::BuildNDRange(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11285,7 +11014,6 @@ impl Instruction {
                 instr
             }
             305u16 => {
-                println!("{}, {:?}", "ImageSparseSampleImplicitLod", data);
                 let instr = Instruction::ImageSparseSampleImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11321,7 +11049,6 @@ impl Instruction {
                 instr
             }
             306u16 => {
-                println!("{}, {:?}", "ImageSparseSampleExplicitLod", data);
                 let instr = Instruction::ImageSparseSampleExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11353,7 +11080,6 @@ impl Instruction {
                 instr
             }
             307u16 => {
-                println!("{}, {:?}", "ImageSparseSampleDrefImplicitLod", data);
                 let instr = Instruction::ImageSparseSampleDrefImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11394,7 +11120,6 @@ impl Instruction {
                 instr
             }
             308u16 => {
-                println!("{}, {:?}", "ImageSparseSampleDrefExplicitLod", data);
                 let instr = Instruction::ImageSparseSampleDrefExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11431,7 +11156,6 @@ impl Instruction {
                 instr
             }
             309u16 => {
-                println!("{}, {:?}", "ImageSparseSampleProjImplicitLod", data);
                 let instr = Instruction::ImageSparseSampleProjImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11467,7 +11191,6 @@ impl Instruction {
                 instr
             }
             310u16 => {
-                println!("{}, {:?}", "ImageSparseSampleProjExplicitLod", data);
                 let instr = Instruction::ImageSparseSampleProjExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11499,7 +11222,6 @@ impl Instruction {
                 instr
             }
             311u16 => {
-                println!("{}, {:?}", "ImageSparseSampleProjDrefImplicitLod", data);
                 let instr = Instruction::ImageSparseSampleProjDrefImplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11540,7 +11262,6 @@ impl Instruction {
                 instr
             }
             312u16 => {
-                println!("{}, {:?}", "ImageSparseSampleProjDrefExplicitLod", data);
                 let instr = Instruction::ImageSparseSampleProjDrefExplicitLod(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11577,7 +11298,6 @@ impl Instruction {
                 instr
             }
             313u16 => {
-                println!("{}, {:?}", "ImageSparseFetch", data);
                 let instr = Instruction::ImageSparseFetch(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11613,7 +11333,6 @@ impl Instruction {
                 instr
             }
             314u16 => {
-                println!("{}, {:?}", "ImageSparseGather", data);
                 let instr = Instruction::ImageSparseGather(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11654,7 +11373,6 @@ impl Instruction {
                 instr
             }
             315u16 => {
-                println!("{}, {:?}", "ImageSparseDrefGather", data);
                 let instr = Instruction::ImageSparseDrefGather(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11695,7 +11413,6 @@ impl Instruction {
                 instr
             }
             316u16 => {
-                println!("{}, {:?}", "ImageSparseTexelsResident", data);
                 let instr = Instruction::ImageSparseTexelsResident(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11718,7 +11435,6 @@ impl Instruction {
             }
             317u16 => Instruction::NoLine,
             318u16 => {
-                println!("{}, {:?}", "AtomicFlagTestAndSet", data);
                 let instr = Instruction::AtomicFlagTestAndSet(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11750,7 +11466,6 @@ impl Instruction {
                 instr
             }
             319u16 => {
-                println!("{}, {:?}", "AtomicFlagClear", data);
                 let instr = Instruction::AtomicFlagClear(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -11772,7 +11487,6 @@ impl Instruction {
                 instr
             }
             320u16 => {
-                println!("{}, {:?}", "ImageSparseRead", data);
                 let instr = Instruction::ImageSparseRead(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11808,7 +11522,6 @@ impl Instruction {
                 instr
             }
             321u16 => {
-                println!("{}, {:?}", "SizeOf", data);
                 let instr = Instruction::SizeOf(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11830,7 +11543,6 @@ impl Instruction {
                 instr
             }
             322u16 => {
-                println!("{}, {:?}", "TypePipeStorage", data);
                 let instr = Instruction::TypePipeStorage({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -11840,7 +11552,6 @@ impl Instruction {
                 instr
             }
             323u16 => {
-                println!("{}, {:?}", "ConstantPipeStorage", data);
                 let instr = Instruction::ConstantPipeStorage(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11872,7 +11583,6 @@ impl Instruction {
                 instr
             }
             324u16 => {
-                println!("{}, {:?}", "CreatePipeFromPipeStorage", data);
                 let instr = Instruction::CreatePipeFromPipeStorage(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11894,7 +11604,6 @@ impl Instruction {
                 instr
             }
             325u16 => {
-                println!("{}, {:?}", "GetKernelLocalSizeForSubgroupCount", data);
                 let instr = Instruction::GetKernelLocalSizeForSubgroupCount(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11936,7 +11645,6 @@ impl Instruction {
                 instr
             }
             326u16 => {
-                println!("{}, {:?}", "GetKernelMaxNumSubgroups", data);
                 let instr = Instruction::GetKernelMaxNumSubgroups(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -11973,7 +11681,6 @@ impl Instruction {
                 instr
             }
             327u16 => {
-                println!("{}, {:?}", "TypeNamedBarrier", data);
                 let instr = Instruction::TypeNamedBarrier({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -11983,7 +11690,6 @@ impl Instruction {
                 instr
             }
             328u16 => {
-                println!("{}, {:?}", "NamedBarrierInitialize", data);
                 let instr = Instruction::NamedBarrierInitialize(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12005,7 +11711,6 @@ impl Instruction {
                 instr
             }
             329u16 => {
-                println!("{}, {:?}", "MemoryNamedBarrier", data);
                 let instr = Instruction::MemoryNamedBarrier(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -12027,7 +11732,6 @@ impl Instruction {
                 instr
             }
             330u16 => {
-                println!("{}, {:?}", "ModuleProcessed", data);
                 let instr = Instruction::ModuleProcessed({
                     let (v, d) = LiteralString::from_raw(data);
                     data = d;
@@ -12037,7 +11741,6 @@ impl Instruction {
                 instr
             }
             331u16 => {
-                println!("{}, {:?}", "ExecutionModeId", data);
                 let instr = Instruction::ExecutionModeId(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -12054,7 +11757,6 @@ impl Instruction {
                 instr
             }
             332u16 => {
-                println!("{}, {:?}", "DecorateId", data);
                 let instr = Instruction::DecorateId(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -12071,7 +11773,6 @@ impl Instruction {
                 instr
             }
             333u16 => {
-                println!("{}, {:?}", "GroupNonUniformElect", data);
                 let instr = Instruction::GroupNonUniformElect(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12093,7 +11794,6 @@ impl Instruction {
                 instr
             }
             334u16 => {
-                println!("{}, {:?}", "GroupNonUniformAll", data);
                 let instr = Instruction::GroupNonUniformAll(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12120,7 +11820,6 @@ impl Instruction {
                 instr
             }
             335u16 => {
-                println!("{}, {:?}", "GroupNonUniformAny", data);
                 let instr = Instruction::GroupNonUniformAny(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12147,7 +11846,6 @@ impl Instruction {
                 instr
             }
             336u16 => {
-                println!("{}, {:?}", "GroupNonUniformAllEqual", data);
                 let instr = Instruction::GroupNonUniformAllEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12174,7 +11872,6 @@ impl Instruction {
                 instr
             }
             337u16 => {
-                println!("{}, {:?}", "GroupNonUniformBroadcast", data);
                 let instr = Instruction::GroupNonUniformBroadcast(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12206,7 +11903,6 @@ impl Instruction {
                 instr
             }
             338u16 => {
-                println!("{}, {:?}", "GroupNonUniformBroadcastFirst", data);
                 let instr = Instruction::GroupNonUniformBroadcastFirst(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12233,7 +11929,6 @@ impl Instruction {
                 instr
             }
             339u16 => {
-                println!("{}, {:?}", "GroupNonUniformBallot", data);
                 let instr = Instruction::GroupNonUniformBallot(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12260,7 +11955,6 @@ impl Instruction {
                 instr
             }
             340u16 => {
-                println!("{}, {:?}", "GroupNonUniformInverseBallot", data);
                 let instr = Instruction::GroupNonUniformInverseBallot(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12287,7 +11981,6 @@ impl Instruction {
                 instr
             }
             341u16 => {
-                println!("{}, {:?}", "GroupNonUniformBallotBitExtract", data);
                 let instr = Instruction::GroupNonUniformBallotBitExtract(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12319,7 +12012,6 @@ impl Instruction {
                 instr
             }
             342u16 => {
-                println!("{}, {:?}", "GroupNonUniformBallotBitCount", data);
                 let instr = Instruction::GroupNonUniformBallotBitCount(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12351,7 +12043,6 @@ impl Instruction {
                 instr
             }
             343u16 => {
-                println!("{}, {:?}", "GroupNonUniformBallotFindLSB", data);
                 let instr = Instruction::GroupNonUniformBallotFindLSB(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12378,7 +12069,6 @@ impl Instruction {
                 instr
             }
             344u16 => {
-                println!("{}, {:?}", "GroupNonUniformBallotFindMSB", data);
                 let instr = Instruction::GroupNonUniformBallotFindMSB(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12405,7 +12095,6 @@ impl Instruction {
                 instr
             }
             345u16 => {
-                println!("{}, {:?}", "GroupNonUniformShuffle", data);
                 let instr = Instruction::GroupNonUniformShuffle(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12437,7 +12126,6 @@ impl Instruction {
                 instr
             }
             346u16 => {
-                println!("{}, {:?}", "GroupNonUniformShuffleXor", data);
                 let instr = Instruction::GroupNonUniformShuffleXor(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12469,7 +12157,6 @@ impl Instruction {
                 instr
             }
             347u16 => {
-                println!("{}, {:?}", "GroupNonUniformShuffleUp", data);
                 let instr = Instruction::GroupNonUniformShuffleUp(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12501,7 +12188,6 @@ impl Instruction {
                 instr
             }
             348u16 => {
-                println!("{}, {:?}", "GroupNonUniformShuffleDown", data);
                 let instr = Instruction::GroupNonUniformShuffleDown(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12533,7 +12219,6 @@ impl Instruction {
                 instr
             }
             349u16 => {
-                println!("{}, {:?}", "GroupNonUniformIAdd", data);
                 let instr = Instruction::GroupNonUniformIAdd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12574,7 +12259,6 @@ impl Instruction {
                 instr
             }
             350u16 => {
-                println!("{}, {:?}", "GroupNonUniformFAdd", data);
                 let instr = Instruction::GroupNonUniformFAdd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12615,7 +12299,6 @@ impl Instruction {
                 instr
             }
             351u16 => {
-                println!("{}, {:?}", "GroupNonUniformIMul", data);
                 let instr = Instruction::GroupNonUniformIMul(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12656,7 +12339,6 @@ impl Instruction {
                 instr
             }
             352u16 => {
-                println!("{}, {:?}", "GroupNonUniformFMul", data);
                 let instr = Instruction::GroupNonUniformFMul(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12697,7 +12379,6 @@ impl Instruction {
                 instr
             }
             353u16 => {
-                println!("{}, {:?}", "GroupNonUniformSMin", data);
                 let instr = Instruction::GroupNonUniformSMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12738,7 +12419,6 @@ impl Instruction {
                 instr
             }
             354u16 => {
-                println!("{}, {:?}", "GroupNonUniformUMin", data);
                 let instr = Instruction::GroupNonUniformUMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12779,7 +12459,6 @@ impl Instruction {
                 instr
             }
             355u16 => {
-                println!("{}, {:?}", "GroupNonUniformFMin", data);
                 let instr = Instruction::GroupNonUniformFMin(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12820,7 +12499,6 @@ impl Instruction {
                 instr
             }
             356u16 => {
-                println!("{}, {:?}", "GroupNonUniformSMax", data);
                 let instr = Instruction::GroupNonUniformSMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12861,7 +12539,6 @@ impl Instruction {
                 instr
             }
             357u16 => {
-                println!("{}, {:?}", "GroupNonUniformUMax", data);
                 let instr = Instruction::GroupNonUniformUMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12902,7 +12579,6 @@ impl Instruction {
                 instr
             }
             358u16 => {
-                println!("{}, {:?}", "GroupNonUniformFMax", data);
                 let instr = Instruction::GroupNonUniformFMax(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12943,7 +12619,6 @@ impl Instruction {
                 instr
             }
             359u16 => {
-                println!("{}, {:?}", "GroupNonUniformBitwiseAnd", data);
                 let instr = Instruction::GroupNonUniformBitwiseAnd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -12984,7 +12659,6 @@ impl Instruction {
                 instr
             }
             360u16 => {
-                println!("{}, {:?}", "GroupNonUniformBitwiseOr", data);
                 let instr = Instruction::GroupNonUniformBitwiseOr(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13025,7 +12699,6 @@ impl Instruction {
                 instr
             }
             361u16 => {
-                println!("{}, {:?}", "GroupNonUniformBitwiseXor", data);
                 let instr = Instruction::GroupNonUniformBitwiseXor(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13066,7 +12739,6 @@ impl Instruction {
                 instr
             }
             362u16 => {
-                println!("{}, {:?}", "GroupNonUniformLogicalAnd", data);
                 let instr = Instruction::GroupNonUniformLogicalAnd(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13107,7 +12779,6 @@ impl Instruction {
                 instr
             }
             363u16 => {
-                println!("{}, {:?}", "GroupNonUniformLogicalOr", data);
                 let instr = Instruction::GroupNonUniformLogicalOr(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13148,7 +12819,6 @@ impl Instruction {
                 instr
             }
             364u16 => {
-                println!("{}, {:?}", "GroupNonUniformLogicalXor", data);
                 let instr = Instruction::GroupNonUniformLogicalXor(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13189,7 +12859,6 @@ impl Instruction {
                 instr
             }
             365u16 => {
-                println!("{}, {:?}", "GroupNonUniformQuadBroadcast", data);
                 let instr = Instruction::GroupNonUniformQuadBroadcast(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13221,7 +12890,6 @@ impl Instruction {
                 instr
             }
             366u16 => {
-                println!("{}, {:?}", "GroupNonUniformQuadSwap", data);
                 let instr = Instruction::GroupNonUniformQuadSwap(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13253,7 +12921,6 @@ impl Instruction {
                 instr
             }
             400u16 => {
-                println!("{}, {:?}", "CopyLogical", data);
                 let instr = Instruction::CopyLogical(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13275,7 +12942,6 @@ impl Instruction {
                 instr
             }
             401u16 => {
-                println!("{}, {:?}", "PtrEqual", data);
                 let instr = Instruction::PtrEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13302,7 +12968,6 @@ impl Instruction {
                 instr
             }
             402u16 => {
-                println!("{}, {:?}", "PtrNotEqual", data);
                 let instr = Instruction::PtrNotEqual(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13329,7 +12994,6 @@ impl Instruction {
                 instr
             }
             403u16 => {
-                println!("{}, {:?}", "PtrDiff", data);
                 let instr = Instruction::PtrDiff(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13356,7 +13020,6 @@ impl Instruction {
                 instr
             }
             4421u16 => {
-                println!("{}, {:?}", "SubgroupBallotKHR", data);
                 let instr = Instruction::SubgroupBallotKHR(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13378,7 +13041,6 @@ impl Instruction {
                 instr
             }
             4422u16 => {
-                println!("{}, {:?}", "SubgroupFirstInvocationKHR", data);
                 let instr = Instruction::SubgroupFirstInvocationKHR(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13400,7 +13062,6 @@ impl Instruction {
                 instr
             }
             4428u16 => {
-                println!("{}, {:?}", "SubgroupAllKHR", data);
                 let instr = Instruction::SubgroupAllKHR(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13422,7 +13083,6 @@ impl Instruction {
                 instr
             }
             4429u16 => {
-                println!("{}, {:?}", "SubgroupAnyKHR", data);
                 let instr = Instruction::SubgroupAnyKHR(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13444,7 +13104,6 @@ impl Instruction {
                 instr
             }
             4430u16 => {
-                println!("{}, {:?}", "SubgroupAllEqualKHR", data);
                 let instr = Instruction::SubgroupAllEqualKHR(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13466,7 +13125,6 @@ impl Instruction {
                 instr
             }
             4432u16 => {
-                println!("{}, {:?}", "SubgroupReadInvocationKHR", data);
                 let instr = Instruction::SubgroupReadInvocationKHR(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13493,7 +13151,6 @@ impl Instruction {
                 instr
             }
             5000u16 => {
-                println!("{}, {:?}", "GroupIAddNonUniformAMD", data);
                 let instr = Instruction::GroupIAddNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13525,7 +13182,6 @@ impl Instruction {
                 instr
             }
             5001u16 => {
-                println!("{}, {:?}", "GroupFAddNonUniformAMD", data);
                 let instr = Instruction::GroupFAddNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13557,7 +13213,6 @@ impl Instruction {
                 instr
             }
             5002u16 => {
-                println!("{}, {:?}", "GroupFMinNonUniformAMD", data);
                 let instr = Instruction::GroupFMinNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13589,7 +13244,6 @@ impl Instruction {
                 instr
             }
             5003u16 => {
-                println!("{}, {:?}", "GroupUMinNonUniformAMD", data);
                 let instr = Instruction::GroupUMinNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13621,7 +13275,6 @@ impl Instruction {
                 instr
             }
             5004u16 => {
-                println!("{}, {:?}", "GroupSMinNonUniformAMD", data);
                 let instr = Instruction::GroupSMinNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13653,7 +13306,6 @@ impl Instruction {
                 instr
             }
             5005u16 => {
-                println!("{}, {:?}", "GroupFMaxNonUniformAMD", data);
                 let instr = Instruction::GroupFMaxNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13685,7 +13337,6 @@ impl Instruction {
                 instr
             }
             5006u16 => {
-                println!("{}, {:?}", "GroupUMaxNonUniformAMD", data);
                 let instr = Instruction::GroupUMaxNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13717,7 +13368,6 @@ impl Instruction {
                 instr
             }
             5007u16 => {
-                println!("{}, {:?}", "GroupSMaxNonUniformAMD", data);
                 let instr = Instruction::GroupSMaxNonUniformAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13749,7 +13399,6 @@ impl Instruction {
                 instr
             }
             5011u16 => {
-                println!("{}, {:?}", "FragmentMaskFetchAMD", data);
                 let instr = Instruction::FragmentMaskFetchAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13776,7 +13425,6 @@ impl Instruction {
                 instr
             }
             5012u16 => {
-                println!("{}, {:?}", "FragmentFetchAMD", data);
                 let instr = Instruction::FragmentFetchAMD(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13808,7 +13456,6 @@ impl Instruction {
                 instr
             }
             5056u16 => {
-                println!("{}, {:?}", "ReadClockKHR", data);
                 let instr = Instruction::ReadClockKHR(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13830,7 +13477,6 @@ impl Instruction {
                 instr
             }
             5283u16 => {
-                println!("{}, {:?}", "ImageSampleFootprintNV", data);
                 let instr = Instruction::ImageSampleFootprintNV(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13876,7 +13522,6 @@ impl Instruction {
                 instr
             }
             5296u16 => {
-                println!("{}, {:?}", "GroupNonUniformPartitionNV", data);
                 let instr = Instruction::GroupNonUniformPartitionNV(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13898,7 +13543,6 @@ impl Instruction {
                 instr
             }
             5299u16 => {
-                println!("{}, {:?}", "WritePackedPrimitiveIndices4x8NV", data);
                 let instr = Instruction::WritePackedPrimitiveIndices4x8NV(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -13915,7 +13559,6 @@ impl Instruction {
                 instr
             }
             5334u16 => {
-                println!("{}, {:?}", "ReportIntersectionNV", data);
                 let instr = Instruction::ReportIntersectionNV(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -13944,7 +13587,6 @@ impl Instruction {
             5335u16 => Instruction::IgnoreIntersectionNV,
             5336u16 => Instruction::TerminateRayNV,
             5337u16 => {
-                println!("{}, {:?}", "TraceNV", data);
                 let instr = Instruction::TraceNV(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14006,7 +13648,6 @@ impl Instruction {
                 instr
             }
             5341u16 => {
-                println!("{}, {:?}", "TypeAccelerationStructureNV", data);
                 let instr = Instruction::TypeAccelerationStructureNV({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -14016,7 +13657,6 @@ impl Instruction {
                 instr
             }
             5344u16 => {
-                println!("{}, {:?}", "ExecuteCallableNV", data);
                 let instr = Instruction::ExecuteCallableNV(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14033,7 +13673,6 @@ impl Instruction {
                 instr
             }
             5358u16 => {
-                println!("{}, {:?}", "TypeCooperativeMatrixNV", data);
                 let instr = Instruction::TypeCooperativeMatrixNV(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -14065,7 +13704,6 @@ impl Instruction {
                 instr
             }
             5359u16 => {
-                println!("{}, {:?}", "CooperativeMatrixLoadNV", data);
                 let instr = Instruction::CooperativeMatrixLoadNV(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14106,7 +13744,6 @@ impl Instruction {
                 instr
             }
             5360u16 => {
-                println!("{}, {:?}", "CooperativeMatrixStoreNV", data);
                 let instr = Instruction::CooperativeMatrixStoreNV(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14142,7 +13779,6 @@ impl Instruction {
                 instr
             }
             5361u16 => {
-                println!("{}, {:?}", "CooperativeMatrixMulAddNV", data);
                 let instr = Instruction::CooperativeMatrixMulAddNV(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14174,7 +13810,6 @@ impl Instruction {
                 instr
             }
             5362u16 => {
-                println!("{}, {:?}", "CooperativeMatrixLengthNV", data);
                 let instr = Instruction::CooperativeMatrixLengthNV(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14199,7 +13834,6 @@ impl Instruction {
             5365u16 => Instruction::EndInvocationInterlockEXT,
             5380u16 => Instruction::DemoteToHelperInvocationEXT,
             5381u16 => {
-                println!("{}, {:?}", "IsHelperInvocationEXT", data);
                 let instr = Instruction::IsHelperInvocationEXT(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14216,7 +13850,6 @@ impl Instruction {
                 instr
             }
             5571u16 => {
-                println!("{}, {:?}", "SubgroupShuffleINTEL", data);
                 let instr = Instruction::SubgroupShuffleINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14243,7 +13876,6 @@ impl Instruction {
                 instr
             }
             5572u16 => {
-                println!("{}, {:?}", "SubgroupShuffleDownINTEL", data);
                 let instr = Instruction::SubgroupShuffleDownINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14275,7 +13907,6 @@ impl Instruction {
                 instr
             }
             5573u16 => {
-                println!("{}, {:?}", "SubgroupShuffleUpINTEL", data);
                 let instr = Instruction::SubgroupShuffleUpINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14307,7 +13938,6 @@ impl Instruction {
                 instr
             }
             5574u16 => {
-                println!("{}, {:?}", "SubgroupShuffleXorINTEL", data);
                 let instr = Instruction::SubgroupShuffleXorINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14334,7 +13964,6 @@ impl Instruction {
                 instr
             }
             5575u16 => {
-                println!("{}, {:?}", "SubgroupBlockReadINTEL", data);
                 let instr = Instruction::SubgroupBlockReadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14356,7 +13985,6 @@ impl Instruction {
                 instr
             }
             5576u16 => {
-                println!("{}, {:?}", "SubgroupBlockWriteINTEL", data);
                 let instr = Instruction::SubgroupBlockWriteINTEL(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14373,7 +14001,6 @@ impl Instruction {
                 instr
             }
             5577u16 => {
-                println!("{}, {:?}", "SubgroupImageBlockReadINTEL", data);
                 let instr = Instruction::SubgroupImageBlockReadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14400,7 +14027,6 @@ impl Instruction {
                 instr
             }
             5578u16 => {
-                println!("{}, {:?}", "SubgroupImageBlockWriteINTEL", data);
                 let instr = Instruction::SubgroupImageBlockWriteINTEL(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14422,7 +14048,6 @@ impl Instruction {
                 instr
             }
             5580u16 => {
-                println!("{}, {:?}", "SubgroupImageMediaBlockReadINTEL", data);
                 let instr = Instruction::SubgroupImageMediaBlockReadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14459,7 +14084,6 @@ impl Instruction {
                 instr
             }
             5581u16 => {
-                println!("{}, {:?}", "SubgroupImageMediaBlockWriteINTEL", data);
                 let instr = Instruction::SubgroupImageMediaBlockWriteINTEL(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14491,7 +14115,6 @@ impl Instruction {
                 instr
             }
             5585u16 => {
-                println!("{}, {:?}", "UCountLeadingZerosINTEL", data);
                 let instr = Instruction::UCountLeadingZerosINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14513,7 +14136,6 @@ impl Instruction {
                 instr
             }
             5586u16 => {
-                println!("{}, {:?}", "UCountTrailingZerosINTEL", data);
                 let instr = Instruction::UCountTrailingZerosINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14535,7 +14157,6 @@ impl Instruction {
                 instr
             }
             5587u16 => {
-                println!("{}, {:?}", "AbsISubINTEL", data);
                 let instr = Instruction::AbsISubINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14562,7 +14183,6 @@ impl Instruction {
                 instr
             }
             5588u16 => {
-                println!("{}, {:?}", "AbsUSubINTEL", data);
                 let instr = Instruction::AbsUSubINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14589,7 +14209,6 @@ impl Instruction {
                 instr
             }
             5589u16 => {
-                println!("{}, {:?}", "IAddSatINTEL", data);
                 let instr = Instruction::IAddSatINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14616,7 +14235,6 @@ impl Instruction {
                 instr
             }
             5590u16 => {
-                println!("{}, {:?}", "UAddSatINTEL", data);
                 let instr = Instruction::UAddSatINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14643,7 +14261,6 @@ impl Instruction {
                 instr
             }
             5591u16 => {
-                println!("{}, {:?}", "IAverageINTEL", data);
                 let instr = Instruction::IAverageINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14670,7 +14287,6 @@ impl Instruction {
                 instr
             }
             5592u16 => {
-                println!("{}, {:?}", "UAverageINTEL", data);
                 let instr = Instruction::UAverageINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14697,7 +14313,6 @@ impl Instruction {
                 instr
             }
             5593u16 => {
-                println!("{}, {:?}", "IAverageRoundedINTEL", data);
                 let instr = Instruction::IAverageRoundedINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14724,7 +14339,6 @@ impl Instruction {
                 instr
             }
             5594u16 => {
-                println!("{}, {:?}", "UAverageRoundedINTEL", data);
                 let instr = Instruction::UAverageRoundedINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14751,7 +14365,6 @@ impl Instruction {
                 instr
             }
             5595u16 => {
-                println!("{}, {:?}", "ISubSatINTEL", data);
                 let instr = Instruction::ISubSatINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14778,7 +14391,6 @@ impl Instruction {
                 instr
             }
             5596u16 => {
-                println!("{}, {:?}", "USubSatINTEL", data);
                 let instr = Instruction::USubSatINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14805,7 +14417,6 @@ impl Instruction {
                 instr
             }
             5597u16 => {
-                println!("{}, {:?}", "IMul32x16INTEL", data);
                 let instr = Instruction::IMul32x16INTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14832,7 +14443,6 @@ impl Instruction {
                 instr
             }
             5598u16 => {
-                println!("{}, {:?}", "UMul32x16INTEL", data);
                 let instr = Instruction::UMul32x16INTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14859,7 +14469,6 @@ impl Instruction {
                 instr
             }
             5632u16 => {
-                println!("{}, {:?}", "DecorateString", data);
                 let instr = Instruction::DecorateString(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14876,7 +14485,6 @@ impl Instruction {
                 instr
             }
             5632u16 => {
-                println!("{}, {:?}", "DecorateStringGOOGLE", data);
                 let instr = Instruction::DecorateStringGOOGLE(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14893,7 +14501,6 @@ impl Instruction {
                 instr
             }
             5633u16 => {
-                println!("{}, {:?}", "MemberDecorateString", data);
                 let instr = Instruction::MemberDecorateString(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14915,7 +14522,6 @@ impl Instruction {
                 instr
             }
             5633u16 => {
-                println!("{}, {:?}", "MemberDecorateStringGOOGLE", data);
                 let instr = Instruction::MemberDecorateStringGOOGLE(
                     {
                         let (v, d) = IdRef::from_raw(data);
@@ -14937,7 +14543,6 @@ impl Instruction {
                 instr
             }
             5699u16 => {
-                println!("{}, {:?}", "VmeImageINTEL", data);
                 let instr = Instruction::VmeImageINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -14964,7 +14569,6 @@ impl Instruction {
                 instr
             }
             5700u16 => {
-                println!("{}, {:?}", "TypeVmeImageINTEL", data);
                 let instr = Instruction::TypeVmeImageINTEL(
                     {
                         let (v, d) = IdResult::from_raw(data);
@@ -14981,7 +14585,6 @@ impl Instruction {
                 instr
             }
             5701u16 => {
-                println!("{}, {:?}", "TypeAvcImePayloadINTEL", data);
                 let instr = Instruction::TypeAvcImePayloadINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -14991,7 +14594,6 @@ impl Instruction {
                 instr
             }
             5702u16 => {
-                println!("{}, {:?}", "TypeAvcRefPayloadINTEL", data);
                 let instr = Instruction::TypeAvcRefPayloadINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15001,7 +14603,6 @@ impl Instruction {
                 instr
             }
             5703u16 => {
-                println!("{}, {:?}", "TypeAvcSicPayloadINTEL", data);
                 let instr = Instruction::TypeAvcSicPayloadINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15011,7 +14612,6 @@ impl Instruction {
                 instr
             }
             5704u16 => {
-                println!("{}, {:?}", "TypeAvcMcePayloadINTEL", data);
                 let instr = Instruction::TypeAvcMcePayloadINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15021,7 +14621,6 @@ impl Instruction {
                 instr
             }
             5705u16 => {
-                println!("{}, {:?}", "TypeAvcMceResultINTEL", data);
                 let instr = Instruction::TypeAvcMceResultINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15031,7 +14630,6 @@ impl Instruction {
                 instr
             }
             5706u16 => {
-                println!("{}, {:?}", "TypeAvcImeResultINTEL", data);
                 let instr = Instruction::TypeAvcImeResultINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15041,10 +14639,6 @@ impl Instruction {
                 instr
             }
             5707u16 => {
-                println!(
-                    "{}, {:?}",
-                    "TypeAvcImeResultSingleReferenceStreamoutINTEL", data
-                );
                 let instr = Instruction::TypeAvcImeResultSingleReferenceStreamoutINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15054,10 +14648,6 @@ impl Instruction {
                 instr
             }
             5708u16 => {
-                println!(
-                    "{}, {:?}",
-                    "TypeAvcImeResultDualReferenceStreamoutINTEL", data
-                );
                 let instr = Instruction::TypeAvcImeResultDualReferenceStreamoutINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15067,7 +14657,6 @@ impl Instruction {
                 instr
             }
             5709u16 => {
-                println!("{}, {:?}", "TypeAvcImeSingleReferenceStreaminINTEL", data);
                 let instr = Instruction::TypeAvcImeSingleReferenceStreaminINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15077,7 +14666,6 @@ impl Instruction {
                 instr
             }
             5710u16 => {
-                println!("{}, {:?}", "TypeAvcImeDualReferenceStreaminINTEL", data);
                 let instr = Instruction::TypeAvcImeDualReferenceStreaminINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15087,7 +14675,6 @@ impl Instruction {
                 instr
             }
             5711u16 => {
-                println!("{}, {:?}", "TypeAvcRefResultINTEL", data);
                 let instr = Instruction::TypeAvcRefResultINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15097,7 +14684,6 @@ impl Instruction {
                 instr
             }
             5712u16 => {
-                println!("{}, {:?}", "TypeAvcSicResultINTEL", data);
                 let instr = Instruction::TypeAvcSicResultINTEL({
                     let (v, d) = IdResult::from_raw(data);
                     data = d;
@@ -15107,10 +14693,6 @@ impl Instruction {
                 instr
             }
             5713u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL", data
-                );
                 let instr =
                     Instruction::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(
                         {
@@ -15138,10 +14720,6 @@ impl Instruction {
                 instr
             }
             5714u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15168,10 +14746,6 @@ impl Instruction {
                 instr
             }
             5715u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultInterShapePenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15198,7 +14772,6 @@ impl Instruction {
                 instr
             }
             5716u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceSetInterShapePenaltyINTEL", data);
                 let instr = Instruction::SubgroupAvcMceSetInterShapePenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15225,10 +14798,6 @@ impl Instruction {
                 instr
             }
             5717u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15255,10 +14824,6 @@ impl Instruction {
                 instr
             }
             5718u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceSetInterDirectionPenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceSetInterDirectionPenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15285,10 +14850,6 @@ impl Instruction {
                 instr
             }
             5719u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15315,10 +14876,6 @@ impl Instruction {
                 instr
             }
             5720u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15345,10 +14902,6 @@ impl Instruction {
                 instr
             }
             5721u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15365,10 +14918,6 @@ impl Instruction {
                 instr
             }
             5722u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15385,10 +14934,6 @@ impl Instruction {
                 instr
             }
             5723u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15405,10 +14950,6 @@ impl Instruction {
                 instr
             }
             5724u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceSetMotionVectorCostFunctionINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15445,10 +14986,6 @@ impl Instruction {
                 instr
             }
             5725u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15475,10 +15012,6 @@ impl Instruction {
                 instr
             }
             5726u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15495,10 +15028,6 @@ impl Instruction {
                 instr
             }
             5727u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15515,7 +15044,6 @@ impl Instruction {
                 instr
             }
             5728u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceSetAcOnlyHaarINTEL", data);
                 let instr = Instruction::SubgroupAvcMceSetAcOnlyHaarINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15537,10 +15065,6 @@ impl Instruction {
                 instr
             }
             5729u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15567,10 +15091,6 @@ impl Instruction {
                 instr
             }
             5730u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL", data
-                );
                 let instr =
                     Instruction::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(
                         {
@@ -15598,10 +15118,6 @@ impl Instruction {
                 instr
             }
             5731u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL", data
-                );
                 let instr =
                     Instruction::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(
                         {
@@ -15634,7 +15150,6 @@ impl Instruction {
                 instr
             }
             5732u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceConvertToImePayloadINTEL", data);
                 let instr = Instruction::SubgroupAvcMceConvertToImePayloadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15656,7 +15171,6 @@ impl Instruction {
                 instr
             }
             5733u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceConvertToImeResultINTEL", data);
                 let instr = Instruction::SubgroupAvcMceConvertToImeResultINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15678,7 +15192,6 @@ impl Instruction {
                 instr
             }
             5734u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceConvertToRefPayloadINTEL", data);
                 let instr = Instruction::SubgroupAvcMceConvertToRefPayloadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15700,7 +15213,6 @@ impl Instruction {
                 instr
             }
             5735u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceConvertToRefResultINTEL", data);
                 let instr = Instruction::SubgroupAvcMceConvertToRefResultINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15722,7 +15234,6 @@ impl Instruction {
                 instr
             }
             5736u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceConvertToSicPayloadINTEL", data);
                 let instr = Instruction::SubgroupAvcMceConvertToSicPayloadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15744,7 +15255,6 @@ impl Instruction {
                 instr
             }
             5737u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceConvertToSicResultINTEL", data);
                 let instr = Instruction::SubgroupAvcMceConvertToSicResultINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15766,7 +15276,6 @@ impl Instruction {
                 instr
             }
             5738u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceGetMotionVectorsINTEL", data);
                 let instr = Instruction::SubgroupAvcMceGetMotionVectorsINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15788,7 +15297,6 @@ impl Instruction {
                 instr
             }
             5739u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceGetInterDistortionsINTEL", data);
                 let instr = Instruction::SubgroupAvcMceGetInterDistortionsINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15810,10 +15318,6 @@ impl Instruction {
                 instr
             }
             5740u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetBestInterDistortionsINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetBestInterDistortionsINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15835,7 +15339,6 @@ impl Instruction {
                 instr
             }
             5741u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceGetInterMajorShapeINTEL", data);
                 let instr = Instruction::SubgroupAvcMceGetInterMajorShapeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15857,7 +15360,6 @@ impl Instruction {
                 instr
             }
             5742u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceGetInterMinorShapeINTEL", data);
                 let instr = Instruction::SubgroupAvcMceGetInterMinorShapeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15879,7 +15381,6 @@ impl Instruction {
                 instr
             }
             5743u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceGetInterDirectionsINTEL", data);
                 let instr = Instruction::SubgroupAvcMceGetInterDirectionsINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15901,10 +15402,6 @@ impl Instruction {
                 instr
             }
             5744u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetInterMotionVectorCountINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcMceGetInterMotionVectorCountINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15926,7 +15423,6 @@ impl Instruction {
                 instr
             }
             5745u16 => {
-                println!("{}, {:?}", "SubgroupAvcMceGetInterReferenceIdsINTEL", data);
                 let instr = Instruction::SubgroupAvcMceGetInterReferenceIdsINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -15948,10 +15444,6 @@ impl Instruction {
                 instr
             }
             5746u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL", data
-                );
                 let instr =
                     Instruction::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(
                         {
@@ -15984,7 +15476,6 @@ impl Instruction {
                 instr
             }
             5747u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeInitializeINTEL", data);
                 let instr = Instruction::SubgroupAvcImeInitializeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16016,7 +15507,6 @@ impl Instruction {
                 instr
             }
             5748u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeSetSingleReferenceINTEL", data);
                 let instr = Instruction::SubgroupAvcImeSetSingleReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16048,7 +15538,6 @@ impl Instruction {
                 instr
             }
             5749u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeSetDualReferenceINTEL", data);
                 let instr = Instruction::SubgroupAvcImeSetDualReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16085,7 +15574,6 @@ impl Instruction {
                 instr
             }
             5750u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeRefWindowSizeINTEL", data);
                 let instr = Instruction::SubgroupAvcImeRefWindowSizeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16112,7 +15600,6 @@ impl Instruction {
                 instr
             }
             5751u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeAdjustRefOffsetINTEL", data);
                 let instr = Instruction::SubgroupAvcImeAdjustRefOffsetINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16149,7 +15636,6 @@ impl Instruction {
                 instr
             }
             5752u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeConvertToMcePayloadINTEL", data);
                 let instr = Instruction::SubgroupAvcImeConvertToMcePayloadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16171,10 +15657,6 @@ impl Instruction {
                 instr
             }
             5753u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeSetMaxMotionVectorCountINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeSetMaxMotionVectorCountINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16201,10 +15683,6 @@ impl Instruction {
                 instr
             }
             5754u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeSetUnidirectionalMixDisableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16226,10 +15704,6 @@ impl Instruction {
                 instr
             }
             5755u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16256,7 +15730,6 @@ impl Instruction {
                 instr
             }
             5756u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeSetWeightedSadINTEL", data);
                 let instr = Instruction::SubgroupAvcImeSetWeightedSadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16283,10 +15756,6 @@ impl Instruction {
                 instr
             }
             5757u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithSingleReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16318,10 +15787,6 @@ impl Instruction {
                 instr
             }
             5758u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithDualReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16358,10 +15823,6 @@ impl Instruction {
                 instr
             }
             5759u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16398,10 +15859,6 @@ impl Instruction {
                 instr
             }
             5760u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16443,10 +15900,6 @@ impl Instruction {
                 instr
             }
             5761u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16478,10 +15931,6 @@ impl Instruction {
                 instr
             }
             5762u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16518,10 +15967,6 @@ impl Instruction {
                 instr
             }
             5763u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16558,10 +16003,6 @@ impl Instruction {
                 instr
             }
             5764u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16603,7 +16044,6 @@ impl Instruction {
                 instr
             }
             5765u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeConvertToMceResultINTEL", data);
                 let instr = Instruction::SubgroupAvcImeConvertToMceResultINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16625,10 +16065,6 @@ impl Instruction {
                 instr
             }
             5766u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetSingleReferenceStreaminINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetSingleReferenceStreaminINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16650,10 +16086,6 @@ impl Instruction {
                 instr
             }
             5767u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetDualReferenceStreaminINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetDualReferenceStreaminINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16675,10 +16107,6 @@ impl Instruction {
                 instr
             }
             5768u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeStripSingleReferenceStreamoutINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16700,10 +16128,6 @@ impl Instruction {
                 instr
             }
             5769u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeStripDualReferenceStreamoutINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeStripDualReferenceStreamoutINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16725,10 +16149,6 @@ impl Instruction {
                 instr
             }
             5770u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL({
                                                                                                                    let (v, d) = IdResultType::from_raw(data);
                                                                                                                    data = d;
@@ -16750,10 +16170,6 @@ impl Instruction {
                 instr
             }
             5771u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL({
                                                                                                                  let (v, d) = IdResultType::from_raw(data);
                                                                                                                  data = d;
@@ -16775,10 +16191,6 @@ impl Instruction {
                 instr
             }
             5772u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL({
                                                                                                                   let (v, d) = IdResultType::from_raw(data);
                                                                                                                   data = d;
@@ -16800,10 +16212,6 @@ impl Instruction {
                 instr
             }
             5773u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL({
                                                                                                                  let (v, d) = IdResultType::from_raw(data);
                                                                                                                  data = d;
@@ -16829,10 +16237,6 @@ impl Instruction {
                 instr
             }
             5774u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL", data
-                );
                 let instr =
                     Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(
                         {
@@ -16865,10 +16269,6 @@ impl Instruction {
                 instr
             }
             5775u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL", data
-                );
                 let instr =
                     Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(
                         {
@@ -16901,7 +16301,6 @@ impl Instruction {
                 instr
             }
             5776u16 => {
-                println!("{}, {:?}", "SubgroupAvcImeGetBorderReachedINTEL", data);
                 let instr = Instruction::SubgroupAvcImeGetBorderReachedINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16928,10 +16327,6 @@ impl Instruction {
                 instr
             }
             5777u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetTruncatedSearchIndicationINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16953,10 +16348,6 @@ impl Instruction {
                 instr
             }
             5778u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -16978,10 +16369,6 @@ impl Instruction {
                 instr
             }
             5779u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17003,10 +16390,6 @@ impl Instruction {
                 instr
             }
             5780u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17028,7 +16411,6 @@ impl Instruction {
                 instr
             }
             5781u16 => {
-                println!("{}, {:?}", "SubgroupAvcFmeInitializeINTEL", data);
                 let instr = Instruction::SubgroupAvcFmeInitializeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17080,7 +16462,6 @@ impl Instruction {
                 instr
             }
             5782u16 => {
-                println!("{}, {:?}", "SubgroupAvcBmeInitializeINTEL", data);
                 let instr = Instruction::SubgroupAvcBmeInitializeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17137,7 +16518,6 @@ impl Instruction {
                 instr
             }
             5783u16 => {
-                println!("{}, {:?}", "SubgroupAvcRefConvertToMcePayloadINTEL", data);
                 let instr = Instruction::SubgroupAvcRefConvertToMcePayloadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17159,10 +16539,6 @@ impl Instruction {
                 instr
             }
             5784u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcRefSetBidirectionalMixDisableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcRefSetBidirectionalMixDisableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17184,10 +16560,6 @@ impl Instruction {
                 instr
             }
             5785u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcRefSetBilinearFilterEnableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcRefSetBilinearFilterEnableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17209,10 +16581,6 @@ impl Instruction {
                 instr
             }
             5786u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcRefEvaluateWithSingleReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17244,10 +16612,6 @@ impl Instruction {
                 instr
             }
             5787u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcRefEvaluateWithDualReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcRefEvaluateWithDualReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17284,10 +16648,6 @@ impl Instruction {
                 instr
             }
             5788u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcRefEvaluateWithMultiReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17319,10 +16679,6 @@ impl Instruction {
                 instr
             }
             5789u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17359,7 +16715,6 @@ impl Instruction {
                 instr
             }
             5790u16 => {
-                println!("{}, {:?}", "SubgroupAvcRefConvertToMceResultINTEL", data);
                 let instr = Instruction::SubgroupAvcRefConvertToMceResultINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17381,7 +16736,6 @@ impl Instruction {
                 instr
             }
             5791u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicInitializeINTEL", data);
                 let instr = Instruction::SubgroupAvcSicInitializeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17403,7 +16757,6 @@ impl Instruction {
                 instr
             }
             5792u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicConfigureSkcINTEL", data);
                 let instr = Instruction::SubgroupAvcSicConfigureSkcINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17450,7 +16803,6 @@ impl Instruction {
                 instr
             }
             5793u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicConfigureIpeLumaINTEL", data);
                 let instr = Instruction::SubgroupAvcSicConfigureIpeLumaINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17507,10 +16859,6 @@ impl Instruction {
                 instr
             }
             5794u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicConfigureIpeLumaChromaINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicConfigureIpeLumaChromaINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17582,7 +16930,6 @@ impl Instruction {
                 instr
             }
             5795u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicGetMotionVectorMaskINTEL", data);
                 let instr = Instruction::SubgroupAvcSicGetMotionVectorMaskINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17609,7 +16956,6 @@ impl Instruction {
                 instr
             }
             5796u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicConvertToMcePayloadINTEL", data);
                 let instr = Instruction::SubgroupAvcSicConvertToMcePayloadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17631,10 +16977,6 @@ impl Instruction {
                 instr
             }
             5797u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicSetIntraLumaShapePenaltyINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17661,10 +17003,6 @@ impl Instruction {
                 instr
             }
             5798u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17701,10 +17039,6 @@ impl Instruction {
                 instr
             }
             5799u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17731,10 +17065,6 @@ impl Instruction {
                 instr
             }
             5800u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicSetBilinearFilterEnableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicSetBilinearFilterEnableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17756,10 +17086,6 @@ impl Instruction {
                 instr
             }
             5801u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicSetSkcForwardTransformEnableINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17786,10 +17112,6 @@ impl Instruction {
                 instr
             }
             5802u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicSetBlockBasedRawSkipSadINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17816,7 +17138,6 @@ impl Instruction {
                 instr
             }
             5803u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicEvaluateIpeINTEL", data);
                 let instr = Instruction::SubgroupAvcSicEvaluateIpeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17843,10 +17164,6 @@ impl Instruction {
                 instr
             }
             5804u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicEvaluateWithSingleReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17878,10 +17195,6 @@ impl Instruction {
                 instr
             }
             5805u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicEvaluateWithDualReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicEvaluateWithDualReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17918,10 +17231,6 @@ impl Instruction {
                 instr
             }
             5806u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicEvaluateWithMultiReferenceINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17953,10 +17262,6 @@ impl Instruction {
                 instr
             }
             5807u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -17993,7 +17298,6 @@ impl Instruction {
                 instr
             }
             5808u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicConvertToMceResultINTEL", data);
                 let instr = Instruction::SubgroupAvcSicConvertToMceResultINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18015,7 +17319,6 @@ impl Instruction {
                 instr
             }
             5809u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicGetIpeLumaShapeINTEL", data);
                 let instr = Instruction::SubgroupAvcSicGetIpeLumaShapeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18037,10 +17340,6 @@ impl Instruction {
                 instr
             }
             5810u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicGetBestIpeLumaDistortionINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18062,10 +17361,6 @@ impl Instruction {
                 instr
             }
             5811u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicGetBestIpeChromaDistortionINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18087,7 +17382,6 @@ impl Instruction {
                 instr
             }
             5812u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicGetPackedIpeLumaModesINTEL", data);
                 let instr = Instruction::SubgroupAvcSicGetPackedIpeLumaModesINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18109,7 +17403,6 @@ impl Instruction {
                 instr
             }
             5813u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicGetIpeChromaModeINTEL", data);
                 let instr = Instruction::SubgroupAvcSicGetIpeChromaModeINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18131,10 +17424,6 @@ impl Instruction {
                 instr
             }
             5814u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18156,10 +17445,6 @@ impl Instruction {
                 instr
             }
             5815u16 => {
-                println!(
-                    "{}, {:?}",
-                    "SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL", data
-                );
                 let instr = Instruction::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);
@@ -18181,7 +17466,6 @@ impl Instruction {
                 instr
             }
             5816u16 => {
-                println!("{}, {:?}", "SubgroupAvcSicGetInterRawSadsINTEL", data);
                 let instr = Instruction::SubgroupAvcSicGetInterRawSadsINTEL(
                     {
                         let (v, d) = IdResultType::from_raw(data);

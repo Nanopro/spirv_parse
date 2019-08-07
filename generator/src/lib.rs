@@ -526,7 +526,7 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
             constr.push(
                 quote!(
                     #op_code =>{
-                        println!("{}, {:?}", #op_str, data);
+                        //println!("{}, {:?}", #op_str, data);
                         let instr = Instruction::#op_name(
                             #( #fields_constr, )*
                         );
