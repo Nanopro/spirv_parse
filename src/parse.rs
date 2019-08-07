@@ -39,9 +39,9 @@ pub fn parse_spirv(i: &[u32]) -> Result<Spirv, ParseError> {
     };
 
     let decorations = instructions.iter().filter_map(|instruction| {
-        match instruction {
-            &Instruction::Decorate(id, decoration) => Some((id.0,None, decoration)),
-            &Instruction::MemberDecorate(id, member, decoration) => Some((id.0, Some(member.0), decoration)),
+        match &instruction {
+            &Instruction::Decorate(id, decoration) => Some((id.0, None, decoration.clone())),
+            &Instruction::MemberDecorate(id, member, decoration) => Some((id.0, Some(member.0), decoration.clone())),
             _ => None
         }
     }).collect::<Vec<_>>();
