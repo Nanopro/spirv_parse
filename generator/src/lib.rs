@@ -309,7 +309,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                     quote!(pub String)
                 }
                 "LiteralContextDependentNumber" => {
-                    quote!(pub u32)
+                    quote!(pub Vec<u32>)
                 }
                 "LiteralExtInstInteger" => {
                     quote!(pub u32)
@@ -339,10 +339,13 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                 }
                 "LiteralContextDependentNumber" => {
                     quote!(
-                        pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
-                              //TODO! это ваще не правильно
-                             //assert!(data.len() > 0);
-                            (Self(data[0]), &data[1..])
+                        pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
+                            let mut v = vec![];
+                             while(data.len() > 0){
+                                v.push(data[0]);
+                                data = &data[1..];
+                             }
+                            (Self(v), data)
                         }
                     )
                 }
