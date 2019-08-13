@@ -3,6 +3,14 @@ use serde::Serialize;
 use serde_json::to_string;
 use std::collections::HashMap;
 
+mod types;
+mod util;
+
+
+use self::types::*;
+use serde_json::map::Entry;
+
+
 #[derive(Debug, Clone, Serialize)]
 pub struct Spirv {
     pub version: (u8, u8),
@@ -113,6 +121,61 @@ impl Spirv {
     pub fn parse(words: &[u32]) -> Result<Self, ParseError> {
         parse_spirv(words)
     }
+
+    pub fn entry_points(&self) -> Vec<EntryPoint>{
+        let mut res = vec![];
+        for instruction in &self.instructions{
+            match instruction{
+                Instruction::EntryPoint(model, _function, name,interface) => {
+                    let interface = interface.iter().map(|id_ref| id_ref.0 as u32).collect();
+                    res.push(
+                        EntryPoint{
+                            name: name.0.clone(),
+                            interface,
+                            execution_model: model.clone()
+                        }
+                    )
+                },
+                _ => (),
+            }
+        }
+        res
+    }
+    pub fn main_entry_point(&self) -> EntryPoint{
+        let mut entries = self.entry_points();
+        match entries.len(){
+            0 => panic!("Shader have no entry point"),
+            1 => {
+                entries.pop().unwrap()
+            },
+            _ => {
+                for entry in entries{
+                    if entry.name == "main"{
+                        return entry
+                    }
+                }
+                panic!("Shader entry point's name is not \"main\".")
+            }
+        }
+    }
+    pub fn input_variables(&self, entry: &EntryPoint) -> Vec<InterfaceVariable>{
+        let mut input = vec![];
+        for &interface in &entry.interface{
+            for instruction in &self.instructions{
+                match instruction{
+                    Instruction::Variable(id_result_type, id_result,storage, _) => {
+
+                    },
+                    _ => ()
+                }
+
+            }
+        }
+
+
+        input
+    }
+
 }
 
 
@@ -137,4 +200,24 @@ mod tests {
         let mut file = File::create("./tests/pos_norm_col.json").unwrap();
         file.write(s.as_bytes());
     }
+    #[test]
+    fn test_entries() {
+        let bytes = include_bytes!("../tests/pos_norm_col.spirv");
+        let words = unsafe {
+            std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4)
+        };
+
+        let res = parse_spirv(words).unwrap();
+        let main = res.main_entry_point();
+        assert_eq!(
+            &main.name,
+            "main"
+        );
+        assert_eq!(
+            main.execution_model,
+            ExecutionModel::Vertex
+        )
+    }
+
+
 }
