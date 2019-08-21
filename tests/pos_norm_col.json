@@ -1,1 +1,947 @@
-{"version":[1,0],"bound":65,"instructions":[{"Capability":"Shader"},{"Capability":"Float64"},{"ExtInstImport":[1,"GLSL.std.450"]},{"MemoryModel":["Logical","GLSL450"]},{"EntryPoint":["Vertex",4,"main",[13,38,51,56,60]]},{"Source":["GLSL",450,null,null]},{"SourceExtension":"GL_ARB_separate_shader_objects"},{"SourceExtension":"GL_ARB_shading_language_420pack"},{"SourceExtension":"GL_GOOGLE_cpp_style_line_directive"},{"SourceExtension":"GL_GOOGLE_include_directive"},{"Name":[4,"main"]},{"Name":[11,"gl_PerVertex"]},{"MemberName":[11,0,"gl_Position"]},{"MemberName":[11,1,"gl_PointSize"]},{"MemberName":[11,2,"gl_ClipDistance"]},{"MemberName":[11,3,"gl_CullDistance"]},{"Name":[13,""]},{"Name":[17,"UBO"]},{"MemberName":[17,0,"viewproj"]},{"Name":[19,"ubo"]},{"Name":[23,"UBO2"]},{"MemberName":[23,0,"viewproj"]},{"Name":[25,"ubo2"]},{"Name":[29,"Model"]},{"MemberName":[29,0,"model"]},{"Name":[31,""]},{"Name":[38,"position"]},{"Name":[40,"NUM_VIEW"]},{"Name":[49,"VertexData"]},{"MemberName":[49,0,"position"]},{"MemberName":[49,1,"normal"]},{"MemberName":[49,2,"color"]},{"Name":[51,"vertex"]},{"Name":[56,"normal"]},{"Name":[60,"color"]},{"Name":[64,"saews"]},{"MemberDecorate":[11,0,{"BuiltIn":"Position"}]},{"MemberDecorate":[11,1,{"BuiltIn":"PointSize"}]},{"MemberDecorate":[11,2,{"BuiltIn":"ClipDistance"}]},{"MemberDecorate":[11,3,{"BuiltIn":"CullDistance"}]},{"Decorate":[11,"Block"]},{"MemberDecorate":[17,0,"ColMajor"]},{"MemberDecorate":[17,0,{"Offset":0}]},{"MemberDecorate":[17,0,{"MatrixStride":16}]},{"Decorate":[17,"Block"]},{"Decorate":[19,{"DescriptorSet":0}]},{"Decorate":[19,{"Binding":0}]},{"MemberDecorate":[23,0,"ColMajor"]},{"MemberDecorate":[23,0,{"Offset":0}]},{"MemberDecorate":[23,0,{"MatrixStride":16}]},{"Decorate":[23,"Block"]},{"Decorate":[25,{"DescriptorSet":0}]},{"Decorate":[25,{"Binding":1}]},{"MemberDecorate":[29,0,"ColMajor"]},{"MemberDecorate":[29,0,{"Offset":0}]},{"MemberDecorate":[29,0,{"MatrixStride":16}]},{"Decorate":[29,"Block"]},{"Decorate":[38,{"Location":0}]},{"Decorate":[40,{"SpecId":0}]},{"Decorate":[49,"Block"]},{"Decorate":[51,{"Location":0}]},{"Decorate":[56,{"Location":1}]},{"Decorate":[60,{"Location":2}]},{"Decorate":[64,{"SpecId":1}]},{"TypeVoid":2},{"TypeFunction":[3,2,[]]},{"TypeFloat":[6,32]},{"TypeVector":[7,6,4]},{"TypeInt":[8,32,0]},{"Constant":[8,9,[1]]},{"TypeArray":[10,6,9]},{"TypeStruct":[11,[7,6,10,10]]},{"TypePointer":[12,"Output",11]},{"Variable":[12,13,"Output",null]},{"TypeInt":[14,32,1]},{"Constant":[14,15,[0]]},{"TypeMatrix":[16,7,4]},{"TypeStruct":[17,[16]]},{"TypePointer":[18,"Uniform",17]},{"Variable":[18,19,"Uniform",null]},{"TypePointer":[20,"Uniform",16]},{"TypeStruct":[23,[16]]},{"TypePointer":[24,"Uniform",23]},{"Variable":[24,25,"Uniform",null]},{"TypeStruct":[29,[16]]},{"TypePointer":[30,"PushConstant",29]},{"Variable":[30,31,"PushConstant",null]},{"TypePointer":[32,"PushConstant",16]},{"TypeVector":[36,6,3]},{"TypePointer":[37,"Input",36]},{"Variable":[37,38,"Input",null]},{"SpecConstant":[14,40,[1]]},{"TypePointer":[47,"Output",7]},{"TypeStruct":[49,[36,36,36]]},{"TypePointer":[50,"Output",49]},{"Variable":[50,51,"Output",null]},{"TypePointer":[53,"Output",36]},{"Constant":[14,55,[1]]},{"Variable":[37,56,"Input",null]},{"Constant":[14,59,[2]]},{"Variable":[37,60,"Input",null]},{"TypeFloat":[63,64]},{"SpecConstant":[63,64,[3951369912,1073920081]]},{"Function":[2,4,0,3]},{"Label":5},{"AccessChain":[20,21,19,[15]]},{"Load":[16,22,21,null]},{"AccessChain":[20,26,25,[15]]},{"Load":[16,27,26,null]},{"MatrixTimesMatrix":[16,28,22,27]},{"AccessChain":[32,33,31,[15]]},{"Load":[16,34,33,null]},{"MatrixTimesMatrix":[16,35,28,34]},{"Load":[36,39,38,null]},{"ConvertSToF":[6,41,40]},{"CompositeExtract":[6,42,39,[0]]},{"CompositeExtract":[6,43,39,[1]]},{"CompositeExtract":[6,44,39,[2]]},{"CompositeConstruct":[7,45,[42,43,44,41]]},{"MatrixTimesVector":[7,46,35,45]},{"AccessChain":[47,48,13,[15]]},{"Store":[48,46,null]},{"Load":[36,52,38,null]},{"AccessChain":[53,54,51,[15]]},{"Store":[54,52,null]},{"Load":[36,57,56,null]},{"AccessChain":[53,58,51,[55]]},{"Store":[58,57,null]},{"Load":[36,61,60,null]},{"AccessChain":[53,62,51,[59]]},{"Store":[62,61,null]},"Return","FunctionEnd"]}
+{
+  "version": [
+    1,
+    0
+  ],
+  "bound": 56,
+  "instructions": [
+    {
+      "Capability": "Shader"
+    },
+    {
+      "ExtInstImport": [
+        1,
+        "GLSL.std.450"
+      ]
+    },
+    {
+      "MemoryModel": [
+        "Logical",
+        "GLSL450"
+      ]
+    },
+    {
+      "EntryPoint": [
+        "Vertex",
+        4,
+        "main",
+        [
+          13,
+          32,
+          44,
+          49,
+          53
+        ]
+      ]
+    },
+    {
+      "Source": [
+        "GLSL",
+        450,
+        null,
+        null
+      ]
+    },
+    {
+      "SourceExtension": "GL_ARB_separate_shader_objects"
+    },
+    {
+      "SourceExtension": "GL_ARB_shading_language_420pack"
+    },
+    {
+      "SourceExtension": "GL_GOOGLE_cpp_style_line_directive"
+    },
+    {
+      "SourceExtension": "GL_GOOGLE_include_directive"
+    },
+    {
+      "Name": [
+        4,
+        "main"
+      ]
+    },
+    {
+      "Name": [
+        11,
+        "gl_PerVertex"
+      ]
+    },
+    {
+      "MemberName": [
+        11,
+        0,
+        "gl_Position"
+      ]
+    },
+    {
+      "MemberName": [
+        11,
+        1,
+        "gl_PointSize"
+      ]
+    },
+    {
+      "MemberName": [
+        11,
+        2,
+        "gl_ClipDistance"
+      ]
+    },
+    {
+      "MemberName": [
+        11,
+        3,
+        "gl_CullDistance"
+      ]
+    },
+    {
+      "Name": [
+        13,
+        ""
+      ]
+    },
+    {
+      "Name": [
+        17,
+        "UBO"
+      ]
+    },
+    {
+      "MemberName": [
+        17,
+        0,
+        "viewproj"
+      ]
+    },
+    {
+      "Name": [
+        19,
+        "ubo"
+      ]
+    },
+    {
+      "Name": [
+        23,
+        "Model"
+      ]
+    },
+    {
+      "MemberName": [
+        23,
+        0,
+        "model"
+      ]
+    },
+    {
+      "Name": [
+        25,
+        ""
+      ]
+    },
+    {
+      "Name": [
+        32,
+        "position"
+      ]
+    },
+    {
+      "Name": [
+        42,
+        "VertexData"
+      ]
+    },
+    {
+      "MemberName": [
+        42,
+        0,
+        "position"
+      ]
+    },
+    {
+      "MemberName": [
+        42,
+        1,
+        "normal"
+      ]
+    },
+    {
+      "MemberName": [
+        42,
+        2,
+        "color"
+      ]
+    },
+    {
+      "Name": [
+        44,
+        "vertex"
+      ]
+    },
+    {
+      "Name": [
+        49,
+        "normal"
+      ]
+    },
+    {
+      "Name": [
+        53,
+        "color"
+      ]
+    },
+    {
+      "MemberDecorate": [
+        11,
+        0,
+        {
+          "BuiltIn": "Position"
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        11,
+        1,
+        {
+          "BuiltIn": "PointSize"
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        11,
+        2,
+        {
+          "BuiltIn": "ClipDistance"
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        11,
+        3,
+        {
+          "BuiltIn": "CullDistance"
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        11,
+        "Block"
+      ]
+    },
+    {
+      "MemberDecorate": [
+        17,
+        0,
+        "ColMajor"
+      ]
+    },
+    {
+      "MemberDecorate": [
+        17,
+        0,
+        {
+          "Offset": 0
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        17,
+        0,
+        {
+          "MatrixStride": 16
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        17,
+        "Block"
+      ]
+    },
+    {
+      "Decorate": [
+        19,
+        {
+          "DescriptorSet": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        19,
+        {
+          "Binding": 0
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        23,
+        0,
+        "ColMajor"
+      ]
+    },
+    {
+      "MemberDecorate": [
+        23,
+        0,
+        {
+          "Offset": 0
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        23,
+        0,
+        {
+          "MatrixStride": 16
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        23,
+        "Block"
+      ]
+    },
+    {
+      "Decorate": [
+        32,
+        {
+          "Location": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        42,
+        "Block"
+      ]
+    },
+    {
+      "Decorate": [
+        44,
+        {
+          "Location": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        49,
+        {
+          "Location": 1
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        53,
+        {
+          "Location": 2
+        }
+      ]
+    },
+    {
+      "TypeVoid": 2
+    },
+    {
+      "TypeFunction": [
+        3,
+        2,
+        []
+      ]
+    },
+    {
+      "TypeFloat": [
+        6,
+        32
+      ]
+    },
+    {
+      "TypeVector": [
+        7,
+        6,
+        4
+      ]
+    },
+    {
+      "TypeInt": [
+        8,
+        32,
+        0
+      ]
+    },
+    {
+      "Constant": [
+        8,
+        9,
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "TypeArray": [
+        10,
+        6,
+        9
+      ]
+    },
+    {
+      "TypeStruct": [
+        11,
+        [
+          7,
+          6,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        12,
+        "Output",
+        11
+      ]
+    },
+    {
+      "Variable": [
+        12,
+        13,
+        "Output",
+        null
+      ]
+    },
+    {
+      "TypeInt": [
+        14,
+        32,
+        1
+      ]
+    },
+    {
+      "Constant": [
+        14,
+        15,
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "TypeMatrix": [
+        16,
+        7,
+        4
+      ]
+    },
+    {
+      "TypeStruct": [
+        17,
+        [
+          16
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        18,
+        "Uniform",
+        17
+      ]
+    },
+    {
+      "Variable": [
+        18,
+        19,
+        "Uniform",
+        null
+      ]
+    },
+    {
+      "TypePointer": [
+        20,
+        "Uniform",
+        16
+      ]
+    },
+    {
+      "TypeStruct": [
+        23,
+        [
+          16
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        24,
+        "PushConstant",
+        23
+      ]
+    },
+    {
+      "Variable": [
+        24,
+        25,
+        "PushConstant",
+        null
+      ]
+    },
+    {
+      "TypePointer": [
+        26,
+        "PushConstant",
+        16
+      ]
+    },
+    {
+      "TypeVector": [
+        30,
+        6,
+        3
+      ]
+    },
+    {
+      "TypePointer": [
+        31,
+        "Input",
+        30
+      ]
+    },
+    {
+      "Variable": [
+        31,
+        32,
+        "Input",
+        null
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        34,
+        [
+          1065353216
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        40,
+        "Output",
+        7
+      ]
+    },
+    {
+      "TypeStruct": [
+        42,
+        [
+          30,
+          30,
+          30
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        43,
+        "Output",
+        42
+      ]
+    },
+    {
+      "Variable": [
+        43,
+        44,
+        "Output",
+        null
+      ]
+    },
+    {
+      "TypePointer": [
+        46,
+        "Output",
+        30
+      ]
+    },
+    {
+      "Constant": [
+        14,
+        48,
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "Variable": [
+        31,
+        49,
+        "Input",
+        null
+      ]
+    },
+    {
+      "Constant": [
+        14,
+        52,
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "Variable": [
+        31,
+        53,
+        "Input",
+        null
+      ]
+    },
+    {
+      "Function": [
+        2,
+        4,
+        0,
+        3
+      ]
+    },
+    {
+      "Label": 5
+    },
+    {
+      "AccessChain": [
+        20,
+        21,
+        19,
+        [
+          15
+        ]
+      ]
+    },
+    {
+      "Load": [
+        16,
+        22,
+        21,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        26,
+        27,
+        25,
+        [
+          15
+        ]
+      ]
+    },
+    {
+      "Load": [
+        16,
+        28,
+        27,
+        null
+      ]
+    },
+    {
+      "MatrixTimesMatrix": [
+        16,
+        29,
+        22,
+        28
+      ]
+    },
+    {
+      "Load": [
+        30,
+        33,
+        32,
+        null
+      ]
+    },
+    {
+      "CompositeExtract": [
+        6,
+        35,
+        33,
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "CompositeExtract": [
+        6,
+        36,
+        33,
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "CompositeExtract": [
+        6,
+        37,
+        33,
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "CompositeConstruct": [
+        7,
+        38,
+        [
+          35,
+          36,
+          37,
+          34
+        ]
+      ]
+    },
+    {
+      "MatrixTimesVector": [
+        7,
+        39,
+        29,
+        38
+      ]
+    },
+    {
+      "AccessChain": [
+        40,
+        41,
+        13,
+        [
+          15
+        ]
+      ]
+    },
+    {
+      "Store": [
+        41,
+        39,
+        null
+      ]
+    },
+    {
+      "Load": [
+        30,
+        45,
+        32,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        46,
+        47,
+        44,
+        [
+          15
+        ]
+      ]
+    },
+    {
+      "Store": [
+        47,
+        45,
+        null
+      ]
+    },
+    {
+      "Load": [
+        30,
+        50,
+        49,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        46,
+        51,
+        44,
+        [
+          48
+        ]
+      ]
+    },
+    {
+      "Store": [
+        51,
+        50,
+        null
+      ]
+    },
+    {
+      "Load": [
+        30,
+        54,
+        53,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        46,
+        55,
+        44,
+        [
+          52
+        ]
+      ]
+    },
+    {
+      "Store": [
+        55,
+        54,
+        null
+      ]
+    },
+    "Return",
+    "FunctionEnd"
+  ],
+  "decorations": [
+    [
+      11,
+      0,
+      {
+        "BuiltIn": "Position"
+      }
+    ],
+    [
+      11,
+      1,
+      {
+        "BuiltIn": "PointSize"
+      }
+    ],
+    [
+      11,
+      2,
+      {
+        "BuiltIn": "ClipDistance"
+      }
+    ],
+    [
+      11,
+      3,
+      {
+        "BuiltIn": "CullDistance"
+      }
+    ],
+    [
+      11,
+      null,
+      "Block"
+    ],
+    [
+      17,
+      0,
+      "ColMajor"
+    ],
+    [
+      17,
+      0,
+      {
+        "Offset": 0
+      }
+    ],
+    [
+      17,
+      0,
+      {
+        "MatrixStride": 16
+      }
+    ],
+    [
+      17,
+      null,
+      "Block"
+    ],
+    [
+      19,
+      null,
+      {
+        "DescriptorSet": 0
+      }
+    ],
+    [
+      19,
+      null,
+      {
+        "Binding": 0
+      }
+    ],
+    [
+      23,
+      0,
+      "ColMajor"
+    ],
+    [
+      23,
+      0,
+      {
+        "Offset": 0
+      }
+    ],
+    [
+      23,
+      0,
+      {
+        "MatrixStride": 16
+      }
+    ],
+    [
+      23,
+      null,
+      "Block"
+    ],
+    [
+      32,
+      null,
+      {
+        "Location": 0
+      }
+    ],
+    [
+      42,
+      null,
+      "Block"
+    ],
+    [
+      44,
+      null,
+      {
+        "Location": 0
+      }
+    ],
+    [
+      49,
+      null,
+      {
+        "Location": 1
+      }
+    ],
+    [
+      53,
+      null,
+      {
+        "Location": 2
+      }
+    ]
+  ]
+}
