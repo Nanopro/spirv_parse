@@ -127,6 +127,15 @@ impl Type{
         }
     }
 }
-
-
-
+#[derive(Debug)]
+pub struct PushConstantBlock{
+    pub name: String,
+    pub ty: Type,
+    pub offset: u32,
+    pub id: u32,
+}
+impl PartialEq for PushConstantBlock{
+    fn eq(&self, other: &Self) -> bool {
+        self.name == other.name && self.ty ==other.ty && self.offset == other.offset
+    }
+}

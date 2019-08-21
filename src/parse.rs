@@ -157,7 +157,7 @@ impl Spirv {
             }
         }
     }
-    pub fn interface_varibles(
+    fn interface_varibles(
         &self,
         entry: &EntryPoint,
         class: StorageClass,
@@ -167,75 +167,108 @@ impl Spirv {
             for instruction in &self.instructions {
                 match instruction {
                     Instruction::Variable(id_result_type, id_result, storage, _)
-                        if *storage == class && interface == id_result.0 =>
-                    {
+                    if *storage == class && interface == id_result.0 =>
+                        {
+                            let ty = self.type_from_id(id_result_type.0);
+                            if let Some(Type::Complex(ComplexType::Structure { name, .. })) = &ty {
+                                if name == "gl_PerVertex" {
+                                    continue;
+                                }
+                            }
+                            let name = self.name_from_id(interface).expect("__unnamed");
+                            let offset = self
+                                .decorations
+                                .iter()
+                                .find_map(|(id, member, decoration)| {
+                                    if *id == interface {
+                                        match decoration {
+                                            Decoration::Offset(lit) => Some(lit.0),
+                                            _ => None,
+                                        }
+                                    } else {
+                                        None
+                                    }
+                                })
+                                .unwrap_or(0);
+                            let location = self
+                                .decorations
+                                .iter()
+                                .find_map(|(id, member, decoration)| {
+                                    if *id == interface {
+                                        match decoration {
+                                            Decoration::Location(lit) => Some(lit.0),
+                                            _ => None,
+                                        }
+                                    } else {
+                                        None
+                                    }
+                                })
+                                .unwrap_or(0);
 
-
-                        let ty = self.type_from_id(id_result_type.0);
-                        if let Some(Type::Complex(ComplexType::Structure {name, ..})) = &ty {
-                            if name == "gl_PerVertex"{
-                                continue;
+                            match ty {
+                                Some(ty @ Type::Simple(_)) => {
+                                    interfaces.push(InterfaceVariable {
+                                        id: interface,
+                                        name,
+                                        ty,
+                                        location,
+                                        storage_class: class.clone(),
+                                        offset,
+                                    });
+                                }
+                                Some(ty @ Type::Complex(_)) => {
+                                    interfaces.push(InterfaceVariable {
+                                        id: interface,
+                                        name,
+                                        ty,
+                                        location,
+                                        storage_class: class.clone(),
+                                        offset,
+                                    });
+                                }
+                                _ => panic!("Missing type for interface variable #{}", interface),
                             }
                         }
-                        let name = self.name_from_id(interface).expect("__unnamed");
-                        let offset = self
-                            .decorations
-                            .iter()
-                            .find_map(|(id, member, decoration)| {
-                                if *id == interface {
-                                    match decoration {
-                                        Decoration::Offset(lit) => Some(lit.0),
-                                        _ => None,
-                                    }
-                                } else {
-                                    None
-                                }
-                            })
-                            .unwrap_or(0);
-                        let location = self
-                            .decorations
-                            .iter()
-                            .find_map(|(id, member, decoration)| {
-                                if *id == interface {
-                                    match decoration {
-                                        Decoration::Location(lit) => Some(lit.0),
-                                        _ => None,
-                                    }
-                                } else {
-                                    None
-                                }
-                            })
-                            .unwrap_or(0);
-
-                        match ty {
-                            Some(ty @ Type::Simple(_)) => {
-                                interfaces.push(InterfaceVariable {
-                                    id: interface,
-                                    name,
-                                    ty,
-                                    location,
-                                    storage_class: class.clone(),
-                                    offset,
-                                });
-                            }
-                            Some(ty @ Type::Complex(_)) => {
-                                interfaces.push(InterfaceVariable {
-                                    id: interface,
-                                    name,
-                                    ty,
-                                    location,
-                                    storage_class: class.clone(),
-                                    offset,
-                                });
-                            }
-                            _ => panic!("Missing type for interface variable #{}", interface),
-                        }
-                    }
                     _ => (),
                 }
             }
         }
         interfaces
+    }
+
+    pub fn push_constant_blocks(&self) -> Option<PushConstantBlock> {
+
+        for instruction in &self.instructions {
+            match instruction {
+                Instruction::Variable(id_result_type, id_result, storage, _)
+                if storage == &StorageClass::PushConstant =>
+                    {
+                        let ty = self.type_from_id(id_result_type.0).unwrap();
+                        let name = self.name_from_id(id_result.0).unwrap_or("UnnamedPushConstant".to_owned());
+                        let offset = self.decorations.iter().find_map(|(id, member, decoration)|{
+                            if *id == id_result.0{
+                                match decoration{
+                                    Decoration::Offset(lit)=> Some(lit.0),
+                                    _ => None,
+                                }
+                            }else{
+                                None
+                            }
+
+                        }).unwrap_or(0);
+                        return Some(PushConstantBlock{
+                            name,
+                            ty,
+                            offset,
+                            id: id_result.0
+                        })
+                    }
+                _ => (),
+            }
+        }
+
+
+        None
     }
 
     pub fn input_variables(&self, entry: &EntryPoint) -> Vec<InterfaceVariable> {
@@ -244,6 +277,7 @@ impl Spirv {
     pub fn output_variables(&self, entry: &EntryPoint) -> Vec<InterfaceVariable> {
         self.interface_varibles(entry, StorageClass::Output)
     }
+
 
     pub fn type_from_id(&self, id: u32) -> Option<Type> {
         for instruction in &self.instructions {
@@ -298,20 +332,19 @@ impl Spirv {
                             })
                             .collect(),
                     }));
-                },
-                Instruction::TypeMatrix(id_res, member, count) if id_res.0 == id =>{
-                    match self.type_from_id(member.0){
-                        Some(Type::Complex(ComplexType::Vector {ty, len})) => {
-
+                }
+                Instruction::TypeMatrix(id_res, member, count) if id_res.0 == id => {
+                    match self.type_from_id(member.0) {
+                        Some(Type::Complex(ComplexType::Vector { ty, len })) => {
                             return Some(Type::Complex(ComplexType::Matrix {
                                 ty,
                                 rows: count.0,
                                 cols: len,
-                            }))
-                        },
+                            }));
+                        }
                         _ => unimplemented!()
                     }
-                },
+                }
                 _ => (),
             }
         }
@@ -351,10 +384,10 @@ impl Spirv {
         for instruction in &self.instructions {
             match instruction {
                 Instruction::MemberName(id_ref, lit_int, literal)
-                    if id_ref.0 == id && lit_int.0 == member =>
-                {
-                    return Some(literal.0.clone());
-                }
+                if id_ref.0 == id && lit_int.0 == member =>
+                    {
+                        return Some(literal.0.clone());
+                    }
                 _ => (),
             }
         }
@@ -367,6 +400,7 @@ mod tests {
     use super::*;
     use std::fs::File;
     use std::io::Write;
+    use crate::raw::StorageClass::PushConstant;
 
     #[test]
     fn test() {
@@ -395,26 +429,25 @@ mod tests {
     }
 
     #[test]
-    fn test_types() {
+    fn test_push_constant() {
         let bytes = include_bytes!("../tests/pos_norm_col.spirv");
         let words =
             unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
 
         let res = parse_spirv(words).unwrap();
         let main = res.main_entry_point();
-        let inputs = res.input_variables(&main);
-        for input in inputs {
-            println!("{:?}", input.ty.to_format());
-        }
-        let outputs = res.output_variables(&main);
-        for input in outputs {
-            println!("{:?}", input);
-        }
+        let block = res.push_constant_blocks();
 
+        let x = Some(
+            PushConstantBlock{
+                name: "".to_string(),
+                ty: Type::Complex(ComplexType::Structure {name: "Model".to_owned(), members: vec![("model".to_owned(), Type::Complex(ComplexType::Matrix { ty: SimpleType::Float, cols: 4, rows: 4 }))] }),
+                offset: 0,
+                id: 0
+            }
+        );
 
-
-
-        assert_eq!(1, 2);
+        assert_eq!(block, x);
     }
 
     #[test]
