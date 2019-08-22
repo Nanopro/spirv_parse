@@ -1,0 +1,1973 @@
+{
+  "version": [
+    1,
+    0
+  ],
+  "bound": 175,
+  "instructions": [
+    {
+      "Capability": "Shader"
+    },
+    {
+      "Capability": "ImageQuery"
+    },
+    {
+      "ExtInstImport": [
+        1,
+        "GLSL.std.450"
+      ]
+    },
+    {
+      "MemoryModel": [
+        "Logical",
+        "GLSL450"
+      ]
+    },
+    {
+      "EntryPoint": [
+        "Fragment",
+        4,
+        "main",
+        [
+          56,
+          166
+        ]
+      ]
+    },
+    {
+      "ExecutionMode": [
+        4,
+        "OriginUpperLeft"
+      ]
+    },
+    {
+      "Source": [
+        "GLSL",
+        450,
+        null,
+        null
+      ]
+    },
+    {
+      "SourceExtension": "GL_GOOGLE_cpp_style_line_directive"
+    },
+    {
+      "SourceExtension": "GL_GOOGLE_include_directive"
+    },
+    {
+      "Name": [
+        4,
+        "main"
+      ]
+    },
+    {
+      "Name": [
+        11,
+        "weight"
+      ]
+    },
+    {
+      "Name": [
+        31,
+        "tex_offset"
+      ]
+    },
+    {
+      "Name": [
+        36,
+        "samplerColor"
+      ]
+    },
+    {
+      "Name": [
+        44,
+        "UBO"
+      ]
+    },
+    {
+      "MemberName": [
+        44,
+        0,
+        "blurScale"
+      ]
+    },
+    {
+      "MemberName": [
+        44,
+        1,
+        "blurStrength"
+      ]
+    },
+    {
+      "Name": [
+        46,
+        "ubo"
+      ]
+    },
+    {
+      "Name": [
+        53,
+        "result"
+      ]
+    },
+    {
+      "Name": [
+        56,
+        "inUV"
+      ]
+    },
+    {
+      "Name": [
+        65,
+        "i"
+      ]
+    },
+    {
+      "Name": [
+        75,
+        "blurdirection"
+      ]
+    },
+    {
+      "Name": [
+        166,
+        "outFragColor"
+      ]
+    },
+    {
+      "Name": [
+        172,
+        "shader_data"
+      ]
+    },
+    {
+      "MemberName": [
+        172,
+        0,
+        "camera_position"
+      ]
+    },
+    {
+      "MemberName": [
+        172,
+        1,
+        "light_position"
+      ]
+    },
+    {
+      "MemberName": [
+        172,
+        2,
+        "light_diffuse"
+      ]
+    },
+    {
+      "Name": [
+        174,
+        "tttttt"
+      ]
+    },
+    {
+      "Decorate": [
+        36,
+        {
+          "DescriptorSet": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        36,
+        {
+          "Binding": 1
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        44,
+        0,
+        {
+          "Offset": 0
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        44,
+        1,
+        {
+          "Offset": 4
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        44,
+        "Block"
+      ]
+    },
+    {
+      "Decorate": [
+        46,
+        {
+          "DescriptorSet": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        46,
+        {
+          "Binding": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        56,
+        {
+          "Location": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        75,
+        {
+          "SpecId": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        166,
+        {
+          "Location": 0
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        172,
+        0,
+        {
+          "Offset": 0
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        172,
+        1,
+        {
+          "Offset": 16
+        }
+      ]
+    },
+    {
+      "MemberDecorate": [
+        172,
+        2,
+        {
+          "Offset": 32
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        172,
+        "BufferBlock"
+      ]
+    },
+    {
+      "Decorate": [
+        174,
+        {
+          "DescriptorSet": 0
+        }
+      ]
+    },
+    {
+      "Decorate": [
+        174,
+        {
+          "Binding": 2
+        }
+      ]
+    },
+    {
+      "TypeVoid": 2
+    },
+    {
+      "TypeFunction": [
+        3,
+        2,
+        []
+      ]
+    },
+    {
+      "TypeFloat": [
+        6,
+        32
+      ]
+    },
+    {
+      "TypeInt": [
+        7,
+        32,
+        0
+      ]
+    },
+    {
+      "Constant": [
+        7,
+        8,
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "TypeArray": [
+        9,
+        6,
+        8
+      ]
+    },
+    {
+      "TypePointer": [
+        10,
+        "Function",
+        9
+      ]
+    },
+    {
+      "TypeInt": [
+        12,
+        32,
+        1
+      ]
+    },
+    {
+      "Constant": [
+        12,
+        13,
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        14,
+        [
+          1047034308
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        15,
+        "Function",
+        6
+      ]
+    },
+    {
+      "Constant": [
+        12,
+        17,
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        18,
+        [
+          1044857807
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        12,
+        20,
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        21,
+        [
+          1039733951
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        12,
+        23,
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        24,
+        [
+          1029531578
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        12,
+        26,
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        27,
+        [
+          1015338859
+        ]
+      ]
+    },
+    {
+      "TypeVector": [
+        29,
+        6,
+        2
+      ]
+    },
+    {
+      "TypePointer": [
+        30,
+        "Function",
+        29
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        32,
+        [
+          1065353216
+        ]
+      ]
+    },
+    {
+      "TypeImage": [
+        33,
+        6,
+        "_2D",
+        0,
+        0,
+        0,
+        1,
+        "Unknown",
+        null
+      ]
+    },
+    {
+      "TypeSampledImage": [
+        34,
+        33
+      ]
+    },
+    {
+      "TypePointer": [
+        35,
+        "UniformConstant",
+        34
+      ]
+    },
+    {
+      "Variable": [
+        35,
+        36,
+        "UniformConstant",
+        null
+      ]
+    },
+    {
+      "TypeVector": [
+        39,
+        12,
+        2
+      ]
+    },
+    {
+      "TypeStruct": [
+        44,
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        45,
+        "Uniform",
+        44
+      ]
+    },
+    {
+      "Variable": [
+        45,
+        46,
+        "Uniform",
+        null
+      ]
+    },
+    {
+      "TypePointer": [
+        47,
+        "Uniform",
+        6
+      ]
+    },
+    {
+      "TypeVector": [
+        51,
+        6,
+        3
+      ]
+    },
+    {
+      "TypePointer": [
+        52,
+        "Function",
+        51
+      ]
+    },
+    {
+      "TypePointer": [
+        55,
+        "Input",
+        29
+      ]
+    },
+    {
+      "Variable": [
+        55,
+        56,
+        "Input",
+        null
+      ]
+    },
+    {
+      "TypeVector": [
+        58,
+        6,
+        4
+      ]
+    },
+    {
+      "TypePointer": [
+        64,
+        "Function",
+        12
+      ]
+    },
+    {
+      "Constant": [
+        12,
+        72,
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "TypeBool": 73
+    },
+    {
+      "SpecConstant": [
+        12,
+        75,
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "SpecConstantOp": [
+        73,
+        76,
+        [
+          170,
+          75,
+          17
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        7,
+        81,
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        6,
+        87,
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "Constant": [
+        7,
+        124,
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        165,
+        "Output",
+        58
+      ]
+    },
+    {
+      "Variable": [
+        165,
+        166,
+        "Output",
+        null
+      ]
+    },
+    {
+      "TypeStruct": [
+        172,
+        [
+          58,
+          58,
+          58
+        ]
+      ]
+    },
+    {
+      "TypePointer": [
+        173,
+        "Uniform",
+        172
+      ]
+    },
+    {
+      "Variable": [
+        173,
+        174,
+        "Uniform",
+        null
+      ]
+    },
+    {
+      "Function": [
+        2,
+        4,
+        0,
+        3
+      ]
+    },
+    {
+      "Label": 5
+    },
+    {
+      "Variable": [
+        10,
+        11,
+        "Function",
+        null
+      ]
+    },
+    {
+      "Variable": [
+        30,
+        31,
+        "Function",
+        null
+      ]
+    },
+    {
+      "Variable": [
+        52,
+        53,
+        "Function",
+        null
+      ]
+    },
+    {
+      "Variable": [
+        64,
+        65,
+        "Function",
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        16,
+        11,
+        [
+          13
+        ]
+      ]
+    },
+    {
+      "Store": [
+        16,
+        14,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        19,
+        11,
+        [
+          17
+        ]
+      ]
+    },
+    {
+      "Store": [
+        19,
+        18,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        22,
+        11,
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "Store": [
+        22,
+        21,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        25,
+        11,
+        [
+          23
+        ]
+      ]
+    },
+    {
+      "Store": [
+        25,
+        24,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        28,
+        11,
+        [
+          26
+        ]
+      ]
+    },
+    {
+      "Store": [
+        28,
+        27,
+        null
+      ]
+    },
+    {
+      "Load": [
+        34,
+        37,
+        36,
+        null
+      ]
+    },
+    {
+      "Image": [
+        33,
+        38,
+        37
+      ]
+    },
+    {
+      "ImageQuerySizeLod": [
+        39,
+        40,
+        38,
+        13
+      ]
+    },
+    {
+      "ConvertSToF": [
+        29,
+        41,
+        40
+      ]
+    },
+    {
+      "CompositeConstruct": [
+        29,
+        42,
+        [
+          32,
+          32
+        ]
+      ]
+    },
+    {
+      "FDiv": [
+        29,
+        43,
+        42,
+        41
+      ]
+    },
+    {
+      "AccessChain": [
+        47,
+        48,
+        46,
+        [
+          13
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        49,
+        48,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        29,
+        50,
+        43,
+        49
+      ]
+    },
+    {
+      "Store": [
+        31,
+        50,
+        null
+      ]
+    },
+    {
+      "Load": [
+        34,
+        54,
+        36,
+        null
+      ]
+    },
+    {
+      "Load": [
+        29,
+        57,
+        56,
+        null
+      ]
+    },
+    {
+      "ImageSampleImplicitLod": [
+        58,
+        59,
+        54,
+        57,
+        null
+      ]
+    },
+    {
+      "VectorShuffle": [
+        51,
+        60,
+        59,
+        59,
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        61,
+        11,
+        [
+          13
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        62,
+        61,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        63,
+        60,
+        62
+      ]
+    },
+    {
+      "Store": [
+        53,
+        63,
+        null
+      ]
+    },
+    {
+      "Store": [
+        65,
+        17,
+        null
+      ]
+    },
+    {
+      "Branch": 66
+    },
+    {
+      "Label": 66
+    },
+    {
+      "LoopMerge": [
+        68,
+        69,
+        0
+      ]
+    },
+    {
+      "Branch": 70
+    },
+    {
+      "Label": 70
+    },
+    {
+      "Load": [
+        12,
+        71,
+        65,
+        null
+      ]
+    },
+    {
+      "SLessThan": [
+        73,
+        74,
+        71,
+        72
+      ]
+    },
+    {
+      "BranchConditional": [
+        74,
+        67,
+        68,
+        []
+      ]
+    },
+    {
+      "Label": 67
+    },
+    {
+      "SelectionMerge": [
+        78,
+        0
+      ]
+    },
+    {
+      "BranchConditional": [
+        76,
+        77,
+        121,
+        []
+      ]
+    },
+    {
+      "Label": 77
+    },
+    {
+      "Load": [
+        34,
+        79,
+        36,
+        null
+      ]
+    },
+    {
+      "Load": [
+        29,
+        80,
+        56,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        82,
+        31,
+        [
+          81
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        83,
+        82,
+        null
+      ]
+    },
+    {
+      "Load": [
+        12,
+        84,
+        65,
+        null
+      ]
+    },
+    {
+      "ConvertSToF": [
+        6,
+        85,
+        84
+      ]
+    },
+    {
+      "FMul": [
+        6,
+        86,
+        83,
+        85
+      ]
+    },
+    {
+      "CompositeConstruct": [
+        29,
+        88,
+        [
+          86,
+          87
+        ]
+      ]
+    },
+    {
+      "FAdd": [
+        29,
+        89,
+        80,
+        88
+      ]
+    },
+    {
+      "ImageSampleImplicitLod": [
+        58,
+        90,
+        79,
+        89,
+        null
+      ]
+    },
+    {
+      "VectorShuffle": [
+        51,
+        91,
+        90,
+        90,
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "Load": [
+        12,
+        92,
+        65,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        93,
+        11,
+        [
+          92
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        94,
+        93,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        95,
+        91,
+        94
+      ]
+    },
+    {
+      "AccessChain": [
+        47,
+        96,
+        46,
+        [
+          17
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        97,
+        96,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        98,
+        95,
+        97
+      ]
+    },
+    {
+      "Load": [
+        51,
+        99,
+        53,
+        null
+      ]
+    },
+    {
+      "FAdd": [
+        51,
+        100,
+        99,
+        98
+      ]
+    },
+    {
+      "Store": [
+        53,
+        100,
+        null
+      ]
+    },
+    {
+      "Load": [
+        34,
+        101,
+        36,
+        null
+      ]
+    },
+    {
+      "Load": [
+        29,
+        102,
+        56,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        103,
+        31,
+        [
+          81
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        104,
+        103,
+        null
+      ]
+    },
+    {
+      "Load": [
+        12,
+        105,
+        65,
+        null
+      ]
+    },
+    {
+      "ConvertSToF": [
+        6,
+        106,
+        105
+      ]
+    },
+    {
+      "FMul": [
+        6,
+        107,
+        104,
+        106
+      ]
+    },
+    {
+      "CompositeConstruct": [
+        29,
+        108,
+        [
+          107,
+          87
+        ]
+      ]
+    },
+    {
+      "FSub": [
+        29,
+        109,
+        102,
+        108
+      ]
+    },
+    {
+      "ImageSampleImplicitLod": [
+        58,
+        110,
+        101,
+        109,
+        null
+      ]
+    },
+    {
+      "VectorShuffle": [
+        51,
+        111,
+        110,
+        110,
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "Load": [
+        12,
+        112,
+        65,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        113,
+        11,
+        [
+          112
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        114,
+        113,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        115,
+        111,
+        114
+      ]
+    },
+    {
+      "AccessChain": [
+        47,
+        116,
+        46,
+        [
+          17
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        117,
+        116,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        118,
+        115,
+        117
+      ]
+    },
+    {
+      "Load": [
+        51,
+        119,
+        53,
+        null
+      ]
+    },
+    {
+      "FAdd": [
+        51,
+        120,
+        119,
+        118
+      ]
+    },
+    {
+      "Store": [
+        53,
+        120,
+        null
+      ]
+    },
+    {
+      "Branch": 78
+    },
+    {
+      "Label": 121
+    },
+    {
+      "Load": [
+        34,
+        122,
+        36,
+        null
+      ]
+    },
+    {
+      "Load": [
+        29,
+        123,
+        56,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        125,
+        31,
+        [
+          124
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        126,
+        125,
+        null
+      ]
+    },
+    {
+      "Load": [
+        12,
+        127,
+        65,
+        null
+      ]
+    },
+    {
+      "ConvertSToF": [
+        6,
+        128,
+        127
+      ]
+    },
+    {
+      "FMul": [
+        6,
+        129,
+        126,
+        128
+      ]
+    },
+    {
+      "CompositeConstruct": [
+        29,
+        130,
+        [
+          87,
+          129
+        ]
+      ]
+    },
+    {
+      "FAdd": [
+        29,
+        131,
+        123,
+        130
+      ]
+    },
+    {
+      "ImageSampleImplicitLod": [
+        58,
+        132,
+        122,
+        131,
+        null
+      ]
+    },
+    {
+      "VectorShuffle": [
+        51,
+        133,
+        132,
+        132,
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "Load": [
+        12,
+        134,
+        65,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        135,
+        11,
+        [
+          134
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        136,
+        135,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        137,
+        133,
+        136
+      ]
+    },
+    {
+      "AccessChain": [
+        47,
+        138,
+        46,
+        [
+          17
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        139,
+        138,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        140,
+        137,
+        139
+      ]
+    },
+    {
+      "Load": [
+        51,
+        141,
+        53,
+        null
+      ]
+    },
+    {
+      "FAdd": [
+        51,
+        142,
+        141,
+        140
+      ]
+    },
+    {
+      "Store": [
+        53,
+        142,
+        null
+      ]
+    },
+    {
+      "Load": [
+        34,
+        143,
+        36,
+        null
+      ]
+    },
+    {
+      "Load": [
+        29,
+        144,
+        56,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        145,
+        31,
+        [
+          124
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        146,
+        145,
+        null
+      ]
+    },
+    {
+      "Load": [
+        12,
+        147,
+        65,
+        null
+      ]
+    },
+    {
+      "ConvertSToF": [
+        6,
+        148,
+        147
+      ]
+    },
+    {
+      "FMul": [
+        6,
+        149,
+        146,
+        148
+      ]
+    },
+    {
+      "CompositeConstruct": [
+        29,
+        150,
+        [
+          87,
+          149
+        ]
+      ]
+    },
+    {
+      "FSub": [
+        29,
+        151,
+        144,
+        150
+      ]
+    },
+    {
+      "ImageSampleImplicitLod": [
+        58,
+        152,
+        143,
+        151,
+        null
+      ]
+    },
+    {
+      "VectorShuffle": [
+        51,
+        153,
+        152,
+        152,
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "Load": [
+        12,
+        154,
+        65,
+        null
+      ]
+    },
+    {
+      "AccessChain": [
+        15,
+        155,
+        11,
+        [
+          154
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        156,
+        155,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        157,
+        153,
+        156
+      ]
+    },
+    {
+      "AccessChain": [
+        47,
+        158,
+        46,
+        [
+          17
+        ]
+      ]
+    },
+    {
+      "Load": [
+        6,
+        159,
+        158,
+        null
+      ]
+    },
+    {
+      "VectorTimesScalar": [
+        51,
+        160,
+        157,
+        159
+      ]
+    },
+    {
+      "Load": [
+        51,
+        161,
+        53,
+        null
+      ]
+    },
+    {
+      "FAdd": [
+        51,
+        162,
+        161,
+        160
+      ]
+    },
+    {
+      "Store": [
+        53,
+        162,
+        null
+      ]
+    },
+    {
+      "Branch": 78
+    },
+    {
+      "Label": 78
+    },
+    {
+      "Branch": 69
+    },
+    {
+      "Label": 69
+    },
+    {
+      "Load": [
+        12,
+        163,
+        65,
+        null
+      ]
+    },
+    {
+      "IAdd": [
+        12,
+        164,
+        163,
+        17
+      ]
+    },
+    {
+      "Store": [
+        65,
+        164,
+        null
+      ]
+    },
+    {
+      "Branch": 66
+    },
+    {
+      "Label": 68
+    },
+    {
+      "Load": [
+        51,
+        167,
+        53,
+        null
+      ]
+    },
+    {
+      "CompositeExtract": [
+        6,
+        168,
+        167,
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "CompositeExtract": [
+        6,
+        169,
+        167,
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "CompositeExtract": [
+        6,
+        170,
+        167,
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "CompositeConstruct": [
+        58,
+        171,
+        [
+          168,
+          169,
+          170,
+          32
+        ]
+      ]
+    },
+    {
+      "Store": [
+        166,
+        171,
+        null
+      ]
+    },
+    "Return",
+    "FunctionEnd"
+  ],
+  "decorations": [
+    [
+      36,
+      null,
+      {
+        "DescriptorSet": 0
+      }
+    ],
+    [
+      36,
+      null,
+      {
+        "Binding": 1
+      }
+    ],
+    [
+      44,
+      0,
+      {
+        "Offset": 0
+      }
+    ],
+    [
+      44,
+      1,
+      {
+        "Offset": 4
+      }
+    ],
+    [
+      44,
+      null,
+      "Block"
+    ],
+    [
+      46,
+      null,
+      {
+        "DescriptorSet": 0
+      }
+    ],
+    [
+      46,
+      null,
+      {
+        "Binding": 0
+      }
+    ],
+    [
+      56,
+      null,
+      {
+        "Location": 0
+      }
+    ],
+    [
+      75,
+      null,
+      {
+        "SpecId": 0
+      }
+    ],
+    [
+      166,
+      null,
+      {
+        "Location": 0
+      }
+    ],
+    [
+      172,
+      0,
+      {
+        "Offset": 0
+      }
+    ],
+    [
+      172,
+      1,
+      {
+        "Offset": 16
+      }
+    ],
+    [
+      172,
+      2,
+      {
+        "Offset": 32
+      }
+    ],
+    [
+      172,
+      null,
+      "BufferBlock"
+    ],
+    [
+      174,
+      null,
+      {
+        "DescriptorSet": 0
+      }
+    ],
+    [
+      174,
+      null,
+      {
+        "Binding": 2
+      }
+    ]
+  ]
+}

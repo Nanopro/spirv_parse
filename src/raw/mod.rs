@@ -98,6 +98,8 @@ mod tests{
         assert_eq!(x, Instruction::ImageSampleExplicitLod(IdResultType(1), IdResult(2), IdRef(3), IdRef(4), ImageOperands(0b1)));
     }
 
+
+
 }
 
 

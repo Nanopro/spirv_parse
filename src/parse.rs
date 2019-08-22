@@ -10,6 +10,7 @@ use self::types::*;
 use crate::raw::Capability::ShaderSMBuiltinsNV;
 use serde_json::map::Entry;
 use std::any::Any;
+use std::ops::Deref;
 
 #[derive(Debug, Clone, Serialize)]
 pub struct Spirv {
@@ -167,68 +168,68 @@ impl Spirv {
             for instruction in &self.instructions {
                 match instruction {
                     Instruction::Variable(id_result_type, id_result, storage, _)
-                    if *storage == class && interface == id_result.0 =>
-                        {
-                            let ty = self.type_from_id(id_result_type.0);
-                            if let Some(Type::Complex(ComplexType::Structure { name, .. })) = &ty {
-                                if name == "gl_PerVertex" {
-                                    continue;
-                                }
-                            }
-                            let name = self.name_from_id(interface).expect("__unnamed");
-                            let offset = self
-                                .decorations
-                                .iter()
-                                .find_map(|(id, member, decoration)| {
-                                    if *id == interface {
-                                        match decoration {
-                                            Decoration::Offset(lit) => Some(lit.0),
-                                            _ => None,
-                                        }
-                                    } else {
-                                        None
-                                    }
-                                })
-                                .unwrap_or(0);
-                            let location = self
-                                .decorations
-                                .iter()
-                                .find_map(|(id, member, decoration)| {
-                                    if *id == interface {
-                                        match decoration {
-                                            Decoration::Location(lit) => Some(lit.0),
-                                            _ => None,
-                                        }
-                                    } else {
-                                        None
-                                    }
-                                })
-                                .unwrap_or(0);
-
-                            match ty {
-                                Some(ty @ Type::Simple(_)) => {
-                                    interfaces.push(InterfaceVariable {
-                                        id: interface,
-                                        name,
-                                        ty,
-                                        location,
-                                        storage_class: class.clone(),
-                                        offset,
-                                    });
-                                }
-                                Some(ty @ Type::Complex(_)) => {
-                                    interfaces.push(InterfaceVariable {
-                                        id: interface,
-                                        name,
-                                        ty,
-                                        location,
-                                        storage_class: class.clone(),
-                                        offset,
-                                    });
-                                }
-                                _ => panic!("Missing type for interface variable #{}", interface),
+                        if *storage == class && interface == id_result.0 =>
+                    {
+                        let ty = self.type_from_id(id_result_type.0);
+                        if let Some(Type::Complex(ComplexType::Structure { name, .. })) = &ty {
+                            if name == "gl_PerVertex" {
+                                continue;
                             }
                         }
+                        let name = self.name_from_id(interface).expect("__unnamed");
+                        let offset = self
+                            .decorations
+                            .iter()
+                            .find_map(|(id, member, decoration)| {
+                                if *id == interface {
+                                    match decoration {
+                                        Decoration::Offset(lit) => Some(lit.0),
+                                        _ => None,
+                                    }
+                                } else {
+                                    None
+                                }
+                            })
+                            .unwrap_or(0);
+                        let location = self
+                            .decorations
+                            .iter()
+                            .find_map(|(id, member, decoration)| {
+                                if *id == interface {
+                                    match decoration {
+                                        Decoration::Location(lit) => Some(lit.0),
+                                        _ => None,
+                                    }
+                                } else {
+                                    None
+                                }
+                            })
+                            .unwrap_or(0);
+
+                        match ty {
+                            Some(ty @ Type::Simple(_)) => {
+                                interfaces.push(InterfaceVariable {
+                                    id: interface,
+                                    name,
+                                    ty,
+                                    location,
+                                    storage_class: class.clone(),
+                                    offset,
+                                });
+                            }
+                            Some(ty @ Type::Complex(_)) => {
+                                interfaces.push(InterfaceVariable {
+                                    id: interface,
+                                    name,
+                                    ty,
+                                    location,
+                                    storage_class: class.clone(),
+                                    offset,
+                                });
+                            }
+                            _ => panic!("Missing type for interface variable #{}", interface),
+                        }
+                    }
                     _ => (),
                 }
             }
@@ -237,38 +238,154 @@ impl Spirv {
     }
 
     pub fn push_constant_blocks(&self) -> Option<PushConstantBlock> {
-
         for instruction in &self.instructions {
             match instruction {
                 Instruction::Variable(id_result_type, id_result, storage, _)
-                if storage == &StorageClass::PushConstant =>
-                    {
-                        let ty = self.type_from_id(id_result_type.0).unwrap();
-                        let name = self.name_from_id(id_result.0).unwrap_or("UnnamedPushConstant".to_owned());
-                        let offset = self.decorations.iter().find_map(|(id, member, decoration)|{
-                            if *id == id_result.0{
-                                match decoration{
-                                    Decoration::Offset(lit)=> Some(lit.0),
+                    if storage == &StorageClass::PushConstant =>
+                {
+                    let ty = self.type_from_id(id_result_type.0).unwrap();
+                    let name = self
+                        .name_from_id(id_result.0)
+                        .unwrap_or("UnnamedPushConstant".to_owned());
+                    let offset = self
+                        .decorations
+                        .iter()
+                        .find_map(|(id, member, decoration)| {
+                            if *id == id_result.0 {
+                                match decoration {
+                                    Decoration::Offset(lit) => Some(lit.0),
                                     _ => None,
                                 }
-                            }else{
+                            } else {
                                 None
                             }
-
-                        }).unwrap_or(0);
-                        return Some(PushConstantBlock{
-                            name,
-                            ty,
-                            offset,
-                            id: id_result.0
                         })
-                    }
+                        .unwrap_or(0);
+                    return Some(PushConstantBlock {
+                        name,
+                        ty,
+                        offset,
+                        id: id_result.0,
+                    });
+                }
                 _ => (),
             }
         }
 
-
         None
+    }
+    pub fn descriptor_sets(&self) -> Vec<DescriptorSet> {
+        let mut sets = vec![];
+        let mut bindings = vec![];
+        for instruction in &self.instructions {
+            match instruction {
+                Instruction::Variable(id_res_type, id_res, class, opt)
+                    if class == &StorageClass::Uniform
+                        || class == &StorageClass::UniformConstant =>
+                {
+                    let data_type = self.type_from_id(id_res_type.0).expect("Must have type");
+
+                    let binding = self
+                        .decorations
+                        .iter()
+                        .find_map(|(id, _, decoration)| {
+                            if *id == id_res.0 {
+                                match decoration {
+                                    Decoration::Binding(lit) => Some(lit.0),
+                                    _ => None,
+                                }
+                            } else {
+                                None
+                            }
+                        })
+                        .expect("Must have binding");
+                    let set = self
+                        .decorations
+                        .iter()
+                        .find_map(|(id, _, decoration)| {
+                            if *id == id_res.0 {
+                                match decoration {
+                                    Decoration::DescriptorSet(lit) => Some(lit.0),
+                                    _ => None,
+                                }
+                            } else {
+                                None
+                            }
+                        })
+                        .expect("Must have Set");
+                    let input_attachment_index =
+                        self.decorations.iter().find_map(|(i, _, deco)| {
+                            if *i == id_res.0 {
+                                match deco {
+                                    Decoration::InputAttachmentIndex(index) => Some(index.0),
+                                    _ => None,
+                                }
+                            } else {
+                                None
+                            }
+                        });
+
+                    let (data_type, count) =
+                        if let Type::Complex(ComplexType::Array { ty, len }) = data_type {
+                            (unsafe { std::ptr::read(Box::into_raw(ty)) }, len)
+                        } else {
+                            (data_type, 1)
+                        };
+
+                    let ty = match data_type {
+                        Type::Complex(ComplexType::SampledImage { ref image, ..}) => {
+                            match image.deref(){
+                                Type::Complex(ComplexType::Image {dim, ..}) => {
+                                    match dim {
+                                        Dim::Buffer => DescriptorType::UniformTexelBuffer,
+                                        _ => DescriptorType::CombinedImageSampler
+                                    }
+                                },
+                                _ => unreachable!()
+                            }
+
+
+                        }
+                        Type::Complex(ComplexType::Image { sampled, ref dim, .. }) => {
+                            match input_attachment_index {
+                                Some(index) => DescriptorType::InputAttachment(index),
+                                None => match sampled {
+                                    Some(sampled) => {
+                                        if sampled {
+                                            DescriptorType::SampledImage
+                                        } else {
+                                            match dim {
+                                                Dim::Buffer => DescriptorType::StorageTexelBuffer,
+                                                _ => DescriptorType::StorageImage,
+                                            }
+                                        }
+                                    }
+                                    _ => DescriptorType::StorageImage,
+                                },
+                            }
+                        }
+                        Type::Complex(ComplexType::Structure { block, .. }) => match block {
+                            BlockType::BufferBlock => DescriptorType::StorageBuffer,
+                            BlockType::Block => DescriptorType::UniformBuffer,
+                        },
+                        Type::Simple(SimpleType::Sampler) => DescriptorType::Sampler,
+                        _ => DescriptorType::Undefined,
+                    };
+
+                    bindings.push(DescriptorBindning {
+                        binding,
+                        set,
+                        ty,
+                        data_type,
+                        count,
+                    })
+                }
+                _ => (),
+            }
+        }
+
+        println!("{:#?}", bindings);
+        sets
     }
 
     pub fn input_variables(&self, entry: &EntryPoint) -> Vec<InterfaceVariable> {
@@ -277,7 +394,6 @@ impl Spirv {
     pub fn output_variables(&self, entry: &EntryPoint) -> Vec<InterfaceVariable> {
         self.interface_varibles(entry, StorageClass::Output)
     }
-
 
     pub fn type_from_id(&self, id: u32) -> Option<Type> {
         for instruction in &self.instructions {
@@ -319,7 +435,20 @@ impl Spirv {
                 }
                 Instruction::TypeStruct(id_res, members) if id_res.0 == id => {
                     return Some(Type::Complex(ComplexType::Structure {
-                        name: self.name_from_id(id).unwrap_or_else(|| "UnnamedStructure".to_owned()),
+                        name: self
+                            .name_from_id(id)
+                            .unwrap_or_else(|| "UnnamedStructure".to_owned()),
+                        block: self
+                            .decorations
+                            .iter()
+                            .find_map(|(i, _, decoration)| match (i, decoration) {
+                                (&i, Decoration::Block) if i == id => Some(BlockType::Block),
+                                (&i, Decoration::BufferBlock) if i == id => {
+                                    Some(BlockType::BufferBlock)
+                                }
+                                _ => None,
+                            })
+                            .expect("Block decoration"),
                         members: members
                             .iter()
                             .enumerate()
@@ -342,8 +471,51 @@ impl Spirv {
                                 cols: len,
                             }));
                         }
-                        _ => unimplemented!()
+                        _ => unimplemented!(),
                     }
+                }
+                Instruction::TypeSampledImage(id_res, image) if id_res.0 == id => {
+                    return Some(Type::Complex(ComplexType::SampledImage {
+                        image: Box::new(self.type_from_id(image.0).unwrap()),
+                    }));
+                }
+                Instruction::TypeSampler(id_res) if id_res.0 == id => {
+                    return Some(Type::Simple(SimpleType::Sampler))
+                }
+                Instruction::TypeImage(
+                    id_res,
+                    sampled_type,
+                    dim,
+                    depth,
+                    arrayed,
+                    ms,
+                    sampled,
+                    format,
+                    access,
+                ) if id_res.0 == id => {
+                    let depth = match depth.0 {
+                        0 => Some(false),
+                        1 => Some(true),
+                        2 => None,
+                        _ => unreachable!(),
+                    };
+                    let arrayed = arrayed.0 == 1;
+                    let multisampled = ms.0 == 1;
+                    let sampled = match sampled.0 {
+                        0 => None,
+                        1 => Some(true),
+                        2 => Some(false),
+                        _ => unreachable!(),
+                    };
+
+                    return Some(Type::Complex(ComplexType::Image {
+                        dim: dim.clone(),
+                        depth,
+                        arrayed,
+                        multisampled,
+                        sampled,
+                        format: format.clone(),
+                    }));
                 }
                 _ => (),
             }
@@ -384,10 +556,10 @@ impl Spirv {
         for instruction in &self.instructions {
             match instruction {
                 Instruction::MemberName(id_ref, lit_int, literal)
-                if id_ref.0 == id && lit_int.0 == member =>
-                    {
-                        return Some(literal.0.clone());
-                    }
+                    if id_ref.0 == id && lit_int.0 == member =>
+                {
+                    return Some(literal.0.clone());
+                }
                 _ => (),
             }
         }
@@ -398,13 +570,13 @@ impl Spirv {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::raw::StorageClass::PushConstant;
     use std::fs::File;
     use std::io::Write;
-    use crate::raw::StorageClass::PushConstant;
 
     #[test]
     fn test() {
-        let bytes = include_bytes!("../tests/pos_norm_col.spirv");
+        let bytes = include_bytes!("../test_shaders/compiled/gaussblur.spirv");
         let words =
             unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
 
@@ -412,7 +584,7 @@ mod tests {
 
         let s = to_string(&res).unwrap();
 
-        let mut file = File::create("./tests/pos_norm_col.json").unwrap();
+        let mut file = File::create("./test_shaders/compiled/gaussblur.json").unwrap();
         file.write(s.as_bytes());
     }
 
@@ -438,14 +610,23 @@ mod tests {
         let main = res.main_entry_point();
         let block = res.push_constant_blocks();
 
-        let x = Some(
-            PushConstantBlock{
-                name: "".to_string(),
-                ty: Type::Complex(ComplexType::Structure {name: "Model".to_owned(), members: vec![("model".to_owned(), Type::Complex(ComplexType::Matrix { ty: SimpleType::Float, cols: 4, rows: 4 }))] }),
-                offset: 0,
-                id: 0
-            }
-        );
+        let x = Some(PushConstantBlock {
+            name: "".to_string(),
+            ty: Type::Complex(ComplexType::Structure {
+                name: "Model".to_owned(),
+                block: BlockType::Block,
+                members: vec![(
+                    "model".to_owned(),
+                    Type::Complex(ComplexType::Matrix {
+                        ty: SimpleType::Float,
+                        cols: 4,
+                        rows: 4,
+                    }),
+                )],
+            }),
+            offset: 0,
+            id: 0,
+        });
 
         assert_eq!(block, x);
     }
@@ -463,7 +644,6 @@ mod tests {
             unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
         let frag = parse_spirv(words).unwrap();
 
-
         let outputs = vert.output_variables(&vert.main_entry_point());
         let inputs = frag.input_variables(&frag.main_entry_point());
         for input in &outputs {
@@ -474,7 +654,19 @@ mod tests {
             println!("{:?}", input);
         }
 
-
         assert_eq!(inputs, outputs);
+    }
+
+    #[test]
+    fn test_descriptors() {
+        let bytes = include_bytes!("../test_shaders/compiled/gaussblur.spirv");
+        let words =
+            unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+
+        let res = parse_spirv(words).unwrap();
+
+        res.descriptor_sets();
+
+        assert_eq!(1, 2)
     }
 }

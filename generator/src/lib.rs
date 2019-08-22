@@ -315,7 +315,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                     quote!(pub u32)
                 }
                 "LiteralSpecConstantOpInteger" => {
-                    quote!(pub u32)
+                    quote!(pub Vec<u32>)
                 }
                 _ => panic!("Unknow Literal kind, please update spirv grammar json"),
             };
@@ -360,8 +360,13 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                 "LiteralSpecConstantOpInteger" => {
                     quote!(
                         pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
-                             //assert!(data.len() > 0);
-                            (Self(data[0]), &data[1..])
+                             let mut v = vec![];
+                             while(data.len() > 0){
+                                v.push(data[0]);
+                                data = &data[1..];
+                             }
+                            (Self(v), data)
+
                         }
                     )
                 }

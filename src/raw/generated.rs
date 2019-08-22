@@ -2,15 +2,11 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(unused)]
-
 use serde::{Deserialize, Serialize};
-
 pub const MAGIC: u64 = 0x07230203;
 pub const VERSION: (u8, u8) = (1u8, 4u8);
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct ImageOperands(pub u32);
-
 impl ImageOperands {
     pub const None: Self = ImageOperands(0u32);
     pub const Bias: Self = ImageOperands(1u32);
@@ -48,13 +44,11 @@ impl ImageOperands {
         }
     }
 }
-
 impl Default for ImageOperands {
     fn default() -> ImageOperands {
         ImageOperands(0)
     }
 }
-
 impl ImageOperands {
     #[inline]
     pub const fn empty() -> ImageOperands {
@@ -90,7 +84,6 @@ impl ImageOperands {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for ImageOperands {
     type Output = ImageOperands;
     #[inline]
@@ -98,14 +91,12 @@ impl ::std::ops::BitOr for ImageOperands {
         ImageOperands(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for ImageOperands {
     #[inline]
     fn bitor_assign(&mut self, rhs: ImageOperands) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for ImageOperands {
     type Output = ImageOperands;
     #[inline]
@@ -113,14 +104,12 @@ impl ::std::ops::BitAnd for ImageOperands {
         ImageOperands(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for ImageOperands {
     #[inline]
     fn bitand_assign(&mut self, rhs: ImageOperands) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for ImageOperands {
     type Output = ImageOperands;
     #[inline]
@@ -128,14 +117,12 @@ impl ::std::ops::BitXor for ImageOperands {
         ImageOperands(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for ImageOperands {
     #[inline]
     fn bitxor_assign(&mut self, rhs: ImageOperands) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for ImageOperands {
     type Output = ImageOperands;
     #[inline]
@@ -143,14 +130,12 @@ impl ::std::ops::Sub for ImageOperands {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for ImageOperands {
     #[inline]
     fn sub_assign(&mut self, rhs: ImageOperands) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for ImageOperands {
     type Output = ImageOperands;
     #[inline]
@@ -158,10 +143,8 @@ impl ::std::ops::Not for ImageOperands {
         self ^ ImageOperands::all()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct FPFastMathMode(pub u32);
-
 impl FPFastMathMode {
     pub const None: Self = FPFastMathMode(0u32);
     pub const NotNaN: Self = FPFastMathMode(1u32);
@@ -181,13 +164,11 @@ impl FPFastMathMode {
         }
     }
 }
-
 impl Default for FPFastMathMode {
     fn default() -> FPFastMathMode {
         FPFastMathMode(0)
     }
 }
-
 impl FPFastMathMode {
     #[inline]
     pub const fn empty() -> FPFastMathMode {
@@ -223,7 +204,6 @@ impl FPFastMathMode {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for FPFastMathMode {
     type Output = FPFastMathMode;
     #[inline]
@@ -231,14 +211,12 @@ impl ::std::ops::BitOr for FPFastMathMode {
         FPFastMathMode(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for FPFastMathMode {
     #[inline]
     fn bitor_assign(&mut self, rhs: FPFastMathMode) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for FPFastMathMode {
     type Output = FPFastMathMode;
     #[inline]
@@ -246,14 +224,12 @@ impl ::std::ops::BitAnd for FPFastMathMode {
         FPFastMathMode(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for FPFastMathMode {
     #[inline]
     fn bitand_assign(&mut self, rhs: FPFastMathMode) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for FPFastMathMode {
     type Output = FPFastMathMode;
     #[inline]
@@ -261,14 +237,12 @@ impl ::std::ops::BitXor for FPFastMathMode {
         FPFastMathMode(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for FPFastMathMode {
     #[inline]
     fn bitxor_assign(&mut self, rhs: FPFastMathMode) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for FPFastMathMode {
     type Output = FPFastMathMode;
     #[inline]
@@ -276,14 +250,12 @@ impl ::std::ops::Sub for FPFastMathMode {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for FPFastMathMode {
     #[inline]
     fn sub_assign(&mut self, rhs: FPFastMathMode) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for FPFastMathMode {
     type Output = FPFastMathMode;
     #[inline]
@@ -291,10 +263,8 @@ impl ::std::ops::Not for FPFastMathMode {
         self ^ FPFastMathMode::all()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct SelectionControl(pub u32);
-
 impl SelectionControl {
     pub const None: Self = SelectionControl(0u32);
     pub const Flatten: Self = SelectionControl(1u32);
@@ -308,13 +278,11 @@ impl SelectionControl {
         }
     }
 }
-
 impl Default for SelectionControl {
     fn default() -> SelectionControl {
         SelectionControl(0)
     }
 }
-
 impl SelectionControl {
     #[inline]
     pub const fn empty() -> SelectionControl {
@@ -350,7 +318,6 @@ impl SelectionControl {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for SelectionControl {
     type Output = SelectionControl;
     #[inline]
@@ -358,14 +325,12 @@ impl ::std::ops::BitOr for SelectionControl {
         SelectionControl(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for SelectionControl {
     #[inline]
     fn bitor_assign(&mut self, rhs: SelectionControl) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for SelectionControl {
     type Output = SelectionControl;
     #[inline]
@@ -373,14 +338,12 @@ impl ::std::ops::BitAnd for SelectionControl {
         SelectionControl(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for SelectionControl {
     #[inline]
     fn bitand_assign(&mut self, rhs: SelectionControl) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for SelectionControl {
     type Output = SelectionControl;
     #[inline]
@@ -388,14 +351,12 @@ impl ::std::ops::BitXor for SelectionControl {
         SelectionControl(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for SelectionControl {
     #[inline]
     fn bitxor_assign(&mut self, rhs: SelectionControl) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for SelectionControl {
     type Output = SelectionControl;
     #[inline]
@@ -403,14 +364,12 @@ impl ::std::ops::Sub for SelectionControl {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for SelectionControl {
     #[inline]
     fn sub_assign(&mut self, rhs: SelectionControl) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for SelectionControl {
     type Output = SelectionControl;
     #[inline]
@@ -418,10 +377,8 @@ impl ::std::ops::Not for SelectionControl {
         self ^ SelectionControl::all()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct LoopControl(pub u32);
-
 impl LoopControl {
     pub const None: Self = LoopControl(0u32);
     pub const Unroll: Self = LoopControl(1u32);
@@ -449,13 +406,11 @@ impl LoopControl {
         }
     }
 }
-
 impl Default for LoopControl {
     fn default() -> LoopControl {
         LoopControl(0)
     }
 }
-
 impl LoopControl {
     #[inline]
     pub const fn empty() -> LoopControl {
@@ -491,7 +446,6 @@ impl LoopControl {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for LoopControl {
     type Output = LoopControl;
     #[inline]
@@ -499,14 +453,12 @@ impl ::std::ops::BitOr for LoopControl {
         LoopControl(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for LoopControl {
     #[inline]
     fn bitor_assign(&mut self, rhs: LoopControl) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for LoopControl {
     type Output = LoopControl;
     #[inline]
@@ -514,14 +466,12 @@ impl ::std::ops::BitAnd for LoopControl {
         LoopControl(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for LoopControl {
     #[inline]
     fn bitand_assign(&mut self, rhs: LoopControl) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for LoopControl {
     type Output = LoopControl;
     #[inline]
@@ -529,14 +479,12 @@ impl ::std::ops::BitXor for LoopControl {
         LoopControl(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for LoopControl {
     #[inline]
     fn bitxor_assign(&mut self, rhs: LoopControl) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for LoopControl {
     type Output = LoopControl;
     #[inline]
@@ -544,14 +492,12 @@ impl ::std::ops::Sub for LoopControl {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for LoopControl {
     #[inline]
     fn sub_assign(&mut self, rhs: LoopControl) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for LoopControl {
     type Output = LoopControl;
     #[inline]
@@ -559,10 +505,8 @@ impl ::std::ops::Not for LoopControl {
         self ^ LoopControl::all()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct FunctionControl(pub u32);
-
 impl FunctionControl {
     pub const None: Self = FunctionControl(0u32);
     pub const Inline: Self = FunctionControl(1u32);
@@ -580,13 +524,11 @@ impl FunctionControl {
         }
     }
 }
-
 impl Default for FunctionControl {
     fn default() -> FunctionControl {
         FunctionControl(0)
     }
 }
-
 impl FunctionControl {
     #[inline]
     pub const fn empty() -> FunctionControl {
@@ -622,7 +564,6 @@ impl FunctionControl {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for FunctionControl {
     type Output = FunctionControl;
     #[inline]
@@ -630,14 +571,12 @@ impl ::std::ops::BitOr for FunctionControl {
         FunctionControl(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for FunctionControl {
     #[inline]
     fn bitor_assign(&mut self, rhs: FunctionControl) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for FunctionControl {
     type Output = FunctionControl;
     #[inline]
@@ -645,14 +584,12 @@ impl ::std::ops::BitAnd for FunctionControl {
         FunctionControl(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for FunctionControl {
     #[inline]
     fn bitand_assign(&mut self, rhs: FunctionControl) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for FunctionControl {
     type Output = FunctionControl;
     #[inline]
@@ -660,14 +597,12 @@ impl ::std::ops::BitXor for FunctionControl {
         FunctionControl(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for FunctionControl {
     #[inline]
     fn bitxor_assign(&mut self, rhs: FunctionControl) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for FunctionControl {
     type Output = FunctionControl;
     #[inline]
@@ -675,14 +610,12 @@ impl ::std::ops::Sub for FunctionControl {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for FunctionControl {
     #[inline]
     fn sub_assign(&mut self, rhs: FunctionControl) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for FunctionControl {
     type Output = FunctionControl;
     #[inline]
@@ -690,10 +623,8 @@ impl ::std::ops::Not for FunctionControl {
         self ^ FunctionControl::all()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct MemorySemantics(pub u32);
-
 impl MemorySemantics {
     pub const Relaxed: Self = MemorySemantics(0u32);
     pub const None: Self = MemorySemantics(0u32);
@@ -733,13 +664,11 @@ impl MemorySemantics {
         }
     }
 }
-
 impl Default for MemorySemantics {
     fn default() -> MemorySemantics {
         MemorySemantics(0)
     }
 }
-
 impl MemorySemantics {
     #[inline]
     pub const fn empty() -> MemorySemantics {
@@ -775,7 +704,6 @@ impl MemorySemantics {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for MemorySemantics {
     type Output = MemorySemantics;
     #[inline]
@@ -783,14 +711,12 @@ impl ::std::ops::BitOr for MemorySemantics {
         MemorySemantics(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for MemorySemantics {
     #[inline]
     fn bitor_assign(&mut self, rhs: MemorySemantics) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for MemorySemantics {
     type Output = MemorySemantics;
     #[inline]
@@ -798,14 +724,12 @@ impl ::std::ops::BitAnd for MemorySemantics {
         MemorySemantics(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for MemorySemantics {
     #[inline]
     fn bitand_assign(&mut self, rhs: MemorySemantics) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for MemorySemantics {
     type Output = MemorySemantics;
     #[inline]
@@ -813,14 +737,12 @@ impl ::std::ops::BitXor for MemorySemantics {
         MemorySemantics(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for MemorySemantics {
     #[inline]
     fn bitxor_assign(&mut self, rhs: MemorySemantics) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for MemorySemantics {
     type Output = MemorySemantics;
     #[inline]
@@ -828,14 +750,12 @@ impl ::std::ops::Sub for MemorySemantics {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for MemorySemantics {
     #[inline]
     fn sub_assign(&mut self, rhs: MemorySemantics) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for MemorySemantics {
     type Output = MemorySemantics;
     #[inline]
@@ -843,10 +763,8 @@ impl ::std::ops::Not for MemorySemantics {
         self ^ MemorySemantics::all()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct MemoryAccess(pub u32);
-
 impl MemoryAccess {
     pub const None: Self = MemoryAccess(0u32);
     pub const Volatile: Self = MemoryAccess(1u32);
@@ -868,13 +786,11 @@ impl MemoryAccess {
         }
     }
 }
-
 impl Default for MemoryAccess {
     fn default() -> MemoryAccess {
         MemoryAccess(0)
     }
 }
-
 impl MemoryAccess {
     #[inline]
     pub const fn empty() -> MemoryAccess {
@@ -910,7 +826,6 @@ impl MemoryAccess {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for MemoryAccess {
     type Output = MemoryAccess;
     #[inline]
@@ -918,14 +833,12 @@ impl ::std::ops::BitOr for MemoryAccess {
         MemoryAccess(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for MemoryAccess {
     #[inline]
     fn bitor_assign(&mut self, rhs: MemoryAccess) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for MemoryAccess {
     type Output = MemoryAccess;
     #[inline]
@@ -933,14 +846,12 @@ impl ::std::ops::BitAnd for MemoryAccess {
         MemoryAccess(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for MemoryAccess {
     #[inline]
     fn bitand_assign(&mut self, rhs: MemoryAccess) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for MemoryAccess {
     type Output = MemoryAccess;
     #[inline]
@@ -948,14 +859,12 @@ impl ::std::ops::BitXor for MemoryAccess {
         MemoryAccess(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for MemoryAccess {
     #[inline]
     fn bitxor_assign(&mut self, rhs: MemoryAccess) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for MemoryAccess {
     type Output = MemoryAccess;
     #[inline]
@@ -963,14 +872,12 @@ impl ::std::ops::Sub for MemoryAccess {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for MemoryAccess {
     #[inline]
     fn sub_assign(&mut self, rhs: MemoryAccess) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for MemoryAccess {
     type Output = MemoryAccess;
     #[inline]
@@ -978,10 +885,8 @@ impl ::std::ops::Not for MemoryAccess {
         self ^ MemoryAccess::all()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct KernelProfilingInfo(pub u32);
-
 impl KernelProfilingInfo {
     pub const None: Self = KernelProfilingInfo(0u32);
     pub const CmdExecTime: Self = KernelProfilingInfo(1u32);
@@ -993,13 +898,11 @@ impl KernelProfilingInfo {
         }
     }
 }
-
 impl Default for KernelProfilingInfo {
     fn default() -> KernelProfilingInfo {
         KernelProfilingInfo(0)
     }
 }
-
 impl KernelProfilingInfo {
     #[inline]
     pub const fn empty() -> KernelProfilingInfo {
@@ -1035,7 +938,6 @@ impl KernelProfilingInfo {
         self & other == other
     }
 }
-
 impl ::std::ops::BitOr for KernelProfilingInfo {
     type Output = KernelProfilingInfo;
     #[inline]
@@ -1043,14 +945,12 @@ impl ::std::ops::BitOr for KernelProfilingInfo {
         KernelProfilingInfo(self.0 | rhs.0)
     }
 }
-
 impl ::std::ops::BitOrAssign for KernelProfilingInfo {
     #[inline]
     fn bitor_assign(&mut self, rhs: KernelProfilingInfo) {
         *self = *self | rhs
     }
 }
-
 impl ::std::ops::BitAnd for KernelProfilingInfo {
     type Output = KernelProfilingInfo;
     #[inline]
@@ -1058,14 +958,12 @@ impl ::std::ops::BitAnd for KernelProfilingInfo {
         KernelProfilingInfo(self.0 & rhs.0)
     }
 }
-
 impl ::std::ops::BitAndAssign for KernelProfilingInfo {
     #[inline]
     fn bitand_assign(&mut self, rhs: KernelProfilingInfo) {
         *self = *self & rhs
     }
 }
-
 impl ::std::ops::BitXor for KernelProfilingInfo {
     type Output = KernelProfilingInfo;
     #[inline]
@@ -1073,14 +971,12 @@ impl ::std::ops::BitXor for KernelProfilingInfo {
         KernelProfilingInfo(self.0 ^ rhs.0)
     }
 }
-
 impl ::std::ops::BitXorAssign for KernelProfilingInfo {
     #[inline]
     fn bitxor_assign(&mut self, rhs: KernelProfilingInfo) {
         *self = *self ^ rhs
     }
 }
-
 impl ::std::ops::Sub for KernelProfilingInfo {
     type Output = KernelProfilingInfo;
     #[inline]
@@ -1088,14 +984,12 @@ impl ::std::ops::Sub for KernelProfilingInfo {
         self & !rhs
     }
 }
-
 impl ::std::ops::SubAssign for KernelProfilingInfo {
     #[inline]
     fn sub_assign(&mut self, rhs: KernelProfilingInfo) {
         *self = *self - rhs
     }
 }
-
 impl ::std::ops::Not for KernelProfilingInfo {
     type Output = KernelProfilingInfo;
     #[inline]
@@ -1103,7 +997,6 @@ impl ::std::ops::Not for KernelProfilingInfo {
         self ^ KernelProfilingInfo::all()
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum SourceLanguage {
@@ -1114,7 +1007,6 @@ pub enum SourceLanguage {
     OpenCL_CPP,
     HLSL,
 }
-
 impl SourceLanguage {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1130,7 +1022,6 @@ impl SourceLanguage {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum ExecutionModel {
@@ -1150,7 +1041,6 @@ pub enum ExecutionModel {
     MissNV,
     CallableNV,
 }
-
 impl ExecutionModel {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1175,7 +1065,6 @@ impl ExecutionModel {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum AddressingModel {
@@ -1184,7 +1073,6 @@ pub enum AddressingModel {
     Physical64,
     PhysicalStorageBuffer64EXT,
 }
-
 impl AddressingModel {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1198,7 +1086,6 @@ impl AddressingModel {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum MemoryModel {
@@ -1207,7 +1094,6 @@ pub enum MemoryModel {
     OpenCL,
     VulkanKHR,
 }
-
 impl MemoryModel {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1221,7 +1107,6 @@ impl MemoryModel {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum ExecutionMode {
@@ -1282,7 +1167,6 @@ pub enum ExecutionMode {
     ShadingRateInterlockOrderedEXT,
     ShadingRateInterlockUnorderedEXT,
 }
-
 impl ExecutionMode {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1496,7 +1380,6 @@ impl ExecutionMode {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum StorageClass {
@@ -1521,7 +1404,6 @@ pub enum StorageClass {
     ShaderRecordBufferNV,
     PhysicalStorageBufferEXT,
 }
-
 impl StorageClass {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1551,7 +1433,6 @@ impl StorageClass {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum Dim {
@@ -1563,7 +1444,6 @@ pub enum Dim {
     Buffer,
     SubpassData,
 }
-
 impl Dim {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1580,7 +1460,6 @@ impl Dim {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum SamplerAddressingMode {
@@ -1590,7 +1469,6 @@ pub enum SamplerAddressingMode {
     Repeat,
     RepeatMirrored,
 }
-
 impl SamplerAddressingMode {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1605,14 +1483,12 @@ impl SamplerAddressingMode {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum SamplerFilterMode {
     Nearest,
     Linear,
 }
-
 impl SamplerFilterMode {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1624,7 +1500,6 @@ impl SamplerFilterMode {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum ImageFormat {
@@ -1669,7 +1544,6 @@ pub enum ImageFormat {
     R16ui,
     R8ui,
 }
-
 impl ImageFormat {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1719,7 +1593,6 @@ impl ImageFormat {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum ImageChannelOrder {
@@ -1744,7 +1617,6 @@ pub enum ImageChannelOrder {
     sBGRA,
     ABGR,
 }
-
 impl ImageChannelOrder {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1774,7 +1646,6 @@ impl ImageChannelOrder {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum ImageChannelDataType {
@@ -1796,7 +1667,6 @@ pub enum ImageChannelDataType {
     UnormInt24,
     UnormInt101010_2,
 }
-
 impl ImageChannelDataType {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1823,7 +1693,6 @@ impl ImageChannelDataType {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum FPRoundingMode {
@@ -1832,7 +1701,6 @@ pub enum FPRoundingMode {
     RTP,
     RTN,
 }
-
 impl FPRoundingMode {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1846,14 +1714,12 @@ impl FPRoundingMode {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum LinkageType {
     Export,
     Import,
 }
-
 impl LinkageType {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1865,7 +1731,6 @@ impl LinkageType {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum AccessQualifier {
@@ -1873,7 +1738,6 @@ pub enum AccessQualifier {
     WriteOnly,
     ReadWrite,
 }
-
 impl AccessQualifier {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1886,7 +1750,6 @@ impl AccessQualifier {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum FunctionParameterAttribute {
@@ -1899,7 +1762,6 @@ pub enum FunctionParameterAttribute {
     NoWrite,
     NoReadWrite,
 }
-
 impl FunctionParameterAttribute {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -1917,7 +1779,6 @@ impl FunctionParameterAttribute {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum Decoration {
@@ -1986,7 +1847,6 @@ pub enum Decoration {
     UserSemantic(LiteralString),
     UserTypeGOOGLE(LiteralString),
 }
-
 impl Decoration {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -2256,7 +2116,6 @@ impl Decoration {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum BuiltIn {
@@ -2356,7 +2215,6 @@ pub enum BuiltIn {
     WarpIDNV,
     SMIDNV,
 }
-
 impl BuiltIn {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -2461,7 +2319,6 @@ impl BuiltIn {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum Scope {
@@ -2472,7 +2329,6 @@ pub enum Scope {
     Invocation,
     QueueFamilyKHR,
 }
-
 impl Scope {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -2488,7 +2344,6 @@ impl Scope {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum GroupOperation {
@@ -2500,7 +2355,6 @@ pub enum GroupOperation {
     PartitionedInclusiveScanNV,
     PartitionedExclusiveScanNV,
 }
-
 impl GroupOperation {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -2517,7 +2371,6 @@ impl GroupOperation {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum KernelEnqueueFlags {
@@ -2525,7 +2378,6 @@ pub enum KernelEnqueueFlags {
     WaitKernel,
     WaitWorkGroup,
 }
-
 impl KernelEnqueueFlags {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -2538,7 +2390,6 @@ impl KernelEnqueueFlags {
         }
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum Capability {
@@ -2681,7 +2532,6 @@ pub enum Capability {
     SubgroupAvcMotionEstimationIntraINTEL,
     SubgroupAvcMotionEstimationChromaINTEL,
 }
-
 impl Capability {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let value = data[0];
@@ -2835,74 +2685,58 @@ impl Capability {
         }
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdResultType(pub u32);
-
 impl IdResultType {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdResult(pub u32);
-
 impl IdResult {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdMemorySemantics(pub u32);
-
 impl IdMemorySemantics {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdScope(pub u32);
-
 impl IdScope {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdRef(pub u32);
-
 impl IdRef {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralInteger(pub u32);
-
 impl LiteralInteger {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralString(pub String);
-
 impl LiteralString {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         let res = parse_string(data);
         (Self(res.0), res.1)
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralContextDependentNumber(pub Vec<u32>);
-
 impl LiteralContextDependentNumber {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         let mut v = vec![];
@@ -2913,28 +2747,27 @@ impl LiteralContextDependentNumber {
         (Self(v), data)
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralExtInstInteger(pub u32);
-
 impl LiteralExtInstInteger {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
-pub struct LiteralSpecConstantOpInteger(pub u32);
-
+pub struct LiteralSpecConstantOpInteger(pub Vec<u32>);
 impl LiteralSpecConstantOpInteger {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
-        (Self(data[0]), &data[1..])
+        let mut v = vec![];
+        while (data.len() > 0) {
+            v.push(data[0]);
+            data = &data[1..];
+        }
+        (Self(v), data)
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct PairLiteralIntegerIdRef(pub LiteralInteger, pub IdRef);
-
 impl PairLiteralIntegerIdRef {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         (
@@ -2954,10 +2787,8 @@ impl PairLiteralIntegerIdRef {
         )
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct PairIdRefLiteralInteger(pub IdRef, pub LiteralInteger);
-
 impl PairIdRefLiteralInteger {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         (
@@ -2977,10 +2808,8 @@ impl PairIdRefLiteralInteger {
         )
     }
 }
-
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct PairIdRefIdRef(pub IdRef, pub IdRef);
-
 impl PairIdRefIdRef {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         (
@@ -3000,7 +2829,6 @@ impl PairIdRefIdRef {
         )
     }
 }
-
 fn parse_string(data: &[u32]) -> (String, &[u32]) {
     let bytes = data
         .iter()
@@ -3017,7 +2845,6 @@ fn parse_string(data: &[u32]) -> (String, &[u32]) {
     let s = String::from_utf8(bytes).expect("Shader content is not UTF-8");
     (s, &data[r..])
 }
-
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub enum Instruction {
     Nop,
@@ -4119,7 +3946,6 @@ pub enum Instruction {
     SubgroupAvcSicGetInterRawSadsINTEL(IdResultType, IdResult, IdRef),
     None(u16),
 }
-
 impl Instruction {
     pub fn from_raw(op_code: u16, mut data: &[u32]) -> Self {
         match op_code {
@@ -16154,90 +15980,22 @@ impl Instruction {
                 instr
             }
             5770u16 => {
-                let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL({
-                                                                                                                   let (v, d) = IdResultType::from_raw(data);
-                                                                                                                   data = d;
-                                                                                                                   v
-                                                                                                               }, {
-                                                                                                                   let (v, d) = IdResult::from_raw(data);
-                                                                                                                   data = d;
-                                                                                                                   v
-                                                                                                               }, {
-                                                                                                                   let (v, d) = IdRef::from_raw(data);
-                                                                                                                   data = d;
-                                                                                                                   v
-                                                                                                               }, {
-                                                                                                                   let (v, d) = IdRef::from_raw(data);
-                                                                                                                   data = d;
-                                                                                                                   v
-                                                                                                               }, );
+                let instr = Instruction :: SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ;
                 assert_eq!(data.len(), 0);
                 instr
             }
             5771u16 => {
-                let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL({
-                                                                                                                 let (v, d) = IdResultType::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, {
-                                                                                                                 let (v, d) = IdResult::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, {
-                                                                                                                 let (v, d) = IdRef::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, {
-                                                                                                                 let (v, d) = IdRef::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, );
+                let instr = Instruction :: SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ;
                 assert_eq!(data.len(), 0);
                 instr
             }
             5772u16 => {
-                let instr = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL({
-                                                                                                                  let (v, d) = IdResultType::from_raw(data);
-                                                                                                                  data = d;
-                                                                                                                  v
-                                                                                                              }, {
-                                                                                                                  let (v, d) = IdResult::from_raw(data);
-                                                                                                                  data = d;
-                                                                                                                  v
-                                                                                                              }, {
-                                                                                                                  let (v, d) = IdRef::from_raw(data);
-                                                                                                                  data = d;
-                                                                                                                  v
-                                                                                                              }, {
-                                                                                                                  let (v, d) = IdRef::from_raw(data);
-                                                                                                                  data = d;
-                                                                                                                  v
-                                                                                                              }, );
+                let instr = Instruction :: SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ;
                 assert_eq!(data.len(), 0);
                 instr
             }
             5773u16 => {
-                let instr = Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL({
-                                                                                                                 let (v, d) = IdResultType::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, {
-                                                                                                                 let (v, d) = IdResult::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, {
-                                                                                                                 let (v, d) = IdRef::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, {
-                                                                                                                 let (v, d) = IdRef::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, {
-                                                                                                                 let (v, d) = IdRef::from_raw(data);
-                                                                                                                 data = d;
-                                                                                                                 v
-                                                                                                             }, );
+                let instr = Instruction :: SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL ( { let ( v , d ) = IdResultType :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdResult :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , { let ( v , d ) = IdRef :: from_raw ( data ) ; data = d ; v } , ) ;
                 assert_eq!(data.len(), 0);
                 instr
             }
