@@ -148,6 +148,69 @@ impl Type {
     }
 }
 
+#[cfg(feature = "vk-format")]
+impl EntryPoint {
+    pub fn shader_flags(&self) -> ash::vk::ShaderStageFlags{
+        use ash::vk::ShaderStageFlags as SSF;
+        match &self.execution_model{
+            Vertex => SSF::VERTEX,
+            TessellationControl => SSF::TESSELLATION_CONTROL,
+            TessellationEvaluation => SSF::TESSELLATION_EVALUATION,
+            Geometry => SSF::GEOMETRY,
+            Fragment => SSF::FRAGMENT,
+            GLCompute => SSF::COMPUTE,
+            Kernel => SSF::COMPUTE,
+            TaskNV => SSF::TASK_NV,
+            MeshNV => SSF::MESH_NV,
+            RayGenerationNV => SSF::RAYGEN_NV,
+            IntersectionNV => SSF::INTERSECTION_NV,
+            AnyHitNV => SSF::ANY_HIT_NV,
+            ClosestHitNV => SSF::CLOSEST_HIT_NV,
+            MissNV => SSF::MISS_NV,
+            CallableNV => SSF::CALLABLE_NV,
+        }
+    }
+}
+
+impl SimpleType{
+    pub fn size(&self) -> Option<u64>{
+        match self{
+            SimpleType::Sampler => None,
+            SimpleType::Integer | SimpleType::UInteger | SimpleType::Float | SimpleType::Numerical | SimpleType::Scalar=> Some(4),
+            _ => unimplemented!() //TODO!
+        }
+    }
+}
+impl ComplexType{
+    pub fn size(&self) -> Option<u64>{
+        match self{
+            ComplexType::Vector { len, ty } => { Some(*len as u64 * ty.size()?)},
+            ComplexType::Matrix { ty, cols, rows } => { Some(*cols as u64 * *rows as u64 * ty.size()?)},
+            ComplexType::Array { ty, len } => {Some(*len as u64 * ty.size()? )},
+            ComplexType::Structure { members, .. } => {  //TODO! not true for complex types with some aligment
+                let sizes = members.iter().map(|(_, ty)| ty.size()).collect::<Option<Vec<_>>>();
+
+                Some(sizes?.into_iter().sum())
+
+            },
+            ComplexType::SampledImage { .. } => { None },
+            ComplexType::Image { .. } => { None },
+        }
+    }
+}
+impl Type{
+    pub fn size(&self) -> Option<u64>{
+        match self{
+            Type::Simple(ty) => {ty.size()},
+            Type::Complex(ty) => { ty.size()},
+        }
+    }
+}
+
+
+
+
+
 #[derive(Debug)]
 pub struct PushConstantBlock {
     pub name: String,
@@ -192,4 +255,27 @@ pub enum DescriptorType {
     StorageBufferDynamic,
     InputAttachment(u32),
     AccelerationStructureNV,
+}
+#[cfg(feature = "vk-format")]
+impl DescriptorType {
+    pub fn to_vulkan(&self) -> ash::vk::DescriptorType {
+        use ash::vk::DescriptorType as DT;
+
+        match self {
+            DescriptorType::Undefined => DT::from_raw(-1), // TODO? HOW to fix it
+            DescriptorType::Sampler => DT::SAMPLER,
+            DescriptorType::CombinedImageSampler => DT::COMBINED_IMAGE_SAMPLER,
+            DescriptorType::SampledImage => DT::SAMPLED_IMAGE,
+            DescriptorType::StorageImage => DT::STORAGE_IMAGE,
+            DescriptorType::UniformTexelBuffer => DT::UNIFORM_TEXEL_BUFFER,
+            DescriptorType::StorageTexelBuffer => DT::STORAGE_TEXEL_BUFFER,
+            DescriptorType::UniformBuffer => DT::UNIFORM_BUFFER,
+            DescriptorType::StorageBuffer => DT::STORAGE_BUFFER,
+            DescriptorType::UniformBufferDynamic => DT::UNIFORM_BUFFER_DYNAMIC, //TODO?
+            DescriptorType::StorageBufferDynamic => DT::STORAGE_BUFFER_DYNAMIC, //TODO?
+            DescriptorType::InputAttachment(_) => DT::INPUT_ATTACHMENT,
+            DescriptorType::AccelerationStructureNV => DT::ACCELERATION_STRUCTURE_NV, //TODO?
+
+        }
+    }
 }
