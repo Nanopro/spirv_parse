@@ -152,6 +152,7 @@ impl Type {
 impl EntryPoint {
     pub fn shader_flags(&self) -> ash::vk::ShaderStageFlags{
         use ash::vk::ShaderStageFlags as SSF;
+        use ExecutionModel::*;
         match &self.execution_model{
             Vertex => SSF::VERTEX,
             TessellationControl => SSF::TESSELLATION_CONTROL,

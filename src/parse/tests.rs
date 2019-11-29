@@ -99,5 +99,5 @@ fn test_descriptors() {
     let sets = res.descriptor_sets();
     println!("{:#?}", sets);
 
-    assert_eq!(1, 2)
+    //assert_eq!(1, 2)
 }
