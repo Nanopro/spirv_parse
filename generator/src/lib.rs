@@ -5,26 +5,18 @@ extern crate quote;
 extern crate syn;
 extern crate proc_macro;
 
-
-
-
-
 use proc_macro2::Span;
 use serde_json::{from_reader, Value};
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::{Read, Write};
 use syn::parse::{Parse, ParseStream, Result};
-use syn::{Ident, LitBool, LitInt, LitStr, Attribute};
-
-
+use syn::{Attribute, Ident, LitBool, LitInt, LitStr};
 
 pub struct MacroInput {
     pub path: String,
     pub output: String,
 }
-
-
 
 fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
     let mut structs = vec![];
@@ -32,10 +24,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
     for op_kind in operand_kinds {
         let category = op_kind.get("category").unwrap().as_str().unwrap();
         let struct_str = op_kind.get("kind").unwrap().as_str().unwrap();
-        let struct_name = Ident::new(
-            struct_str,
-            Span::call_site(),
-        );
+        let struct_name = Ident::new(struct_str, Span::call_site());
 
         if category == "BitEnum" {
             let mut values = vec![];
@@ -54,7 +43,8 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
 
                 let value =
                     syn::parse_str::<LitInt>(enumerant.get("value").unwrap().as_str().unwrap())
-                        .unwrap().value() as u32;
+                        .unwrap()
+                        .value() as u32;
 
                 if value > max_value {
                     max_value = value;
@@ -206,38 +196,32 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                 let value = enumerant.get("value").unwrap().as_u64().unwrap() as u32;
                 let mut fields_constr = vec![];
                 let mut fields = vec![];
-                match enumerant.get("parameters"){
+                match enumerant.get("parameters") {
                     Some(v) => {
                         let parameters = v.as_array().unwrap();
-                        for par in parameters{
-                            let kind = Ident::new(par.get("kind").unwrap().as_str().unwrap(), Span::call_site());
-                            fields.push(
-                                quote!(
-                                    #kind
-                                )
+                        for par in parameters {
+                            let kind = Ident::new(
+                                par.get("kind").unwrap().as_str().unwrap(),
+                                Span::call_site(),
                             );
+                            fields.push(quote!(
+                                #kind
+                            ));
 
-                            fields_constr.push(
-                                quote!(
-                                    {
-                                        let (v, d) = #kind::from_raw(data);
-                                        data = d;
-                                        v
-                                    }
-                                )
-                            );
-
+                            fields_constr.push(quote!(
+                                {
+                                    let (v, d) = #kind::from_raw(data);
+                                    data = d;
+                                    v
+                                }
+                            ));
                         }
-                    },
-                    None => {
-
                     }
+                    None => {}
                 }
 
-
-
                 if occupied.insert(value) {
-                    if fields.len() > 0{
+                    if fields.len() > 0 {
                         values.push(quote!(
                             #ident(
                                 #( #fields, )*
@@ -252,7 +236,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                                 (s, data)
                             }
                         ))
-                    }else{
+                    } else {
                         values.push(quote!(
                                 #ident
                         ));
@@ -263,7 +247,6 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                             }
                         ))
                     }
-
                 }
             }
 
@@ -287,136 +270,118 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
             ));
         }
         if category == "Id" {
-            structs.push(
-                quote!(
-                     #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
-                    pub struct #struct_name(pub u32);
-                    impl #struct_name{
-                        pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
-                            //assert!(data.len() > 0);
-                            (Self(data[0]), &data[1..])
-                        }
+            structs.push(quote!(
+                 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+                pub struct #struct_name(pub u32);
+                impl #struct_name{
+                    pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
+                        //assert!(data.len() > 0);
+                        (Self(data[0]), &data[1..])
                     }
-                )
-            );
+                }
+            ));
         }
         if category == "Literal" {
             let t = match op_kind.get("kind").unwrap().as_str().unwrap() {
-                "LiteralInteger" => {
-                    quote!(pub u32)
-                }
-                "LiteralString" => {
-                    quote!(pub String)
-                }
-                "LiteralContextDependentNumber" => {
-                    quote!(pub Vec<u32>)
-                }
-                "LiteralExtInstInteger" => {
-                    quote!(pub u32)
-                }
-                "LiteralSpecConstantOpInteger" => {
-                    quote!(pub Vec<u32>)
-                }
+                "LiteralInteger" => quote!(pub u32),
+                "LiteralString" => quote!(pub String),
+                "LiteralContextDependentNumber" => quote!(pub Vec<u32>),
+                "LiteralExtInstInteger" => quote!(pub u32),
+                "LiteralSpecConstantOpInteger" => quote!(pub Vec<u32>),
                 _ => panic!("Unknow Literal kind, please update spirv grammar json"),
             };
 
             let constr = match op_kind.get("kind").unwrap().as_str().unwrap() {
                 "LiteralInteger" => {
                     quote!(
-                        pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
+                        pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
                             //assert!(data.len() > 0);
                             (Self(data[0]), &data[1..])
                         }
                     )
                 }
-                "LiteralString" => {
-                    quote!(
-                        pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
-                            let res = parse_string(data);
-                            (Self(res.0), res.1)
+                "LiteralString" => quote!(
+                    pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
+                        let res = parse_string(data);
+                        (Self(res.0), res.1)
+                    }
+                ),
+                "LiteralContextDependentNumber" => quote!(
+                    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+                        let mut v = vec![];
+                        while (data.len() > 0) {
+                            v.push(data[0]);
+                            data = &data[1..];
                         }
-                    )
-                }
-                "LiteralContextDependentNumber" => {
-                    quote!(
-                        pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
-                            let mut v = vec![];
-                             while(data.len() > 0){
-                                v.push(data[0]);
-                                data = &data[1..];
-                             }
-                            (Self(v), data)
-                        }
-                    )
-                }
+                        (Self(v), data)
+                    }
+                ),
                 "LiteralExtInstInteger" => {
                     quote!(
-                        pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
+                        pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
                             //assert!(data.len() > 0);
                             (Self(data[0]), &data[1..])
                         }
                     )
                 }
-                "LiteralSpecConstantOpInteger" => {
-                    quote!(
-                        pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
-                             let mut v = vec![];
-                             while(data.len() > 0){
-                                v.push(data[0]);
-                                data = &data[1..];
-                             }
-                            (Self(v), data)
-
+                "LiteralSpecConstantOpInteger" => quote!(
+                    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+                        let mut v = vec![];
+                        while (data.len() > 0) {
+                            v.push(data[0]);
+                            data = &data[1..];
                         }
-                    )
-                }
+                        (Self(v), data)
+                    }
+                ),
                 _ => panic!("Unknow Literal kind, please update spirv grammar json"),
             };
 
-
-            structs.push(
-                quote!(
-                    #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
-                    pub struct #struct_name (#t);
-                    impl #struct_name {
-                        #constr
-                    }
-                )
-            );
+            structs.push(quote!(
+                #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+                pub struct #struct_name (#t);
+                impl #struct_name {
+                    #constr
+                }
+            ));
         }
         if category == "Composite" {
-            let bases = op_kind.get("bases").unwrap().as_array().unwrap().iter()
-                .map(|v| {
-                    Ident::new(v.as_str().unwrap(), Span::call_site())
+            let bases = op_kind
+                .get("bases")
+                .unwrap()
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| Ident::new(v.as_str().unwrap(), Span::call_site()))
+                .collect::<Vec<_>>();
+
+            let fields_constr = bases
+                .iter()
+                .map(|ident| {
+                    quote!(
+                        {
+                            let (v, d) = #ident::from_raw(data);
+                            data = d;
+                            v
+                        }
+                    )
                 })
                 .collect::<Vec<_>>();
 
-            let fields_constr = bases.iter().map(|ident|
-                quote!(
-                            {
-                                let (v, d) = #ident::from_raw(data);
-                                data = d;
-                                v
-                            }
+            structs.push(quote!(
+                #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+                pub struct #struct_name( #( pub #bases, )* );
+                impl #struct_name{
+                    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
+                        (
+                            Self(
+                                #( #fields_constr, )*
+                            ),
+                            data
                         )
-            ).collect::<Vec<_>>();
-
-            structs.push(
-                quote!(
-                    #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
-                    pub struct #struct_name( #( pub #bases, )* );
-                    impl #struct_name{
-                        pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]){
-                            (
-                                Self(
-                                    #( #fields_constr, )*
-                                ),
-                                data
-                            )
-                        }
                     }
-                )
-            );
+                }
+            ));
         }
     }
 
@@ -424,7 +389,6 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
          #( #structs )*
     )
 }
-
 
 fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
     let mut constr = vec![];
@@ -441,82 +405,64 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
                 for operand in operands.as_array().unwrap() {
                     let kind = operand.get("kind").unwrap().as_str().unwrap();
                     let name = match operand.get("name") {
-                        Some(v) => {
-                            v.as_str().unwrap()
-                        }
-                        None => {
-                            match kind {
-                                "IdResult" => "id",
-                                "IdRef" => "id_ref",
-                                _ => "unknown",
-                            }
-                        }
+                        Some(v) => v.as_str().unwrap(),
+                        None => match kind {
+                            "IdResult" => "id",
+                            "IdRef" => "id_ref",
+                            _ => "unknown",
+                        },
                     };
                     let quantifier = operand.get("quantifier");
                     let ident = Ident::new(kind, Span::call_site());
                     match quantifier {
-                        Some(v) => {
-                            match v.as_str() {
-                                Some("?") => {
-                                    fields.push(
-                                        quote!(
-                                           Option<#ident>
-                                        )
-                                    );
-                                    fields_constr.push(
-                                        quote!(
-                                            {
-                                                if data.len() > 0{
-                                                    let (v, d) = #ident::from_raw(data);
-                                                    data = d;
-                                                    Some(v)
-                                                } else{
-                                                    None
-                                                }
-
-                                            }
-                                        )
-                                    );
-                                }
-                                Some("*") => {
-                                    fields.push(
-                                        quote!(
-                                           Vec<#ident>
-                                        )
-                                    );
-                                    fields_constr.push(
-                                        quote!(
-                                            {
-                                                let mut v = vec![];
-                                                while data.len() > 0{
-                                                    let (s, d) = #ident::from_raw(data);
-                                                    data = d;
-                                                    v.push(s);
-                                                }
-
-                                                v
-                                            }
-                                        )
-                                    );
-                                }
-                                _ => unreachable!()
-                            }
-                        }
-                        None => {
-                            fields.push(
-                                quote!(
-                                   #ident
-                                )
-                            );
-                            fields_constr.push(
-                                quote!(
+                        Some(v) => match v.as_str() {
+                            Some("?") => {
+                                fields.push(quote!(
+                                   Option<#ident>
+                                ));
+                                fields_constr.push(quote!(
                                     {
-                                        let (v, d) = #ident::from_raw(data);
-                                        data = d;
+                                        if data.len() > 0{
+                                            let (v, d) = #ident::from_raw(data);
+                                            data = d;
+                                            Some(v)
+                                        } else{
+                                            None
+                                        }
+
+                                    }
+                                ));
+                            }
+                            Some("*") => {
+                                fields.push(quote!(
+                                   Vec<#ident>
+                                ));
+                                fields_constr.push(quote!(
+                                    {
+                                        let mut v = vec![];
+                                        while data.len() > 0{
+                                            let (s, d) = #ident::from_raw(data);
+                                            data = d;
+                                            v.push(s);
+                                        }
+
                                         v
                                     }
-                                )
-                            );
+                                ));
+                            }
+                            _ => unreachable!(),
+                        },
+                        None => {
+                            fields.push(quote!(
+                               #ident
+                            ));
+                            fields_constr.push(quote!(
+                                {
+                                    let (v, d) = #ident::from_raw(data);
+                                    data = d;
+                                    v
+                                }
+                            ));
                         }
                     }
                 }
@@ -525,38 +471,29 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
         }
 
         if fields.len() > 0 {
-            members.push(
-                quote!(
-                    #op_name (#( #fields, )*)
-                )
-            );
+            members.push(quote!(
+                #op_name (#( #fields, )*)
+            ));
 
-            constr.push(
-                quote!(
-                    #op_code =>{
-                        //println!("{}, {:?}", #op_str, data);
-                        let instr = Instruction::#op_name(
-                            #( #fields_constr, )*
-                        );
-                        assert_eq!(data.len(), 0);
-                        instr
-                    }
-                )
-            );
+            constr.push(quote!(
+                #op_code =>{
+                    //println!("{}, {:?}", #op_str, data);
+                    let instr = Instruction::#op_name(
+                        #( #fields_constr, )*
+                    );
+                    assert_eq!(data.len(), 0);
+                    instr
+                }
+            ));
         } else {
-            members.push(
-                quote!(
-                    #op_name
-                )
-            );
-            constr.push(
-                quote!(
-                    #op_code => Instruction::#op_name
-                )
-            );
+            members.push(quote!(
+                #op_name
+            ));
+            constr.push(quote!(
+                #op_code => Instruction::#op_name
+            ));
         }
     }
-
 
     quote! {
         fn parse_string(data: &[u32]) -> (String, &[u32]) {
@@ -594,7 +531,6 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
     }
 }
 
-
 //#[proc_macro]
 pub fn grammar(input: MacroInput) {
     let file = File::open(input.path).unwrap();
@@ -602,15 +538,14 @@ pub fn grammar(input: MacroInput) {
     let instr = &data.get("instructions").unwrap().as_array().unwrap();
     let operand_kinds = data.get("operand_kinds").unwrap().as_array().unwrap();
 
-    let magic: LitInt = syn::parse_str(data.get("magic_number").unwrap().as_str().unwrap()).unwrap();
+    let magic: LitInt =
+        syn::parse_str(data.get("magic_number").unwrap().as_str().unwrap()).unwrap();
     let major = data.get("major_version").unwrap().as_u64().unwrap() as u8;
     let minor = data.get("minor_version").unwrap().as_u64().unwrap() as u8;
-
 
     // let res = vec![];
     let enums = op_kinds(operand_kinds);
     let instr = instructions(instr);
-
 
     let res = quote!(
         #![allow(non_upper_case_globals)]
@@ -626,57 +561,3 @@ pub fn grammar(input: MacroInput) {
     let mut file = File::create(input.output).unwrap();
     write!(&mut file, "{}", res).expect("WTF");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

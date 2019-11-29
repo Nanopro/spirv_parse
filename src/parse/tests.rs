@@ -5,7 +5,7 @@ use std::io::Write;
 
 #[test]
 fn test() {
-    let bytes = include_bytes!("../../test_shaders/compiled/gaussblur.spirv");
+    let bytes = include_bytes!("../../test_shaders/compiled/array_const_len.spirv");
     let words =
         unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
 
@@ -13,7 +13,7 @@ fn test() {
 
     let s = to_string(&res).unwrap();
 
-    let mut file = File::create("./test_shaders/compiled/gaussblur.json").unwrap();
+    let mut file = File::create("./test_shaders/compiled/array_const_len.json").unwrap();
     file.write(s.as_bytes());
 }
 
@@ -100,4 +100,15 @@ fn test_descriptors() {
     println!("{:#?}", sets);
 
     //assert_eq!(1, 2)
+}
+
+#[test]
+fn array_const_length(){
+    let bytes = include_bytes!("../../test_shaders/compiled/array_const_len.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+
+    let res = parse_spirv(words).unwrap();
+    let ds = res.descriptor_sets();
+    println!("{:#?}", ds);
 }

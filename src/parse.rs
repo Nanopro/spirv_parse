@@ -5,7 +5,6 @@ use std::collections::HashMap;
 
 mod types;
 
-
 use self::types::*;
 use crate::raw::Capability::ShaderSMBuiltinsNV;
 use serde_json::map::Entry;
@@ -275,7 +274,6 @@ impl Spirv {
         None
     }
     pub fn descriptor_sets(&self) -> Vec<DescriptorSet> {
-
         let mut bindings = vec![];
         for instruction in &self.instructions {
             match instruction {
@@ -329,47 +327,47 @@ impl Spirv {
                         if let Type::Complex(ComplexType::Array { ty, len }) = data_type {
                             (unsafe { std::ptr::read(Box::into_raw(ty)) }, len)
                         } else {
-                            (data_type, 1)
+                            (data_type, ArrayLength::Number(1))
                         };
 
                     let ty = match data_type {
-                        Type::Complex(ComplexType::SampledImage { ref image, ..}) => {
-                            match image.deref(){
-                                Type::Complex(ComplexType::Image {dim, ..}) => {
-                                    match dim {
-                                        Dim::Buffer => DescriptorType::UniformTexelBuffer,
-                                        _ => DescriptorType::CombinedImageSampler
-                                    }
+                        Type::Complex(ComplexType::SampledImage { ref image, .. }) => {
+                            match image.deref() {
+                                Type::Complex(ComplexType::Image { dim, .. }) => match dim {
+                                    Dim::Buffer => DescriptorType::UniformTexelBuffer,
+                                    _ => DescriptorType::CombinedImageSampler,
                                 },
-                                _ => unreachable!()
+                                _ => unreachable!(),
                             }
-
-
                         }
-                        Type::Complex(ComplexType::Image { sampled, ref dim, .. }) => {
-                            match input_attachment_index {
-                                Some(index) => DescriptorType::InputAttachment(index),
-                                None => match sampled {
-                                    Some(sampled) => {
-                                        if sampled {
-                                            DescriptorType::SampledImage
-                                        } else {
-                                            match dim {
-                                                Dim::Buffer => DescriptorType::StorageTexelBuffer,
-                                                _ => DescriptorType::StorageImage,
-                                            }
+                        Type::Complex(ComplexType::Image {
+                            sampled, ref dim, ..
+                        }) => match input_attachment_index {
+                            Some(index) => DescriptorType::InputAttachment(index),
+                            None => match sampled {
+                                Some(sampled) => {
+                                    if sampled {
+                                        DescriptorType::SampledImage
+                                    } else {
+                                        match dim {
+                                            Dim::Buffer => DescriptorType::StorageTexelBuffer,
+                                            _ => DescriptorType::StorageImage,
                                         }
                                     }
-                                    _ => DescriptorType::StorageImage,
-                                },
-                            }
-                        }
+                                }
+                                _ => DescriptorType::StorageImage,
+                            },
+                        },
                         Type::Complex(ComplexType::Structure { block, .. }) => match block {
                             BlockType::BufferBlock => DescriptorType::StorageBuffer,
                             BlockType::Block => DescriptorType::UniformBuffer,
                         },
                         Type::Simple(SimpleType::Sampler) => DescriptorType::Sampler,
                         _ => DescriptorType::Undefined,
+                    };
+                    let count = match count{
+                        ArrayLength::Number(c) => c,
+                        _ => unimplemented!() // TODO! массивы с длинной зависящие от константы
                     };
 
                     bindings.push(DescriptorBindning {
@@ -384,18 +382,20 @@ impl Spirv {
             }
         }
 
-
         let mut sets = HashMap::new();
 
-        bindings.into_iter().for_each(|binding|{
-            sets.entry(binding.set).or_insert_with(|| DescriptorSet{
-                set: binding.set,
-                bindings: vec![]
-            }).bindings.push((binding.binding, binding));
+        bindings.into_iter().for_each(|binding| {
+            sets.entry(binding.set)
+                .or_insert_with(|| DescriptorSet {
+                    set: binding.set,
+                    bindings: vec![],
+                })
+                .bindings
+                .push((binding.binding, binding));
         });
         sets.into_iter()
             .map(|(_, mut v)| {
-                v.bindings.sort_by_key(|v| v.0) ;
+                v.bindings.sort_by_key(|v| v.0);
                 v
             })
             .collect()
@@ -435,12 +435,18 @@ impl Spirv {
                     }));
                 }
                 Instruction::TypeArray(id_res, element, len) if id_res.0 == id => {
+                    let ty = Box::new(self.type_from_id(element.0).unwrap());
+
+                    let len = match self.const_value(len.0) {
+                        Some(ConstValue::UInteger(len)) => len,
+                        _ => panic!("Array length must be unsigned integer"),
+                    };
+                    let len = ArrayLength::Number(len);
+
+
                     return Some(Type::Complex(ComplexType::Array {
-                        ty: Box::new(self.type_from_id(element.0).unwrap()),
-                        len: match self.const_value(len.0) {
-                            Some(ConstValue::UInteger(len)) => len,
-                            _ => panic!("Array length must be unsigned integer"),
-                        },
+                        ty,
+                        len
                     }));
                 }
                 Instruction::TypePointer(id_res, class, point_type) if id_res.0 == id => {

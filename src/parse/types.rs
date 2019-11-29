@@ -1,30 +1,26 @@
 use crate::raw::*;
 
-
 pub struct EntryPoint {
     pub name: String,
     pub execution_model: ExecutionModel,
     pub(crate) interface: Vec<u32>,
 }
 
-
 #[derive(Debug)]
 pub struct InterfaceVariable {
-    pub  id: u32,
-    pub  name: String,
-    pub  location: u32,
-    pub  storage_class: StorageClass,
+    pub id: u32,
+    pub name: String,
+    pub location: u32,
+    pub storage_class: StorageClass,
     pub offset: u32,
-    pub  ty: Type,
+    pub ty: Type,
 }
-
 
 impl PartialEq for InterfaceVariable {
     fn eq(&self, other: &Self) -> bool {
         self.location == other.location && self.ty == other.ty
     }
 }
-
 
 #[derive(Debug, PartialEq)]
 pub enum SimpleType {
@@ -34,7 +30,7 @@ pub enum SimpleType {
     Float,
     Numerical,
     Scalar,
-    Sampler
+    Sampler,
 }
 
 #[derive(Debug, PartialEq)]
@@ -50,7 +46,7 @@ pub enum ComplexType {
     },
     Array {
         ty: Box<Type>,
-        len: u32,
+        len: ArrayLength,
     },
     Structure {
         name: String,
@@ -58,7 +54,7 @@ pub enum ComplexType {
         members: Vec<(String, Type)>,
     },
     SampledImage {
-        image: Box<Type>
+        image: Box<Type>,
     },
     Image {
         dim: Dim,
@@ -67,12 +63,18 @@ pub enum ComplexType {
         multisampled: bool,
         sampled: Option<bool>,
         format: ImageFormat,
-
     },
 }
 
+#[derive(Debug, PartialEq,  Clone)]
+pub enum ArrayLength{
+    Number(u32),
+    Constant(IdRef),
+}
+
+
 #[derive(Debug, PartialEq, Copy, Clone)]
-pub enum BlockType{
+pub enum BlockType {
     Block,
     BufferBlock,
 }
@@ -104,56 +106,40 @@ use std::collections::HashMap;
 impl Type {
     pub fn to_format(&self) -> ash::vk::Format {
         match self {
-            Type::Simple(ty) => {
-                match ty {
-                    SimpleType::Boolean => Format::R8_UINT,
-                    SimpleType::UInteger => Format::R32_UINT,
-                    SimpleType::Float => Format::R32_SFLOAT,
-                    SimpleType::Numerical => unimplemented!(),
-                    SimpleType::Scalar => unimplemented!(),
-                    _ => Format::UNDEFINED
-                }
-            }
-            Type::Complex(ty) => {
-                match ty {
-                    ComplexType::Vector { ty, len, .. } => {
-                        match ty {
-                            SimpleType::Float => {
-                                match len {
-                                    1 => Format::R32_SFLOAT,
-                                    2 => Format::R32G32_SFLOAT,
-                                    3 => Format::R32G32B32_SFLOAT,
-                                    4 => Format::R32G32B32A32_SFLOAT,
-                                    _ => panic!("Vector's len > 5")
-                                }
-                            }
-                            _ => {
-                                unimplemented!()
-                            }
-                        }
-                    }
-                    ComplexType::Array { ty, len, .. } => {
-                        unimplemented!()
-                    }
-                    ComplexType::Matrix { .. } => {
-                        unimplemented!()
-                    }
-                    ComplexType::Structure { name, members,.. } => {
-                        Format::UNDEFINED
-                    }
+            Type::Simple(ty) => match ty {
+                SimpleType::Boolean => Format::R8_UINT,
+                SimpleType::UInteger => Format::R32_UINT,
+                SimpleType::Float => Format::R32_SFLOAT,
+                SimpleType::Numerical => unimplemented!(),
+                SimpleType::Scalar => unimplemented!(),
+                _ => Format::UNDEFINED,
+            },
+            Type::Complex(ty) => match ty {
+                ComplexType::Vector { ty, len, .. } => match ty {
+                    SimpleType::Float => match len {
+                        1 => Format::R32_SFLOAT,
+                        2 => Format::R32G32_SFLOAT,
+                        3 => Format::R32G32B32_SFLOAT,
+                        4 => Format::R32G32B32A32_SFLOAT,
+                        _ => panic!("Vector's len > 5"),
+                    },
                     _ => unimplemented!(),
-                }
-            }
+                },
+                ComplexType::Array { ty, len, .. } => unimplemented!(),
+                ComplexType::Matrix { .. } => unimplemented!(),
+                ComplexType::Structure { name, members, .. } => Format::UNDEFINED,
+                _ => unimplemented!(),
+            },
         }
     }
 }
 
 #[cfg(feature = "vk-format")]
 impl EntryPoint {
-    pub fn shader_flags(&self) -> ash::vk::ShaderStageFlags{
+    pub fn shader_flags(&self) -> ash::vk::ShaderStageFlags {
         use ash::vk::ShaderStageFlags as SSF;
         use ExecutionModel::*;
-        match &self.execution_model{
+        match &self.execution_model {
             Vertex => SSF::VERTEX,
             TessellationControl => SSF::TESSELLATION_CONTROL,
             TessellationEvaluation => SSF::TESSELLATION_EVALUATION,
@@ -173,44 +159,56 @@ impl EntryPoint {
     }
 }
 
-impl SimpleType{
-    pub fn size(&self) -> Option<u64>{
-        match self{
+impl SimpleType {
+    pub fn size(&self) -> Option<u64> {
+        match self {
             SimpleType::Sampler => None,
-            SimpleType::Integer | SimpleType::UInteger | SimpleType::Float | SimpleType::Numerical | SimpleType::Scalar=> Some(4),
-            _ => unimplemented!() //TODO!
+            SimpleType::Integer
+            | SimpleType::UInteger
+            | SimpleType::Float
+            | SimpleType::Numerical
+            | SimpleType::Scalar => Some(4),
+            _ => unimplemented!(), //TODO!
         }
     }
 }
-impl ComplexType{
-    pub fn size(&self) -> Option<u64>{
-        match self{
-            ComplexType::Vector { len, ty } => { Some(*len as u64 * ty.size()?)},
-            ComplexType::Matrix { ty, cols, rows } => { Some(*cols as u64 * *rows as u64 * ty.size()?)},
-            ComplexType::Array { ty, len } => {Some(*len as u64 * ty.size()? )},
-            ComplexType::Structure { members, .. } => {  //TODO! not true for complex types with some aligment
-                let sizes = members.iter().map(|(_, ty)| ty.size()).collect::<Option<Vec<_>>>();
+impl ComplexType {
+    pub fn size(&self) -> Option<u64> {
+        match self {
+            ComplexType::Vector { len, ty } => Some(*len as u64 * ty.size()?),
+            ComplexType::Matrix { ty, cols, rows } => {
+                Some(*cols as u64 * *rows as u64 * ty.size()?)
+            }
+            ComplexType::Array { ty, len } => {
+                let len = match len{
+                    ArrayLength::Number(len) => len,
+                    _ => unimplemented!() //TODO! переменная длина
+                };
+
+                Some(*len as u64 * ty.size()?)
+            },
+            ComplexType::Structure { members, .. } => {
+                //TODO! not true for complex types with some aligment
+                let sizes = members
+                    .iter()
+                    .map(|(_, ty)| ty.size())
+                    .collect::<Option<Vec<_>>>();
 
                 Some(sizes?.into_iter().sum())
-
-            },
-            ComplexType::SampledImage { .. } => { None },
-            ComplexType::Image { .. } => { None },
+            }
+            ComplexType::SampledImage { .. } => None,
+            ComplexType::Image { .. } => None,
         }
     }
 }
-impl Type{
-    pub fn size(&self) -> Option<u64>{
-        match self{
-            Type::Simple(ty) => {ty.size()},
-            Type::Complex(ty) => { ty.size()},
+impl Type {
+    pub fn size(&self) -> Option<u64> {
+        match self {
+            Type::Simple(ty) => ty.size(),
+            Type::Complex(ty) => ty.size(),
         }
     }
 }
-
-
-
-
 
 #[derive(Debug)]
 pub struct PushConstantBlock {
@@ -239,7 +237,6 @@ pub struct DescriptorBindning {
     pub data_type: Type,
     pub ty: DescriptorType,
     pub count: u32,
-
 }
 #[derive(Debug)]
 pub enum DescriptorType {
@@ -276,7 +273,6 @@ impl DescriptorType {
             DescriptorType::StorageBufferDynamic => DT::STORAGE_BUFFER_DYNAMIC, //TODO?
             DescriptorType::InputAttachment(_) => DT::INPUT_ATTACHMENT,
             DescriptorType::AccelerationStructureNV => DT::ACCELERATION_STRUCTURE_NV, //TODO?
-
         }
     }
 }
