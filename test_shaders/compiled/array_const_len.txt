@@ -1,0 +1,110 @@
+Instruction::Capability Shader
+Instruction::Capability MultiView
+Instruction::Extension LiteralString("SPV_KHR_multiview")
+%IdResult(1) = Instruction::ExtInstImport LiteralString("GLSL.std.450")
+Instruction::MemoryModel Logical GLSL450
+Instruction::EntryPoint Vertex IdRef(4) LiteralString("main") [IdRef(13), IdRef(23), IdRef(37), IdRef(49), IdRef(50)]
+Instruction::Source GLSL LiteralInteger(450) None None
+Instruction::SourceExtension LiteralString("GL_ARB_separate_shader_objects")
+Instruction::SourceExtension LiteralString("GL_ARB_shading_language_420pack")
+Instruction::SourceExtension LiteralString("GL_EXT_multiview")
+Instruction::SourceExtension LiteralString("GL_GOOGLE_cpp_style_line_directive")
+Instruction::SourceExtension LiteralString("GL_GOOGLE_include_directive")
+Instruction::Name IdRef(4) LiteralString("main")
+Instruction::Name IdRef(11) LiteralString("gl_PerVertex")
+Instruction::MemberName IdRef(11) LiteralInteger(0) LiteralString("gl_Position")
+Instruction::MemberName IdRef(11) LiteralInteger(1) LiteralString("gl_PointSize")
+Instruction::MemberName IdRef(11) LiteralInteger(2) LiteralString("gl_ClipDistance")
+Instruction::MemberName IdRef(11) LiteralInteger(3) LiteralString("gl_CullDistance")
+Instruction::Name IdRef(13) LiteralString("")
+Instruction::Name IdRef(17) LiteralString("NUM_VIEW")
+Instruction::Name IdRef(19) LiteralString("UBO")
+Instruction::MemberName IdRef(19) LiteralInteger(0) LiteralString("viewproj")
+Instruction::Name IdRef(21) LiteralString("ubo")
+Instruction::Name IdRef(23) LiteralString("gl_ViewIndex")
+Instruction::Name IdRef(28) LiteralString("Model")
+Instruction::MemberName IdRef(28) LiteralInteger(0) LiteralString("model")
+Instruction::Name IdRef(30) LiteralString("")
+Instruction::Name IdRef(37) LiteralString("position")
+Instruction::Name IdRef(47) LiteralString("VertexData")
+Instruction::MemberName IdRef(47) LiteralInteger(0) LiteralString("color")
+Instruction::Name IdRef(49) LiteralString("vertex")
+Instruction::Name IdRef(50) LiteralString("color")
+Instruction::MemberDecorate IdRef(11) LiteralInteger(0) BuiltIn(Position)
+Instruction::MemberDecorate IdRef(11) LiteralInteger(1) BuiltIn(PointSize)
+Instruction::MemberDecorate IdRef(11) LiteralInteger(2) BuiltIn(ClipDistance)
+Instruction::MemberDecorate IdRef(11) LiteralInteger(3) BuiltIn(CullDistance)
+Instruction::Decorate IdRef(11) Block
+Instruction::Decorate IdRef(17) SpecId(LiteralInteger(0))
+Instruction::Decorate IdRef(18) ArrayStride(LiteralInteger(64))
+Instruction::MemberDecorate IdRef(19) LiteralInteger(0) ColMajor
+Instruction::MemberDecorate IdRef(19) LiteralInteger(0) Offset(LiteralInteger(0))
+Instruction::MemberDecorate IdRef(19) LiteralInteger(0) MatrixStride(LiteralInteger(16))
+Instruction::Decorate IdRef(19) Block
+Instruction::Decorate IdRef(21) DescriptorSet(LiteralInteger(0))
+Instruction::Decorate IdRef(21) Binding(LiteralInteger(0))
+Instruction::Decorate IdRef(23) BuiltIn(ViewIndex)
+Instruction::MemberDecorate IdRef(28) LiteralInteger(0) ColMajor
+Instruction::MemberDecorate IdRef(28) LiteralInteger(0) Offset(LiteralInteger(0))
+Instruction::MemberDecorate IdRef(28) LiteralInteger(0) MatrixStride(LiteralInteger(16))
+Instruction::Decorate IdRef(28) Block
+Instruction::Decorate IdRef(37) Location(LiteralInteger(0))
+Instruction::Decorate IdRef(47) Block
+Instruction::Decorate IdRef(49) Location(LiteralInteger(0))
+Instruction::Decorate IdRef(50) Location(LiteralInteger(1))
+%IdResult(2) = Instruction::TypeVoid 
+%IdResult(3) = Instruction::TypeFunction IdRef(2) []
+%IdResult(6) = Instruction::TypeFloat LiteralInteger(32)
+%IdResult(7) = Instruction::TypeVector IdRef(6) LiteralInteger(4)
+%IdResult(8) = Instruction::TypeInt LiteralInteger(32) LiteralInteger(0)
+%IdResult(9) = Instruction::Constant IdResultType(8) LiteralContextDependentNumber([1])
+%IdResult(10) = Instruction::TypeArray IdRef(6) IdRef(9)
+%IdResult(11) = Instruction::TypeStruct [IdRef(7), IdRef(6), IdRef(10), IdRef(10)]
+%IdResult(12) = Instruction::TypePointer Output IdRef(11)
+%IdResult(13) = Instruction::Variable IdResultType(12) Output None
+%IdResult(14) = Instruction::TypeInt LiteralInteger(32) LiteralInteger(1)
+%IdResult(15) = Instruction::Constant IdResultType(14) LiteralContextDependentNumber([0])
+%IdResult(16) = Instruction::TypeMatrix IdRef(7) LiteralInteger(4)
+%IdResult(17) = Instruction::SpecConstant IdResultType(8) LiteralContextDependentNumber([1])
+%IdResult(18) = Instruction::TypeArray IdRef(16) IdRef(17)
+%IdResult(19) = Instruction::TypeStruct [IdRef(18)]
+%IdResult(20) = Instruction::TypePointer Uniform IdRef(19)
+%IdResult(21) = Instruction::Variable IdResultType(20) Uniform None
+%IdResult(22) = Instruction::TypePointer Input IdRef(14)
+%IdResult(23) = Instruction::Variable IdResultType(22) Input None
+%IdResult(25) = Instruction::TypePointer Uniform IdRef(16)
+%IdResult(28) = Instruction::TypeStruct [IdRef(16)]
+%IdResult(29) = Instruction::TypePointer PushConstant IdRef(28)
+%IdResult(30) = Instruction::Variable IdResultType(29) PushConstant None
+%IdResult(31) = Instruction::TypePointer PushConstant IdRef(16)
+%IdResult(35) = Instruction::TypeVector IdRef(6) LiteralInteger(3)
+%IdResult(36) = Instruction::TypePointer Input IdRef(35)
+%IdResult(37) = Instruction::Variable IdResultType(36) Input None
+%IdResult(39) = Instruction::Constant IdResultType(6) LiteralContextDependentNumber([1065353216])
+%IdResult(45) = Instruction::TypePointer Output IdRef(7)
+%IdResult(47) = Instruction::TypeStruct [IdRef(35)]
+%IdResult(48) = Instruction::TypePointer Output IdRef(47)
+%IdResult(49) = Instruction::Variable IdResultType(48) Output None
+%IdResult(50) = Instruction::Variable IdResultType(36) Input None
+%IdResult(52) = Instruction::TypePointer Output IdRef(35)
+%IdResult(4) = Instruction::Function IdResultType(2) FunctionControl(0) IdRef(3)
+%IdResult(5) = Instruction::Label 
+%IdResult(24) = Instruction::Load IdResultType(14) IdRef(23) None
+%IdResult(26) = Instruction::AccessChain IdResultType(25) IdRef(21) [IdRef(15), IdRef(24)]
+%IdResult(27) = Instruction::Load IdResultType(16) IdRef(26) None
+%IdResult(32) = Instruction::AccessChain IdResultType(31) IdRef(30) [IdRef(15)]
+%IdResult(33) = Instruction::Load IdResultType(16) IdRef(32) None
+%IdResult(34) = Instruction::MatrixTimesMatrix IdResultType(16) IdRef(27) IdRef(33)
+%IdResult(38) = Instruction::Load IdResultType(35) IdRef(37) None
+%IdResult(40) = Instruction::CompositeExtract IdResultType(6) IdRef(38) [LiteralInteger(0)]
+%IdResult(41) = Instruction::CompositeExtract IdResultType(6) IdRef(38) [LiteralInteger(1)]
+%IdResult(42) = Instruction::CompositeExtract IdResultType(6) IdRef(38) [LiteralInteger(2)]
+%IdResult(43) = Instruction::CompositeConstruct IdResultType(7) [IdRef(40), IdRef(41), IdRef(42), IdRef(39)]
+%IdResult(44) = Instruction::MatrixTimesVector IdResultType(7) IdRef(34) IdRef(43)
+%IdResult(46) = Instruction::AccessChain IdResultType(45) IdRef(13) [IdRef(15)]
+Instruction::Store IdRef(46) IdRef(44) None
+%IdResult(51) = Instruction::Load IdResultType(35) IdRef(50) None
+%IdResult(53) = Instruction::AccessChain IdResultType(52) IdRef(49) [IdRef(15)]
+Instruction::Store IdRef(53) IdRef(51) None
+Instruction::Return
+Instruction::FunctionEnd

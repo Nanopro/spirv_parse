@@ -18,6 +18,20 @@ fn test() {
 }
 
 #[test]
+fn test_display() {
+    let bytes = include_bytes!("../../test_shaders/compiled/array_const_len.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+
+    let res = parse_spirv(words).unwrap();
+
+    
+
+    let mut file = File::create("./test_shaders/compiled/array_const_len.txt").unwrap();
+    write!(file, "{}", res);
+}
+
+#[test]
 fn test_entries() {
     let bytes = include_bytes!("../../tests/pos_norm_col.spirv");
     let words =

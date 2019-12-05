@@ -393,6 +393,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
 fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
     let mut constr = vec![];
     let mut members = vec![];
+    let mut formaters = vec![];
 
     for instr in instrs {
         let op_str = &instr.get("opname").unwrap().as_str().unwrap()[2..];
@@ -400,9 +401,10 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
         let op_code = instr.get("opcode").unwrap().as_u64().unwrap() as u16;
         let mut fields = vec![];
         let mut fields_constr = vec![];
+        let mut fields_formatters = vec![];
         match instr.get("operands") {
             Some(operands) => {
-                for operand in operands.as_array().unwrap() {
+                for (num, operand) in operands.as_array().unwrap().iter().enumerate() {
                     let kind = operand.get("kind").unwrap().as_str().unwrap();
                     let name = match operand.get("name") {
                         Some(v) => v.as_str().unwrap(),
@@ -465,9 +467,50 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
                             ));
                         }
                     }
+                    match kind{
+                        "IdResult" => {
+                            fields_formatters.push(
+                                (-1, num)
+                            )
+                        },
+                        _ => {
+                            fields_formatters.push(
+                                (num as isize, num)
+                            )
+                        }
+                    }
+
                 }
+                
+                fields_formatters.sort_by_key(|(prior, _)| *prior);
+                let has_result = fields_formatters[0].0 == -1;
+                let result_key = fields_formatters[0].1;
+                let fmt_string = if has_result {
+                    let rest = fields_formatters.iter().skip(1).map(|(_, num)| format!("{{{}:?}}", num)).collect::<Vec<_>>().join(" ");
+                    format!("%{{{0}:?}} = Instruction::{1} {2}", result_key, op_name, rest)
+                }else{
+                    let rest = fields_formatters.iter().map(|(_, num)| format!("{{{}:?}}", num)).collect::<Vec<_>>().join(" ");
+                    format!("Instruction::{0} {1}",op_name, rest)
+                };
+                let fields = (0..fields.len()).map(|i| {
+                    let ident = Ident::new(&format!("x_{}", i), Span::call_site());
+                    quote!( #ident )
+                    }).collect::<Vec<_>>();
+                let fields_tupple = fields.clone();
+                formaters.push(
+                    quote!{
+                        Instruction::#op_name( #( #fields_tupple, )* ) => {write!(f, #fmt_string, #( #fields, )* )?;}
+                    }
+                );
             }
-            None => (),
+            None => {
+                let fmt_string = format!("Instruction::{}", op_name);
+                formaters.push(
+                    quote!(
+                        Instruction::#op_name => {write!(f, #fmt_string)?;}
+                    )
+                );
+            },
         }
 
         if fields.len() > 0 {
@@ -525,7 +568,15 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
                      #( #constr, )*
                     _ => Instruction::None(op_code)
                 }
-
+            }
+        }
+        impl std::fmt::Display for Instruction{
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result{
+                match self{
+                    #( #formaters, )*
+                    Instruction::None(op_code) => {write!(f, "Instuction::None %{}", op_code)?;},
+                }
+                Ok(())
             }
         }
     }
