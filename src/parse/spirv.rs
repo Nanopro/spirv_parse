@@ -75,6 +75,19 @@ impl Spirv {
                                 continue;
                             }
                         }
+                        // Скипаем билт-ины
+                        if self.decorations.iter().find(|(deco_id, _, deco)| {
+                            if *deco_id != id_result.0{
+                                false
+                            } else{
+                                match deco{
+                                    Decoration::BuiltIn(_) => true,
+                                    _ => false
+                                }
+                            }
+                        }).is_some(){
+                            continue;
+                        }
                         let name = self.name_from_id(interface).expect("__unnamed");
                         let offset = self
                             .decorations
