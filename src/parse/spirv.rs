@@ -15,6 +15,7 @@ pub struct Spirv {
     pub version: (u8, u8),
     pub bound: u32,
     pub instructions: Vec<Instruction>,
+    /// IdRef, Member, Decoration
     pub decorations: Vec<(u32, Option<u32>, Decoration)>,
 }
 
@@ -337,10 +338,11 @@ impl Spirv {
                     let ty = Box::new(self.type_from_id(element.0).unwrap());
 
                     let len = match self.const_value(len.0) {
-                        Some(ConstValue::UInteger(len)) => len,
+                        Some(ConstValue::UInteger(len)) => ArrayLength::Number(len),
+                        Some(ConstValue::SpecConst {spec_id, default, ..}) => ArrayLength::Constant{ spec_id, default},
                         _ => panic!("Array length must be unsigned integer"),
                     };
-                    let len = ArrayLength::Number(len);
+
 
 
                     return Some(Type::Complex(ComplexType::Array {
@@ -451,6 +453,22 @@ impl Spirv {
                         }
                         x => panic!("Not implemented for {:?}", x),
                     }
+                },
+                Instruction::SpecConstant(id_res_type, id_res, default_value) if id_res.0 == id => {
+                    let ty = self.type_from_id(id_res_type.0).unwrap();
+                    let spec_id = self.decorations.iter().find_map(|(id, _,dec)| {
+                        if *id != id_res.0{
+                            None
+                        }else{
+                            match dec{
+                                Decoration::SpecId(i) => Some(i.0),
+                                _ => None
+                            }
+                        }
+                    }).expect("SpecId expected for constant array length");
+                    return Some(
+                        ConstValue::SpecConst{ spec_id, ty, default: default_value.0[0] }
+                    )
                 }
                 _ => (),
             }
@@ -487,8 +505,12 @@ impl Spirv {
 
 impl std::fmt::Display for Spirv{
     fn fmt(&self, f:&mut std::fmt::Formatter) -> std::fmt::Result{
+        writeln!(f, "; Magic: {}", MAGIC)?;
+        writeln!(f, "; Version: {:?}", self.version)?;
+        writeln!(f, "; Bound: {}", self.bound)?;
+        writeln!(f, "; Instructions")?;
         for i in &self.instructions{
-            writeln!(f, "{}", i)?;
+            writeln!(f, "{:12}{}","", i)?;
         }
         Ok(())
     }

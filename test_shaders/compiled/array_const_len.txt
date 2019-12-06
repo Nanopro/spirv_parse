@@ -1,110 +1,114 @@
-Instruction::Capability Shader
-Instruction::Capability MultiView
-Instruction::Extension LiteralString("SPV_KHR_multiview")
-%IdResult(1) = Instruction::ExtInstImport LiteralString("GLSL.std.450")
-Instruction::MemoryModel Logical GLSL450
-Instruction::EntryPoint Vertex IdRef(4) LiteralString("main") [IdRef(13), IdRef(23), IdRef(37), IdRef(49), IdRef(50)]
-Instruction::Source GLSL LiteralInteger(450) None None
-Instruction::SourceExtension LiteralString("GL_ARB_separate_shader_objects")
-Instruction::SourceExtension LiteralString("GL_ARB_shading_language_420pack")
-Instruction::SourceExtension LiteralString("GL_EXT_multiview")
-Instruction::SourceExtension LiteralString("GL_GOOGLE_cpp_style_line_directive")
-Instruction::SourceExtension LiteralString("GL_GOOGLE_include_directive")
-Instruction::Name IdRef(4) LiteralString("main")
-Instruction::Name IdRef(11) LiteralString("gl_PerVertex")
-Instruction::MemberName IdRef(11) LiteralInteger(0) LiteralString("gl_Position")
-Instruction::MemberName IdRef(11) LiteralInteger(1) LiteralString("gl_PointSize")
-Instruction::MemberName IdRef(11) LiteralInteger(2) LiteralString("gl_ClipDistance")
-Instruction::MemberName IdRef(11) LiteralInteger(3) LiteralString("gl_CullDistance")
-Instruction::Name IdRef(13) LiteralString("")
-Instruction::Name IdRef(17) LiteralString("NUM_VIEW")
-Instruction::Name IdRef(19) LiteralString("UBO")
-Instruction::MemberName IdRef(19) LiteralInteger(0) LiteralString("viewproj")
-Instruction::Name IdRef(21) LiteralString("ubo")
-Instruction::Name IdRef(23) LiteralString("gl_ViewIndex")
-Instruction::Name IdRef(28) LiteralString("Model")
-Instruction::MemberName IdRef(28) LiteralInteger(0) LiteralString("model")
-Instruction::Name IdRef(30) LiteralString("")
-Instruction::Name IdRef(37) LiteralString("position")
-Instruction::Name IdRef(47) LiteralString("VertexData")
-Instruction::MemberName IdRef(47) LiteralInteger(0) LiteralString("color")
-Instruction::Name IdRef(49) LiteralString("vertex")
-Instruction::Name IdRef(50) LiteralString("color")
-Instruction::MemberDecorate IdRef(11) LiteralInteger(0) BuiltIn(Position)
-Instruction::MemberDecorate IdRef(11) LiteralInteger(1) BuiltIn(PointSize)
-Instruction::MemberDecorate IdRef(11) LiteralInteger(2) BuiltIn(ClipDistance)
-Instruction::MemberDecorate IdRef(11) LiteralInteger(3) BuiltIn(CullDistance)
-Instruction::Decorate IdRef(11) Block
-Instruction::Decorate IdRef(17) SpecId(LiteralInteger(0))
-Instruction::Decorate IdRef(18) ArrayStride(LiteralInteger(64))
-Instruction::MemberDecorate IdRef(19) LiteralInteger(0) ColMajor
-Instruction::MemberDecorate IdRef(19) LiteralInteger(0) Offset(LiteralInteger(0))
-Instruction::MemberDecorate IdRef(19) LiteralInteger(0) MatrixStride(LiteralInteger(16))
-Instruction::Decorate IdRef(19) Block
-Instruction::Decorate IdRef(21) DescriptorSet(LiteralInteger(0))
-Instruction::Decorate IdRef(21) Binding(LiteralInteger(0))
-Instruction::Decorate IdRef(23) BuiltIn(ViewIndex)
-Instruction::MemberDecorate IdRef(28) LiteralInteger(0) ColMajor
-Instruction::MemberDecorate IdRef(28) LiteralInteger(0) Offset(LiteralInteger(0))
-Instruction::MemberDecorate IdRef(28) LiteralInteger(0) MatrixStride(LiteralInteger(16))
-Instruction::Decorate IdRef(28) Block
-Instruction::Decorate IdRef(37) Location(LiteralInteger(0))
-Instruction::Decorate IdRef(47) Block
-Instruction::Decorate IdRef(49) Location(LiteralInteger(0))
-Instruction::Decorate IdRef(50) Location(LiteralInteger(1))
-%IdResult(2) = Instruction::TypeVoid 
-%IdResult(3) = Instruction::TypeFunction IdRef(2) []
-%IdResult(6) = Instruction::TypeFloat LiteralInteger(32)
-%IdResult(7) = Instruction::TypeVector IdRef(6) LiteralInteger(4)
-%IdResult(8) = Instruction::TypeInt LiteralInteger(32) LiteralInteger(0)
-%IdResult(9) = Instruction::Constant IdResultType(8) LiteralContextDependentNumber([1])
-%IdResult(10) = Instruction::TypeArray IdRef(6) IdRef(9)
-%IdResult(11) = Instruction::TypeStruct [IdRef(7), IdRef(6), IdRef(10), IdRef(10)]
-%IdResult(12) = Instruction::TypePointer Output IdRef(11)
-%IdResult(13) = Instruction::Variable IdResultType(12) Output None
-%IdResult(14) = Instruction::TypeInt LiteralInteger(32) LiteralInteger(1)
-%IdResult(15) = Instruction::Constant IdResultType(14) LiteralContextDependentNumber([0])
-%IdResult(16) = Instruction::TypeMatrix IdRef(7) LiteralInteger(4)
-%IdResult(17) = Instruction::SpecConstant IdResultType(8) LiteralContextDependentNumber([1])
-%IdResult(18) = Instruction::TypeArray IdRef(16) IdRef(17)
-%IdResult(19) = Instruction::TypeStruct [IdRef(18)]
-%IdResult(20) = Instruction::TypePointer Uniform IdRef(19)
-%IdResult(21) = Instruction::Variable IdResultType(20) Uniform None
-%IdResult(22) = Instruction::TypePointer Input IdRef(14)
-%IdResult(23) = Instruction::Variable IdResultType(22) Input None
-%IdResult(25) = Instruction::TypePointer Uniform IdRef(16)
-%IdResult(28) = Instruction::TypeStruct [IdRef(16)]
-%IdResult(29) = Instruction::TypePointer PushConstant IdRef(28)
-%IdResult(30) = Instruction::Variable IdResultType(29) PushConstant None
-%IdResult(31) = Instruction::TypePointer PushConstant IdRef(16)
-%IdResult(35) = Instruction::TypeVector IdRef(6) LiteralInteger(3)
-%IdResult(36) = Instruction::TypePointer Input IdRef(35)
-%IdResult(37) = Instruction::Variable IdResultType(36) Input None
-%IdResult(39) = Instruction::Constant IdResultType(6) LiteralContextDependentNumber([1065353216])
-%IdResult(45) = Instruction::TypePointer Output IdRef(7)
-%IdResult(47) = Instruction::TypeStruct [IdRef(35)]
-%IdResult(48) = Instruction::TypePointer Output IdRef(47)
-%IdResult(49) = Instruction::Variable IdResultType(48) Output None
-%IdResult(50) = Instruction::Variable IdResultType(36) Input None
-%IdResult(52) = Instruction::TypePointer Output IdRef(35)
-%IdResult(4) = Instruction::Function IdResultType(2) FunctionControl(0) IdRef(3)
-%IdResult(5) = Instruction::Label 
-%IdResult(24) = Instruction::Load IdResultType(14) IdRef(23) None
-%IdResult(26) = Instruction::AccessChain IdResultType(25) IdRef(21) [IdRef(15), IdRef(24)]
-%IdResult(27) = Instruction::Load IdResultType(16) IdRef(26) None
-%IdResult(32) = Instruction::AccessChain IdResultType(31) IdRef(30) [IdRef(15)]
-%IdResult(33) = Instruction::Load IdResultType(16) IdRef(32) None
-%IdResult(34) = Instruction::MatrixTimesMatrix IdResultType(16) IdRef(27) IdRef(33)
-%IdResult(38) = Instruction::Load IdResultType(35) IdRef(37) None
-%IdResult(40) = Instruction::CompositeExtract IdResultType(6) IdRef(38) [LiteralInteger(0)]
-%IdResult(41) = Instruction::CompositeExtract IdResultType(6) IdRef(38) [LiteralInteger(1)]
-%IdResult(42) = Instruction::CompositeExtract IdResultType(6) IdRef(38) [LiteralInteger(2)]
-%IdResult(43) = Instruction::CompositeConstruct IdResultType(7) [IdRef(40), IdRef(41), IdRef(42), IdRef(39)]
-%IdResult(44) = Instruction::MatrixTimesVector IdResultType(7) IdRef(34) IdRef(43)
-%IdResult(46) = Instruction::AccessChain IdResultType(45) IdRef(13) [IdRef(15)]
-Instruction::Store IdRef(46) IdRef(44) None
-%IdResult(51) = Instruction::Load IdResultType(35) IdRef(50) None
-%IdResult(53) = Instruction::AccessChain IdResultType(52) IdRef(49) [IdRef(15)]
-Instruction::Store IdRef(53) IdRef(51) None
-Instruction::Return
-Instruction::FunctionEnd
+; Magic: 119734787
+; Version: (1, 0)
+; Bound: 54
+; Instructions
+            OpCapability Shader
+            OpCapability MultiView
+            OpExtension "SPV_KHR_multiview"
+            %1 = OpExtInstImport "GLSL.std.450"
+            OpMemoryModel Logical GLSL450
+            OpEntryPoint Vertex &4 "main" [&13, &23, &37, &49, &50]
+            OpSource GLSL 450 None None
+            OpSourceExtension "GL_ARB_separate_shader_objects"
+            OpSourceExtension "GL_ARB_shading_language_420pack"
+            OpSourceExtension "GL_EXT_multiview"
+            OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+            OpSourceExtension "GL_GOOGLE_include_directive"
+            OpName &4 "main"
+            OpName &11 "gl_PerVertex"
+            OpMemberName &11 0 "gl_Position"
+            OpMemberName &11 1 "gl_PointSize"
+            OpMemberName &11 2 "gl_ClipDistance"
+            OpMemberName &11 3 "gl_CullDistance"
+            OpName &13 ""
+            OpName &17 "NUM_VIEW"
+            OpName &19 "UBO"
+            OpMemberName &19 0 "viewproj"
+            OpName &21 "ubo"
+            OpName &23 "gl_ViewIndex"
+            OpName &28 "Model"
+            OpMemberName &28 0 "model"
+            OpName &30 ""
+            OpName &37 "position"
+            OpName &47 "VertexData"
+            OpMemberName &47 0 "color"
+            OpName &49 "vertex"
+            OpName &50 "color"
+            OpMemberDecorate &11 0 BuiltIn(Position)
+            OpMemberDecorate &11 1 BuiltIn(PointSize)
+            OpMemberDecorate &11 2 BuiltIn(ClipDistance)
+            OpMemberDecorate &11 3 BuiltIn(CullDistance)
+            OpDecorate &11 Block
+            OpDecorate &17 SpecId(0)
+            OpDecorate &18 ArrayStride(64)
+            OpMemberDecorate &19 0 ColMajor
+            OpMemberDecorate &19 0 Offset(0)
+            OpMemberDecorate &19 0 MatrixStride(16)
+            OpDecorate &19 Block
+            OpDecorate &21 DescriptorSet(0)
+            OpDecorate &21 Binding(0)
+            OpDecorate &23 BuiltIn(ViewIndex)
+            OpMemberDecorate &28 0 ColMajor
+            OpMemberDecorate &28 0 Offset(0)
+            OpMemberDecorate &28 0 MatrixStride(16)
+            OpDecorate &28 Block
+            OpDecorate &37 Location(0)
+            OpDecorate &47 Block
+            OpDecorate &49 Location(0)
+            OpDecorate &50 Location(1)
+            %2 = OpTypeVoid 
+            %3 = OpTypeFunction &2 []
+            %6 = OpTypeFloat 32
+            %7 = OpTypeVector &6 4
+            %8 = OpTypeInt 32 0
+            %9 = OpConstant @8 [1]
+            %10 = OpTypeArray &6 &9
+            %11 = OpTypeStruct [&7, &6, &10, &10]
+            %12 = OpTypePointer Output &11
+            %13 = OpVariable @12 Output None
+            %14 = OpTypeInt 32 1
+            %15 = OpConstant @14 [0]
+            %16 = OpTypeMatrix &7 4
+            %17 = OpSpecConstant @8 [1]
+            %18 = OpTypeArray &16 &17
+            %19 = OpTypeStruct [&18]
+            %20 = OpTypePointer Uniform &19
+            %21 = OpVariable @20 Uniform None
+            %22 = OpTypePointer Input &14
+            %23 = OpVariable @22 Input None
+            %25 = OpTypePointer Uniform &16
+            %28 = OpTypeStruct [&16]
+            %29 = OpTypePointer PushConstant &28
+            %30 = OpVariable @29 PushConstant None
+            %31 = OpTypePointer PushConstant &16
+            %35 = OpTypeVector &6 3
+            %36 = OpTypePointer Input &35
+            %37 = OpVariable @36 Input None
+            %39 = OpConstant @6 [1065353216]
+            %45 = OpTypePointer Output &7
+            %47 = OpTypeStruct [&35]
+            %48 = OpTypePointer Output &47
+            %49 = OpVariable @48 Output None
+            %50 = OpVariable @36 Input None
+            %52 = OpTypePointer Output &35
+            %4 = OpFunction @2 FunctionControl(0) &3
+            %5 = OpLabel 
+            %24 = OpLoad @14 &23 None
+            %26 = OpAccessChain @25 &21 [&15, &24]
+            %27 = OpLoad @16 &26 None
+            %32 = OpAccessChain @31 &30 [&15]
+            %33 = OpLoad @16 &32 None
+            %34 = OpMatrixTimesMatrix @16 &27 &33
+            %38 = OpLoad @35 &37 None
+            %40 = OpCompositeExtract @6 &38 [0]
+            %41 = OpCompositeExtract @6 &38 [1]
+            %42 = OpCompositeExtract @6 &38 [2]
+            %43 = OpCompositeConstruct @7 [&40, &41, &42, &39]
+            %44 = OpMatrixTimesVector @7 &34 &43
+            %46 = OpAccessChain @45 &13 [&15]
+            OpStore &46 &44 None
+            %51 = OpLoad @35 &50 None
+            %53 = OpAccessChain @52 &49 [&15]
+            OpStore &53 &51 None
+            OpReturn
+            OpFunctionEnd

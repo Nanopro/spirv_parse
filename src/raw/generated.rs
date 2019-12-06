@@ -2703,49 +2703,239 @@ impl Capability {
         }
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdResultType(pub u32);
 impl IdResultType {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for IdResultType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(
+                    f,
+                    "{:<width$?}",
+                    format_args!("{}{}", "@", self.0),
+                    width = width
+                ),
+                Alignment::Right => write!(
+                    f,
+                    "{:>width$?}",
+                    format_args!("{}{}", "@", self.0),
+                    width = width
+                ),
+                Alignment::Center => write!(
+                    f,
+                    "{:^width$?}",
+                    format_args!("{}{}", "@", self.0),
+                    width = width
+                ),
+            }
+        } else {
+            write!(
+                f,
+                "{:width$?}",
+                format_args!("{}{}", "@", self.0),
+                width = width
+            )
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdResult(pub u32);
 impl IdResult {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for IdResult {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(
+                    f,
+                    "{:<width$?}",
+                    format_args!("{}{}", "%", self.0),
+                    width = width
+                ),
+                Alignment::Right => write!(
+                    f,
+                    "{:>width$?}",
+                    format_args!("{}{}", "%", self.0),
+                    width = width
+                ),
+                Alignment::Center => write!(
+                    f,
+                    "{:^width$?}",
+                    format_args!("{}{}", "%", self.0),
+                    width = width
+                ),
+            }
+        } else {
+            write!(
+                f,
+                "{:width$?}",
+                format_args!("{}{}", "%", self.0),
+                width = width
+            )
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdMemorySemantics(pub u32);
 impl IdMemorySemantics {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for IdMemorySemantics {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(
+                    f,
+                    "{:<width$?}",
+                    format_args!("{}{}", "", self.0),
+                    width = width
+                ),
+                Alignment::Right => write!(
+                    f,
+                    "{:>width$?}",
+                    format_args!("{}{}", "", self.0),
+                    width = width
+                ),
+                Alignment::Center => write!(
+                    f,
+                    "{:^width$?}",
+                    format_args!("{}{}", "", self.0),
+                    width = width
+                ),
+            }
+        } else {
+            write!(
+                f,
+                "{:width$?}",
+                format_args!("{}{}", "", self.0),
+                width = width
+            )
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdScope(pub u32);
 impl IdScope {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for IdScope {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(
+                    f,
+                    "{:<width$?}",
+                    format_args!("{}{}", "", self.0),
+                    width = width
+                ),
+                Alignment::Right => write!(
+                    f,
+                    "{:>width$?}",
+                    format_args!("{}{}", "", self.0),
+                    width = width
+                ),
+                Alignment::Center => write!(
+                    f,
+                    "{:^width$?}",
+                    format_args!("{}{}", "", self.0),
+                    width = width
+                ),
+            }
+        } else {
+            write!(
+                f,
+                "{:width$?}",
+                format_args!("{}{}", "", self.0),
+                width = width
+            )
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct IdRef(pub u32);
 impl IdRef {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for IdRef {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(
+                    f,
+                    "{:<width$?}",
+                    format_args!("{}{}", "&", self.0),
+                    width = width
+                ),
+                Alignment::Right => write!(
+                    f,
+                    "{:>width$?}",
+                    format_args!("{}{}", "&", self.0),
+                    width = width
+                ),
+                Alignment::Center => write!(
+                    f,
+                    "{:^width$?}",
+                    format_args!("{}{}", "&", self.0),
+                    width = width
+                ),
+            }
+        } else {
+            write!(
+                f,
+                "{:width$?}",
+                format_args!("{}{}", "&", self.0),
+                width = width
+            )
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralInteger(pub u32);
 impl LiteralInteger {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for LiteralInteger {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(f, "{:<1$?}", self.0, width),
+                Alignment::Right => write!(f, "{:>1$?}", self.0, width),
+                Alignment::Center => write!(f, "{:^1$?}", self.0, width),
+            }
+        } else {
+            write!(f, "{:width$?}", self.0, width = width)
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralString(pub String);
 impl LiteralString {
     pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
@@ -2753,7 +2943,22 @@ impl LiteralString {
         (Self(res.0), res.1)
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for LiteralString {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(f, "{:<1$?}", self.0, width),
+                Alignment::Right => write!(f, "{:>1$?}", self.0, width),
+                Alignment::Center => write!(f, "{:^1$?}", self.0, width),
+            }
+        } else {
+            write!(f, "{:width$?}", self.0, width = width)
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralContextDependentNumber(pub Vec<u32>);
 impl LiteralContextDependentNumber {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
@@ -2765,14 +2970,44 @@ impl LiteralContextDependentNumber {
         (Self(v), data)
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for LiteralContextDependentNumber {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(f, "{:<1$?}", self.0, width),
+                Alignment::Right => write!(f, "{:>1$?}", self.0, width),
+                Alignment::Center => write!(f, "{:^1$?}", self.0, width),
+            }
+        } else {
+            write!(f, "{:width$?}", self.0, width = width)
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralExtInstInteger(pub u32);
 impl LiteralExtInstInteger {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
         (Self(data[0]), &data[1..])
     }
 }
-#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+impl std::fmt::Debug for LiteralExtInstInteger {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(f, "{:<1$?}", self.0, width),
+                Alignment::Right => write!(f, "{:>1$?}", self.0, width),
+                Alignment::Center => write!(f, "{:^1$?}", self.0, width),
+            }
+        } else {
+            write!(f, "{:width$?}", self.0, width = width)
+        }
+    }
+}
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct LiteralSpecConstantOpInteger(pub Vec<u32>);
 impl LiteralSpecConstantOpInteger {
     pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
@@ -2782,6 +3017,21 @@ impl LiteralSpecConstantOpInteger {
             data = &data[1..];
         }
         (Self(v), data)
+    }
+}
+impl std::fmt::Debug for LiteralSpecConstantOpInteger {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use std::fmt::{self, Alignment};
+        let width = f.width().unwrap_or(0);
+        if let Some(s) = f.align() {
+            match s {
+                Alignment::Left => write!(f, "{:<1$?}", self.0, width),
+                Alignment::Right => write!(f, "{:>1$?}", self.0, width),
+                Alignment::Center => write!(f, "{:^1$?}", self.0, width),
+            }
+        } else {
+            write!(f, "{:width$?}", self.0, width = width)
+        }
     }
 }
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
@@ -17275,1553 +17525,1317 @@ impl std::fmt::Display for Instruction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Instruction::Nop => {
-                write!(f, "Instruction::Nop")?;
+                write!(f, "OpNop")?;
             }
             Instruction::Undef(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::Undef {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpUndef {0:?}", x_0, x_1,)?;
             }
             Instruction::SourceContinued(x_0) => {
-                write!(f, "Instruction::SourceContinued {0:?}", x_0,)?;
+                write!(f, "OpSourceContinued {0:?}", x_0,)?;
             }
             Instruction::Source(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "Instruction::Source {0:?} {1:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "OpSource {0:?} {1:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::SourceExtension(x_0) => {
-                write!(f, "Instruction::SourceExtension {0:?}", x_0,)?;
+                write!(f, "OpSourceExtension {0:?}", x_0,)?;
             }
             Instruction::Name(x_0, x_1) => {
-                write!(f, "Instruction::Name {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpName {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::MemberName(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "Instruction::MemberName {0:?} {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "OpMemberName {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::String(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::String {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpString {1:?}", x_0, x_1,)?;
             }
             Instruction::Line(x_0, x_1, x_2) => {
-                write!(f, "Instruction::Line {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "OpLine {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::Extension(x_0) => {
-                write!(f, "Instruction::Extension {0:?}", x_0,)?;
+                write!(f, "OpExtension {0:?}", x_0,)?;
             }
             Instruction::ExtInstImport(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::ExtInstImport {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpExtInstImport {1:?}", x_0, x_1,)?;
             }
             Instruction::ExtInst(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ExtInst {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpExtInst {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::MemoryModel(x_0, x_1) => {
-                write!(f, "Instruction::MemoryModel {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpMemoryModel {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::EntryPoint(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "Instruction::EntryPoint {0:?} {1:?} {2:?} {3:?}",
+                    "OpEntryPoint {0:?} {1:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ExecutionMode(x_0, x_1) => {
-                write!(f, "Instruction::ExecutionMode {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpExecutionMode {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::Capability(x_0) => {
-                write!(f, "Instruction::Capability {0:?}", x_0,)?;
+                write!(f, "OpCapability {0:?}", x_0,)?;
             }
             Instruction::TypeVoid(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeVoid ", x_0,)?;
+                write!(f, "{0:?} = OpTypeVoid ", x_0,)?;
             }
             Instruction::TypeBool(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeBool ", x_0,)?;
+                write!(f, "{0:?} = OpTypeBool ", x_0,)?;
             }
             Instruction::TypeInt(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypeInt {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{0:?} = OpTypeInt {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::TypeFloat(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::TypeFloat {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpTypeFloat {1:?}", x_0, x_1,)?;
             }
             Instruction::TypeVector(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypeVector {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{0:?} = OpTypeVector {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::TypeMatrix(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypeMatrix {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{0:?} = OpTypeMatrix {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::TypeImage(x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8) => {
-                write ! ( f , "%{0:?} = Instruction::TypeImage {1:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , ) ? ;
+                write!(
+                    f,
+                    "{0:?} = OpTypeImage {1:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8,
+                )?;
             }
             Instruction::TypeSampler(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeSampler ", x_0,)?;
+                write!(f, "{0:?} = OpTypeSampler ", x_0,)?;
             }
             Instruction::TypeSampledImage(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::TypeSampledImage {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpTypeSampledImage {1:?}", x_0, x_1,)?;
             }
             Instruction::TypeArray(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypeArray {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{0:?} = OpTypeArray {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::TypeRuntimeArray(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::TypeRuntimeArray {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpTypeRuntimeArray {1:?}", x_0, x_1,)?;
             }
             Instruction::TypeStruct(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::TypeStruct {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpTypeStruct {1:?}", x_0, x_1,)?;
             }
             Instruction::TypeOpaque(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::TypeOpaque {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpTypeOpaque {1:?}", x_0, x_1,)?;
             }
             Instruction::TypePointer(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypePointer {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{0:?} = OpTypePointer {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::TypeFunction(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypeFunction {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{0:?} = OpTypeFunction {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::TypeEvent(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeEvent ", x_0,)?;
+                write!(f, "{0:?} = OpTypeEvent ", x_0,)?;
             }
             Instruction::TypeDeviceEvent(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeDeviceEvent ", x_0,)?;
+                write!(f, "{0:?} = OpTypeDeviceEvent ", x_0,)?;
             }
             Instruction::TypeReserveId(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeReserveId ", x_0,)?;
+                write!(f, "{0:?} = OpTypeReserveId ", x_0,)?;
             }
             Instruction::TypeQueue(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeQueue ", x_0,)?;
+                write!(f, "{0:?} = OpTypeQueue ", x_0,)?;
             }
             Instruction::TypePipe(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::TypePipe {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpTypePipe {1:?}", x_0, x_1,)?;
             }
             Instruction::TypeForwardPointer(x_0, x_1) => {
-                write!(f, "Instruction::TypeForwardPointer {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpTypeForwardPointer {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::ConstantTrue(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::ConstantTrue {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpConstantTrue {0:?}", x_0, x_1,)?;
             }
             Instruction::ConstantFalse(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::ConstantFalse {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpConstantFalse {0:?}", x_0, x_1,)?;
             }
             Instruction::Constant(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::Constant {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConstant {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConstantComposite(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ConstantComposite {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConstantComposite {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConstantSampler(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ConstantSampler {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpConstantSampler {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ConstantNull(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::ConstantNull {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpConstantNull {0:?}", x_0, x_1,)?;
             }
             Instruction::SpecConstantTrue(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::SpecConstantTrue {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpSpecConstantTrue {0:?}", x_0, x_1,)?;
             }
             Instruction::SpecConstantFalse(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::SpecConstantFalse {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpSpecConstantFalse {0:?}", x_0, x_1,)?;
             }
             Instruction::SpecConstant(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SpecConstant {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSpecConstant {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SpecConstantComposite(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SpecConstantComposite {0:?} {2:?}",
+                    "{1:?} = OpSpecConstantComposite {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SpecConstantOp(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SpecConstantOp {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSpecConstantOp {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::Function(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::Function {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFunction {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FunctionParameter(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::FunctionParameter {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpFunctionParameter {0:?}", x_0, x_1,)?;
             }
             Instruction::FunctionEnd => {
-                write!(f, "Instruction::FunctionEnd")?;
+                write!(f, "OpFunctionEnd")?;
             }
             Instruction::FunctionCall(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FunctionCall {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFunctionCall {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Variable(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::Variable {0:?} {2:?} {3:?}",
+                    "{1:?} = OpVariable {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ImageTexelPointer(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageTexelPointer {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageTexelPointer {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::Load(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::Load {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpLoad {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::Store(x_0, x_1, x_2) => {
-                write!(f, "Instruction::Store {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "OpStore {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::CopyMemory(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "Instruction::CopyMemory {0:?} {1:?} {2:?} {3:?}",
+                    "OpCopyMemory {0:?} {1:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::CopyMemorySized(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "Instruction::CopyMemorySized {0:?} {1:?} {2:?} {3:?} {4:?}",
+                    "OpCopyMemorySized {0:?} {1:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::AccessChain(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AccessChain {0:?} {2:?} {3:?}",
+                    "{1:?} = OpAccessChain {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::InBoundsAccessChain(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::InBoundsAccessChain {0:?} {2:?} {3:?}",
+                    "{1:?} = OpInBoundsAccessChain {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::PtrAccessChain(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::PtrAccessChain {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpPtrAccessChain {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ArrayLength(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ArrayLength {0:?} {2:?} {3:?}",
+                    "{1:?} = OpArrayLength {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GenericPtrMemSemantics(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GenericPtrMemSemantics {0:?} {2:?}",
+                    "{1:?} = OpGenericPtrMemSemantics {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::InBoundsPtrAccessChain(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::InBoundsPtrAccessChain {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpInBoundsPtrAccessChain {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::Decorate(x_0, x_1) => {
-                write!(f, "Instruction::Decorate {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpDecorate {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::MemberDecorate(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "Instruction::MemberDecorate {0:?} {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "OpMemberDecorate {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::DecorationGroup(x_0) => {
-                write!(f, "%{0:?} = Instruction::DecorationGroup ", x_0,)?;
+                write!(f, "{0:?} = OpDecorationGroup ", x_0,)?;
             }
             Instruction::GroupDecorate(x_0, x_1) => {
-                write!(f, "Instruction::GroupDecorate {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpGroupDecorate {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::GroupMemberDecorate(x_0, x_1) => {
-                write!(f, "Instruction::GroupMemberDecorate {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpGroupMemberDecorate {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::VectorExtractDynamic(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::VectorExtractDynamic {0:?} {2:?} {3:?}",
+                    "{1:?} = OpVectorExtractDynamic {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::VectorInsertDynamic(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::VectorInsertDynamic {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpVectorInsertDynamic {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::VectorShuffle(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::VectorShuffle {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpVectorShuffle {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::CompositeConstruct(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::CompositeConstruct {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpCompositeConstruct {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::CompositeExtract(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::CompositeExtract {0:?} {2:?} {3:?}",
+                    "{1:?} = OpCompositeExtract {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::CompositeInsert(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::CompositeInsert {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpCompositeInsert {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::CopyObject(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::CopyObject {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpCopyObject {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::Transpose(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::Transpose {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpTranspose {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SampledImage(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SampledImage {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSampledImage {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ImageSampleImplicitLod(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSampleImplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSampleImplicitLod {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSampleExplicitLod(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSampleExplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSampleExplicitLod {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSampleDrefImplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSampleDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSampleDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageSampleDrefExplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSampleDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSampleDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageSampleProjImplicitLod(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSampleProjImplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSampleProjImplicitLod {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSampleProjExplicitLod(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSampleProjExplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSampleProjExplicitLod {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSampleProjDrefImplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSampleProjDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSampleProjDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageSampleProjDrefExplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSampleProjDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSampleProjDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageFetch(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageFetch {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageFetch {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageGather(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageGather {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpImageGather {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::ImageDrefGather(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageDrefGather {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpImageDrefGather {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::ImageRead(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageRead {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageRead {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageWrite(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "Instruction::ImageWrite {0:?} {1:?} {2:?} {3:?}",
+                    "OpImageWrite {0:?} {1:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Image(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::Image {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpImage {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ImageQueryFormat(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ImageQueryFormat {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpImageQueryFormat {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ImageQueryOrder(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ImageQueryOrder {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpImageQueryOrder {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ImageQuerySizeLod(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageQuerySizeLod {0:?} {2:?} {3:?}",
+                    "{1:?} = OpImageQuerySizeLod {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ImageQuerySize(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ImageQuerySize {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpImageQuerySize {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ImageQueryLod(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageQueryLod {0:?} {2:?} {3:?}",
+                    "{1:?} = OpImageQueryLod {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ImageQueryLevels(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ImageQueryLevels {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpImageQueryLevels {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ImageQuerySamples(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ImageQuerySamples {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpImageQuerySamples {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConvertFToU(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ConvertFToU {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConvertFToU {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConvertFToS(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ConvertFToS {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConvertFToS {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConvertSToF(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ConvertSToF {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConvertSToF {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConvertUToF(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ConvertUToF {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConvertUToF {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::UConvert(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::UConvert {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpUConvert {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SConvert(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SConvert {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSConvert {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::FConvert(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FConvert {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpFConvert {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::QuantizeToF16(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::QuantizeToF16 {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpQuantizeToF16 {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConvertPtrToU(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ConvertPtrToU {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConvertPtrToU {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SatConvertSToU(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SatConvertSToU {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSatConvertSToU {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SatConvertUToS(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SatConvertUToS {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSatConvertUToS {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ConvertUToPtr(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ConvertUToPtr {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpConvertUToPtr {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::PtrCastToGeneric(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::PtrCastToGeneric {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpPtrCastToGeneric {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::GenericCastToPtr(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::GenericCastToPtr {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpGenericCastToPtr {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::GenericCastToPtrExplicit(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GenericCastToPtrExplicit {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGenericCastToPtrExplicit {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Bitcast(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::Bitcast {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpBitcast {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SNegate(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SNegate {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSNegate {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::FNegate(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FNegate {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpFNegate {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::IAdd(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IAdd {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpIAdd {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::FAdd(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FAdd {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpFAdd {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::ISub(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ISub {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpISub {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::FSub(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FSub {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpFSub {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::IMul(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IMul {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpIMul {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::FMul(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FMul {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpFMul {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::UDiv(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::UDiv {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpUDiv {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::SDiv(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SDiv {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpSDiv {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::FDiv(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FDiv {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpFDiv {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::UMod(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::UMod {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpUMod {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::SRem(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SRem {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpSRem {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::SMod(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SMod {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpSMod {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::FRem(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FRem {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpFRem {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::FMod(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FMod {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpFMod {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::VectorTimesScalar(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::VectorTimesScalar {0:?} {2:?} {3:?}",
+                    "{1:?} = OpVectorTimesScalar {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::MatrixTimesScalar(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::MatrixTimesScalar {0:?} {2:?} {3:?}",
+                    "{1:?} = OpMatrixTimesScalar {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::VectorTimesMatrix(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::VectorTimesMatrix {0:?} {2:?} {3:?}",
+                    "{1:?} = OpVectorTimesMatrix {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::MatrixTimesVector(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::MatrixTimesVector {0:?} {2:?} {3:?}",
+                    "{1:?} = OpMatrixTimesVector {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::MatrixTimesMatrix(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::MatrixTimesMatrix {0:?} {2:?} {3:?}",
+                    "{1:?} = OpMatrixTimesMatrix {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::OuterProduct(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::OuterProduct {0:?} {2:?} {3:?}",
+                    "{1:?} = OpOuterProduct {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Dot(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::Dot {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpDot {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::IAddCarry(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::IAddCarry {0:?} {2:?} {3:?}",
+                    "{1:?} = OpIAddCarry {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ISubBorrow(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ISubBorrow {0:?} {2:?} {3:?}",
+                    "{1:?} = OpISubBorrow {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::UMulExtended(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UMulExtended {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUMulExtended {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SMulExtended(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SMulExtended {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSMulExtended {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Any(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::Any {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpAny {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::All(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::All {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpAll {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::IsNan(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::IsNan {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpIsNan {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::IsInf(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::IsInf {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpIsInf {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::IsFinite(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IsFinite {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpIsFinite {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::IsNormal(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IsNormal {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpIsNormal {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SignBitSet(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SignBitSet {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSignBitSet {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::LessOrGreater(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::LessOrGreater {0:?} {2:?} {3:?}",
+                    "{1:?} = OpLessOrGreater {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Ordered(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::Ordered {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpOrdered {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::Unordered(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::Unordered {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUnordered {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::LogicalEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::LogicalEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpLogicalEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::LogicalNotEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::LogicalNotEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpLogicalNotEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::LogicalOr(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::LogicalOr {0:?} {2:?} {3:?}",
+                    "{1:?} = OpLogicalOr {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::LogicalAnd(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::LogicalAnd {0:?} {2:?} {3:?}",
+                    "{1:?} = OpLogicalAnd {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::LogicalNot(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::LogicalNot {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpLogicalNot {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::Select(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::Select {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpSelect {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::IEqual(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IEqual {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpIEqual {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::INotEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::INotEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpINotEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::UGreaterThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UGreaterThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUGreaterThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SGreaterThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SGreaterThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSGreaterThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::UGreaterThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UGreaterThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUGreaterThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SGreaterThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SGreaterThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSGreaterThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ULessThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ULessThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpULessThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SLessThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SLessThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSLessThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ULessThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ULessThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpULessThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SLessThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SLessThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSLessThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FOrdEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FOrdEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFOrdEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FUnordEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FUnordEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFUnordEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FOrdNotEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FOrdNotEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFOrdNotEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FUnordNotEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FUnordNotEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFUnordNotEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FOrdLessThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FOrdLessThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFOrdLessThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FUnordLessThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FUnordLessThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFUnordLessThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FOrdGreaterThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FOrdGreaterThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFOrdGreaterThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FUnordGreaterThan(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FUnordGreaterThan {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFUnordGreaterThan {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FOrdLessThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FOrdLessThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFOrdLessThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FUnordLessThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FUnordLessThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFUnordLessThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FOrdGreaterThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FOrdGreaterThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFOrdGreaterThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FUnordGreaterThanEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FUnordGreaterThanEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFUnordGreaterThanEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ShiftRightLogical(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ShiftRightLogical {0:?} {2:?} {3:?}",
+                    "{1:?} = OpShiftRightLogical {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ShiftRightArithmetic(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ShiftRightArithmetic {0:?} {2:?} {3:?}",
+                    "{1:?} = OpShiftRightArithmetic {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ShiftLeftLogical(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ShiftLeftLogical {0:?} {2:?} {3:?}",
+                    "{1:?} = OpShiftLeftLogical {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::BitwiseOr(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::BitwiseOr {0:?} {2:?} {3:?}",
+                    "{1:?} = OpBitwiseOr {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::BitwiseXor(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::BitwiseXor {0:?} {2:?} {3:?}",
+                    "{1:?} = OpBitwiseXor {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::BitwiseAnd(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::BitwiseAnd {0:?} {2:?} {3:?}",
+                    "{1:?} = OpBitwiseAnd {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Not(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::Not {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpNot {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::BitFieldInsert(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::BitFieldInsert {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpBitFieldInsert {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::BitFieldSExtract(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::BitFieldSExtract {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpBitFieldSExtract {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::BitFieldUExtract(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::BitFieldUExtract {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpBitFieldUExtract {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::BitReverse(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::BitReverse {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpBitReverse {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::BitCount(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::BitCount {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpBitCount {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::DPdx(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::DPdx {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpDPdx {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::DPdy(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::DPdy {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpDPdy {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::Fwidth(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::Fwidth {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpFwidth {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::DPdxFine(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::DPdxFine {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpDPdxFine {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::DPdyFine(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::DPdyFine {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpDPdyFine {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::FwidthFine(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FwidthFine {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpFwidthFine {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::DPdxCoarse(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::DPdxCoarse {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpDPdxCoarse {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::DPdyCoarse(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::DPdyCoarse {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpDPdyCoarse {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::FwidthCoarse(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::FwidthCoarse {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpFwidthCoarse {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::EmitVertex => {
-                write!(f, "Instruction::EmitVertex")?;
+                write!(f, "OpEmitVertex")?;
             }
             Instruction::EndPrimitive => {
-                write!(f, "Instruction::EndPrimitive")?;
+                write!(f, "OpEndPrimitive")?;
             }
             Instruction::EmitStreamVertex(x_0) => {
-                write!(f, "Instruction::EmitStreamVertex {0:?}", x_0,)?;
+                write!(f, "OpEmitStreamVertex {0:?}", x_0,)?;
             }
             Instruction::EndStreamPrimitive(x_0) => {
-                write!(f, "Instruction::EndStreamPrimitive {0:?}", x_0,)?;
+                write!(f, "OpEndStreamPrimitive {0:?}", x_0,)?;
             }
             Instruction::ControlBarrier(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "Instruction::ControlBarrier {0:?} {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "OpControlBarrier {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::MemoryBarrier(x_0, x_1) => {
-                write!(f, "Instruction::MemoryBarrier {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpMemoryBarrier {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::AtomicLoad(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicLoad {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpAtomicLoad {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::AtomicStore(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "Instruction::AtomicStore {0:?} {1:?} {2:?} {3:?}",
+                    "OpAtomicStore {0:?} {1:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::AtomicExchange(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicExchange {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicExchange {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicCompareExchange(x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7) => {
-                write ! ( f , "%{1:?} = Instruction::AtomicCompareExchange {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpAtomicCompareExchange {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7,
+                )?;
             }
             Instruction::AtomicCompareExchangeWeak(x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7) => {
-                write ! ( f , "%{1:?} = Instruction::AtomicCompareExchangeWeak {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpAtomicCompareExchangeWeak {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7,
+                )?;
             }
             Instruction::AtomicIIncrement(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicIIncrement {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpAtomicIIncrement {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::AtomicIDecrement(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicIDecrement {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpAtomicIDecrement {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::AtomicIAdd(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicIAdd {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicIAdd {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicISub(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicISub {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicISub {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicSMin(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicSMin {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicSMin {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicUMin(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicUMin {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicUMin {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicSMax(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicSMax {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicSMax {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicUMax(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicUMax {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicUMax {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicAnd(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicAnd {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicAnd {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicOr(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicOr {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicOr {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::AtomicXor(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicXor {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpAtomicXor {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::Phi(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::Phi {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpPhi {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::LoopMerge(x_0, x_1, x_2) => {
-                write!(f, "Instruction::LoopMerge {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "OpLoopMerge {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SelectionMerge(x_0, x_1) => {
-                write!(f, "Instruction::SelectionMerge {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpSelectionMerge {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::Label(x_0) => {
-                write!(f, "%{0:?} = Instruction::Label ", x_0,)?;
+                write!(f, "{0:?} = OpLabel ", x_0,)?;
             }
             Instruction::Branch(x_0) => {
-                write!(f, "Instruction::Branch {0:?}", x_0,)?;
+                write!(f, "OpBranch {0:?}", x_0,)?;
             }
             Instruction::BranchConditional(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "Instruction::BranchConditional {0:?} {1:?} {2:?} {3:?}",
+                    "OpBranchConditional {0:?} {1:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::Switch(x_0, x_1, x_2) => {
-                write!(f, "Instruction::Switch {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "OpSwitch {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::Kill => {
-                write!(f, "Instruction::Kill")?;
+                write!(f, "OpKill")?;
             }
             Instruction::Return => {
-                write!(f, "Instruction::Return")?;
+                write!(f, "OpReturn")?;
             }
             Instruction::ReturnValue(x_0) => {
-                write!(f, "Instruction::ReturnValue {0:?}", x_0,)?;
+                write!(f, "OpReturnValue {0:?}", x_0,)?;
             }
             Instruction::Unreachable => {
-                write!(f, "Instruction::Unreachable")?;
+                write!(f, "OpUnreachable")?;
             }
             Instruction::LifetimeStart(x_0, x_1) => {
-                write!(f, "Instruction::LifetimeStart {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpLifetimeStart {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::LifetimeStop(x_0, x_1) => {
-                write!(f, "Instruction::LifetimeStop {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpLifetimeStop {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::GroupAsyncCopy(x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7) => {
-                write ! ( f , "%{1:?} = Instruction::GroupAsyncCopy {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , ) ? ;
-            }
-            Instruction::GroupWaitEvents(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "Instruction::GroupWaitEvents {0:?} {1:?} {2:?}",
-                    x_0, x_1, x_2,
+                    "{1:?} = OpGroupAsyncCopy {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7,
                 )?;
+            }
+            Instruction::GroupWaitEvents(x_0, x_1, x_2) => {
+                write!(f, "OpGroupWaitEvents {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::GroupAll(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupAll {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupAll {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupAny(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupAny {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupAny {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupBroadcast(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupBroadcast {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupBroadcast {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupIAdd(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupIAdd {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupIAdd {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupFAdd(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupFAdd {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupFAdd {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupFMin(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupFMin {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupFMin {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupUMin(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupUMin {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupUMin {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupSMin(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupSMin {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupSMin {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupFMax(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupFMax {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupFMax {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupUMax(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupUMax {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupUMax {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupSMax(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupSMax {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupSMax {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ReadPipe(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ReadPipe {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpReadPipe {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::WritePipe(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::WritePipe {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpWritePipe {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::ReservedReadPipe(x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7) => {
-                write ! ( f , "%{1:?} = Instruction::ReservedReadPipe {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpReservedReadPipe {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7,
+                )?;
             }
             Instruction::ReservedWritePipe(x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7) => {
-                write ! ( f , "%{1:?} = Instruction::ReservedWritePipe {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpReservedWritePipe {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7,
+                )?;
             }
             Instruction::ReserveReadPipePackets(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ReserveReadPipePackets {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpReserveReadPipePackets {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::ReserveWritePipePackets(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ReserveWritePipePackets {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpReserveWritePipePackets {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::CommitReadPipe(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "Instruction::CommitReadPipe {0:?} {1:?} {2:?} {3:?}",
+                    "OpCommitReadPipe {0:?} {1:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::CommitWritePipe(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "Instruction::CommitWritePipe {0:?} {1:?} {2:?} {3:?}",
+                    "OpCommitWritePipe {0:?} {1:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::IsValidReserveId(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IsValidReserveId {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpIsValidReserveId {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::GetNumPipePackets(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GetNumPipePackets {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGetNumPipePackets {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GetMaxPipePackets(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GetMaxPipePackets {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGetMaxPipePackets {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupReserveReadPipePackets(x_0, x_1, x_2, x_3, x_4, x_5, x_6) => {
-                write ! ( f , "%{1:?} = Instruction::GroupReserveReadPipePackets {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpGroupReserveReadPipePackets {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6,
+                )?;
             }
             Instruction::GroupReserveWritePipePackets(x_0, x_1, x_2, x_3, x_4, x_5, x_6) => {
-                write ! ( f , "%{1:?} = Instruction::GroupReserveWritePipePackets {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpGroupReserveWritePipePackets {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6,
+                )?;
             }
             Instruction::GroupCommitReadPipe(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "Instruction::GroupCommitReadPipe {0:?} {1:?} {2:?} {3:?} {4:?}",
+                    "OpGroupCommitReadPipe {0:?} {1:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupCommitWritePipe(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "Instruction::GroupCommitWritePipe {0:?} {1:?} {2:?} {3:?} {4:?}",
+                    "OpGroupCommitWritePipe {0:?} {1:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::EnqueueMarker(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::EnqueueMarker {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpEnqueueMarker {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
@@ -18840,920 +18854,908 @@ impl std::fmt::Display for Instruction {
                 x_11,
                 x_12,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::EnqueueKernel {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?} {10:?} {11:?} {12:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , x_10 , x_11 , x_12 , ) ? ;
+                write ! ( f , "{1:?} = OpEnqueueKernel {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?} {10:?} {11:?} {12:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , x_10 , x_11 , x_12 , ) ? ;
             }
             Instruction::GetKernelNDrangeSubGroupCount(x_0, x_1, x_2, x_3, x_4, x_5, x_6) => {
-                write ! ( f , "%{1:?} = Instruction::GetKernelNDrangeSubGroupCount {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpGetKernelNDrangeSubGroupCount {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6,
+                )?;
             }
             Instruction::GetKernelNDrangeMaxSubGroupSize(x_0, x_1, x_2, x_3, x_4, x_5, x_6) => {
-                write ! ( f , "%{1:?} = Instruction::GetKernelNDrangeMaxSubGroupSize {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpGetKernelNDrangeMaxSubGroupSize {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6,
+                )?;
             }
             Instruction::GetKernelWorkGroupSize(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GetKernelWorkGroupSize {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGetKernelWorkGroupSize {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GetKernelPreferredWorkGroupSizeMultiple(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::GetKernelPreferredWorkGroupSizeMultiple {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpGetKernelPreferredWorkGroupSizeMultiple {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::RetainEvent(x_0) => {
-                write!(f, "Instruction::RetainEvent {0:?}", x_0,)?;
+                write!(f, "OpRetainEvent {0:?}", x_0,)?;
             }
             Instruction::ReleaseEvent(x_0) => {
-                write!(f, "Instruction::ReleaseEvent {0:?}", x_0,)?;
+                write!(f, "OpReleaseEvent {0:?}", x_0,)?;
             }
             Instruction::CreateUserEvent(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::CreateUserEvent {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpCreateUserEvent {0:?}", x_0, x_1,)?;
             }
             Instruction::IsValidEvent(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IsValidEvent {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpIsValidEvent {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SetUserEventStatus(x_0, x_1) => {
-                write!(f, "Instruction::SetUserEventStatus {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpSetUserEventStatus {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::CaptureEventProfilingInfo(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "Instruction::CaptureEventProfilingInfo {0:?} {1:?} {2:?}",
+                    "OpCaptureEventProfilingInfo {0:?} {1:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::GetDefaultQueue(x_0, x_1) => {
-                write!(f, "%{1:?} = Instruction::GetDefaultQueue {0:?}", x_0, x_1,)?;
+                write!(f, "{1:?} = OpGetDefaultQueue {0:?}", x_0, x_1,)?;
             }
             Instruction::BuildNDRange(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::BuildNDRange {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpBuildNDRange {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSparseSampleImplicitLod(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSparseSampleImplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSparseSampleImplicitLod {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSparseSampleExplicitLod(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSparseSampleExplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSparseSampleExplicitLod {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSparseSampleDrefImplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSparseSampleDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSparseSampleDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageSparseSampleDrefExplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSparseSampleDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSparseSampleDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageSparseSampleProjImplicitLod(x_0, x_1, x_2, x_3, x_4) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSparseSampleProjImplicitLod {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSparseSampleProjImplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    x_0, x_1, x_2, x_3, x_4,
+                )?;
             }
             Instruction::ImageSparseSampleProjExplicitLod(x_0, x_1, x_2, x_3, x_4) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSparseSampleProjExplicitLod {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSparseSampleProjExplicitLod {0:?} {2:?} {3:?} {4:?}",
+                    x_0, x_1, x_2, x_3, x_4,
+                )?;
             }
             Instruction::ImageSparseSampleProjDrefImplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSparseSampleProjDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSparseSampleProjDrefImplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageSparseSampleProjDrefExplicitLod(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSparseSampleProjDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSparseSampleProjDrefExplicitLod {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::ImageSparseFetch(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSparseFetch {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSparseFetch {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ImageSparseGather(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSparseGather {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpImageSparseGather {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::ImageSparseDrefGather(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSparseDrefGather {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpImageSparseDrefGather {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::ImageSparseTexelsResident(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSparseTexelsResident {0:?} {2:?}",
+                    "{1:?} = OpImageSparseTexelsResident {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::NoLine => {
-                write!(f, "Instruction::NoLine")?;
+                write!(f, "OpNoLine")?;
             }
             Instruction::AtomicFlagTestAndSet(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AtomicFlagTestAndSet {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpAtomicFlagTestAndSet {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::AtomicFlagClear(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "Instruction::AtomicFlagClear {0:?} {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "OpAtomicFlagClear {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ImageSparseRead(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ImageSparseRead {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpImageSparseRead {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::SizeOf(x_0, x_1, x_2) => {
-                write!(f, "%{1:?} = Instruction::SizeOf {0:?} {2:?}", x_0, x_1, x_2,)?;
+                write!(f, "{1:?} = OpSizeOf {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::TypePipeStorage(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypePipeStorage ", x_0,)?;
+                write!(f, "{0:?} = OpTypePipeStorage ", x_0,)?;
             }
             Instruction::ConstantPipeStorage(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ConstantPipeStorage {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpConstantPipeStorage {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::CreatePipeFromPipeStorage(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::CreatePipeFromPipeStorage {0:?} {2:?}",
+                    "{1:?} = OpCreatePipeFromPipeStorage {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::GetKernelLocalSizeForSubgroupCount(x_0, x_1, x_2, x_3, x_4, x_5, x_6) => {
-                write ! ( f , "%{1:?} = Instruction::GetKernelLocalSizeForSubgroupCount {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write ! ( f , "{1:?} = OpGetKernelLocalSizeForSubgroupCount {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
             }
             Instruction::GetKernelMaxNumSubgroups(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GetKernelMaxNumSubgroups {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGetKernelMaxNumSubgroups {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::TypeNamedBarrier(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeNamedBarrier ", x_0,)?;
+                write!(f, "{0:?} = OpTypeNamedBarrier ", x_0,)?;
             }
             Instruction::NamedBarrierInitialize(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::NamedBarrierInitialize {0:?} {2:?}",
+                    "{1:?} = OpNamedBarrierInitialize {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::MemoryNamedBarrier(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "Instruction::MemoryNamedBarrier {0:?} {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "OpMemoryNamedBarrier {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ModuleProcessed(x_0) => {
-                write!(f, "Instruction::ModuleProcessed {0:?}", x_0,)?;
+                write!(f, "OpModuleProcessed {0:?}", x_0,)?;
             }
             Instruction::ExecutionModeId(x_0, x_1) => {
-                write!(f, "Instruction::ExecutionModeId {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpExecutionModeId {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::DecorateId(x_0, x_1) => {
-                write!(f, "Instruction::DecorateId {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpDecorateId {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::GroupNonUniformElect(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformElect {0:?} {2:?}",
+                    "{1:?} = OpGroupNonUniformElect {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::GroupNonUniformAll(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformAll {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformAll {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformAny(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformAny {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformAny {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformAllEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformAllEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformAllEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformBroadcast(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBroadcast {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformBroadcast {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformBroadcastFirst(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBroadcastFirst {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformBroadcastFirst {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformBallot(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBallot {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformBallot {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformInverseBallot(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformInverseBallot {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformInverseBallot {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformBallotBitExtract(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBallotBitExtract {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformBallotBitExtract {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformBallotBitCount(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBallotBitCount {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformBallotBitCount {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformBallotFindLSB(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBallotFindLSB {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformBallotFindLSB {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformBallotFindMSB(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBallotFindMSB {0:?} {2:?} {3:?}",
+                    "{1:?} = OpGroupNonUniformBallotFindMSB {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupNonUniformShuffle(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformShuffle {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformShuffle {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformShuffleXor(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformShuffleXor {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformShuffleXor {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformShuffleUp(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformShuffleUp {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformShuffleUp {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformShuffleDown(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformShuffleDown {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformShuffleDown {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformIAdd(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformIAdd {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformIAdd {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformFAdd(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformFAdd {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformFAdd {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformIMul(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformIMul {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformIMul {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformFMul(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformFMul {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformFMul {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformSMin(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformSMin {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformSMin {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformUMin(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformUMin {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformUMin {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformFMin(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformFMin {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformFMin {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformSMax(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformSMax {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformSMax {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformUMax(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformUMax {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformUMax {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformFMax(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformFMax {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformFMax {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformBitwiseAnd(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBitwiseAnd {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformBitwiseAnd {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformBitwiseOr(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBitwiseOr {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformBitwiseOr {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformBitwiseXor(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformBitwiseXor {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformBitwiseXor {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformLogicalAnd(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformLogicalAnd {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformLogicalAnd {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformLogicalOr(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformLogicalOr {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformLogicalOr {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformLogicalXor(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformLogicalXor {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpGroupNonUniformLogicalXor {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::GroupNonUniformQuadBroadcast(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformQuadBroadcast {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformQuadBroadcast {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupNonUniformQuadSwap(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformQuadSwap {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupNonUniformQuadSwap {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::CopyLogical(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::CopyLogical {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpCopyLogical {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::PtrEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::PtrEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpPtrEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::PtrNotEqual(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::PtrNotEqual {0:?} {2:?} {3:?}",
+                    "{1:?} = OpPtrNotEqual {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::PtrDiff(x_0, x_1, x_2, x_3) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::PtrDiff {0:?} {2:?} {3:?}",
-                    x_0, x_1, x_2, x_3,
-                )?;
+                write!(f, "{1:?} = OpPtrDiff {0:?} {2:?} {3:?}", x_0, x_1, x_2, x_3,)?;
             }
             Instruction::SubgroupBallotKHR(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SubgroupBallotKHR {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSubgroupBallotKHR {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SubgroupFirstInvocationKHR(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupFirstInvocationKHR {0:?} {2:?}",
+                    "{1:?} = OpSubgroupFirstInvocationKHR {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAllKHR(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SubgroupAllKHR {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSubgroupAllKHR {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SubgroupAnyKHR(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::SubgroupAnyKHR {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpSubgroupAnyKHR {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::SubgroupAllEqualKHR(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAllEqualKHR {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAllEqualKHR {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupReadInvocationKHR(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupReadInvocationKHR {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupReadInvocationKHR {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::GroupIAddNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupIAddNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupIAddNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupFAddNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupFAddNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupFAddNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupFMinNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupFMinNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupFMinNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupUMinNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupUMinNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupUMinNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupSMinNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupSMinNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupSMinNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupFMaxNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupFMaxNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupFMaxNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupUMaxNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupUMaxNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupUMaxNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::GroupSMaxNonUniformAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupSMaxNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpGroupSMaxNonUniformAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::FragmentMaskFetchAMD(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FragmentMaskFetchAMD {0:?} {2:?} {3:?}",
+                    "{1:?} = OpFragmentMaskFetchAMD {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::FragmentFetchAMD(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::FragmentFetchAMD {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpFragmentFetchAMD {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::ReadClockKHR(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::ReadClockKHR {0:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "{1:?} = OpReadClockKHR {0:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::ImageSampleFootprintNV(x_0, x_1, x_2, x_3, x_4, x_5, x_6) => {
-                write ! ( f , "%{1:?} = Instruction::ImageSampleFootprintNV {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpImageSampleFootprintNV {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6,
+                )?;
             }
             Instruction::GroupNonUniformPartitionNV(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::GroupNonUniformPartitionNV {0:?} {2:?}",
+                    "{1:?} = OpGroupNonUniformPartitionNV {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::WritePackedPrimitiveIndices4x8NV(x_0, x_1) => {
                 write!(
                     f,
-                    "Instruction::WritePackedPrimitiveIndices4x8NV {0:?} {1:?}",
+                    "OpWritePackedPrimitiveIndices4x8NV {0:?} {1:?}",
                     x_0, x_1,
                 )?;
             }
             Instruction::ReportIntersectionNV(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ReportIntersectionNV {0:?} {2:?} {3:?}",
+                    "{1:?} = OpReportIntersectionNV {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::IgnoreIntersectionNV => {
-                write!(f, "Instruction::IgnoreIntersectionNV")?;
+                write!(f, "OpIgnoreIntersectionNV")?;
             }
             Instruction::TerminateRayNV => {
-                write!(f, "Instruction::TerminateRayNV")?;
+                write!(f, "OpTerminateRayNV")?;
             }
             Instruction::TraceNV(x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9, x_10) => {
-                write ! ( f , "Instruction::TraceNV {0:?} {1:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?} {10:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , x_10 , ) ? ;
+                write!(
+                    f,
+                    "OpTraceNV {0:?} {1:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?} {10:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9, x_10,
+                )?;
             }
             Instruction::TypeAccelerationStructureNV(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAccelerationStructureNV ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAccelerationStructureNV ", x_0,)?;
             }
             Instruction::ExecuteCallableNV(x_0, x_1) => {
-                write!(f, "Instruction::ExecuteCallableNV {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpExecuteCallableNV {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::TypeCooperativeMatrixNV(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{0:?} = Instruction::TypeCooperativeMatrixNV {1:?} {2:?} {3:?} {4:?}",
+                    "{0:?} = OpTypeCooperativeMatrixNV {1:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::CooperativeMatrixLoadNV(x_0, x_1, x_2, x_3, x_4, x_5) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::CooperativeMatrixLoadNV {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    "{1:?} = OpCooperativeMatrixLoadNV {0:?} {2:?} {3:?} {4:?} {5:?}",
                     x_0, x_1, x_2, x_3, x_4, x_5,
                 )?;
             }
             Instruction::CooperativeMatrixStoreNV(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "Instruction::CooperativeMatrixStoreNV {0:?} {1:?} {2:?} {3:?} {4:?}",
+                    "OpCooperativeMatrixStoreNV {0:?} {1:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::CooperativeMatrixMulAddNV(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::CooperativeMatrixMulAddNV {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpCooperativeMatrixMulAddNV {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::CooperativeMatrixLengthNV(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::CooperativeMatrixLengthNV {0:?} {2:?}",
+                    "{1:?} = OpCooperativeMatrixLengthNV {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::BeginInvocationInterlockEXT => {
-                write!(f, "Instruction::BeginInvocationInterlockEXT")?;
+                write!(f, "OpBeginInvocationInterlockEXT")?;
             }
             Instruction::EndInvocationInterlockEXT => {
-                write!(f, "Instruction::EndInvocationInterlockEXT")?;
+                write!(f, "OpEndInvocationInterlockEXT")?;
             }
             Instruction::DemoteToHelperInvocationEXT => {
-                write!(f, "Instruction::DemoteToHelperInvocationEXT")?;
+                write!(f, "OpDemoteToHelperInvocationEXT")?;
             }
             Instruction::IsHelperInvocationEXT(x_0, x_1) => {
-                write!(
-                    f,
-                    "%{1:?} = Instruction::IsHelperInvocationEXT {0:?}",
-                    x_0, x_1,
-                )?;
+                write!(f, "{1:?} = OpIsHelperInvocationEXT {0:?}", x_0, x_1,)?;
             }
             Instruction::SubgroupShuffleINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupShuffleINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupShuffleINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SubgroupShuffleDownINTEL(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupShuffleDownINTEL {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpSubgroupShuffleDownINTEL {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::SubgroupShuffleUpINTEL(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupShuffleUpINTEL {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpSubgroupShuffleUpINTEL {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::SubgroupShuffleXorINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupShuffleXorINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupShuffleXorINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SubgroupBlockReadINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupBlockReadINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupBlockReadINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupBlockWriteINTEL(x_0, x_1) => {
-                write!(
-                    f,
-                    "Instruction::SubgroupBlockWriteINTEL {0:?} {1:?}",
-                    x_0, x_1,
-                )?;
+                write!(f, "OpSubgroupBlockWriteINTEL {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::SubgroupImageBlockReadINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupImageBlockReadINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupImageBlockReadINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SubgroupImageBlockWriteINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "Instruction::SubgroupImageBlockWriteINTEL {0:?} {1:?} {2:?}",
+                    "OpSubgroupImageBlockWriteINTEL {0:?} {1:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupImageMediaBlockReadINTEL(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupImageMediaBlockReadINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupImageMediaBlockReadINTEL {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::SubgroupImageMediaBlockWriteINTEL(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "Instruction::SubgroupImageMediaBlockWriteINTEL {0:?} {1:?} {2:?} {3:?} {4:?}",
+                    "OpSubgroupImageMediaBlockWriteINTEL {0:?} {1:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::UCountLeadingZerosINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UCountLeadingZerosINTEL {0:?} {2:?}",
+                    "{1:?} = OpUCountLeadingZerosINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::UCountTrailingZerosINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UCountTrailingZerosINTEL {0:?} {2:?}",
+                    "{1:?} = OpUCountTrailingZerosINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::AbsISubINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AbsISubINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpAbsISubINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::AbsUSubINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::AbsUSubINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpAbsUSubINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::IAddSatINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::IAddSatINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpIAddSatINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::UAddSatINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UAddSatINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUAddSatINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::IAverageINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::IAverageINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpIAverageINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::UAverageINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UAverageINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUAverageINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::IAverageRoundedINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::IAverageRoundedINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpIAverageRoundedINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::UAverageRoundedINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UAverageRoundedINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUAverageRoundedINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::ISubSatINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::ISubSatINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpISubSatINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::USubSatINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::USubSatINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUSubSatINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::IMul32x16INTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::IMul32x16INTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpIMul32x16INTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::UMul32x16INTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::UMul32x16INTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpUMul32x16INTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::DecorateString(x_0, x_1) => {
-                write!(f, "Instruction::DecorateString {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpDecorateString {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::DecorateStringGOOGLE(x_0, x_1) => {
-                write!(f, "Instruction::DecorateStringGOOGLE {0:?} {1:?}", x_0, x_1,)?;
+                write!(f, "OpDecorateStringGOOGLE {0:?} {1:?}", x_0, x_1,)?;
             }
             Instruction::MemberDecorateString(x_0, x_1, x_2) => {
-                write!(
-                    f,
-                    "Instruction::MemberDecorateString {0:?} {1:?} {2:?}",
-                    x_0, x_1, x_2,
-                )?;
+                write!(f, "OpMemberDecorateString {0:?} {1:?} {2:?}", x_0, x_1, x_2,)?;
             }
             Instruction::MemberDecorateStringGOOGLE(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "Instruction::MemberDecorateStringGOOGLE {0:?} {1:?} {2:?}",
+                    "OpMemberDecorateStringGOOGLE {0:?} {1:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::VmeImageINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::VmeImageINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpVmeImageINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::TypeVmeImageINTEL(x_0, x_1) => {
-                write!(f, "%{0:?} = Instruction::TypeVmeImageINTEL {1:?}", x_0, x_1,)?;
+                write!(f, "{0:?} = OpTypeVmeImageINTEL {1:?}", x_0, x_1,)?;
             }
             Instruction::TypeAvcImePayloadINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcImePayloadINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcImePayloadINTEL ", x_0,)?;
             }
             Instruction::TypeAvcRefPayloadINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcRefPayloadINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcRefPayloadINTEL ", x_0,)?;
             }
             Instruction::TypeAvcSicPayloadINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcSicPayloadINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcSicPayloadINTEL ", x_0,)?;
             }
             Instruction::TypeAvcMcePayloadINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcMcePayloadINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcMcePayloadINTEL ", x_0,)?;
             }
             Instruction::TypeAvcMceResultINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcMceResultINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcMceResultINTEL ", x_0,)?;
             }
             Instruction::TypeAvcImeResultINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcImeResultINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcImeResultINTEL ", x_0,)?;
             }
             Instruction::TypeAvcImeResultSingleReferenceStreamoutINTEL(x_0) => {
                 write!(
                     f,
-                    "%{0:?} = Instruction::TypeAvcImeResultSingleReferenceStreamoutINTEL ",
+                    "{0:?} = OpTypeAvcImeResultSingleReferenceStreamoutINTEL ",
                     x_0,
                 )?;
             }
             Instruction::TypeAvcImeResultDualReferenceStreamoutINTEL(x_0) => {
                 write!(
                     f,
-                    "%{0:?} = Instruction::TypeAvcImeResultDualReferenceStreamoutINTEL ",
+                    "{0:?} = OpTypeAvcImeResultDualReferenceStreamoutINTEL ",
                     x_0,
                 )?;
             }
             Instruction::TypeAvcImeSingleReferenceStreaminINTEL(x_0) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypeAvcImeSingleReferenceStreaminINTEL ",
-                    x_0,
-                )?;
+                write!(f, "{0:?} = OpTypeAvcImeSingleReferenceStreaminINTEL ", x_0,)?;
             }
             Instruction::TypeAvcImeDualReferenceStreaminINTEL(x_0) => {
-                write!(
-                    f,
-                    "%{0:?} = Instruction::TypeAvcImeDualReferenceStreaminINTEL ",
-                    x_0,
-                )?;
+                write!(f, "{0:?} = OpTypeAvcImeDualReferenceStreaminINTEL ", x_0,)?;
             }
             Instruction::TypeAvcRefResultINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcRefResultINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcRefResultINTEL ", x_0,)?;
             }
             Instruction::TypeAvcSicResultINTEL(x_0) => {
-                write!(f, "%{0:?} = Instruction::TypeAvcSicResultINTEL ", x_0,)?;
+                write!(f, "{0:?} = OpTypeAvcSicResultINTEL ", x_0,)?;
             }
             Instruction::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(
                 x_0,
@@ -19761,7 +19763,7 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(
                 x_0,
@@ -19769,22 +19771,34 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcMceSetInterShapePenaltyINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceSetInterShapePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceSetInterShapePenaltyINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcMceSetInterDirectionPenaltyINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceSetInterDirectionPenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(
                 x_0,
@@ -19792,22 +19806,26 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(x_0, x_1) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {0:?}",
+                    "{1:?} = OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {0:?}",
                     x_0, x_1,
                 )?;
             }
             Instruction::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(x_0, x_1) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {0:?}" , x_0 , x_1 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {0:?}",
+                    x_0, x_1,
+                )?;
             }
             Instruction::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(x_0, x_1) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {0:?}",
+                    "{1:?} = OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {0:?}",
                     x_0, x_1,
                 )?;
             }
@@ -19819,21 +19837,33 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceSetMotionVectorCostFunctionINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(x_0, x_1) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {0:?}" , x_0 , x_1 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {0:?}",
+                    x_0, x_1,
+                )?;
             }
             Instruction::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(x_0, x_1) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {0:?}" , x_0 , x_1 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {0:?}",
+                    x_0, x_1,
+                )?;
             }
             Instruction::SubgroupAvcMceSetAcOnlyHaarINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceSetAcOnlyHaarINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceSetAcOnlyHaarINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
@@ -19843,7 +19873,7 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(
                 x_0,
@@ -19851,7 +19881,7 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(
                 x_0,
@@ -19860,99 +19890,103 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcMceConvertToImePayloadINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceConvertToImePayloadINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceConvertToImePayloadINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceConvertToImeResultINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceConvertToImeResultINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceConvertToImeResultINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceConvertToRefPayloadINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceConvertToRefPayloadINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceConvertToRefPayloadINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceConvertToRefResultINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceConvertToRefResultINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceConvertToRefResultINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceConvertToSicPayloadINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceConvertToSicPayloadINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceConvertToSicPayloadINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceConvertToSicResultINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceConvertToSicResultINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceConvertToSicResultINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceGetMotionVectorsINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetMotionVectorsINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceGetMotionVectorsINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceGetInterDistortionsINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetInterDistortionsINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceGetInterDistortionsINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceGetBestInterDistortionsINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetBestInterDistortionsINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceGetBestInterDistortionsINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceGetInterMajorShapeINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetInterMajorShapeINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceGetInterMajorShapeINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceGetInterMinorShapeINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetInterMinorShapeINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceGetInterMinorShapeINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceGetInterDirectionsINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetInterDirectionsINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceGetInterDirectionsINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcMceGetInterMotionVectorCountINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetInterMotionVectorCountINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcMceGetInterMotionVectorCountINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcMceGetInterReferenceIdsINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcMceGetInterReferenceIdsINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcMceGetInterReferenceIdsINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
@@ -19963,43 +19997,63 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcImeInitializeINTEL(x_0, x_1, x_2, x_3, x_4) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcImeInitializeINTEL {0:?} {2:?} {3:?} {4:?}",
+                    "{1:?} = OpSubgroupAvcImeInitializeINTEL {0:?} {2:?} {3:?} {4:?}",
                     x_0, x_1, x_2, x_3, x_4,
                 )?;
             }
             Instruction::SubgroupAvcImeSetSingleReferenceINTEL(x_0, x_1, x_2, x_3, x_4) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeSetSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeSetSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}",
+                    x_0, x_1, x_2, x_3, x_4,
+                )?;
             }
             Instruction::SubgroupAvcImeSetDualReferenceINTEL(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeSetDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeSetDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::SubgroupAvcImeRefWindowSizeINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcImeRefWindowSizeINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupAvcImeRefWindowSizeINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SubgroupAvcImeAdjustRefOffsetINTEL(x_0, x_1, x_2, x_3, x_4, x_5) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeAdjustRefOffsetINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeAdjustRefOffsetINTEL {0:?} {2:?} {3:?} {4:?} {5:?}",
+                    x_0, x_1, x_2, x_3, x_4, x_5,
+                )?;
             }
             Instruction::SubgroupAvcImeConvertToMcePayloadINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcImeConvertToMcePayloadINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcImeConvertToMcePayloadINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcImeSetMaxMotionVectorCountINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeSetMaxMotionVectorCountINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeSetUnidirectionalMixDisableINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(
                 x_0,
@@ -20007,12 +20061,12 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcImeSetWeightedSadINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcImeSetWeightedSadINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupAvcImeSetWeightedSadINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
@@ -20023,7 +20077,7 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcImeEvaluateWithDualReferenceINTEL(
                 x_0,
@@ -20033,7 +20087,7 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(
                 x_0,
@@ -20043,7 +20097,7 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(
                 x_0,
@@ -20054,7 +20108,7 @@ impl std::fmt::Display for Instruction {
                 x_5,
                 x_6,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
             }
             Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(
                 x_0,
@@ -20063,7 +20117,7 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(
                 x_0,
@@ -20073,7 +20127,7 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(
                 x_0,
@@ -20083,7 +20137,7 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(
                 x_0,
@@ -20094,30 +20148,42 @@ impl std::fmt::Display for Instruction {
                 x_5,
                 x_6,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , ) ? ;
             }
             Instruction::SubgroupAvcImeConvertToMceResultINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcImeConvertToMceResultINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcImeConvertToMceResultINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcImeGetSingleReferenceStreaminINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetSingleReferenceStreaminINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcImeGetDualReferenceStreaminINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcImeGetDualReferenceStreaminINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcImeGetDualReferenceStreaminINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeStripSingleReferenceStreamoutINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcImeStripDualReferenceStreamoutINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeStripDualReferenceStreamoutINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(
                 x_0,
@@ -20125,7 +20191,7 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(
                 x_0,
@@ -20133,7 +20199,7 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(
                 x_0,
@@ -20141,7 +20207,7 @@ impl std::fmt::Display for Instruction {
                 x_2,
                 x_3,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(
                 x_0,
@@ -20150,7 +20216,7 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(
                 x_0,
@@ -20159,7 +20225,7 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(
                 x_0,
@@ -20168,34 +20234,42 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetBorderReachedINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcImeGetBorderReachedINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupAvcImeGetBorderReachedINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
             Instruction::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetTruncatedSearchIndicationINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(
                 x_0,
                 x_1,
                 x_2,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(
                 x_0,
                 x_1,
                 x_2,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
             }
             Instruction::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcFmeInitializeINTEL(
                 x_0,
@@ -20208,7 +20282,7 @@ impl std::fmt::Display for Instruction {
                 x_7,
                 x_8,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcFmeInitializeINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcFmeInitializeINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , ) ? ;
             }
             Instruction::SubgroupAvcBmeInitializeINTEL(
                 x_0,
@@ -20222,22 +20296,26 @@ impl std::fmt::Display for Instruction {
                 x_8,
                 x_9,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcBmeInitializeINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcBmeInitializeINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , ) ? ;
             }
             Instruction::SubgroupAvcRefConvertToMcePayloadINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcRefConvertToMcePayloadINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcRefConvertToMcePayloadINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcRefSetBidirectionalMixDisableINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcRefSetBidirectionalMixDisableINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcRefSetBilinearFilterEnableINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcRefSetBilinearFilterEnableINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcRefSetBilinearFilterEnableINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
@@ -20248,7 +20326,7 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcRefEvaluateWithSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcRefEvaluateWithDualReferenceINTEL(
                 x_0,
@@ -20258,10 +20336,10 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcRefEvaluateWithDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(x_0, x_1, x_2, x_3, x_4) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcRefEvaluateWithMultiReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(
                 x_0,
@@ -20271,19 +20349,19 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcRefConvertToMceResultINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcRefConvertToMceResultINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcRefConvertToMceResultINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicInitializeINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicInitializeINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicInitializeINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
@@ -20297,7 +20375,7 @@ impl std::fmt::Display for Instruction {
                 x_6,
                 x_7,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicConfigureSkcINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicConfigureSkcINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , ) ? ;
             }
             Instruction::SubgroupAvcSicConfigureIpeLumaINTEL(
                 x_0,
@@ -20311,7 +20389,7 @@ impl std::fmt::Display for Instruction {
                 x_8,
                 x_9,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicConfigureIpeLumaINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicConfigureIpeLumaINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , ) ? ;
             }
             Instruction::SubgroupAvcSicConfigureIpeLumaChromaINTEL(
                 x_0,
@@ -20328,20 +20406,28 @@ impl std::fmt::Display for Instruction {
                 x_11,
                 x_12,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicConfigureIpeLumaChromaINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?} {10:?} {11:?} {12:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , x_10 , x_11 , x_12 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {0:?} {2:?} {3:?} {4:?} {5:?} {6:?} {7:?} {8:?} {9:?} {10:?} {11:?} {12:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , x_6 , x_7 , x_8 , x_9 , x_10 , x_11 , x_12 , ) ? ;
             }
             Instruction::SubgroupAvcSicGetMotionVectorMaskINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicGetMotionVectorMaskINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicGetMotionVectorMaskINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcSicConvertToMcePayloadINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicConvertToMcePayloadINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicConvertToMcePayloadINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(
                 x_0,
@@ -20351,28 +20437,40 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcSicSetBilinearFilterEnableINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicSetBilinearFilterEnableINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicSetBilinearFilterEnableINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicSetSkcForwardTransformEnableINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(x_0, x_1, x_2, x_3) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL {0:?} {2:?} {3:?}" , x_0 , x_1 , x_2 , x_3 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {0:?} {2:?} {3:?}",
+                    x_0, x_1, x_2, x_3,
+                )?;
             }
             Instruction::SubgroupAvcSicEvaluateIpeINTEL(x_0, x_1, x_2, x_3) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicEvaluateIpeINTEL {0:?} {2:?} {3:?}",
+                    "{1:?} = OpSubgroupAvcSicEvaluateIpeINTEL {0:?} {2:?} {3:?}",
                     x_0, x_1, x_2, x_3,
                 )?;
             }
@@ -20383,7 +20481,7 @@ impl std::fmt::Display for Instruction {
                 x_3,
                 x_4,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicEvaluateWithSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcSicEvaluateWithDualReferenceINTEL(
                 x_0,
@@ -20393,10 +20491,10 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicEvaluateWithDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(x_0, x_1, x_2, x_3, x_4) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicEvaluateWithMultiReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {0:?} {2:?} {3:?} {4:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , ) ? ;
             }
             Instruction::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(
                 x_0,
@@ -20406,61 +20504,73 @@ impl std::fmt::Display for Instruction {
                 x_4,
                 x_5,
             ) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
+                write ! ( f , "{1:?} = OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {0:?} {2:?} {3:?} {4:?} {5:?}" , x_0 , x_1 , x_2 , x_3 , x_4 , x_5 , ) ? ;
             }
             Instruction::SubgroupAvcSicConvertToMceResultINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicConvertToMceResultINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicConvertToMceResultINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicGetIpeLumaShapeINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicGetIpeLumaShapeINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicGetIpeLumaShapeINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicGetBestIpeLumaDistortionINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicGetBestIpeChromaDistortionINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcSicGetPackedIpeLumaModesINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicGetPackedIpeLumaModesINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicGetIpeChromaModeINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicGetIpeChromaModeINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicGetIpeChromaModeINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(x_0, x_1, x_2) => {
-                write ! ( f , "%{1:?} = Instruction::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {0:?} {2:?}" , x_0 , x_1 , x_2 , ) ? ;
+                write!(
+                    f,
+                    "{1:?} = OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {0:?} {2:?}",
+                    x_0, x_1, x_2,
+                )?;
             }
             Instruction::SubgroupAvcSicGetInterRawSadsINTEL(x_0, x_1, x_2) => {
                 write!(
                     f,
-                    "%{1:?} = Instruction::SubgroupAvcSicGetInterRawSadsINTEL {0:?} {2:?}",
+                    "{1:?} = OpSubgroupAvcSicGetInterRawSadsINTEL {0:?} {2:?}",
                     x_0, x_1, x_2,
                 )?;
             }
             Instruction::None(op_code) => {
-                write!(f, "Instuction::None %{}", op_code)?;
+                write!(f, "OpNone opcode({})", op_code)?;
             }
         }
         Ok(())

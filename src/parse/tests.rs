@@ -29,6 +29,7 @@ fn test_display() {
 
     let mut file = File::create("./test_shaders/compiled/array_const_len.txt").unwrap();
     write!(file, "{}", res);
+
 }
 
 #[test]

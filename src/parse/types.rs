@@ -69,7 +69,7 @@ pub enum ComplexType {
 #[derive(Debug, PartialEq,  Clone)]
 pub enum ArrayLength{
     Number(u32),
-    Constant(IdRef),
+    Constant{spec_id: u32, default: u32},
 }
 
 
@@ -93,6 +93,7 @@ pub enum ConstValue {
     Float(f32),
     Numerical(u64),
     Scalar(u64),
+    SpecConst{ spec_id: u32, default: u32, ty: Type}
 }
 
 #[cfg(feature = "vk-format")]

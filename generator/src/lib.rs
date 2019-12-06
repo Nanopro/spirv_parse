@@ -270,13 +270,37 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
             ));
         }
         if category == "Id" {
+            let c = match struct_str{
+                "IdResult" => "%",
+                "IdResultType" => "@",
+                "IdRef" => "&",
+                _ => ""
+            };
+
+
             structs.push(quote!(
-                 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+                 #[derive(PartialEq, Clone, Serialize, Deserialize)]
                 pub struct #struct_name(pub u32);
                 impl #struct_name{
                     pub fn from_raw(data: &[u32]) -> (Self, &[u32]){
                         //assert!(data.len() > 0);
                         (Self(data[0]), &data[1..])
+                    }
+                }
+                impl std::fmt::Debug for #struct_name{
+                    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result{
+                        use std::fmt::{self, Alignment};
+                        let width = f.width().unwrap_or(0);
+                        if let Some(s) = f.align() {
+                            match s {
+                                Alignment::Left    =>  write!(f, "{:<width$?}", format_args!("{}{}", #c, self.0), width=width),
+                                Alignment::Right   =>  write!(f, "{:>width$?}", format_args!("{}{}", #c, self.0), width=width),
+                                Alignment::Center  =>  write!(f, "{:^width$?}", format_args!("{}{}", #c, self.0), width=width),
+                            }
+                        } else {
+                             write!(f, "{:width$?}", format_args!("{}{}", #c, self.0), width=width)
+                        }
+
                     }
                 }
             ));
@@ -338,11 +362,27 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
             };
 
             structs.push(quote!(
-                #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+                #[derive(PartialEq, Clone, Serialize, Deserialize)]
                 pub struct #struct_name (#t);
                 impl #struct_name {
                     #constr
                 }
+                 impl std::fmt::Debug for #struct_name{
+                    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        use std::fmt::{self, Alignment};
+                        let width = f.width().unwrap_or(0);
+                        if let Some(s) = f.align() {
+                            match s {
+                                Alignment::Left    =>  write!(f, "{:<1$?}", self.0, width),
+                                Alignment::Right   =>  write!(f, "{:>1$?}", self.0, width),
+                                Alignment::Center  =>  write!(f, "{:^1$?}", self.0, width),
+                            }
+                        } else {
+                             write!(f, "{:width$?}", self.0, width=width)
+                        }
+
+                    }
+                 }
             ));
         }
         if category == "Composite" {
@@ -487,10 +527,10 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
                 let result_key = fields_formatters[0].1;
                 let fmt_string = if has_result {
                     let rest = fields_formatters.iter().skip(1).map(|(_, num)| format!("{{{}:?}}", num)).collect::<Vec<_>>().join(" ");
-                    format!("%{{{0}:?}} = Instruction::{1} {2}", result_key, op_name, rest)
+                    format!("{{{0}:?}} = Op{1} {2}", result_key, op_name, rest)
                 }else{
                     let rest = fields_formatters.iter().map(|(_, num)| format!("{{{}:?}}", num)).collect::<Vec<_>>().join(" ");
-                    format!("Instruction::{0} {1}",op_name, rest)
+                    format!("Op{0} {1}",op_name, rest)
                 };
                 let fields = (0..fields.len()).map(|i| {
                     let ident = Ident::new(&format!("x_{}", i), Span::call_site());
@@ -504,7 +544,7 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
                 );
             }
             None => {
-                let fmt_string = format!("Instruction::{}", op_name);
+                let fmt_string = format!("Op{}", op_name);
                 formaters.push(
                     quote!(
                         Instruction::#op_name => {write!(f, #fmt_string)?;}
@@ -574,7 +614,7 @@ fn instructions(instrs: &[Value]) -> proc_macro2::TokenStream {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result{
                 match self{
                     #( #formaters, )*
-                    Instruction::None(op_code) => {write!(f, "Instuction::None %{}", op_code)?;},
+                    Instruction::None(op_code) => {write!(f, "OpNone opcode({})", op_code)?;},
                 }
                 Ok(())
             }
