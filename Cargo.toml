@@ -3,6 +3,8 @@ name = "spirv_parse"
 version = "0.1.0"
 authors = ["Nanopro <nanopro1g@gmail.com>"]
 edition = "2018"
+license = "GPL-3.0"
+description = "SPIR-V parser and analyzer."
 
 [workspace]
 members = [
