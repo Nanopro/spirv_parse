@@ -235,6 +235,7 @@ pub struct DescriptorSet {
 pub struct DescriptorBindning {
     pub binding: u32,
     pub set: u32,
+    pub name: Option<String>,
     pub data_type: Type,
     pub ty: DescriptorType,
     pub count: u32,

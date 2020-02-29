@@ -282,11 +282,13 @@ impl Spirv {
                         ArrayLength::Number(c) => c,
                         _ => unimplemented!() // TODO! массивы с длинной зависящие от константы
                     };
+                    let name = self.name_from_id(id_res.0);
 
                     bindings.push(DescriptorBindning {
                         binding,
                         set,
                         ty,
+                        name,
                         data_type,
                         count,
                     })
