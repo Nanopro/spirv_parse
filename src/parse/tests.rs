@@ -79,19 +79,25 @@ fn test_push_constant() {
 
 #[test]
 fn test_interfaces() {
-    let bytes = include_bytes!("../../tests/pos_norm_col.spirv");
+    let bytes = include_bytes!("../../test_shaders/compiled/pos_norm_col.spirv");
     let words =
         unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
 
     let vert = parse_spirv(words).unwrap();
 
-    let bytes = include_bytes!("../../tests/shaded.spirv");
+    let bytes = include_bytes!("../../test_shaders/compiled/shaded.spirv");
     let words =
         unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
     let frag = parse_spirv(words).unwrap();
 
     let outputs = vert.output_variables(&vert.main_entry_point());
     let inputs = frag.input_variables(&frag.main_entry_point());
+
+    for input in &vert.input_variables(&vert.main_entry_point()) {
+        println!("{:?}", input);
+    }
+
+
     for input in &outputs {
         println!("{:?}", input);
     }
@@ -126,4 +132,13 @@ fn array_const_length(){
     let res = parse_spirv(words).unwrap();
     let ds = res.descriptor_sets();
     println!("{:#?}", ds);
+}
+
+
+#[test]
+fn test_vulkan_types(){
+    let bytes = include_bytes!("../../test_shaders/compiled/pos_norm_col.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
 }

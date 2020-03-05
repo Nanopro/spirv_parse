@@ -22,7 +22,7 @@ impl PartialEq for InterfaceVariable {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub enum SimpleType {
     Boolean,
     Integer,
@@ -33,7 +33,7 @@ pub enum SimpleType {
     Sampler,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum ComplexType {
     Vector {
         ty: SimpleType,
@@ -79,13 +79,13 @@ pub enum BlockType {
     BufferBlock,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Type {
     Simple(SimpleType),
     Complex(ComplexType),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ConstValue {
     Boolean(bool),
     Integer(i64),
@@ -105,30 +105,36 @@ use std::collections::HashMap;
 
 #[cfg(feature = "vk-format")]
 impl Type {
-    pub fn to_format(&self) -> ash::vk::Format {
+    pub fn to_format(&self) -> Vec<ash::vk::Format> {
         match self {
             Type::Simple(ty) => match ty {
-                SimpleType::Boolean => Format::R8_UINT,
-                SimpleType::UInteger => Format::R32_UINT,
-                SimpleType::Float => Format::R32_SFLOAT,
+                SimpleType::Boolean => vec![Format::R8_UINT],
+                SimpleType::UInteger => vec![Format::R32_UINT],
+                SimpleType::Float => vec![Format::R32_SFLOAT],
                 SimpleType::Numerical => unimplemented!(),
                 SimpleType::Scalar => unimplemented!(),
-                _ => Format::UNDEFINED,
+                _ => vec![Format::UNDEFINED],
             },
             Type::Complex(ty) => match ty {
                 ComplexType::Vector { ty, len, .. } => match ty {
                     SimpleType::Float => match len {
-                        1 => Format::R32_SFLOAT,
-                        2 => Format::R32G32_SFLOAT,
-                        3 => Format::R32G32B32_SFLOAT,
-                        4 => Format::R32G32B32A32_SFLOAT,
+                        1 => vec![Format::R32_SFLOAT],
+                        2 => vec![Format::R32G32_SFLOAT],
+                        3 => vec![Format::R32G32B32_SFLOAT],
+                        4 => vec![Format::R32G32B32A32_SFLOAT],
                         _ => panic!("Vector's len > 5"),
                     },
                     _ => unimplemented!(),
                 },
                 ComplexType::Array { ty, len, .. } => unimplemented!(),
-                ComplexType::Matrix { .. } => unimplemented!(),
-                ComplexType::Structure { name, members, .. } => Format::UNDEFINED,
+                ComplexType::Matrix { ty, cols, rows } => {
+                    std::iter::repeat(
+                        Type::Complex(ComplexType::Vector {ty: (*ty).clone(), len: *cols})
+                                .to_format()
+                                .pop().unwrap()
+                    ).take(*rows as usize).collect()
+                },
+                ComplexType::Structure { name, members, .. } => vec![Format::UNDEFINED],
                 _ => unimplemented!(),
             },
         }
