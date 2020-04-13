@@ -19,7 +19,8 @@ vk-format = ["ash"]
 [dependencies]
 serde = { version = "1", features = ['derive']}
 serde_json = "1"
-
+bitflags = "1.2"
+derivative = "2"
 
 [build-dependencies]
 generator = { path = "generator", version = "1.0.0" }

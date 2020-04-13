@@ -142,3 +142,11 @@ fn test_vulkan_types(){
         unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
     let vert = parse_spirv(words).unwrap();
 }
+
+#[test]
+fn test_texel_fetch_offset(){
+    let bytes = include_bytes!("../../test_shaders/compiled/edge_detec.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+}
