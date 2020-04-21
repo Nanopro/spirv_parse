@@ -1,4 +1,5 @@
 use crate::raw::*;
+use std::ops::Deref;
 
 pub struct EntryPoint {
     pub name: String,
@@ -31,6 +32,8 @@ pub enum SimpleType {
     Numerical,
     Scalar,
     Sampler,
+    AccelerationStructureKHR,
+    AccelerationStructureNV,
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -47,6 +50,10 @@ pub enum ComplexType {
     Array {
         ty: Box<Type>,
         len: ArrayLength,
+    },
+    Pointer{
+        ty: Box<Type>,
+        storage: StorageClass,
     },
     Structure {
         name: String,
@@ -66,10 +73,11 @@ pub enum ComplexType {
     },
 }
 
-#[derive(Debug, PartialEq,  Clone)]
+#[derive(Debug, PartialEq,  Clone, Copy)]
 pub enum ArrayLength{
     Number(u32),
     Constant{spec_id: u32, default: u32},
+    Dynamic,
 }
 
 
@@ -135,8 +143,59 @@ impl Type {
                     ).take(*rows as usize).collect()
                 },
                 ComplexType::Structure { name, members, .. } => vec![Format::UNDEFINED],
+                ComplexType::Pointer { ty, .. } => ty.to_format(),
                 _ => unimplemented!(),
             },
+        }
+    }
+}
+
+impl Type{
+    pub fn descriptor_type(&self, input_attachment_index: Option<u32>) -> DescriptorType{
+        match self {
+            Type::Complex(ComplexType::SampledImage { ref image, .. }) => {
+                match image.deref() {
+                    Type::Complex(ComplexType::Image { dim, .. }) => match dim {
+                        Dim::Buffer => DescriptorType::UniformTexelBuffer,
+                        _ => DescriptorType::CombinedImageSampler,
+                    },
+                    _ => unreachable!(),
+                }
+            }
+            Type::Complex(ComplexType::Image {
+                              sampled, ref dim, ..
+                          }) => match input_attachment_index {
+                Some(index) => DescriptorType::InputAttachment(index),
+                None => match sampled {
+                    Some(sampled) => {
+                        if *sampled {
+                            DescriptorType::SampledImage
+                        } else {
+                            match dim {
+                                Dim::Buffer => DescriptorType::StorageTexelBuffer,
+                                _ => DescriptorType::StorageImage,
+                            }
+                        }
+                    }
+                    _ => DescriptorType::StorageImage,
+                },
+            },
+            Type::Complex(ComplexType::Structure { block, .. }) => match block {
+                BlockType::BufferBlock => DescriptorType::StorageBuffer,
+                BlockType::Block => DescriptorType::UniformBuffer,
+            },
+            Type::Complex(ComplexType::Pointer {ty, ..}) => ty.descriptor_type(input_attachment_index),
+            Type::Complex(ComplexType::Array { ty,  ..}) => ty.descriptor_type(input_attachment_index),
+            Type::Simple(SimpleType::AccelerationStructureKHR) => DescriptorType::AccelerationStructureKHR,
+            Type::Simple(SimpleType::AccelerationStructureNV) => DescriptorType::AccelerationStructureNV,
+            _ => DescriptorType::Undefined,
+        }
+    }
+    pub fn descriptor_count(&self,) -> ArrayLength {
+        match self{
+            Type::Complex(ComplexType::Array {len, ..}) => *len,
+            Type::Complex(ComplexType::Pointer {ty, ..}) => ty.descriptor_count(),
+            _ => ArrayLength::Number(1)
         }
     }
 }
@@ -205,6 +264,7 @@ impl ComplexType {
             }
             ComplexType::SampledImage { .. } => None,
             ComplexType::Image { .. } => None,
+            ComplexType::Pointer { .. } => None,
         }
     }
 }
@@ -261,6 +321,7 @@ pub enum DescriptorType {
     StorageBufferDynamic,
     InputAttachment(u32),
     AccelerationStructureNV,
+    AccelerationStructureKHR,
 }
 #[cfg(feature = "vk-format")]
 impl DescriptorType {
@@ -281,6 +342,7 @@ impl DescriptorType {
             DescriptorType::StorageBufferDynamic => DT::STORAGE_BUFFER_DYNAMIC, //TODO?
             DescriptorType::InputAttachment(_) => DT::INPUT_ATTACHMENT,
             DescriptorType::AccelerationStructureNV => DT::ACCELERATION_STRUCTURE_NV, //TODO?
+            DescriptorType::AccelerationStructureKHR => DT::ACCELERATION_STRUCTURE_KHR, //TODO?
         }
     }
 }

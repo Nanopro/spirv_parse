@@ -236,51 +236,13 @@ impl Spirv {
                             }
                         });
 
-                    let (data_type, count) =
-                        if let Type::Complex(ComplexType::Array { ty, len }) = data_type {
-                            (unsafe { std::ptr::read(Box::into_raw(ty)) }, len)
-                        } else {
-                            (data_type, ArrayLength::Number(1))
-                        };
 
-                    let ty = match data_type {
-                        Type::Complex(ComplexType::SampledImage { ref image, .. }) => {
-                            match image.deref() {
-                                Type::Complex(ComplexType::Image { dim, .. }) => match dim {
-                                    Dim::Buffer => DescriptorType::UniformTexelBuffer,
-                                    _ => DescriptorType::CombinedImageSampler,
-                                },
-                                _ => unreachable!(),
-                            }
-                        }
-                        Type::Complex(ComplexType::Image {
-                            sampled, ref dim, ..
-                        }) => match input_attachment_index {
-                            Some(index) => DescriptorType::InputAttachment(index),
-                            None => match sampled {
-                                Some(sampled) => {
-                                    if sampled {
-                                        DescriptorType::SampledImage
-                                    } else {
-                                        match dim {
-                                            Dim::Buffer => DescriptorType::StorageTexelBuffer,
-                                            _ => DescriptorType::StorageImage,
-                                        }
-                                    }
-                                }
-                                _ => DescriptorType::StorageImage,
-                            },
-                        },
-                        Type::Complex(ComplexType::Structure { block, .. }) => match block {
-                            BlockType::BufferBlock => DescriptorType::StorageBuffer,
-                            BlockType::Block => DescriptorType::UniformBuffer,
-                        },
-                        Type::Simple(SimpleType::Sampler) => DescriptorType::Sampler,
-                        _ => DescriptorType::Undefined,
-                    };
-                    let count = match count{
+
+                    let ty = data_type.descriptor_type(input_attachment_index);
+                    let count = match data_type.descriptor_count(){
                         ArrayLength::Number(c) => c,
-                        _ => unimplemented!() // TODO! массивы с длинной зависящие от константы
+                        ArrayLength::Dynamic => 0,
+                        _ => 1 // TODO! массивы с длинной зависящие от константы
                     };
                     let name = self.name_from_id(id_res.0);
 
@@ -366,7 +328,10 @@ impl Spirv {
                     }));
                 }
                 Instruction::TypePointer(id_res, class, point_type) if id_res.0 == id => {
-                    return self.type_from_id(point_type.0);
+                    return Some(Type::Complex(ComplexType::Pointer {
+                        ty: Box::new(self.type_from_id(point_type.0)?),
+                        storage: class.clone(),
+                    }));
                 }
                 Instruction::TypeStruct(id_res, members) if id_res.0 == id => {
                     return Some(Type::Complex(ComplexType::Structure {
@@ -450,6 +415,20 @@ impl Spirv {
                         multisampled,
                         sampled,
                         format: format.clone(),
+                    }));
+                }
+                Instruction::TypeAccelerationStructureKHR(id_res) if id_res.0 == id => {
+                    return Some(Type::Simple(SimpleType::AccelerationStructureKHR))
+                }
+                Instruction::TypeAccelerationStructureNV(id_res) if id_res.0 == id => {
+                    return Some(Type::Simple(SimpleType::AccelerationStructureNV))
+                }
+                Instruction::TypeRuntimeArray(id_res, id_type) if id_res.0 == id => {
+                    let ty = Box::new(self.type_from_id(id_type.0).unwrap());
+                    let len = ArrayLength::Dynamic;
+                    return Some(Type::Complex(ComplexType::Array {
+                        ty,
+                        len
                     }));
                 }
                 _ => (),

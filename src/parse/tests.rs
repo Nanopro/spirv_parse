@@ -150,3 +150,37 @@ fn test_texel_fetch_offset(){
         unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
     let vert = parse_spirv(words).unwrap();
 }
+
+#[test]
+fn test_ray_tracing(){
+    let bytes = include_bytes!("../../test_shaders/compiled/raygen.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/raygen.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+
+    println!("{:#?}", bindings);
+
+}
+
+#[test]
+fn test_storage_dynamic(){
+    let bytes = include_bytes!("../../test_shaders/compiled/closesthit.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/closesthit.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+
+    println!("{:#?}", bindings);
+
+}

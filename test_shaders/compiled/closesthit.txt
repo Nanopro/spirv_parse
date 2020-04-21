@@ -1,0 +1,197 @@
+; Magic: 119734787
+; Version: (1, 0)
+; Bound: 279
+; Instructions
+            OpCapability RuntimeDescriptorArray
+            OpCapability RayTracingNV
+            OpExtension "SPV_EXT_descriptor_indexing"
+            OpExtension "SPV_NV_ray_tracing"
+            %1 = OpExtInstImport "GLSL.std.450"
+            OpMemoryModel Logical GLSL450
+            OpEntryPoint ClosestHitNV &4 "main" [&71, &84]
+            OpDecorate &64 ArrayStride(4)
+            OpMemberDecorate &65 0 NonWritable
+            OpMemberDecorate &65 0 Offset(0)
+            OpDecorate &65 BufferBlock
+            OpDecorate &67 DescriptorSet(1)
+            OpDecorate &67 Binding(0)
+            OpDecorate &71 BuiltIn(InstanceCustomIndexNV)
+            OpDecorate &77 ArrayStride(4)
+            OpMemberDecorate &78 0 NonWritable
+            OpMemberDecorate &78 0 Offset(0)
+            OpDecorate &78 BufferBlock
+            OpDecorate &81 DescriptorSet(1)
+            OpDecorate &81 Binding(2)
+            OpDecorate &84 BuiltIn(PrimitiveId)
+            OpDecorate &107 ArrayStride(4)
+            OpMemberDecorate &108 0 NonWritable
+            OpMemberDecorate &108 0 Offset(0)
+            OpDecorate &108 BufferBlock
+            OpDecorate &112 DescriptorSet(1)
+            OpDecorate &112 Binding(4)
+            OpDecorate &158 ArrayStride(16)
+            OpMemberDecorate &159 0 NonWritable
+            OpMemberDecorate &159 0 Offset(0)
+            OpDecorate &159 BufferBlock
+            OpDecorate &162 DescriptorSet(1)
+            OpDecorate &162 Binding(3)
+            OpDecorate &213 Location(0)
+            %2 = OpTypeVoid 
+            %3 = OpTypeFunction &2 []
+            %6 = OpTypeFloat 32
+            %8 = OpTypeVector &6 3
+            %13 = OpConstant @6 [0]
+            %15 = OpTypeBool 
+            %18 = OpConstant @6 [1048576000]
+            %23 = OpConstant @6 [1065353216]
+            %31 = OpConstant @6 [1056964608]
+            %43 = OpConstant @6 [1061158912]
+            %61 = OpTypeInt 32 0
+            %64 = OpTypeRuntimeArray &61
+            %65 = OpTypeStruct [&64]
+            %66 = OpTypePointer Uniform &65
+            %67 = OpVariable @66 Uniform None
+            %68 = OpTypeInt 32 1
+            %69 = OpConstant @68 [0]
+            %70 = OpTypePointer Input &68
+            %71 = OpVariable @70 Input None
+            %73 = OpTypePointer Uniform &61
+            %77 = OpTypeRuntimeArray &61
+            %78 = OpTypeStruct [&77]
+            %79 = OpTypeRuntimeArray &78
+            %80 = OpTypePointer Uniform &79
+            %81 = OpVariable @80 Uniform None
+            %83 = OpConstant @68 [3]
+            %84 = OpVariable @70 Input None
+            %94 = OpConstant @68 [1]
+            %102 = OpConstant @68 [2]
+            %107 = OpTypeRuntimeArray &6
+            %108 = OpTypeStruct [&107]
+            %109 = OpConstant @61 [10]
+            %110 = OpTypeArray &108 &109
+            %111 = OpTypePointer Uniform &110
+            %112 = OpVariable @111 Uniform None
+            %115 = OpTypePointer Uniform &6
+            %129 = OpTypePointer HitAttributeNV &8
+            %130 = OpVariable @129 HitAttributeNV None
+            %131 = OpConstant @61 [0]
+            %132 = OpTypePointer HitAttributeNV &6
+            %136 = OpConstant @61 [1]
+            %158 = OpTypeRuntimeArray &8
+            %159 = OpTypeStruct [&158]
+            %160 = OpTypeRuntimeArray &159
+            %161 = OpTypePointer Uniform &160
+            %162 = OpVariable @161 Uniform None
+            %165 = OpTypePointer Uniform &8
+            %198 = OpConstant @6 [3205745978]
+            %199 = OpConstantComposite @8 [&198, &198, &198]
+            %203 = OpConstant @6 [1058262330]
+            %204 = OpConstantComposite @8 [&203, &203, &203]
+            %212 = OpTypePointer IncomingRayPayloadNV &8
+            %213 = OpVariable @212 IncomingRayPayloadNV None
+            %277 = OpConstant @6 [1082130432]
+            %278 = OpConstant @6 [1059760811]
+            %4 = OpFunction @2 FunctionControl { value: None, parameters: [None] } &3
+            %5 = OpLabel 
+            %72 = OpLoad @68 &71 None
+            %74 = OpAccessChain @73 &67 [&69, &72]
+            %75 = OpLoad @61 &74 None
+            %85 = OpLoad @68 &84 None
+            %86 = OpIMul @68 &83 &85
+            %88 = OpAccessChain @73 &81 [&75, &69, &86]
+            %89 = OpLoad @61 &88 None
+            %95 = OpIAdd @68 &86 &94
+            %96 = OpAccessChain @73 &81 [&75, &69, &95]
+            %97 = OpLoad @61 &96 None
+            %103 = OpIAdd @68 &86 &102
+            %104 = OpAccessChain @73 &81 [&75, &69, &103]
+            %105 = OpLoad @61 &104 None
+            %116 = OpAccessChain @115 &112 [&75, &69, &89]
+            %117 = OpLoad @6 &116 None
+            %121 = OpAccessChain @115 &112 [&75, &69, &97]
+            %122 = OpLoad @6 &121 None
+            %126 = OpAccessChain @115 &112 [&75, &69, &105]
+            %127 = OpLoad @6 &126 None
+            %133 = OpAccessChain @132 &130 [&131]
+            %134 = OpLoad @6 &133 None
+            %135 = OpFSub @6 &23 &134
+            %137 = OpAccessChain @132 &130 [&136]
+            %138 = OpLoad @6 &137 None
+            %139 = OpFSub @6 &135 &138
+            %141 = OpFMul @6 &139 &117
+            %143 = OpLoad @6 &133 None
+            %145 = OpFMul @6 &143 &122
+            %146 = OpFAdd @6 &141 &145
+            %148 = OpLoad @6 &137 None
+            %150 = OpFMul @6 &148 &127
+            %151 = OpFAdd @6 &146 &150
+            OpSelectionMerge &235 SelectionControl { value: None, parameters: [None] }
+            OpSwitch &131 &236 []
+            %236 = OpLabel 
+            %238 = OpFOrdLessThanEqual @15 &13 &151
+            %240 = OpFOrdLessThan @15 &151 &18
+            %241 = OpLogicalAnd @15 &238 &240
+            OpSelectionMerge &242 SelectionControl { value: None, parameters: [None] }
+            OpBranchConditional &241 &243 &244 []
+            %244 = OpLabel 
+            %250 = OpFOrdLessThan @15 &151 &31
+            OpSelectionMerge &251 SelectionControl { value: None, parameters: [None] }
+            OpBranchConditional &250 &252 &253 []
+            %253 = OpLabel 
+            %260 = OpFOrdLessThan @15 &151 &43
+            OpSelectionMerge &261 SelectionControl { value: None, parameters: [None] }
+            OpBranchConditional &260 &262 &263 []
+            %263 = OpLabel 
+            %270 = OpFSub @6 &23 &151
+            %272 = OpFMul @6 &270 &277
+            %273 = OpCompositeConstruct @8 [&23, &272, &13]
+            OpBranch &235
+            %262 = OpLabel 
+            %265 = OpFSub @6 &151 &31
+            %267 = OpFMul @6 &265 &277
+            %268 = OpCompositeConstruct @8 [&267, &23, &13]
+            OpBranch &235
+            %261 = OpLabel 
+            OpUnreachable
+            %252 = OpLabel 
+            %255 = OpFSub @6 &31 &151
+            %257 = OpFMul @6 &255 &277
+            %258 = OpCompositeConstruct @8 [&13, &23, &257]
+            OpBranch &235
+            %251 = OpLabel 
+            OpUnreachable
+            %243 = OpLabel 
+            %247 = OpFMul @6 &151 &277
+            %248 = OpCompositeConstruct @8 [&13, &247, &23]
+            OpBranch &235
+            %242 = OpLabel 
+            OpUnreachable
+            %235 = OpLabel 
+            %275 = OpPhi @8 [PairIdRefIdRef(&248, &243), PairIdRefIdRef(&258, &252), PairIdRefIdRef(&268, &262), PairIdRefIdRef(&273, &263)]
+            %166 = OpAccessChain @165 &162 [&75, &69, &89]
+            %167 = OpLoad @8 &166 None
+            %171 = OpAccessChain @165 &162 [&75, &69, &97]
+            %172 = OpLoad @8 &171 None
+            %176 = OpAccessChain @165 &162 [&75, &69, &105]
+            %177 = OpLoad @8 &176 None
+            %180 = OpLoad @6 &133 None
+            %181 = OpFSub @6 &23 &180
+            %183 = OpLoad @6 &137 None
+            %184 = OpFSub @6 &181 &183
+            %186 = OpVectorTimesScalar @8 &167 &184
+            %188 = OpLoad @6 &133 None
+            %190 = OpVectorTimesScalar @8 &172 &188
+            %191 = OpFAdd @8 &186 &190
+            %193 = OpLoad @6 &137 None
+            %195 = OpVectorTimesScalar @8 &177 &193
+            %196 = OpFAdd @8 &191 &195
+            %201 = OpExtInst @8 &1 69 [&196]
+            %202 = OpDot @6 &199 &201
+            %207 = OpDot @6 &204 &201
+            %208 = OpExtInst @6 &1 40 [&202, &207]
+            %209 = OpFAdd @6 &208 &31
+            %211 = OpFMul @6 &209 &278
+            %216 = OpVectorTimesScalar @8 &275 &211
+            OpStore &213 &216 None
+            OpReturn
+            OpFunctionEnd
