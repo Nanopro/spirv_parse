@@ -184,3 +184,20 @@ fn test_storage_dynamic(){
     println!("{:#?}", bindings);
 
 }
+
+#[test]
+fn test_compute(){
+    let bytes = include_bytes!("../../test_shaders/compiled/boid.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/boid.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+
+    println!("{:#?}", bindings);
+
+}

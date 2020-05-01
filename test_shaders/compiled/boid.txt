@@ -1,0 +1,151 @@
+; Magic: 119734787
+; Version: (1, 0)
+; Bound: 184
+; Instructions
+            OpCapability Shader
+            %1 = OpExtInstImport "GLSL.std.450"
+            OpMemoryModel Logical GLSL450
+            OpEntryPoint GLCompute &4 "main" [&11]
+            OpExecutionMode &4 LocalSize(256, 1, 1)
+            OpDecorate &11 BuiltIn(GlobalInvocationId)
+            OpMemberDecorate &21 0 Offset(0)
+            OpMemberDecorate &21 1 Offset(16)
+            OpMemberDecorate &21 2 Offset(28)
+            OpMemberDecorate &21 3 Offset(32)
+            OpMemberDecorate &21 4 Offset(48)
+            OpMemberDecorate &21 5 Offset(64)
+            OpDecorate &22 ArrayStride(80)
+            OpMemberDecorate &23 0 Offset(0)
+            OpDecorate &23 BufferBlock
+            OpDecorate &25 DescriptorSet(0)
+            OpDecorate &25 Binding(0)
+            OpMemberDecorate &60 0 Offset(0)
+            OpMemberDecorate &60 1 Offset(4)
+            OpMemberDecorate &60 2 Offset(8)
+            OpDecorate &60 Block
+            OpDecorate &151 BuiltIn(WorkgroupSize)
+            %2 = OpTypeVoid 
+            %3 = OpTypeFunction &2 []
+            %6 = OpTypeInt 32 0
+            %9 = OpTypeVector &6 3
+            %10 = OpTypePointer Input &9
+            %11 = OpVariable @10 Input None
+            %12 = OpConstant @6 [0]
+            %13 = OpTypePointer Input &6
+            %16 = OpTypeFloat 32
+            %17 = OpTypeVector &16 3
+            %21 = OpTypeStruct [&17, &17, &6, &17, &17, &17]
+            %22 = OpTypeRuntimeArray &21
+            %23 = OpTypeStruct [&22]
+            %24 = OpTypePointer Uniform &23
+            %25 = OpVariable @24 Uniform None
+            %26 = OpTypeInt 32 1
+            %27 = OpConstant @26 [0]
+            %29 = OpTypePointer Uniform &21
+            %36 = OpConstant @26 [1]
+            %39 = OpConstant @26 [2]
+            %42 = OpConstant @26 [3]
+            %45 = OpConstant @26 [4]
+            %48 = OpConstant @26 [5]
+            %60 = OpTypeStruct [&6, &16, &16]
+            %61 = OpTypePointer PushConstant &60
+            %62 = OpVariable @61 PushConstant None
+            %63 = OpTypePointer PushConstant &6
+            %66 = OpTypeBool 
+            %75 = OpTypePointer Uniform &17
+            %87 = OpTypePointer PushConstant &16
+            %115 = OpConstant @16 [981668463]
+            %141 = OpTypePointer Uniform &6
+            %149 = OpConstant @6 [256]
+            %150 = OpConstant @6 [1]
+            %151 = OpConstantComposite @9 [&149, &150, &150]
+            %4 = OpFunction @2 FunctionControl { value: None, parameters: [None] } &3
+            %5 = OpLabel 
+            %14 = OpAccessChain @13 &11 [&12]
+            %15 = OpLoad @6 &14 None
+            %30 = OpAccessChain @29 &25 [&27, &15]
+            %31 = OpLoad @21 &30 None
+            %32 = OpCompositeExtract @17 &31 [0]
+            %35 = OpCompositeExtract @17 &31 [1]
+            %38 = OpCompositeExtract @6 &31 [2]
+            %41 = OpCompositeExtract @17 &31 [3]
+            %44 = OpCompositeExtract @17 &31 [4]
+            %47 = OpCompositeExtract @17 &31 [5]
+            OpBranch &54
+            %54 = OpLabel 
+            %169 = OpPhi @6 [PairIdRefIdRef(&38, &5), PairIdRefIdRef(&182, &57)]
+            %168 = OpPhi @17 [PairIdRefIdRef(&41, &5), PairIdRefIdRef(&179, &57)]
+            %167 = OpPhi @17 [PairIdRefIdRef(&44, &5), PairIdRefIdRef(&176, &57)]
+            %166 = OpPhi @17 [PairIdRefIdRef(&47, &5), PairIdRefIdRef(&173, &57)]
+            %165 = OpPhi @6 [PairIdRefIdRef(&12, &5), PairIdRefIdRef(&132, &57)]
+            %64 = OpAccessChain @63 &62 [&27]
+            %65 = OpLoad @6 &64 None
+            %67 = OpULessThan @66 &165 &65
+            OpLoopMerge &56 &57 LoopControl { value: None, parameters: [None] }
+            OpBranchConditional &67 &55 &56 []
+            %55 = OpLabel 
+            %70 = OpINotEqual @66 &165 &15
+            OpSelectionMerge &72 SelectionControl { value: None, parameters: [None] }
+            OpBranchConditional &70 &71 &72 []
+            %71 = OpLabel 
+            %76 = OpAccessChain @75 &25 [&27, &165, &27]
+            %77 = OpLoad @17 &76 None
+            %81 = OpFSub @17 &32 &77
+            %85 = OpExtInst @16 &1 66 [&81]
+            %88 = OpAccessChain @87 &62 [&36]
+            %89 = OpLoad @16 &88 None
+            %90 = OpFOrdLessThan @66 &85 &89
+            OpSelectionMerge &92 SelectionControl { value: None, parameters: [None] }
+            OpBranchConditional &90 &91 &92 []
+            %91 = OpLabel 
+            %95 = OpAccessChain @75 &25 [&27, &165, &36]
+            %96 = OpLoad @17 &95 None
+            %99 = OpIAdd @6 &169 &36
+            %103 = OpFAdd @17 &168 &96
+            %108 = OpFAdd @17 &167 &77
+            %111 = OpAccessChain @87 &62 [&39]
+            %112 = OpLoad @16 &111 None
+            %113 = OpFOrdLessThan @66 &85 &112
+            %116 = OpFOrdGreaterThanEqual @66 &85 &115
+            %117 = OpLogicalAnd @66 &113 &116
+            OpSelectionMerge &119 SelectionControl { value: None, parameters: [None] }
+            OpBranchConditional &117 &118 &119 []
+            %118 = OpLabel 
+            %122 = OpCompositeConstruct @17 [&85, &85, &85]
+            %123 = OpFDiv @17 &81 &122
+            %126 = OpFDiv @17 &123 &122
+            %129 = OpFAdd @17 &166 &126
+            OpBranch &119
+            %119 = OpLabel 
+            %175 = OpPhi @17 [PairIdRefIdRef(&166, &91), PairIdRefIdRef(&129, &118)]
+            OpBranch &92
+            %92 = OpLabel 
+            %183 = OpPhi @6 [PairIdRefIdRef(&169, &71), PairIdRefIdRef(&99, &119)]
+            %180 = OpPhi @17 [PairIdRefIdRef(&168, &71), PairIdRefIdRef(&103, &119)]
+            %177 = OpPhi @17 [PairIdRefIdRef(&167, &71), PairIdRefIdRef(&108, &119)]
+            %174 = OpPhi @17 [PairIdRefIdRef(&166, &71), PairIdRefIdRef(&175, &119)]
+            OpBranch &72
+            %72 = OpLabel 
+            %182 = OpPhi @6 [PairIdRefIdRef(&169, &55), PairIdRefIdRef(&183, &92)]
+            %179 = OpPhi @17 [PairIdRefIdRef(&168, &55), PairIdRefIdRef(&180, &92)]
+            %176 = OpPhi @17 [PairIdRefIdRef(&167, &55), PairIdRefIdRef(&177, &92)]
+            %173 = OpPhi @17 [PairIdRefIdRef(&166, &55), PairIdRefIdRef(&174, &92)]
+            OpBranch &57
+            %57 = OpLabel 
+            %132 = OpIAdd @6 &165 &36
+            OpBranch &54
+            %56 = OpLabel 
+            %137 = OpAccessChain @75 &25 [&27, &15, &27]
+            OpStore &137 &32 None
+            %139 = OpAccessChain @75 &25 [&27, &15, &36]
+            OpStore &139 &35 None
+            %142 = OpAccessChain @141 &25 [&27, &15, &39]
+            OpStore &142 &169 None
+            %144 = OpAccessChain @75 &25 [&27, &15, &42]
+            OpStore &144 &168 None
+            %146 = OpAccessChain @75 &25 [&27, &15, &45]
+            OpStore &146 &167 None
+            %148 = OpAccessChain @75 &25 [&27, &15, &48]
+            OpStore &148 &166 None
+            OpReturn
+            OpFunctionEnd

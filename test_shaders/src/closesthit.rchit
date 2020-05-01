@@ -1,60 +1,69 @@
 #version 460
-#extension GL_NV_ray_tracing : require
+#extension GL_EXT_ray_tracing : require
 #extension GL_EXT_nonuniform_qualifier : enable
-#extension VK_EXT_buffer_indexing : enable
+#extension GL_EXT_debug_printf : enable
 
-layout(location = 0) rayPayloadInNV vec3 hitValue;
+struct Vertex{
+  vec3 pos;
+  vec3 norm;
+  vec2 uv;
+};
 
-layout(set = 1, binding = 0) readonly buffer MeshId { uint mesh_id[]; };
-layout(set = 1, binding = 1) readonly buffer VertexPositionBuffer { vec3 pos[]; } vertex_buffer[];
-layout(set = 1, binding = 2) readonly buffer IndexBuffer { uint index[]; } index_buffer[];
-layout(set = 1, binding = 3) readonly buffer VertexNormalBuffer { vec3 normal[]; } normal_buffer[];
-layout(set = 1, binding = 4) readonly buffer VertexValueBuffer { float value[]; } value_buffer[];
+const uint STRIDE = 8;
 
-hitAttributeNV vec3 attribs;
+layout(location = 0) rayPayloadInEXT vec3 hitValue;
+
+
+layout(set = 1, binding = 0) readonly buffer HasVertexBuffer { uint has[]; } has_vertex_buffer;
+layout(set = 1, binding = 1) readonly buffer VertexBuffer { float data[]; } vertex_buffer[];
+
+layout(set = 2, binding = 0) readonly buffer HasIndexBuffer { uint has[]; } has_index_buffer;
+layout(set = 2, binding = 1) readonly buffer IndexBuffer { uint index[]; } index_buffer[];
+
+hitAttributeEXT vec3 attribs;
 
 const vec3 LIGHT = -vec3(1.0, 1.0, 1.0);
 
 
-vec3 Rainbow(in float value){
-  if (0.0 <= value && value < 0.25) {
-    return vec3(0.0, (1.0 * (value) / 0.25), 1.0);
-  }
-  else if (value < 0.5) {
-    return vec3(0.0, 1.0, (1.0 * (0.5 - value) / 0.25));
-  }
-  else if (value < 0.75) {
-    return vec3((1.0 * (value - 0.5) / 0.25), 1.0, 0.0);
-  }
-  else {
-    return vec3(1.0, (1.0 * (1.0 - value) / 0.25), 0.0);
-  }
+Vertex unpack(uint index){
+  Vertex v;
+  v.pos = vec3(
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 0 ],
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 1 ],
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 2 ]
+  );
+  v.norm = vec3(
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 3 ],
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 4 ],
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 5 ]
+  );
+  v.uv = vec2(
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 6 ],
+  vertex_buffer[gl_InstanceCustomIndexEXT].data[ STRIDE * index + 7 ]
+  );
+
+
+
+  return v;
 }
+
 
 
 void main()
 {
-  uint mesh = mesh_id[gl_InstanceCustomIndexNV];
-  uint x = index_buffer[mesh].index[3 * gl_PrimitiveID + 0];
-  uint y = index_buffer[mesh].index[3 * gl_PrimitiveID + 1];
-  uint z = index_buffer[mesh].index[3 * gl_PrimitiveID + 2];
+
+  uint ai = index_buffer[gl_InstanceCustomIndexEXT].index[3 * gl_PrimitiveID + 0];
+  uint bi = index_buffer[gl_InstanceCustomIndexEXT].index[3 * gl_PrimitiveID + 1];
+  uint ci = index_buffer[gl_InstanceCustomIndexEXT].index[3 * gl_PrimitiveID + 2];
 
 
-  float a = value_buffer[mesh].value[x];
-  float b = value_buffer[mesh].value[y];
-  float c = value_buffer[mesh].value[z];
-  float value = (1.0f - attribs.x - attribs.y) * a + attribs.x * b + attribs.y * c;
-  vec3 color = Rainbow(value);
+  Vertex a = unpack(ai);
+  Vertex b = unpack(bi);
+  Vertex c = unpack(ci);
 
-  vec3 an = normal_buffer[mesh].normal[x];
-  vec3 bn = normal_buffer[mesh].normal[y];
-  vec3 cn = normal_buffer[mesh].normal[z];
-  vec3 normal = (1.0f - attribs.x - attribs.y) * an + attribs.x * bn + attribs.y * cn;
-  //vec3 normal = an;
-
-  //float bright = max(max(dot(LIGHT, normal), dot(-LIGHT, normal)), 0.4);
-
-
+  vec3 normal = (1.0f - attribs.x - attribs.y) * a.norm + attribs.x * b.norm + attribs.y * c.norm;
+  vec3 color = vec3( (1.0f - attribs.x - attribs.y) * a.uv + attribs.x * b.uv + attribs.y * c.uv, 1.0 );
   float bright = (max(dot(normalize(LIGHT), normalize(normal)), dot(-normalize(LIGHT), normalize(normal)))+0.5)/1.5;
   hitValue = color * bright;
+
 }

@@ -239,11 +239,7 @@ impl Spirv {
 
 
                     let ty = data_type.descriptor_type(input_attachment_index);
-                    let count = match data_type.descriptor_count(){
-                        ArrayLength::Number(c) => c,
-                        ArrayLength::Dynamic => 0,
-                        _ => 1 // TODO! массивы с длинной зависящие от константы
-                    };
+                    let count = data_type.descriptor_count();
                     let name = self.name_from_id(id_res.0);
 
                     bindings.push(DescriptorBindning {
@@ -348,7 +344,8 @@ impl Spirv {
                                 }
                                 _ => None,
                             })
-                            .expect("Block decoration"),
+                            .unwrap_or(BlockType::Block),
+                           //.expect(&format!("Block decoration missing for struct {}", id_res.0)),
                         members: members
                             .iter()
                             .enumerate()

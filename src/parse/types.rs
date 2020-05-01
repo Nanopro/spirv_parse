@@ -194,7 +194,13 @@ impl Type{
     pub fn descriptor_count(&self,) -> ArrayLength {
         match self{
             Type::Complex(ComplexType::Array {len, ..}) => *len,
-            Type::Complex(ComplexType::Pointer {ty, ..}) => ty.descriptor_count(),
+            Type::Complex(ComplexType::Pointer {ty, ..}) => {
+                match ty.as_ref() {
+                    Type::Complex(ComplexType::Array {..}) => ArrayLength::Dynamic,
+                    _ => ty.descriptor_count(),
+                }
+
+            },
             _ => ArrayLength::Number(1)
         }
     }
@@ -264,7 +270,7 @@ impl ComplexType {
             }
             ComplexType::SampledImage { .. } => None,
             ComplexType::Image { .. } => None,
-            ComplexType::Pointer { .. } => None,
+            ComplexType::Pointer { ty, .. } => ty.size(),
         }
     }
 }
@@ -304,8 +310,12 @@ pub struct DescriptorBindning {
     pub name: Option<String>,
     pub data_type: Type,
     pub ty: DescriptorType,
-    pub count: u32,
+    pub count: ArrayLength,
 }
+
+
+
+
 #[derive(Debug)]
 pub enum DescriptorType {
     Undefined,
