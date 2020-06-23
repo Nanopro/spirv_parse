@@ -201,3 +201,24 @@ fn test_compute(){
     println!("{:#?}", bindings);
 
 }
+
+#[test]
+fn test_geometry(){
+    let bytes = include_bytes!("../../test_shaders/compiled/test_geom.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/test_geom.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+    let push = vert.push_constant_blocks();
+    let input = vert.input_variables(&entry);
+    let output = vert.output_variables(&entry);
+    let input = input.iter().map(|v| v.ty.to_format()).flatten().collect::<Vec<_>>();
+
+    println!("{:#?}", input);
+
+}

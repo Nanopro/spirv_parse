@@ -134,7 +134,12 @@ impl Type {
                     },
                     _ => unimplemented!(),
                 },
-                ComplexType::Array { ty, len, .. } => unimplemented!(),
+                ComplexType::Array { ty, len, .. } => {
+                    match len{
+                        ArrayLength::Number(n) => std::iter::repeat(ty.to_format()).take(*n as usize).flatten().collect(),
+                        _ => todo!()
+                    }
+                },
                 ComplexType::Matrix { ty, cols, rows } => {
                     std::iter::repeat(
                         Type::Complex(ComplexType::Vector {ty: (*ty).clone(), len: *cols})

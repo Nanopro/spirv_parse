@@ -1,0 +1,89 @@
+; Magic: 119734787
+; Version: (1, 5)
+; Bound: 37
+; Instructions
+            OpCapability Geometry
+            %1 = OpExtInstImport "GLSL.std.450"
+            OpMemoryModel Logical GLSL450
+            OpEntryPoint Geometry &4 "main" [&13, &19, &28, &36]
+            OpExecutionMode &4 InputPoints
+            OpExecutionMode &4 Invocations(1)
+            OpExecutionMode &4 OutputPoints
+            OpExecutionMode &4 OutputVertices(1)
+            OpSource GLSL 450 None None
+            OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+            OpSourceExtension "GL_GOOGLE_include_directive"
+            OpName &4 "main"
+            OpName &11 "gl_PerVertex"
+            OpMemberName &11 0 "gl_Position"
+            OpMemberName &11 1 "gl_PointSize"
+            OpMemberName &11 2 "gl_ClipDistance"
+            OpMemberName &11 3 "gl_CullDistance"
+            OpName &13 ""
+            OpName &16 "gl_PerVertex"
+            OpMemberName &16 0 "gl_Position"
+            OpMemberName &16 1 "gl_PointSize"
+            OpMemberName &16 2 "gl_ClipDistance"
+            OpMemberName &16 3 "gl_CullDistance"
+            OpName &19 "gl_in"
+            OpName &26 "VertexOutput"
+            OpMemberName &26 0 "color"
+            OpName &28 "vs_out"
+            OpName &33 "VertexData"
+            OpMemberName &33 0 "half_extent"
+            OpName &36 "vertex"
+            OpMemberDecorate &11 0 BuiltIn(Position)
+            OpMemberDecorate &11 1 BuiltIn(PointSize)
+            OpMemberDecorate &11 2 BuiltIn(ClipDistance)
+            OpMemberDecorate &11 3 BuiltIn(CullDistance)
+            OpDecorate &11 Block
+            OpMemberDecorate &16 0 BuiltIn(Position)
+            OpMemberDecorate &16 1 BuiltIn(PointSize)
+            OpMemberDecorate &16 2 BuiltIn(ClipDistance)
+            OpMemberDecorate &16 3 BuiltIn(CullDistance)
+            OpDecorate &16 Block
+            OpDecorate &26 Block
+            OpDecorate &28 Location(0)
+            OpDecorate &33 Block
+            OpDecorate &36 Location(0)
+            %2 = OpTypeVoid 
+            %3 = OpTypeFunction &2 []
+            %6 = OpTypeFloat 32
+            %7 = OpTypeVector &6 4
+            %8 = OpTypeInt 32 0
+            %9 = OpConstant @8 [1]
+            %10 = OpTypeArray &6 &9
+            %11 = OpTypeStruct [&7, &6, &10, &10]
+            %12 = OpTypePointer Output &11
+            %13 = OpVariable @12 Output None
+            %14 = OpTypeInt 32 1
+            %15 = OpConstant @14 [0]
+            %16 = OpTypeStruct [&7, &6, &10, &10]
+            %17 = OpTypeArray &16 &9
+            %18 = OpTypePointer Input &17
+            %19 = OpVariable @18 Input None
+            %20 = OpTypePointer Input &7
+            %23 = OpTypePointer Output &7
+            %25 = OpTypeVector &6 3
+            %26 = OpTypeStruct [&25]
+            %27 = OpTypePointer Output &26
+            %28 = OpVariable @27 Output None
+            %29 = OpConstant @6 [1065353216]
+            %30 = OpConstantComposite @25 [&29, &29, &29]
+            %31 = OpTypePointer Output &25
+            %33 = OpTypeStruct [&25]
+            %34 = OpTypeArray &33 &9
+            %35 = OpTypePointer Input &34
+            %36 = OpVariable @35 Input None
+            %4 = OpFunction @2 FunctionControl { value: None, parameters: [None] } &3
+            %5 = OpLabel 
+            %21 = OpAccessChain @20 &19 [&15, &15]
+            %22 = OpLoad @7 &21 None
+            %24 = OpAccessChain @23 &13 [&15]
+            OpStore &24 &22 None
+            %32 = OpAccessChain @31 &28 [&15]
+            OpStore &32 &30 None
+            OpEmitVertex
+            OpEndPrimitive
+            OpReturn
+            OpFunctionEnd
