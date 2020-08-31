@@ -9,6 +9,3 @@ extern crate bitflags;
 extern crate derivative;
 extern crate serde_json;
 
-use serde_json::from_reader;
-use std::fs::File;
-use std::io::Read;

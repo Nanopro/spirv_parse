@@ -49,7 +49,7 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                 let value =
                     syn::parse_str::<LitInt>(enumerant.get("value").unwrap().as_str().unwrap())
                         .unwrap()
-                        .value() as u32;
+                        .base10_parse::<u32>().unwrap();
 
                 let parameters = match enumerant.get("parameters"){
                     Some(pars) => {
