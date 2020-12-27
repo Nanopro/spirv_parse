@@ -1,0 +1,50 @@
+#version 450
+
+struct Boid{
+    vec3 position;
+    vec3 velocity;
+
+    uint mates;
+    vec3 flock_heading;
+    vec3 flock_center;
+    vec3 separation_heading;
+};
+
+
+layout (local_size_x = 256) in;
+layout (binding = 0) buffer Boids { Boid[] boids; };
+
+
+layout (push_constant) uniform Config{
+    uint boid_count;
+    float view_distance;
+    float avoid_distance;
+};
+
+
+
+void main()
+{
+    uint id = gl_GlobalInvocationID.x;
+    Boid boid = boids[id];
+    vec3 position = boid.position;
+    for(uint i = 0; i < boid_count; i++){
+        if (i != id){
+            vec3 pos = boids[i].position;
+            vec3 offset = position - pos;
+            float distance = length(offset);
+            if ( distance < view_distance) {
+                vec3 velocity = boids[i].velocity;
+                boid.mates++;
+                boid.flock_heading += velocity;
+                boid.flock_center += pos;
+                if ((distance < avoid_distance ) && (distance >= 0.001)) {
+                    boid.separation_heading += offset / distance / distance;
+                }
+            }
+        }
+    }
+
+    boids[id] = boid;
+
+}

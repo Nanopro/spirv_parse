@@ -69,7 +69,7 @@ mod tests {
     fn test_bit() {
         let data = vec![0b11];
         let x = ImageOperands::from_raw(&data);
-        assert_eq!(x.0, ImageOperands(0b11));
+        assert_eq!(x.0, ImageOperands::new(0b11));
         assert_eq!(x.1, &[] as &[u32]);
     }
 
@@ -88,7 +88,7 @@ mod tests {
 
     #[test]
     fn test_instruction_with_parametred_bit_enum() {
-        let data = vec![1, 2, 3, 4, 0b1];
+        let data = vec![1, 2, 3, 4, 0b1, 5];
         let x = Instruction::from_raw(88, &data);
         assert_eq!(
             x,
@@ -97,8 +97,10 @@ mod tests {
                 IdResult(2),
                 IdRef(3),
                 IdRef(4),
-                ImageOperands(0b1)
+                ImageOperands::new(0b1)
             )
         );
     }
 }
+
+

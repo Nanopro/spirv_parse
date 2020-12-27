@@ -142,3 +142,83 @@ fn test_vulkan_types(){
         unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
     let vert = parse_spirv(words).unwrap();
 }
+
+#[test]
+fn test_texel_fetch_offset(){
+    let bytes = include_bytes!("../../test_shaders/compiled/edge_detec.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+}
+
+#[test]
+fn test_ray_tracing(){
+    let bytes = include_bytes!("../../test_shaders/compiled/raygen.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/raygen.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+
+    println!("{:#?}", bindings);
+
+}
+
+#[test]
+fn test_storage_dynamic(){
+    let bytes = include_bytes!("../../test_shaders/compiled/closesthit.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/closesthit.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+
+    println!("{:#?}", bindings);
+
+}
+
+#[test]
+fn test_compute(){
+    let bytes = include_bytes!("../../test_shaders/compiled/boid.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/boid.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+
+    println!("{:#?}", bindings);
+
+}
+
+#[test]
+fn test_geometry(){
+    let bytes = include_bytes!("../../test_shaders/compiled/test_geom.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/test_geom.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+    let push = vert.push_constant_blocks();
+    let input = vert.input_variables(&entry);
+    let output = vert.output_variables(&entry);
+    let input = input.iter().map(|v| v.ty.to_format()).flatten().collect::<Vec<_>>();
+
+    println!("{:#?}", input);
+
+}

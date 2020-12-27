@@ -25,10 +25,15 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
         let category = op_kind.get("category").unwrap().as_str().unwrap();
         let struct_str = op_kind.get("kind").unwrap().as_str().unwrap();
         let struct_name = Ident::new(struct_str, Span::call_site());
+        let parameters_enum_name = Ident::new(&format!("{}Parameters", struct_name), Span::call_site());
+        let struct_name_enums = Ident::new(&format!("{}Bits", struct_name), Span::call_site());
 
         if category == "BitEnum" {
             let mut values = vec![];
+            let mut parse_parameters = vec![];
             let mut from_name = vec![];
+            let mut parameter_enums = vec![];
+
             let mut max_value = 0x0;
 
             for enumerant in op_kind.get("enumerants").unwrap().as_array().unwrap() {
@@ -44,139 +49,105 @@ fn op_kinds(operand_kinds: &Vec<Value>) -> proc_macro2::TokenStream {
                 let value =
                     syn::parse_str::<LitInt>(enumerant.get("value").unwrap().as_str().unwrap())
                         .unwrap()
-                        .value() as u32;
+                        .base10_parse::<u32>().unwrap();
+
+                let parameters = match enumerant.get("parameters"){
+                    Some(pars) => {
+                        pars.as_array().unwrap()
+                            .iter()
+                            .map(|parameter|{
+                                let kind: Ident = parameter.get("kind").and_then(|p| p.as_str()).map(|p| syn::parse_str::<Ident>(p).unwrap()).unwrap();
+                                kind
+                            })
+                            .collect::<Vec<_>>()
+                    },
+                    None => {
+                        vec![]
+                    }
+                };
+                let parameters2 = parameters.clone();
+                parse_parameters.push(
+                    quote!{
+                        if bits.contains(#struct_name_enums::#ident){
+                            parameters.push(
+                                #parameters_enum_name::#ident(
+                                    #({
+                                        let (v, d) = #parameters2::from_raw(data);
+                                        data = d;
+                                        v
+                                    }, )*
+                                )
+                            )
+                        }
+                    }
+                );
+
+                parameter_enums.push(
+                    quote!{
+                        #ident( #( #parameters, )* ),
+                    }
+                );
 
                 if value > max_value {
                     max_value = value;
                 }
 
                 values.push(quote!(
-                    pub const #ident: Self = #struct_name(#value);
+                    const #ident = #value;
                 ));
                 from_name.push(quote!(
-                    #name => Some(#struct_name::#ident)
+                    #name => Some(#struct_name_enums::#ident)
                 ));
             }
 
             structs.push(quote!(
 
-                #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-                pub struct #struct_name(pub u32);
+                #[derive(Debug, Clone, Serialize, Deserialize, Derivative)]
+                #[derivative(PartialEq, Default(bound=""))]
+                pub struct #struct_name{
+                    pub value: #struct_name_enums,
+                    #[derivative(PartialEq="ignore")]
+                    pub parameters: Vec<#parameters_enum_name>
+                }
 
+               #[derive(Debug, Clone, Serialize, Deserialize)]
+                pub enum #parameters_enum_name{
+                    #( #parameter_enums )*
+                }
 
-
-                impl #struct_name{
-                     #( #values )*
-
-                    pub fn from_name(name: &str) -> Option<Self>{
-                        match name{
-                             #( #from_name, )*
-                             _ => None
-                        }
+                bitflags!{
+                    #[derive(Default, Serialize, Deserialize)]
+                    pub struct #struct_name_enums: u32{
+                        #( #values )*
                     }
                 }
-                impl Default for #struct_name {
-                    fn default() -> #struct_name {
-                        #struct_name(0)
-                    }
-                    }
-                    impl #struct_name {
-                        #[inline]
-                        pub const fn empty() -> #struct_name {
-                        #struct_name(0)
+
+                impl #struct_name{
+                     pub fn new(value: u32) -> Self{
+                        Self{
+                            value: #struct_name_enums::from_bits(value).unwrap(),
+                            parameters: vec![],
                         }
-                        #[inline]
-                        pub const fn all() -> #struct_name {
-                            #struct_name(#max_value as u32)
-                        }
-                        #[inline]
-                        pub fn from_raw(data: &[u32]) -> (Self, &[u32]) {
-                            //assert!(data.len() > 0);
-                            (#struct_name(data[0]), &data[1..])
-                        }
-                        #[inline]
-                        pub const fn as_raw(self) -> u32 {
-                            self.0
-                        }
-                        #[inline]
-                        pub fn is_empty(self) -> bool {
-                        self == #struct_name::empty()
-                        }
-                        #[inline]
-                        pub fn is_all(self) -> bool {
-                        self & #struct_name::all() == #struct_name::all()
-                        }
-                        #[inline]
-                        pub fn intersects(self, other: #struct_name) -> bool {
-                        self & other != #struct_name::empty()
-                        }
-                        #[doc = r" Returns whether `other` is a subset of `self`"]
-                        #[inline]
-                        pub fn contains(self, other: #struct_name) -> bool {
-                        self & other == other
-                        }
-                    }
-                    impl ::std::ops::BitOr for #struct_name {
-                        type Output = #struct_name;
-                        #[inline]
-                        fn bitor(self, rhs: #struct_name) -> #struct_name {
-                        #struct_name(self.0 | rhs.0)
-                        }
-                    }
-                    impl ::std::ops::BitOrAssign for #struct_name {
-                        #[inline]
-                        fn bitor_assign(&mut self, rhs: #struct_name) {
-                        *self = *self | rhs
-                        }
-                    }
-                    impl ::std::ops::BitAnd for #struct_name {
-                        type Output = #struct_name;
-                        #[inline]
-                        fn bitand(self, rhs: #struct_name) -> #struct_name {
-                            #struct_name(self.0 & rhs.0)
-                        }
-                    }
-                    impl ::std::ops::BitAndAssign for #struct_name {
-                        #[inline]
-                        fn bitand_assign(&mut self, rhs: #struct_name) {
-                        *self = *self & rhs
-                        }
-                    }
-                    impl ::std::ops::BitXor for #struct_name {
-                        type Output = #struct_name;
-                        #[inline]
-                        fn bitxor(self, rhs: #struct_name) -> #struct_name {
-                        #struct_name(self.0 ^ rhs.0)
-                        }
-                    }
-                    impl ::std::ops::BitXorAssign for #struct_name {
+                     }
+                }
+
+                impl #struct_name {
                     #[inline]
-                        fn bitxor_assign(&mut self, rhs: #struct_name) {
-                        *self = *self ^ rhs
-                        }
+                    pub fn from_raw(mut data: &[u32]) -> (Self, &[u32]) {
+                        //assert!(data.len() > 0);
+                        let bits = #struct_name_enums::from_bits(data[0]).unwrap();
+                        data = &data[1..];
+                        let mut parameters = vec![];
+                        #( #parse_parameters )*
+                        (
+                            Self{
+                                value: bits,
+                                parameters,
+                            },
+                            data
+                        )
                     }
-                    impl ::std::ops::Sub for #struct_name {
-                        type Output = #struct_name;
-                        #[inline]
-                        fn sub(self, rhs: #struct_name) -> #struct_name {
-                        self & !rhs
-                        }
-                    }
-                    impl ::std::ops::SubAssign for #struct_name {
-                        #[inline]
-                        fn sub_assign(&mut self, rhs: #struct_name) {
-                        *self = *self - rhs
-                        }
-                    }
-                    impl ::std::ops::Not for #struct_name {
-                        type Output = #struct_name;
-                        #[inline]
-                        fn not(self) -> #struct_name {
-                        self ^ #struct_name::all()
-                        }
-                    }
-
-
+                }
             ));
         }
         if category == "ValueEnum" {

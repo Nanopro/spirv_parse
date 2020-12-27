@@ -1,0 +1,169 @@
+; Magic: 119734787
+; Version: (1, 0)
+; Bound: 109
+; Instructions
+            OpCapability RayTracingProvisionalKHR
+            OpExtension "SPV_KHR_non_semantic_info"
+            OpExtension "SPV_KHR_ray_tracing"
+            %1 = OpExtInstImport "GLSL.std.450"
+            %107 = OpExtInstImport "NonSemantic.DebugPrintf"
+            OpMemoryModel Logical GLSL450
+            OpEntryPoint RayGenerationNV &4 "main" [&13, &23]
+            %106 = OpString "Hello!"
+            OpSource GLSL 460 None None
+            OpSourceExtension "GL_EXT_debug_printf"
+            OpSourceExtension "GL_EXT_ray_tracing"
+            OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+            OpSourceExtension "GL_GOOGLE_include_directive"
+            OpName &4 "main"
+            OpName &9 "pixelCenter"
+            OpName &13 "gl_LaunchIDEXT"
+            OpName &21 "inUV"
+            OpName &23 "gl_LaunchSizeEXT"
+            OpName &28 "d"
+            OpName &37 "origin"
+            OpName &39 "CameraProperties"
+            OpMemberName &39 0 "viewInverse"
+            OpMemberName &39 1 "projInverse"
+            OpName &41 "cam"
+            OpName &50 "target"
+            OpName &63 "direction"
+            OpName &75 "tmin"
+            OpName &77 "tmax"
+            OpName &80 "hitValue"
+            OpName &84 "topLevelAS"
+            OpName &95 "image"
+            OpDecorate &13 BuiltIn(LaunchIdNV)
+            OpDecorate &23 BuiltIn(LaunchSizeNV)
+            OpMemberDecorate &39 0 ColMajor
+            OpMemberDecorate &39 0 Offset(0)
+            OpMemberDecorate &39 0 MatrixStride(16)
+            OpMemberDecorate &39 1 ColMajor
+            OpMemberDecorate &39 1 Offset(64)
+            OpMemberDecorate &39 1 MatrixStride(16)
+            OpDecorate &39 Block
+            OpDecorate &41 DescriptorSet(0)
+            OpDecorate &41 Binding(2)
+            OpDecorate &80 Location(0)
+            OpDecorate &84 DescriptorSet(0)
+            OpDecorate &84 Binding(0)
+            OpDecorate &95 DescriptorSet(0)
+            OpDecorate &95 Binding(1)
+            %2 = OpTypeVoid 
+            %3 = OpTypeFunction &2 []
+            %6 = OpTypeFloat 32
+            %7 = OpTypeVector &6 2
+            %8 = OpTypePointer Function &7
+            %10 = OpTypeInt 32 0
+            %11 = OpTypeVector &10 3
+            %12 = OpTypePointer Input &11
+            %13 = OpVariable @12 Input None
+            %14 = OpTypeVector &10 2
+            %18 = OpConstant @6 [1056964608]
+            %19 = OpConstantComposite @7 [&18, &18]
+            %23 = OpVariable @12 Input None
+            %30 = OpConstant @6 [1073741824]
+            %32 = OpConstant @6 [1065353216]
+            %35 = OpTypeVector &6 4
+            %36 = OpTypePointer Function &35
+            %38 = OpTypeMatrix &35 4
+            %39 = OpTypeStruct [&38, &38]
+            %40 = OpTypePointer Uniform &39
+            %41 = OpVariable @40 Uniform None
+            %42 = OpTypeInt 32 1
+            %43 = OpConstant @42 [0]
+            %44 = OpTypePointer Uniform &38
+            %47 = OpConstant @6 [0]
+            %48 = OpConstantComposite @35 [&47, &47, &47, &32]
+            %51 = OpConstant @42 [1]
+            %54 = OpConstant @10 [0]
+            %55 = OpTypePointer Function &6
+            %58 = OpConstant @10 [1]
+            %66 = OpTypeVector &6 3
+            %76 = OpConstant @6 [981668463]
+            %78 = OpConstant @6 [1176256512]
+            %79 = OpTypePointer RayPayloadNV &66
+            %80 = OpVariable @79 RayPayloadNV None
+            %81 = OpConstantComposite @66 [&47, &47, &47]
+            %82 = OpTypeAccelerationStructureNV 
+            %83 = OpTypePointer UniformConstant &82
+            %84 = OpVariable @83 UniformConstant None
+            %86 = OpConstant @10 [255]
+            %93 = OpTypeImage &6 _2D 0 0 0 2 Rgba8 None
+            %94 = OpTypePointer UniformConstant &93
+            %95 = OpVariable @94 UniformConstant None
+            %99 = OpTypeVector &42 2
+            %4 = OpFunction @2 FunctionControl { value: None, parameters: [None] } &3
+            %5 = OpLabel 
+            %9 = OpVariable @8 Function None
+            %21 = OpVariable @8 Function None
+            %28 = OpVariable @8 Function None
+            %37 = OpVariable @36 Function None
+            %50 = OpVariable @36 Function None
+            %63 = OpVariable @36 Function None
+            %75 = OpVariable @55 Function None
+            %77 = OpVariable @55 Function None
+            %15 = OpLoad @11 &13 None
+            %16 = OpVectorShuffle @14 &15 &15 [0, 1]
+            %17 = OpConvertUToF @7 &16
+            %20 = OpFAdd @7 &17 &19
+            OpStore &9 &20 None
+            %22 = OpLoad @7 &9 None
+            %24 = OpLoad @11 &23 None
+            %25 = OpVectorShuffle @14 &24 &24 [0, 1]
+            %26 = OpConvertUToF @7 &25
+            %27 = OpFDiv @7 &22 &26
+            OpStore &21 &27 None
+            %29 = OpLoad @7 &21 None
+            %31 = OpVectorTimesScalar @7 &29 &30
+            %33 = OpCompositeConstruct @7 [&32, &32]
+            %34 = OpFSub @7 &31 &33
+            OpStore &28 &34 None
+            %45 = OpAccessChain @44 &41 [&43]
+            %46 = OpLoad @38 &45 None
+            %49 = OpMatrixTimesVector @35 &46 &48
+            OpStore &37 &49 None
+            %52 = OpAccessChain @44 &41 [&51]
+            %53 = OpLoad @38 &52 None
+            %56 = OpAccessChain @55 &28 [&54]
+            %57 = OpLoad @6 &56 None
+            %59 = OpAccessChain @55 &28 [&58]
+            %60 = OpLoad @6 &59 None
+            %61 = OpCompositeConstruct @35 [&57, &60, &32, &32]
+            %62 = OpMatrixTimesVector @35 &53 &61
+            OpStore &50 &62 None
+            %64 = OpAccessChain @44 &41 [&43]
+            %65 = OpLoad @38 &64 None
+            %67 = OpLoad @35 &50 None
+            %68 = OpVectorShuffle @66 &67 &67 [0, 1, 2]
+            %69 = OpExtInst @66 &1 69 [&68]
+            %70 = OpCompositeExtract @6 &69 [0]
+            %71 = OpCompositeExtract @6 &69 [1]
+            %72 = OpCompositeExtract @6 &69 [2]
+            %73 = OpCompositeConstruct @35 [&70, &71, &72, &47]
+            %74 = OpMatrixTimesVector @35 &65 &73
+            OpStore &63 &74 None
+            OpStore &75 &76 None
+            OpStore &77 &78 None
+            OpStore &80 &81 None
+            %85 = OpLoad @82 &84 None
+            %87 = OpLoad @35 &37 None
+            %88 = OpVectorShuffle @66 &87 &87 [0, 1, 2]
+            %89 = OpLoad @6 &75 None
+            %90 = OpLoad @35 &63 None
+            %91 = OpVectorShuffle @66 &90 &90 [0, 1, 2]
+            %92 = OpLoad @6 &77 None
+            OpTraceNV &85 &58 &86 &54 &54 &54 &88 &89 &91 &92 &43
+            %96 = OpLoad @93 &95 None
+            %97 = OpLoad @11 &13 None
+            %98 = OpVectorShuffle @14 &97 &97 [0, 1]
+            %100 = OpBitcast @99 &98
+            %101 = OpLoad @66 &80 None
+            %102 = OpCompositeExtract @6 &101 [0]
+            %103 = OpCompositeExtract @6 &101 [1]
+            %104 = OpCompositeExtract @6 &101 [2]
+            %105 = OpCompositeConstruct @35 [&102, &103, &104, &47]
+            OpImageWrite &96 &100 &105 None
+            %108 = OpExtInst @2 &107 1 [&106]
+            OpReturn
+            OpFunctionEnd
