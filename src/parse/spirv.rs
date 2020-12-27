@@ -192,7 +192,7 @@ impl Spirv {
             match instruction {
                 Instruction::Variable(id_res_type, id_res, class, opt)
                     if class == &StorageClass::Uniform
-                        || class == &StorageClass::UniformConstant =>
+                        || class == &StorageClass::UniformConstant || class == &StorageClass::StorageBuffer =>
                 {
                     let data_type = self.type_from_id(id_res_type.0).expect("Must have type");
 
@@ -368,6 +368,16 @@ impl Spirv {
                 Instruction::TypePointer(id_res, class, point_type) if id_res.0 == id => {
                     return self.type_from_id(point_type.0);
                 }
+                Instruction::TypeRuntimeArray(id_res, point_type) if id_res.0 == id => {
+                    return Some(
+                        Type::Complex(
+                            ComplexType::Array{
+                                ty: Box::new(self.type_from_id(point_type.0).unwrap_or_else(|| panic!("Unknown type for runtime's array point type: {}", point_type.0))),
+                                len: ArrayLength::Dynamic,
+                            }
+                        )
+                    )
+                }
                 Instruction::TypeStruct(id_res, members) if id_res.0 == id => {
                     return Some(Type::Complex(ComplexType::Structure {
                         name: self
@@ -391,7 +401,7 @@ impl Spirv {
                                 (
                                     self.member_name(id_res.0, n as u32)
                                         .unwrap_or_else(|| "__unnamed".to_owned()),
-                                    self.type_from_id(member.0).unwrap(),
+                                    self.type_from_id(member.0).unwrap_or_else(|| { panic!("Not found type for member: {}", member.0)}),
                                 )
                             })
                             .collect(),

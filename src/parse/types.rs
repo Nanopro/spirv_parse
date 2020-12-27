@@ -68,6 +68,7 @@ pub enum ComplexType {
 
 #[derive(Debug, PartialEq,  Clone)]
 pub enum ArrayLength{
+    Dynamic,
     Number(u32),
     Constant{spec_id: u32, default: u32},
 }
