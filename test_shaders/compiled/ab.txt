@@ -1,0 +1,103 @@
+; Magic: 119734787
+; Version: (1, 5)
+; Bound: 54
+; Instructions
+            OpCapability Shader
+            %1 = OpExtInstImport "GLSL.std.450"
+            OpMemoryModel Logical GLSL450
+            OpEntryPoint GLCompute &4 "main" [&11, &21, &35, &45]
+            OpExecutionMode &4 LocalSize(16, 1, 1)
+            OpSource GLSL 450 None None
+            OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+            OpSourceExtension "GL_GOOGLE_include_directive"
+            OpName &4 "main"
+            OpName &8 "index"
+            OpName &11 "gl_GlobalInvocationID"
+            OpName &19 "A"
+            OpMemberName &19 0 "asize"
+            OpMemberName &19 1 "a"
+            OpName &21 ""
+            OpName &33 "OutputBuffer"
+            OpMemberName &33 0 "c"
+            OpName &35 ""
+            OpName &43 "B"
+            OpMemberName &43 0 "bsize"
+            OpMemberName &43 1 "b"
+            OpName &45 ""
+            OpDecorate &11 BuiltIn(GlobalInvocationId)
+            OpDecorate &18 ArrayStride(4)
+            OpMemberDecorate &19 0 Offset(0)
+            OpMemberDecorate &19 1 Offset(4)
+            OpDecorate &19 Block
+            OpDecorate &21 DescriptorSet(0)
+            OpDecorate &21 Binding(0)
+            OpDecorate &32 ArrayStride(4)
+            OpMemberDecorate &33 0 Offset(0)
+            OpDecorate &33 Block
+            OpDecorate &35 DescriptorSet(0)
+            OpDecorate &35 Binding(2)
+            OpDecorate &42 ArrayStride(4)
+            OpMemberDecorate &43 0 Offset(0)
+            OpMemberDecorate &43 1 Offset(4)
+            OpDecorate &43 Block
+            OpDecorate &45 DescriptorSet(0)
+            OpDecorate &45 Binding(1)
+            OpDecorate &53 BuiltIn(WorkgroupSize)
+            %2 = OpTypeVoid 
+            %3 = OpTypeFunction &2 []
+            %6 = OpTypeInt 32 0
+            %7 = OpTypePointer Function &6
+            %9 = OpTypeVector &6 3
+            %10 = OpTypePointer Input &9
+            %11 = OpVariable @10 Input None
+            %12 = OpConstant @6 [0]
+            %13 = OpTypePointer Input &6
+            %17 = OpTypeFloat 32
+            %18 = OpTypeRuntimeArray &17
+            %19 = OpTypeStruct [&6, &18]
+            %20 = OpTypePointer StorageBuffer &19
+            %21 = OpVariable @20 StorageBuffer None
+            %22 = OpTypeInt 32 1
+            %23 = OpConstant @22 [0]
+            %24 = OpTypePointer StorageBuffer &6
+            %27 = OpTypeBool 
+            %32 = OpTypeRuntimeArray &17
+            %33 = OpTypeStruct [&32]
+            %34 = OpTypePointer StorageBuffer &33
+            %35 = OpVariable @34 StorageBuffer None
+            %37 = OpConstant @22 [1]
+            %39 = OpTypePointer StorageBuffer &17
+            %42 = OpTypeRuntimeArray &17
+            %43 = OpTypeStruct [&6, &42]
+            %44 = OpTypePointer StorageBuffer &43
+            %45 = OpVariable @44 StorageBuffer None
+            %51 = OpConstant @6 [16]
+            %52 = OpConstant @6 [1]
+            %53 = OpConstantComposite @9 [&51, &52, &52]
+            %4 = OpFunction @2 FunctionControl { value: None, parameters: [None] } &3
+            %5 = OpLabel 
+            %8 = OpVariable @7 Function None
+            %14 = OpAccessChain @13 &11 [&12]
+            %15 = OpLoad @6 &14 None
+            OpStore &8 &15 None
+            %16 = OpLoad @6 &8 None
+            %25 = OpAccessChain @24 &21 [&23]
+            %26 = OpLoad @6 &25 None
+            %28 = OpUGreaterThanEqual @27 &16 &26
+            OpSelectionMerge &30 SelectionControl { value: None, parameters: [None] }
+            OpBranchConditional &28 &29 &30 []
+            %29 = OpLabel 
+            OpReturn
+            %30 = OpLabel 
+            %36 = OpLoad @6 &8 None
+            %38 = OpLoad @6 &8 None
+            %40 = OpAccessChain @39 &21 [&37, &38]
+            %41 = OpLoad @17 &40 None
+            %46 = OpLoad @6 &8 None
+            %47 = OpAccessChain @39 &45 [&37, &46]
+            %48 = OpLoad @17 &47 None
+            %49 = OpFAdd @17 &41 &48
+            %50 = OpAccessChain @39 &35 [&23, &36]
+            OpStore &50 &49 None
+            OpReturn
+            OpFunctionEnd

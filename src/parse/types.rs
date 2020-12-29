@@ -51,7 +51,7 @@ pub enum ComplexType {
         ty: Box<Type>,
         len: ArrayLength,
     },
-    Pointer{
+    Pointer {
         ty: Box<Type>,
         storage: StorageClass,
     },
@@ -73,13 +73,12 @@ pub enum ComplexType {
     },
 }
 
-#[derive(Debug, PartialEq,  Clone, Copy)]
-pub enum ArrayLength{
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub enum ArrayLength {
     Number(u32),
-    Constant{spec_id: u32, default: u32},
+    Constant { spec_id: u32, default: u32 },
     Dynamic,
 }
-
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub enum BlockType {
@@ -101,7 +100,11 @@ pub enum ConstValue {
     Float(f32),
     Numerical(u64),
     Scalar(u64),
-    SpecConst{ spec_id: u32, default: u32, ty: Type}
+    SpecConst {
+        spec_id: u32,
+        default: u32,
+        ty: Type,
+    },
 }
 
 #[cfg(feature = "vk-format")]
@@ -134,19 +137,24 @@ impl Type {
                     },
                     _ => unimplemented!(),
                 },
-                ComplexType::Array { ty, len, .. } => {
-                    match len{
-                        ArrayLength::Number(n) => std::iter::repeat(ty.to_format()).take(*n as usize).flatten().collect(),
-                        _ => todo!()
-                    }
+                ComplexType::Array { ty, len, .. } => match len {
+                    ArrayLength::Number(n) => std::iter::repeat(ty.to_format())
+                        .take(*n as usize)
+                        .flatten()
+                        .collect(),
+                    _ => todo!(),
                 },
-                ComplexType::Matrix { ty, cols, rows } => {
-                    std::iter::repeat(
-                        Type::Complex(ComplexType::Vector {ty: (*ty).clone(), len: *cols})
-                                .to_format()
-                                .pop().unwrap()
-                    ).take(*rows as usize).collect()
-                },
+                ComplexType::Matrix { ty, cols, rows } => std::iter::repeat(
+                    Type::Complex(ComplexType::Vector {
+                        ty: (*ty).clone(),
+                        len: *cols,
+                    })
+                    .to_format()
+                    .pop()
+                    .unwrap(),
+                )
+                .take(*rows as usize)
+                .collect(),
                 ComplexType::Structure { name, members, .. } => vec![Format::UNDEFINED],
                 ComplexType::Pointer { ty, .. } => ty.to_format(),
                 _ => unimplemented!(),
@@ -155,10 +163,14 @@ impl Type {
     }
 }
 
-impl Type{
-    pub fn descriptor_type(&self, input_attachment_index: Option<u32>) -> DescriptorType{
-        match self {
-            Type::Complex(ComplexType::SampledImage { ref image, .. }) => {
+impl Type {
+    pub fn descriptor_type(
+        &self,
+        input_attachment_index: Option<u32>,
+        storage_class: StorageClass,
+    ) -> DescriptorType {
+        match (self, storage_class.clone()) {
+            (Type::Complex(ComplexType::SampledImage { ref image, .. }), _) => {
                 match image.deref() {
                     Type::Complex(ComplexType::Image { dim, .. }) => match dim {
                         Dim::Buffer => DescriptorType::UniformTexelBuffer,
@@ -167,9 +179,12 @@ impl Type{
                     _ => unreachable!(),
                 }
             }
-            Type::Complex(ComplexType::Image {
-                              sampled, ref dim, ..
-                          }) => match input_attachment_index {
+            (
+                Type::Complex(ComplexType::Image {
+                    sampled, ref dim, ..
+                }),
+                _,
+            ) => match input_attachment_index {
                 Some(index) => DescriptorType::InputAttachment(index),
                 None => match sampled {
                     Some(sampled) => {
@@ -185,28 +200,34 @@ impl Type{
                     _ => DescriptorType::StorageImage,
                 },
             },
-            Type::Complex(ComplexType::Structure { block, .. }) => match block {
+            (_, StorageClass::StorageBuffer) => DescriptorType::StorageBuffer,
+            (Type::Complex(ComplexType::Structure { block, .. }), _) => match block {
                 BlockType::BufferBlock => DescriptorType::StorageBuffer,
                 BlockType::Block => DescriptorType::UniformBuffer,
             },
-            Type::Complex(ComplexType::Pointer {ty, ..}) => ty.descriptor_type(input_attachment_index),
-            Type::Complex(ComplexType::Array { ty,  ..}) => ty.descriptor_type(input_attachment_index),
-            Type::Simple(SimpleType::AccelerationStructureKHR) => DescriptorType::AccelerationStructureKHR,
-            Type::Simple(SimpleType::AccelerationStructureNV) => DescriptorType::AccelerationStructureNV,
+            (Type::Complex(ComplexType::Pointer { ty, storage }), _) => {
+                ty.descriptor_type(input_attachment_index, storage.clone())
+            }
+            (Type::Complex(ComplexType::Array { ty, .. }), _) => {
+                ty.descriptor_type(input_attachment_index, storage_class.clone())
+            }
+            (Type::Simple(SimpleType::AccelerationStructureKHR), _) => {
+                DescriptorType::AccelerationStructureKHR
+            }
+            (Type::Simple(SimpleType::AccelerationStructureNV), _) => {
+                DescriptorType::AccelerationStructureNV
+            }
             _ => DescriptorType::Undefined,
         }
     }
-    pub fn descriptor_count(&self,) -> ArrayLength {
-        match self{
-            Type::Complex(ComplexType::Array {len, ..}) => *len,
-            Type::Complex(ComplexType::Pointer {ty, ..}) => {
-                match ty.as_ref() {
-                    Type::Complex(ComplexType::Array {..}) => ArrayLength::Dynamic,
-                    _ => ty.descriptor_count(),
-                }
-
+    pub fn descriptor_count(&self) -> ArrayLength {
+        match self {
+            Type::Complex(ComplexType::Array { len, .. }) => *len,
+            Type::Complex(ComplexType::Pointer { ty, .. }) => match ty.as_ref() {
+                Type::Complex(ComplexType::Array { .. }) => ArrayLength::Dynamic,
+                _ => ty.descriptor_count(),
             },
-            _ => ArrayLength::Number(1)
+            _ => ArrayLength::Number(1),
         }
     }
 }
@@ -257,13 +278,13 @@ impl ComplexType {
                 Some(*cols as u64 * *rows as u64 * ty.size()?)
             }
             ComplexType::Array { ty, len } => {
-                let len = match len{
+                let len = match len {
                     ArrayLength::Number(len) => len,
-                    _ => unimplemented!() //TODO! переменная длина
+                    _ => unimplemented!(), //TODO! переменная длина
                 };
 
                 Some(*len as u64 * ty.size()?)
-            },
+            }
             ComplexType::Structure { members, .. } => {
                 //TODO! not true for complex types with some aligment
                 let sizes = members
@@ -317,9 +338,6 @@ pub struct DescriptorBindning {
     pub ty: DescriptorType,
     pub count: ArrayLength,
 }
-
-
-
 
 #[derive(Debug)]
 pub enum DescriptorType {

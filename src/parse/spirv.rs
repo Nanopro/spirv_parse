@@ -238,7 +238,7 @@ impl Spirv {
 
 
 
-                    let ty = data_type.descriptor_type(input_attachment_index);
+                    let ty = data_type.descriptor_type(input_attachment_index, class.clone());
                     let count = data_type.descriptor_count();
                     let name = self.name_from_id(id_res.0);
 

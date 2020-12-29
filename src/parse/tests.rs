@@ -203,6 +203,24 @@ fn test_compute(){
 }
 
 #[test]
+fn test_compute_storage(){
+    let bytes = include_bytes!("../../test_shaders/compiled/ab.spirv");
+    let words =
+        unsafe { std::slice::from_raw_parts(bytes.as_ptr() as *const u32, bytes.len() / 4) };
+    let vert = parse_spirv(words).unwrap();
+    let mut file = File::create("./test_shaders/compiled/ab.txt").unwrap();
+    write!(file, "{}", vert);
+
+
+    let entry = vert.main_entry_point();
+    let bindings = vert.descriptor_sets();
+
+    println!("{:#?}", bindings);
+
+}
+
+
+#[test]
 fn test_geometry(){
     let bytes = include_bytes!("../../test_shaders/compiled/test_geom.spirv");
     let words =
